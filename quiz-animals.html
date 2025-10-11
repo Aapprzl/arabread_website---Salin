@@ -14,8 +14,8 @@
       theme: {
         extend: {
           colors: {
-            primary: { 500: '#3b82f6', 600: '#2563eb', 800: '#1e40af' },
-            secondary: { 500: '#22c55e', 600: '#16a34a' }
+            primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
+            secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
           },
           fontFamily: { arabic: ['Amiri', 'Scheherazade New', 'serif'] }
         }
@@ -166,16 +166,26 @@
         </div>
       </div>
 
-      <!-- Navigation Buttons -->
-      <div class="flex justify-between mt-8">
-        <a href="reading-animals.html" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center">
-          <i data-feather="arrow-left" class="w-5 h-5 mr-2"></i>
-          🔙 Kembali ke Bacaan
-        </a>
-        <a href="index.html" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center">
-          🏠 Beranda
-        </a>
-      </div>
+      <!-- Navigasi bawah (dengan tambahan tombol ke Kosa Kata) -->
+<div class="flex flex-col sm:flex-row gap-3 justify-between mt-6">
+  <a href="index.html"
+     class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white w-full sm:w-auto">
+     🏠 Kembali ke Beranda
+  </a>
+
+  <div class="flex gap-3 justify-center sm:justify-end w-full sm:w-auto">
+    <a href="vocabulary-animals.html"
+       class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-100 text-primary-700 hover:bg-primary-200">
+       📚 Kosa Kata
+    </a>
+
+    <a href="reading-animals.html"
+       class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-secondary-500 hover:bg-secondary-600 text-white">
+       📖 Baca Teks
+    </a>
+  </div>
+</div>
+
     </section>
   </main>
 
