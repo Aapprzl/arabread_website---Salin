@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kosakata Tema Ta'aruf (التَّعارُف) | ArabRead</title>
+
+  <!-- Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a'},
+            secondary: {100:'#dcfce7',500:'#22c55e',600:'#16a34a'}
+          },
+          fontFamily: { arabic:['Amiri','Scheherazade New','serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .arabic-text { font-family:'Amiri','Scheherazade New',serif; direction:rtl; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-primary-600 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5.75A2.75 2.75 0 0 1 6.75 3h10.5A2.75 2.75 0 0 1 20 5.75V22M4 19.5c0-1.38 1.12-2.5 2.5-2.5H20"/></svg>
+        <span class="text-2xl font-bold">ArabRead</span>
+      </div>
+      <nav class="hidden md:flex gap-6 text-white/90">
+        <a class="hover:text-white" href="index.html">Beranda</a>
+        <a class="hover:text-white" href="reading-taaruf.html">Baca Teks</a>
+        <a class="hover:text-white" href="quiz-taaruf.html">Kuis</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-4 pt-10 pb-6 text-center">
+    <h1 class="arabic-text text-4xl font-bold text-primary-800 mb-2">التَّعارُف</h1>
+    <p class="text-lg text-gray-600">Kosakata Tema Ta'aruf (Pengenalan Diri)</p>
+  </section>
+
+  <!-- Konten -->
+  <main class="max-w-6xl mx-auto px-4 pb-16">
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div class="px-6 py-4 border-b bg-primary-500 text-white">
+        <h2 class="text-xl font-semibold">Daftar Kosakata</h2>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table id="vocab-table" class="hidden md:table min-w-full divide-y divide-gray-200">
+          <thead class="bg-primary-100">
+            <tr>
+              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900">No</th>
+              <th class="px-4 py-3 text-sm text-right font-semibold text-primary-900">Bahasa Arab</th>
+              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900">Transliterasi</th>
+              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900">Arti Indonesia</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">1</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">السَّلَامُ عَلَيْكُمْ</td><td class="px-4 py-3">as-salāmu ʿalaikum</td><td class="px-4 py-3">Assalamu’alaikum</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">2</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">وَعَلَيْكُمُ السَّلَامُ</td><td class="px-4 py-3">waʿalaikumu as-salām</td><td class="px-4 py-3">Waalaikumussalam</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">3</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">مَا اسْمُكَ؟</td><td class="px-4 py-3">mā ismuka?</td><td class="px-4 py-3">Siapa namamu? (laki-laki)</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">4</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">مَا اسْمُكِ؟</td><td class="px-4 py-3">mā ismuki?</td><td class="px-4 py-3">Siapa namamu? (perempuan)</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">5</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">اسْمِي ...</td><td class="px-4 py-3">ismī ...</td><td class="px-4 py-3">Namaku …</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">6</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">مِنْ أَيْنَ أَنْتَ؟</td><td class="px-4 py-3">min ayna anta?</td><td class="px-4 py-3">Dari mana kamu? (laki-laki)</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">7</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">مِنْ أَيْنَ أَنْتِ؟</td><td class="px-4 py-3">min ayna anti?</td><td class="px-4 py-3">Dari mana kamu? (perempuan)</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">8</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">أَنَا مِنْ بُونِي</td><td class="px-4 py-3">anā min Būnī</td><td class="px-4 py-3">Saya dari Bone</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">9</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">كَيْفَ حَالُكَ؟</td><td class="px-4 py-3">kaifa ḥāluka?</td><td class="px-4 py-3">Bagaimana kabarmu? (laki-laki)</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">10</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">أَنَا بِخَيْرٍ، وَالْحَمْدُ لِلّٰهِ</td><td class="px-4 py-3">anā bikhairin, wal-ḥamdu lillāh</td><td class="px-4 py-3">Saya baik, alhamdulillah</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">11</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">فِي أَيِّ صَفٍّ أَنْتَ؟</td><td class="px-4 py-3">fī ayy ṣaffin anta?</td><td class="px-4 py-3">Kamu di kelas berapa? (laki-laki)</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">12</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">أَنَا فِي الصَّفِّ السَّابِعِ</td><td class="px-4 py-3">anā fī aṣ-ṣaffi as-sābiʿi</td><td class="px-4 py-3">Saya di kelas tujuh</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">13</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">مَا هِوَايَتُكَ؟</td><td class="px-4 py-3">mā hiwāyatuka?</td><td class="px-4 py-3">Apa hobimu? (laki-laki)</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">14</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">هِوَايَتِي الْقِرَاءَةُ</td><td class="px-4 py-3">hiwāyatī al-qirāʾatu</td><td class="px-4 py-3">Hobiku membaca</td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3">15</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">إِلَى اللِّقَاءِ</td><td class="px-4 py-3">ilā al-liqāʾi</td><td class="px-4 py-3">Sampai jumpa</td></tr>
+          </tbody>
+        </table>
+
+        <div id="mobile-list" class="md:hidden grid gap-3 p-3"></div>
+      </div>
+    </div>
+
+    <!-- Navigasi bawah -->
+    <div class="flex flex-col sm:flex-row gap-3 justify-between mt-6">
+      <a href="index.html" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white">🏠 Kembali ke Beranda</a>
+      <div class="flex gap-3">
+        <a href="reading-taaruf.html" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-100 text-primary-700 hover:bg-primary-200">📖 Baca Teks</a>
+        <a href="quiz-taaruf.html" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-secondary-500 hover:bg-secondary-600 text-white">📝 Kuis</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-primary-800 text-white text-center py-6">
+    <p>&copy; 2025 ArabRead – Kosakata Tema: التَّعارُف</p>
+  </footer>
+
+  <!-- Script: buat kartu mobile otomatis -->
+  <script>
+    (function buildMobileList(){
+      const table=document.getElementById('vocab-table');
+      const target=document.getElementById('mobile-list');
+      if(!table||!target)return;
+      const rows=table.querySelectorAll('tbody tr');
+      target.innerHTML='';
+      rows.forEach(tr=>{
+        const tds=tr.querySelectorAll('td');
+        if(tds.length<4)return;
+        const [no,arabic,translit,arti]=[...tds].map(td=>td.textContent.trim());
+        const card=document.createElement('div');
+        card.className="rounded-xl shadow bg-white p-3";
+        card.innerHTML=`
+          <div class='flex items-start justify-between'><span class='text-xs text-gray-400'>#${no}</span></div>
+          <div class='arabic-text text-2xl leading-snug text-right break-words mt-1'>${arabic}</div>
+          <div class='text-xs text-gray-500 mt-1'>${translit}</div>
+          <div class='text-sm text-gray-700'>${arti}</div>`;
+        target.appendChild(card);
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kosakata Tema Sekolah (المدرسة) | ArabRead</title>
+
+  <!-- Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
+            secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
+          },
+          fontFamily: { arabic: ['Amiri','Scheherazade New','serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .arabic-text { font-family: 'Amiri','Scheherazade New',serif; direction: rtl; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-primary-600 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5.75A2.75 2.75 0 0 1 6.75 3h10.5A2.75 2.75 0 0 1 20 5.75V22M4 19.5c0-1.38 1.12-2.5 2.5-2.5H20"/></svg>
+        <span class="text-2xl font-bold">ArabRead</span>
+      </div>
+      <nav class="hidden md:flex gap-6 text-white/90">
+        <a class="hover:text-white" href="index.html">Beranda</a>
+        <a class="hover:text-white" href="reading-school.html">Baca Teks</a>
+        <a class="hover:text-white" href="quiz-school.html">Kuis</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-4 pt-10 pb-6 text-center">
+    <h1 class="arabic-text text-4xl font-bold text-primary-800 mb-2">المدرسة</h1>
+    <p class="text-lg text-gray-600">Kosakata Sekolah</p>
+  </section>
+
+  <!-- Konten -->
+  <main class="max-w-6xl mx-auto px-4 pb-16">
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div class="px-6 py-4 border-b bg-primary-500 text-white">
+        <h2 class="text-xl font-semibold">Daftar Kosakata</h2>
+      </div>
+
+      <div class="overflow-x-auto">
+        <!-- TABEL (md+): tanpa kolom audio -->
+        <table id="vocab-table" class="hidden md:table min-w-full divide-y divide-gray-200">
+          <thead class="bg-primary-100">
+            <tr>
+              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900">No</th>
+              <th class="px-4 py-3 text-sm text-right font-semibold text-primary-900">Bahasa Arab</th>
+              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900">Transliterasi</th>
+              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900">Arti Indonesia</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <!-- 1 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">1</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">مَدْرَسَةٌ</td>
+              <td class="px-4 py-3">madrasatun</td>
+              <td class="px-4 py-3">Sekolah</td>
+            </tr>
+            <!-- 2 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">2</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">مُعَلِّمٌ</td>
+              <td class="px-4 py-3">muʿallimun</td>
+              <td class="px-4 py-3">Guru (laki-laki)</td>
+            </tr>
+            <!-- 3 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">3</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">مُعَلِّمَةٌ</td>
+              <td class="px-4 py-3">muʿallimatun</td>
+              <td class="px-4 py-3">Guru (perempuan)</td>
+            </tr>
+            <!-- 4 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">4</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">طَالِبٌ</td>
+              <td class="px-4 py-3">ṭālibun</td>
+              <td class="px-4 py-3">Siswa (laki-laki)</td>
+            </tr>
+            <!-- 5 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">5</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">طَالِبَةٌ</td>
+              <td class="px-4 py-3">ṭālibatun</td>
+              <td class="px-4 py-3">Siswa (perempuan)</td>
+            </tr>
+            <!-- 6 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">6</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">فَصْلٌ</td>
+              <td class="px-4 py-3">faṣlun</td>
+              <td class="px-4 py-3">Kelas / ruang kelas</td>
+            </tr>
+            <!-- 7 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">7</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">كِتَابٌ</td>
+              <td class="px-4 py-3">kitābun</td>
+              <td class="px-4 py-3">Buku</td>
+            </tr>
+            <!-- 8 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">8</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">قَلَمٌ</td>
+              <td class="px-4 py-3">qalamun</td>
+              <td class="px-4 py-3">Pena / pulpen</td>
+            </tr>
+            <!-- 9 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">9</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">سَبُّورَةٌ</td>
+              <td class="px-4 py-3">sabbūratun</td>
+              <td class="px-4 py-3">Papan tulis</td>
+            </tr>
+            <!-- 10 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">10</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">كُرْسِيٌّ</td>
+              <td class="px-4 py-3">kursiyyun</td>
+              <td class="px-4 py-3">Kursi</td>
+            </tr>
+            <!-- 11 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">11</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">مَكْتَبٌ</td>
+              <td class="px-4 py-3">maktabun</td>
+              <td class="px-4 py-3">Meja</td>
+            </tr>
+            <!-- 12 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">12</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">حَقِيبَةٌ</td>
+              <td class="px-4 py-3">ḥaqībatun</td>
+              <td class="px-4 py-3">Tas</td>
+            </tr>
+            <!-- 13 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">13</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">مُدِيرٌ</td>
+              <td class="px-4 py-3">mudīrun</td>
+              <td class="px-4 py-3">Kepala sekolah</td>
+            </tr>
+            <!-- 14 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">14</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">مَكْتَبَةٌ</td>
+              <td class="px-4 py-3">maktabatun</td>
+              <td class="px-4 py-3">Perpustakaan</td>
+            </tr>
+            <!-- 15 -->
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 text-sm">15</td>
+              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">مَلْعَبٌ</td>
+              <td class="px-4 py-3">malʿabun</td>
+              <td class="px-4 py-3">Lapangan</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- LIST MOBILE (otomatis dari tabel) -->
+        <div id="mobile-list" class="md:hidden grid gap-3 p-3"></div>
+      </div>
+    </div>
+
+    <!-- Navigasi bawah -->
+    <div class="flex flex-col sm:flex-row gap-3 justify-between mt-6">
+      <a href="index.html" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white">🏠 Kembali ke Beranda</a>
+      <div class="flex gap-3">
+        <a href="reading-school.html" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-100 text-primary-700 hover:bg-primary-200">📖 Baca Teks</a>
+        <a href="quiz-school.html" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-secondary-500 hover:bg-secondary-600 text-white">📝 Kuis</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-800 text-white text-center py-6">
+    <p>&copy; 2025 ArabRead – Kosakata Tema: المدرسة</p>
+  </footer>
+
+  <!-- Script kecil untuk membuat kartu mobile dari tabel (tanpa audio) -->
+  <script>
+    (function buildMobileList() {
+      const table = document.getElementById('vocab-table');
+      const target = document.getElementById('mobile-list');
+      if (!table || !target) return;
+
+      const rows = table.querySelectorAll('tbody tr');
+      target.innerHTML = '';
+      rows.forEach((tr) => {
+        const tds = tr.querySelectorAll('td');
+        if (tds.length < 4) return;
+
+        const no = tds[0].textContent.trim();
+        const arabic = tds[1].textContent.trim();
+        const translit = tds[2].textContent.trim();
+        const arti = tds[3].textContent.trim();
+
+        const card = document.createElement('div');
+        card.className = "rounded-xl shadow bg-white p-3";
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between">
+            <span class="text-xs text-gray-400">#${no}</span>
+          </div>
+          <div class="arabic-text text-2xl leading-snug text-right break-words mt-1">${arabic}</div>
+          <div class="text-xs text-gray-500 mt-1">${translit}</div>
+          <div class="text-sm text-gray-700">${arti}</div>
+        `;
+
+        target.appendChild(card);
+      });
+    })();
+  </script>
+</body>
+</html>

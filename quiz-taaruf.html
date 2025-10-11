@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kuis Pemahaman Teks – Tema Ta'aruf (التَّعارُف) | ArabRead</title>
+
+  <!-- Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
+            secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
+          },
+          fontFamily: { arabic: ['Amiri','Scheherazade New','serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .arabic-text { font-family:'Amiri','Scheherazade New',serif; direction:rtl; }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-primary-600 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <i data-feather="book-open" class="w-8 h-8"></i>
+        <h1 class="text-2xl font-bold">ArabRead</h1>
+      </div>
+      <nav class="hidden md:flex space-x-6">
+        <a href="index.html" class="hover:text-secondary-300">Beranda</a>
+        <a href="reading-taaruf.html" class="hover:text-secondary-300">Bacaan</a>
+        <a href="index.html#tentang" class="hover:text-secondary-300">Tentang</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- Title -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-primary-800 arabic-text mb-2">التَّعارُف</h1>
+      <p class="text-2xl text-gray-700">Kuis Pemahaman Teks</p>
+    </div>
+
+    <!-- Quiz Card -->
+    <section class="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
+      <form id="quizForm" class="space-y-8">
+        <!-- Q1 -->
+        <div class="p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">1) Siapakah yang memperkenalkan diri di awal teks?</h3>
+          <div class="space-y-3">
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q1" value="A" class="mr-3"> <span>A. Ali</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q1" value="B" class="mr-3"> <span>B. Ahmad</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q1" value="C" class="mr-3"> <span>C. Hasan</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q1" value="D" class="mr-3"> <span>D. Umar</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">2) Dari manakah <strong>Umar</strong> berasal?</h3>
+          <div class="space-y-3">
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q2" value="A" class="mr-3"> <span>A. Bone</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q2" value="B" class="mr-3"> <span>B. Watampone</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q2" value="C" class="mr-3"> <span>C. Makassar</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q2" value="D" class="mr-3"> <span>D. Parepare</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">3) Ahmad sekarang kelas berapa?</h3>
+          <div class="space-y-3">
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q3" value="A" class="mr-3"> <span>A. Kelas 6</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q3" value="B" class="mr-3"> <span>B. Kelas 7</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q3" value="C" class="mr-3"> <span>C. Kelas 8</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q3" value="D" class="mr-3"> <span>D. Kelas 9</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">4) Ungkapan salam pembuka yang benar sesuai teks adalah…</h3>
+          <div class="space-y-3">
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q4" value="A" class="mr-3"> <span>A. مَرْحَبًا</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q4" value="B" class="mr-3"> <span>B. السَّلَامُ عَلَيْكُمْ</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q4" value="C" class="mr-3"> <span>C. صَبَاحُ الْخَيْرِ</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q4" value="D" class="mr-3"> <span>D. تَصْبَحْ عَلَى خَيْرٍ</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">5) Hobi Ahmad adalah…</h3>
+          <div class="space-y-3">
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q5" value="A" class="mr-3"> <span>A. Memasak dan melukis</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q5" value="B" class="mr-3"> <span>B. Membaca dan sepak bola</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q5" value="C" class="mr-3"> <span>C. Renang dan voli</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q5" value="D" class="mr-3"> <span>D. Bersepeda dan memancing</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">6) Kalimat Arab berikut yang berarti “Dari mana kamu?” (untuk laki-laki) adalah…</h3>
+          <div class="space-y-3">
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q6" value="A" class="mr-3"> <span>A. مَا اسْمُكَ؟</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q6" value="B" class="mr-3"> <span>B. مِنْ أَيْنَ أَنْتَ؟</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q6" value="C" class="mr-3"> <span>C. كَيْفَ حَالُكَ؟</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q6" value="D" class="mr-3"> <span>D. مَا هِوَايَتُكَ؟</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">7) Ucapan perpisahan yang muncul di teks adalah…</h3>
+          <div class="space-y-3">
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q7" value="A" class="mr-3"> <span>A. إِلَى اللِّقَاءِ</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q7" value="B" class="mr-3"> <span>B. صَبَاحُ النُّورِ</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q7" value="C" class="mr-3"> <span>C. مَسَاءُ الْخَيْرِ</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q7" value="D" class="mr-3"> <span>D. كَيْفَ حَالُكَ؟</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="p-4">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">8) Balasan salam yang tepat untuk “السَّلَامُ عَلَيْكُمْ” adalah…</h3>
+          <div class="space-y-3">
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q8" value="A" class="mr-3"> <span>A. وَعَلَيْكُمُ السَّلَامُ</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q8" value="B" class="mr-3"> <span>B. شُكْرًا جَزِيلًا</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q8" value="C" class="mr-3"> <span>C. أَهْلًا وَسَهْلًا</span>
+            </label>
+            <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <input type="radio" name="q8" value="D" class="mr-3"> <span>D. مَعَ السَّلَامَةِ</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="text-center pt-2">
+          <button type="button" id="checkAnswers" class="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-3 px-8 rounded-lg transition">
+            Periksa Jawaban
+          </button>
+          <button type="button" id="resetQuiz" class="ml-3 bg-primary-100 hover:bg-primary-200 text-primary-700 font-semibold py-3 px-6 rounded-lg transition">
+            Reset
+          </button>
+        </div>
+      </form>
+
+      <!-- Results -->
+      <div id="results" class="mt-8 p-6 bg-gray-50 rounded-xl hidden">
+        <h3 class="text-xl font-semibold text-primary-800 mb-3">Hasil Kuis</h3>
+        <p id="score" class="text-2xl font-bold text-secondary-600 mb-2"></p>
+        <p id="feedback" class="text-lg text-gray-700"></p>
+
+      </div>
+
+      <!-- Nav -->
+      <div class="flex justify-between mt-8">
+        <a href="reading-taaruf.html" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center">
+          <i data-feather="arrow-left" class="w-5 h-5 mr-2"></i>
+          Kembali ke Bacaan
+        </a>
+        <a href="index.html" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center">
+          <i data-feather="home" class="w-5 h-5 mr-2"></i>
+          Beranda
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-800 text-white text-center py-6 mt-8">
+    <p>&copy; 2025 ArabRead – Kuis Tema: التَّعارُف</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    feather.replace();
+
+    const correctAnswers = {
+      q1:'B', q2:'B', q3:'B', q4:'B', q5:'B', q6:'B', q7:'A', q8:'A'
+    };
+
+    function highlightAnswers() {
+      // Bersihkan highlight lama
+      document.querySelectorAll('label').forEach(l => {
+        l.classList.remove('ring-2','ring-green-300','bg-green-50','ring-red-300','bg-red-50');
+      });
+
+      // Tambahkan highlight untuk jawaban user
+      Object.keys(correctAnswers).forEach(q => {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (!selected) return;
+        const label = selected.closest('label');
+        const isCorrect = selected.value === correctAnswers[q];
+        label.classList.add('ring-2', isCorrect ? 'ring-green-300' : 'ring-red-300', isCorrect ? 'bg-green-50' : 'bg-red-50');
+      });
+    }
+
+    document.getElementById('checkAnswers').addEventListener('click', function() {
+      const form = document.getElementById('quizForm');
+      const formData = new FormData(form);
+      let score = 0, answered = 0;
+
+      for (const q in correctAnswers) {
+        const a = formData.get(q);
+        if (a) {
+          answered++;
+          if (a === correctAnswers[q]) score++;
+        }
+      }
+
+      highlightAnswers();
+
+      // Tampilkan hasil
+      const results = document.getElementById('results');
+      const scoreEl = document.getElementById('score');
+      const feedbackEl = document.getElementById('feedback');
+
+      scoreEl.textContent = `Skor: ${score}/${Object.keys(correctAnswers).length}`;
+      if (answered < Object.keys(correctAnswers).length) {
+        feedbackEl.textContent = 'Masih ada soal yang belum dijawab. Lengkapi dulu ya!';
+        feedbackEl.className = 'text-lg text-primary-600 font-semibold';
+      } else if (score >= 7) {
+        feedbackEl.textContent = 'Mantap! Pemahamanmu sangat baik 🎉';
+        feedbackEl.className = 'text-lg text-secondary-600 font-semibold';
+      } else if (score >= 5) {
+        feedbackEl.textContent = 'Bagus! Tinggal sedikit lagi, coba ulangi bacaannya.';
+        feedbackEl.className = 'text-lg text-primary-700 font-semibold';
+      } else {
+        feedbackEl.textContent = 'Ayo semangat! Baca kembali teks lalu coba lagi.';
+        feedbackEl.className = 'text-lg text-primary-600 font-semibold';
+      }
+
+      results.classList.remove('hidden');
+      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.getElementById('resetQuiz').addEventListener('click', function() {
+      document.getElementById('quizForm').reset();
+      document.getElementById('results').classList.add('hidden');
+      document.getElementById('score').textContent = '';
+      document.getElementById('feedback').textContent = '';
+      document.querySelectorAll('label').forEach(l => {
+        l.classList.remove('ring-2','ring-green-300','bg-green-50','ring-red-300','bg-red-50');
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

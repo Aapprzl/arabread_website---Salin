@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArabRead — Pembelajaran Membaca Bahasa Arab MTs</title>
+
+  <!-- Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
+            secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
+          },
+          fontFamily: { arabic: ['Amiri','Scheherazade New','serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .arabic-text { font-family: 'Amiri','Scheherazade New',serif; direction: rtl; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-primary-600 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5.75A2.75 2.75 0 0 1 6.75 3h10.5A2.75 2.75 0 0 1 20 5.75V22M4 19.5c0-1.38 1.12-2.5 2.5-2.5H20"/></svg>
+        <span class="text-2xl font-bold">ArabRead</span>
+      </div>
+      <nav class="hidden md:flex gap-6 text-white/90">
+        <a class="inline-flex items-center gap-2 hover:text-white" href="#materi">
+          <i data-feather="book-open" class="w-4 h-4"></i><span class="leading-none">Materi</span>
+        </a>
+        <a class="inline-flex items-center gap-2 hover:text-white" href="#tentang">
+          <i data-feather="info" class="w-4 h-4"></i><span class="leading-none">Tentang</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="text-center max-w-6xl mx-auto px-4 pt-10 pb-8">
+    <h1 class="arabic-text text-4xl font-bold text-primary-800">موقع تعليم مهارة القراءة العربية</h1>
+    <p class="mt-3 text-gray-600 text-lg">Media belajar interaktif untuk meningkatkan kemampuan membaca teks Arab berharakat bagi siswa MTs kelas 7.</p>
+  </section>
+
+  <!-- Mini Widget: Tantangan Hari Ini (Game ringan di beranda) -->
+<section id="tantangan" class="max-w-4xl mx-auto px-4 mt-6 mb-10">
+  <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+    <div class="inline-flex items-center gap-2 mb-3">
+      <h2 class="text-2xl font-bold text-primary-700">🎯 Tantangan Hari Ini</h2>
+    </div>
+
+    <!-- Pertanyaan -->
+    <p id="q-text" class="text-gray-700 mb-4">
+      Apa arti frasa <span id="q-ar" class="arabic-text text-xl font-bold text-primary-800">...</span> ?
+    </p>
+
+    <!-- Opsi -->
+    <div id="q-options" class="flex flex-wrap justify-center gap-3"></div>
+
+    <!-- Feedback -->
+    <p id="q-feedback" class="mt-4 text-sm font-semibold"></p>
+
+    <!-- Tombol kontrol -->
+    <div class="mt-5 flex flex-wrap gap-3 justify-center">
+      <button id="q-next"
+              class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white disabled:opacity-50 disabled:cursor-not-allowed">
+        Soal Berikutnya
+      </button>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- Materi -->
+  <main id="materi" class="max-w-6xl mx-auto px-4 pb-16">
+    <h2 class="text-2xl md:text-3xl font-bold text-primary-900 text-center mb-8">Pilih Materi Membaca</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Kartu: Ta'aruf / Pengenalan -->
+<article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+  <div class="bg-secondary-500 text-white text-center py-6">
+    <h3 class="arabic-text text-2xl font-bold">التَّعارُف</h3>
+    <p class="mt-1 text-white/90">Pengenalan / Ta'aruf</p>
+  </div>
+  <div class="p-6 space-y-5">
+    <p class="text-gray-600">
+      Latihan membaca teks perkenalan sederhana: nama, asal, kelas, hobi, dan kalimat salam.
+    </p>
+    <a href="vocabulary-taaruf.html"
+       class="flex items-center justify-center gap-2 w-full
+              bg-primary-600 hover:bg-primary-700 text-white
+              py-2.5 px-4 rounded-lg transition-colors h-11">
+      <i data-feather="play" class="w-5 h-5 shrink-0"></i>
+      <span class="leading-none font-semibold">Mulai Belajar</span>
+    </a>
+    <p class="text-xs text-gray-500 text-center">
+      Urutan: Kosakata → Baca Teks → Kuis
+    </p>
+  </div>
+</article>
+
+
+      <!-- Kartu: Sekolah -->
+      <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+        <div class="bg-primary-500 text-white text-center py-6">
+          <h3 class="arabic-text text-2xl font-bold">المدرسة</h3>
+          <p class="mt-1 text-white/90">Sekolah</p>
+        </div>
+        <div class="p-6 space-y-5">
+          <p class="text-gray-600">Latihan membaca teks sederhana tentang kegiatan di sekolah.</p>
+          <a href="vocabulary-school.html"
+             class="flex items-center justify-center gap-2 w-full
+                    bg-primary-600 hover:bg-primary-700 text-white
+                    py-2.5 px-4 rounded-lg transition-colors h-11">
+            <i data-feather="play" class="w-5 h-5 shrink-0"></i>
+            <span class="leading-none font-semibold">Mulai Belajar</span>
+          </a>
+          <p class="text-xs text-gray-500 text-center">Urutan: Kosakata → Baca Teks → Kuis</p>
+        </div>
+      </article>
+
+      <!-- Kartu: Keluarga -->
+      <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+        <div class="bg-secondary-500 text-white text-center py-6">
+          <h3 class="arabic-text text-2xl font-bold">العائلة</h3>
+          <p class="mt-1 text-white/90">Keluarga</p>
+        </div>
+        <div class="p-6 space-y-5">
+          <p class="text-gray-600">Membaca teks tentang keluarga dan mengenal kosakata anggota keluarga.</p>
+          <a href="vocabulary-family.html"
+             class="flex items-center justify-center gap-2 w-full
+                    bg-primary-600 hover:bg-primary-700 text-white
+                    py-2.5 px-4 rounded-lg transition-colors h-11">
+            <i data-feather="play" class="w-5 h-5 shrink-0"></i>
+            <span class="leading-none font-semibold">Mulai Belajar</span>
+          </a>
+          <p class="text-xs text-gray-500 text-center">Urutan: Kosakata → Baca Teks → Kuis</p>
+        </div>
+      </article>
+
+      <!-- Kartu: Hewan -->
+      <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+        <div class="bg-primary-500 text-white text-center py-6">
+          <h3 class="arabic-text text-2xl font-bold">الحيوانات</h3>
+          <p class="mt-1 text-white/90">Hewan</p>
+        </div>
+        <div class="p-6 space-y-5">
+          <p class="text-gray-600">Latihan membaca teks deskriptif tentang hewan dalam bahasa Arab.</p>
+          <a href="vocabulary-animals.html"
+             class="flex items-center justify-center gap-2 w-full
+                    bg-primary-600 hover:bg-primary-700 text-white
+                    py-2.5 px-4 rounded-lg transition-colors h-11">
+            <i data-feather="play" class="w-5 h-5 shrink-0"></i>
+            <span class="leading-none font-semibold">Mulai Belajar</span>
+          </a>
+          <p class="text-xs text-gray-500 text-center">Urutan: Kosakata → Baca Teks → Kuis</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- Tentang -->
+  <section id="tentang" class="max-w-6xl mx-auto px-4 pb-16">
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+      <h2 class="text-2xl md:text-3xl font-bold text-primary-900 mb-3">Tentang ArabRead</h2>
+      <p class="text-gray-700 leading-relaxed">
+        ArabRead adalah media pembelajaran berbasis website yang dirancang untuk meningkatkan kemampuan membaca
+        (مهارة القراءة) siswa MTs kelas 7. Alur belajar dibuat bertahap: <b>Kosakata → Baca Teks → Kuis</b>,
+        agar pemahaman tumbuh secara sistematis.
+      </p>
+      <p class="text-gray-600 mt-4">Dikembangkan oleh Afrizal — PBA IAIN Bone, 2025.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary-800 text-white text-center py-6">
+    <p>&copy; 2025 ArabRead — Media Pembelajaran Membaca Bahasa Arab MTs</p>
+  </footer>
+
+  <!-- Feather Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => feather.replace());</script>
+
+  <script>
+  // ========= Mini Widget Logic (tanpa penyimpanan skor) =========
+  (function(){
+    const QUESTIONS = [
+      { ar: 'مَا اسْمُكَ؟', id: 'Siapa namamu?', opts: ['Apa kabarmu?','Di mana rumahmu?','Siapa namamu?','Apa hobimu?'], correct: 2 },
+      { ar: 'مِنْ أَيْنَ أَنْتَ؟', id: 'Dari mana kamu? (laki-laki)', opts: ['Di kelas berapa?','Dari mana kamu? (laki-laki)','Apa hobimu?','Siapa namamu?'], correct: 1 },
+      { ar: 'السَّلَامُ عَلَيْكُمْ', id: 'Assalamu’alaikum', opts: ['Selamat pagi','Assalamu’alaikum','Sampai jumpa','Terima kasih'], correct: 1 },
+      { ar: 'وَعَلَيْكُمُ السَّلَامُ', id: 'Wa’alaikumussalam', opts: ['Wa’alaikumussalam','Selamat malam','Sampai besok','Apa kabarmu?'], correct: 0 },
+      { ar: 'أَنَا فِي الصَّفِّ السَّابِعِ', id: 'Saya di kelas tujuh', opts: ['Saya di kelas tujuh','Saya dari Bone','Hobiku membaca','Saya lapar'], correct: 0 },
+      { ar: 'مَا هِوَايَتُكَ؟', id: 'Apa hobimu? (laki-laki)', opts: ['Apa hobimu? (laki-laki)','Di mana kamu?','Siapa namamu?','Berapa usiamu?'], correct: 0 },
+      { ar: 'إِلَى اللِّقَاءِ', id: 'Sampai jumpa', opts: ['Selamat datang','Sampai jumpa','Selamat siang','Selamat tidur'], correct: 1 }
+    ];
+
+    const qAr = document.getElementById('q-ar');
+    const qOpts = document.getElementById('q-options');
+    const qFeedback = document.getElementById('q-feedback');
+    const qNext = document.getElementById('q-next');
+
+    let current = null;
+    let locked = false;
+
+    function pickRandom(){
+      return QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
+    }
+
+    function renderQuestion(){
+      current = pickRandom();
+      locked = false;
+      qFeedback.textContent = '';
+      qFeedback.className = 'mt-4 text-sm font-semibold';
+      qAr.textContent = current.ar;
+      qOpts.innerHTML = '';
+
+      current.opts.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className =
+          'px-4 py-2 bg-primary-100 hover:bg-primary-200 text-primary-800 rounded-lg transition disabled:opacity-60';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => choose(idx, btn));
+        qOpts.appendChild(btn);
+      });
+
+      qNext.disabled = true;
+    }
+
+    function choose(idx, btn){
+      if (locked) return;
+      locked = true;
+      [...qOpts.children].forEach((el, i) => {
+        el.disabled = true;
+        if (i === current.correct)
+          el.classList.add('ring-2','ring-green-300','bg-green-50');
+      });
+
+      if (idx === current.correct) {
+        qFeedback.textContent = 'Benar! 🎉';
+        qFeedback.classList.add('text-secondary-600');
+      } else {
+        qFeedback.textContent = `Kurang tepat. Jawaban benar: ${current.id}`;
+        qFeedback.classList.add('text-primary-700');
+        btn.classList.add('ring-2','ring-red-300','bg-red-50');
+      }
+
+      qNext.disabled = false;
+    }
+
+    qNext.addEventListener('click', renderQuestion);
+    renderQuestion();
+  })();
+</script>
+
+
+
+</body>
+</html>

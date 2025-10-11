@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuis Pemahaman Teks – Tema Sekolah (المدرسة) | ArabRead</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 500: '#3b82f6', 600: '#2563eb', 800: '#1e40af' },
+            secondary: { 500: '#22c55e', 600: '#16a34a' }
+          },
+          fontFamily: { arabic: ['Amiri', 'Scheherazade New', 'serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .arabic-text { font-family: 'Amiri', 'Scheherazade New', serif; direction: rtl; }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-primary-600 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <i data-feather="book-open" class="w-8 h-8"></i>
+        <h1 class="text-2xl font-bold">ArabRead</h1>
+      </div>
+      <nav class="hidden md:flex space-x-6">
+        <a href="index.html" class="hover:text-secondary-300">Beranda</a>
+        <a href="reading-school.html" class="hover:text-secondary-300">Bacaan</a>
+        <a href="index.html#tentang" class="hover:text-secondary-300">Tentang</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- Page Title -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-primary-800 arabic-text mb-2">المدرسة</h1>
+      <p class="text-2xl text-gray-700">Kuis Pemahaman Teks</p>
+    </div>
+
+    <!-- Quiz Section -->
+    <section class="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
+      <form id="quizForm">
+        <!-- Question 1 -->
+        <div class="mb-8 p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">1. Siapakah tokoh utama dalam teks tersebut?</h3>
+        <div class="space-y-3">
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q1" value="A" class="mr-3">
+          <span>A. Muhammad</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q1" value="B" class="mr-3">
+          <span>B. Ahmad</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q1" value="C" class="mr-3">
+          <span>C. Ali</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q1" value="D" class="mr-3">
+          <span>D. Hasan</span>
+          </label>
+        </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="mb-8 p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">2. Berapa sering Ahmad pergi ke sekolah?</h3>
+        <div class="space-y-3">
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q2" value="A" class="mr-3">
+          <span>A. Setiap hari</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q2" value="B" class="mr-3">
+          <span>B. Dua kali seminggu</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q2" value="C" class="mr-3">
+          <span>C. Hanya hari Senin</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q2" value="D" class="mr-3">
+          <span>D. Seminggu sekali</span>
+          </label>
+        </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="mb-8 p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">3. Mata pelajaran apa yang disebutkan dalam teks?</h3>
+        <div class="space-y-3">
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q3" value="A" class="mr-3">
+          <span>A. Bahasa Arab dan Sejarah</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q3" value="B" class="mr-3">
+          <span>B. Ilmu pengetahuan dan matematika</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q3" value="C" class="mr-3">
+          <span>C. Seni dan olahraga</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q3" value="D" class="mr-3">
+          <span>D. Agama dan bahasa Inggris</span>
+          </label>
+        </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="mb-8 p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">4. Di mana Ahmad bermain dengan teman-temannya?</h3>
+        <div class="space-y-3">
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q4" value="A" class="mr-3">
+          <span>A. Di perpustakaan</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q4" value="B" class="mr-3">
+          <span>B. Di halaman sekolah</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q4" value="C" class="mr-3">
+          <span>C. Di kelas</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q4" value="D" class="mr-3">
+          <span>D. Di kantin</span>
+          </label>
+        </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="mb-8 p-4">
+          <h3 class="text-xl font-semibold text-primary-800 mb-4">5. Bagaimana sikap para guru dalam mengajar?</h3>
+        <div class="space-y-3">
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q5" value="A" class="mr-3">
+          <span>A. Dengan santai</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q5" value="B" class="mr-3">
+          <span>B. Dengan sungguh-sungguh</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q5" value="C" class="mr-3">
+          <span>C. Dengan marah</span>
+          </label>
+          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+            <input type="radio" name="q5" value="D" class="mr-3">
+          <span>D. Dengan malas</span>
+          </label>
+        </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center mt-8">
+          <button type="button" id="checkAnswers" class="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-3 px-8 rounded-lg transition">
+            Periksa Jawaban
+          </button>
+        </div>
+      </form>
+
+      <!-- Results Section -->
+      <div id="results" class="mt-8 p-6 bg-gray-50 rounded-xl hidden">
+        <h3 class="text-xl font-semibold text-primary-800 mb-3">Hasil Kuis:</h3>
+        <p id="score" class="text-2xl font-bold text-secondary-600 mb-4"></p>
+        <p id="feedback" class="text-lg text-gray-700"></p>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="flex justify-between mt-8">
+        <a href="reading-school.html" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center">
+          <i data-feather="arrow-left" class="w-5 h-5 mr-2"></i>
+          Kembali ke Bacaan
+        </a>
+        <a href="index.html" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center">
+          <i data-feather="home" class="w-5 h-5 mr-2"></i>
+          Beranda
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-800 text-white text-center py-6 mt-8">
+    <p>&copy; 2025 ArabRead – Kuis Tema: المدرسة</p>
+  </footer>
+
+  <script>
+    feather.replace();
+
+    document.getElementById('checkAnswers').addEventListener('click', function() {
+      // Correct answers
+      const correctAnswers = {
+        q1: 'B',
+        q2: 'A', 
+        q3: 'B',
+        q4: 'B',
+        q5: 'B'
+      };
+
+      // Calculate score
+      let score = 0;
+      const form = document.getElementById('quizForm');
+      const formData = new FormData(form);
+      
+      for (let [question, answer] of formData.entries()) {
+        if (correctAnswers[question] === answer) {
+          score++;
+        }
+      }
+
+      // Display results
+      const results = document.getElementById('results');
+      const scoreElement = document.getElementById('score');
+      const feedbackElement = document.getElementById('feedback');
+
+      scoreElement.textContent = `Skor: ${score}/5`;
+      
+      if (score >= 4) {
+        feedbackElement.textContent = 'Bagus sekali! Kamu sudah memahami isi teks.';
+        feedbackElement.className = 'text-lg text-secondary-600 font-semibold';
+      } else {
+        feedbackElement.textContent = 'Coba lagi ya, pelajari kembali teksnya.';
+        feedbackElement.className = 'text-lg text-primary-600 font-semibold';
+      }
+
+      results.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>

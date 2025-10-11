@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التَّعارُف | Membaca Teks Bahasa Arab - ArabRead</title>
+
+  <!-- Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 500: '#3b82f6', 600: '#2563eb', 800: '#1e40af' },
+            secondary: { 500: '#22c55e', 600: '#16a34a' }
+          },
+          fontFamily: { arabic: ['Amiri', 'Scheherazade New', 'serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .arabic-text { font-family: 'Amiri','Scheherazade New',serif; direction: rtl; }
+    #translation { display: none; }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-primary-600 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <i data-feather="book-open" class="w-8 h-8"></i>
+        <h1 class="text-2xl font-bold">ArabRead</h1>
+      </div>
+      <nav class="hidden md:flex space-x-6">
+        <a href="index.html" class="hover:text-secondary-300">Beranda</a>
+        <a href="quiz-taaruf.html" class="hover:text-secondary-300">Kuis</a>
+        <a href="index.html#tentang" class="hover:text-secondary-300">Tentang</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- Page Title -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-primary-800 arabic-text mb-2">التَّعارُف</h1>
+      <p class="text-2xl text-gray-700">Ta'aruf / Pengenalan Diri</p>
+    </div>
+
+    <!-- Reading Section -->
+    <section class="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
+      <!-- Audio Button -->
+      <div class="flex justify-center mb-6">
+        <button id="btnPlayTaaruf"
+          class="flex items-center justify-center w-16 h-16 rounded-full bg-secondary-500 hover:bg-secondary-600 text-white shadow-lg transition"
+          aria-label="Putar Audio" aria-pressed="false">
+          <i data-feather="headphones" class="w-7 h-7"></i>
+        </button>
+      </div>
+
+      <!-- Audio Source -->
+      <audio id="audioTaaruf" preload="metadata">
+        <!-- Ganti file audio ini sesuai folder-mu -->
+        <source src="media/audio/dialog_taaruf.mp3" type="audio/mpeg">
+        Browser kamu tidak mendukung elemen audio.
+      </audio>
+
+      <!-- Arabic Text -->
+      <div class="bg-gray-50 p-6 rounded-xl mb-6">
+        <p class="arabic-text text-2xl leading-loose text-center">
+          اَلسَّلَامُ عَلَيْكُمْ. &nbsp;اِسْمِي أَحْمَدُ. أَنَا مِنْ بُونِي، وَأَنَا فِي الصَّفِّ السَّابِعِ.
+          هَذَا صَدِيقِي عُمَرُ. &nbsp;مِنْ أَيْنَ أَنْتَ يَا عُمَرُ؟ — أَنَا مِنْ وَاتَامْپُونْ.
+          كَيْفَ حَالُكَ؟ — أَنَا بِخَيْرٍ، وَالْحَمْدُ لِلّٰهِ. &nbsp;مَا هِوَايَتُكَ؟ — هِوَايَتِي الْقِرَاءَةُ وَكُرَةُ الْقَدَمِ.
+          تَشَرَّفْنَا! — تَشَرَّفْنَا بِكُمْ، إِلَى اللِّقَاءِ.
+        </p>
+      </div>
+
+      <!-- Translation Toggle -->
+      <div class="text-center mb-6">
+        <button id="toggleTranslation" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-6 rounded-lg transition">
+          Tampilkan Terjemahan
+        </button>
+      </div>
+
+      <!-- Translation (Initially Hidden) -->
+      <div id="translation" class="bg-primary-50 p-6 rounded-xl border border-primary-200">
+        <h3 class="text-xl font-semibold text-primary-800 mb-3">Terjemahan:</h3>
+        <p class="text-gray-700 leading-relaxed">
+          Assalamu’alaikum. Namaku Ahmad. Saya dari Bone, dan saya kelas tujuh.
+          Ini temanku, Umar. Dari mana kamu, Umar? — Saya dari Watampone.
+          Bagaimana kabarmu? — Saya baik, alhamdulillah. Apa hobimu? — Hobiku membaca dan sepak bola.
+          Senang berkenalan! — Sama-sama, sampai jumpa.
+        </p>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="flex justify-between mt-8">
+        <a href="index.html" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center">
+          <i data-feather="arrow-left" class="w-5 h-5 mr-2"></i>
+          Kembali ke Beranda
+        </a>
+        <a href="quiz-taaruf.html" class="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center">
+          Lanjut ke Kuis
+          <i data-feather="arrow-right" class="w-5 h-5 ml-2"></i>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary-800 text-white text-center py-6 mt-8">
+    <p>&copy; 2025 ArabRead – Tema: التَّعارُف</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    feather.replace();
+
+    // Toggle Terjemahan
+    document.getElementById('toggleTranslation').addEventListener('click', function() {
+      const translation = document.getElementById('translation');
+      const button = this;
+
+      if (translation.style.display === 'block') {
+        translation.style.display = 'none';
+        button.textContent = 'Tampilkan Terjemahan';
+      } else {
+        translation.style.display = 'block';
+        button.textContent = 'Sembunyikan Terjemahan';
+      }
+    });
+
+    // Audio Playback
+    (function () {
+      const btn = document.getElementById('btnPlayTaaruf');
+      const audio = document.getElementById('audioTaaruf');
+
+      function setPlayingUI(isPlaying) {
+        btn.setAttribute('aria-pressed', String(isPlaying));
+        if (isPlaying) {
+          btn.classList.add('ring-2', 'ring-green-300');
+          btn.innerHTML = '<i data-feather="pause" class="w-7 h-7"></i>';
+        } else {
+          btn.classList.remove('ring-2', 'ring-green-300');
+          btn.innerHTML = '<i data-feather="headphones" class="w-7 h-7"></i>';
+        }
+        feather.replace();
+      }
+
+      btn.addEventListener('click', async () => {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            setPlayingUI(true);
+          } catch (e) {
+            alert('Gagal memutar audio. Pastikan file "media/audio/dialog_taaruf.mp3" tersedia.');
+            console.error(e);
+          }
+        } else {
+          audio.pause();
+          setPlayingUI(false);
+        }
+      });
+
+      audio.addEventListener('ended', () => setPlayingUI(false));
+      audio.addEventListener('pause', () => setPlayingUI(false));
+      audio.addEventListener('play', () => setPlayingUI(true));
+      audio.addEventListener('error', () => {
+        setPlayingUI(false);
+        alert('Tidak dapat memuat audio: media/audio/dialog_taaruf.mp3');
+      });
+    })();
+  </script>
+</body>
+</html>
