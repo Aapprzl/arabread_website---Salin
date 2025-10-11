@@ -52,7 +52,7 @@
     <p class="mt-3 text-gray-600 text-lg">Media belajar interaktif untuk meningkatkan kemampuan membaca teks Arab berharakat bagi siswa MTs kelas 7.</p>
   </section>
 
-  <!-- Mini Widget: Tantangan Hari Ini (Game ringan di beranda) -->
+<!-- Mini Widget: Tantangan Hari Ini (Game ringan di beranda) -->
 <section id="tantangan" class="max-w-4xl mx-auto px-4 mt-6 mb-10">
   <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
     <div class="inline-flex items-center gap-2 mb-3">
@@ -77,7 +77,6 @@
         Soal Berikutnya
       </button>
     </div>
-
   </div>
 </section>
 
@@ -193,76 +192,197 @@
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script>document.addEventListener('DOMContentLoaded', () => feather.replace());</script>
 
-  <script>
-  // ========= Mini Widget Logic (tanpa penyimpanan skor) =========
-  (function(){
-    const QUESTIONS = [
-      { ar: 'مَا اسْمُكَ؟', id: 'Siapa namamu?', opts: ['Apa kabarmu?','Di mana rumahmu?','Siapa namamu?','Apa hobimu?'], correct: 2 },
-      { ar: 'مِنْ أَيْنَ أَنْتَ؟', id: 'Dari mana kamu? (laki-laki)', opts: ['Di kelas berapa?','Dari mana kamu? (laki-laki)','Apa hobimu?','Siapa namamu?'], correct: 1 },
-      { ar: 'السَّلَامُ عَلَيْكُمْ', id: 'Assalamu’alaikum', opts: ['Selamat pagi','Assalamu’alaikum','Sampai jumpa','Terima kasih'], correct: 1 },
-      { ar: 'وَعَلَيْكُمُ السَّلَامُ', id: 'Wa’alaikumussalam', opts: ['Wa’alaikumussalam','Selamat malam','Sampai besok','Apa kabarmu?'], correct: 0 },
-      { ar: 'أَنَا فِي الصَّفِّ السَّابِعِ', id: 'Saya di kelas tujuh', opts: ['Saya di kelas tujuh','Saya dari Bone','Hobiku membaca','Saya lapar'], correct: 0 },
-      { ar: 'مَا هِوَايَتُكَ؟', id: 'Apa hobimu? (laki-laki)', opts: ['Apa hobimu? (laki-laki)','Di mana kamu?','Siapa namamu?','Berapa usiamu?'], correct: 0 },
-      { ar: 'إِلَى اللِّقَاءِ', id: 'Sampai jumpa', opts: ['Selamat datang','Sampai jumpa','Selamat siang','Selamat tidur'], correct: 1 }
-    ];
 
-    const qAr = document.getElementById('q-ar');
-    const qOpts = document.getElementById('q-options');
-    const qFeedback = document.getElementById('q-feedback');
-    const qNext = document.getElementById('q-next');
+<script>
+(function(){
+  const QUESTIONS = [
+    // ====== TA'ARUF ======
+    { ar: 'مَا اسْمُكَ؟', id: 'Siapa namamu?', opts: ['Apa kabarmu?','Di mana rumahmu?','Siapa namamu?','Apa hobimu?'], correct: 2 },
+    { ar: 'مِنْ أَيْنَ أَنْتَ؟', id: 'Dari mana kamu? (laki-laki)', opts: ['Di kelas berapa?','Dari mana kamu? (laki-laki)','Apa hobimu?','Siapa namamu?'], correct: 1 },
+    { ar: 'كَيْفَ حَالُكَ؟', id: 'Apa kabarmu?', opts: ['Apa kabarmu?','Siapa namamu?','Di mana rumahmu?','Kamu kelas berapa?'], correct: 0 },
+    { ar: 'كَمْ عُمْرُكَ؟', id: 'Berapa usiamu?', opts: ['Apa hobimu?','Berapa usiamu?','Dari mana kamu?','Di mana kamu belajar?'], correct: 1 },
+    { ar: 'السَّلَامُ عَلَيْكُمْ', id: 'Assalamu’alaikum', opts: ['Selamat pagi','Assalamu’alaikum','Sampai jumpa','Terima kasih'], correct: 1 },
+    { ar: 'وَعَلَيْكُمُ السَّلَامُ', id: 'Wa’alaikumussalam', opts: ['Wa’alaikumussalam','Selamat malam','Sampai besok','Apa kabarmu?'], correct: 0 },
+    { ar: 'إِلَى اللِّقَاءِ', id: 'Sampai jumpa', opts: ['Selamat datang','Sampai jumpa','Selamat siang','Selamat tidur'], correct: 1 },
+    { ar: 'مَا هِوَايَتُكَ؟', id: 'Apa hobimu?', opts: ['Apa hobimu?','Berapa umurmu?','Siapa namamu?','Dari mana kamu?'], correct: 0 },
 
-    let current = null;
-    let locked = false;
+    // ====== KELUARGA ======
+    { ar: 'هَذَا أَبِي', id: 'Ini ayahku', opts: ['Ini ayahku','Ini ibuku','Ini kakakku','Ini guruku'], correct: 0 },
+    { ar: 'هَذِهِ أُمِّي', id: 'Ini ibuku', opts: ['Ini ibuku','Ini ayahku','Ini temanku','Ini adikku'], correct: 0 },
+    { ar: 'لِي أَخٌ وَأُخْتٌ', id: 'Aku punya saudara laki-laki dan perempuan', opts: ['Aku punya saudara laki-laki dan perempuan','Aku tidak punya saudara','Aku punya dua paman','Aku punya teman baru'], correct: 0 },
+    { ar: 'جَدِّي كَبِيرُ السِّنِّ', id: 'Kakekku sudah tua', opts: ['Kakekku sudah tua','Ayahku seorang guru','Saudaraku sedang belajar','Ibuku memasak'], correct: 0 },
 
-    function pickRandom(){
-      return QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
-    }
+    // ====== SEKOLAH ======
+    { ar: 'أَيْنَ فَصْلُكَ؟', id: 'Di mana kelasmu?', opts: ['Di mana kelasmu?','Siapa gurumu?','Kapan libur?','Berapa umurmu?'], correct: 0 },
+    { ar: 'مَتَى يَبْدَأُ الدَّرْسُ؟', id: 'Kapan pelajaran dimulai?', opts: ['Kapan pelajaran dimulai?','Kapan kamu tidur?','Kapan kamu makan?','Kapan kamu bermain?'], correct: 0 },
+    { ar: 'أَنَا فِي الصَّفِّ السَّابِعِ', id: 'Saya di kelas tujuh', opts: ['Saya di kelas tujuh','Saya dari Bone','Saya lapar','Saya bahagia'], correct: 0 },
+    { ar: 'هَذَا مُعَلِّمُ اللُّغَةِ الْعَرَبِيَّةِ', id: 'Ini guru bahasa Arab', opts: ['Ini guru bahasa Arab','Ini teman sekelas','Ini kepala sekolah','Ini penjaga sekolah'], correct: 0 },
+    { ar: 'أُحِبُّ دَرْسَ الرِّيَاضِيَّاتِ', id: 'Saya suka pelajaran Matematika', opts: ['Saya suka pelajaran Matematika','Saya tidak suka olahraga','Saya benci musik','Saya senang bermain'], correct: 0 },
 
-    function renderQuestion(){
-      current = pickRandom();
-      locked = false;
-      qFeedback.textContent = '';
-      qFeedback.className = 'mt-4 text-sm font-semibold';
-      qAr.textContent = current.ar;
-      qOpts.innerHTML = '';
+    // ====== HEWAN ======
+    { ar: 'الْقِطَّةُ حَيَوَانٌ أَلِيفٌ', id: 'Kucing adalah hewan jinak', opts: ['Kucing adalah hewan jinak','Singa adalah hewan jinak','Ikan adalah mamalia','Kuda adalah burung'], correct: 0 },
+    { ar: 'أُرَبِّي سَمَكَةً', id: 'Saya memelihara ikan', opts: ['Saya memelihara ikan','Saya memelihara burung','Saya memelihara kuda','Saya memelihara ayam'], correct: 0 },
+    { ar: 'الطِّفْلُ يُحِبُّ الأَرَانِبَ', id: 'Anak itu suka kelinci', opts: ['Anak itu suka kelinci','Ayah suka harimau','Nenek takut kucing','Guru membeli kambing'], correct: 0 },
+    { ar: 'يَطِيرُ الطَّائِرُ فِي السَّمَاءِ', id: 'Burung terbang di langit', opts: ['Burung terbang di langit','Ikan berenang di air','Kuda berjalan di jalan','Kucing tidur di rumah'], correct: 0 }
+  ];
 
-      current.opts.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className =
-          'px-4 py-2 bg-primary-100 hover:bg-primary-200 text-primary-800 rounded-lg transition disabled:opacity-60';
-        btn.textContent = opt;
-        btn.addEventListener('click', () => choose(idx, btn));
-        qOpts.appendChild(btn);
-      });
+  // ========== TAMBAHAN SOAL (AUTO-GENERATED) ==========
+// Tempelkan blok ini SETELAH deklarasi const QUESTIONS = [...] milikmu
 
-      qNext.disabled = true;
-    }
+(function addExtraVocab(){
+  // 1) Daftar kosakata baru: {ar, id}
+  //    (Duplikat yang sudah ada di bank awalmu sengaja TIDAK dimasukkan)
+  const VOCABS = [
+    // 4
+    { ar:'مَا اسْمُكِ؟', id:'Siapa namamu? (perempuan)' },
+    // 5
+    { ar:'اسْمِي ...', id:'Namaku …' },
+    // 7
+    { ar:'مِنْ أَيْنَ أَنْتِ؟', id:'Dari mana kamu? (perempuan)' },
+    // 8
+    { ar:'أَنَا مِنْ بُونِي', id:'Saya dari Bone' },
+    // 9
+    { ar:'كَيْفَ حَالُكَ؟', id:'Bagaimana kabarmu? (laki-laki)' },
+    // 10
+    { ar:'أَنَا بِخَيْرٍ، وَالْحَمْدُ لِلّٰهِ', id:'Saya baik, alhamdulillah' },
+    // 11
+    { ar:'فِي أَيِّ صَفٍّ أَنْتَ؟', id:'Kamu di kelas berapa? (laki-laki)' },
+    // 14
+    { ar:'هِوَايَتِي الْقِرَاءَةُ', id:'Hobiku membaca' },
+    // 16–30: sekolah
+    { ar:'مَدْرَسَةٌ', id:'Sekolah' },
+    { ar:'مُعَلِّمٌ', id:'Guru (laki-laki)' },
+    { ar:'مُعَلِّمَةٌ', id:'Guru (perempuan)' },
+    { ar:'طَالِبٌ', id:'Siswa (laki-laki)' },
+    { ar:'طَالِبَةٌ', id:'Siswa (perempuan)' },
+    { ar:'فَصْلٌ', id:'Kelas / ruang kelas' },
+    { ar:'كِتَابٌ', id:'Buku' },
+    { ar:'قَلَمٌ', id:'Pena / pulpen' },
+    { ar:'سَبُّورَةٌ', id:'Papan tulis' },
+    { ar:'كُرْسِيٌّ', id:'Kursi' },
+    { ar:'مَكْتَبٌ', id:'Meja' },
+    { ar:'حَقِيبَةٌ', id:'Tas' },
+    { ar:'مُدِيرٌ', id:'Kepala sekolah' },
+    { ar:'مَكْتَبَةٌ', id:'Perpustakaan' },
+    { ar:'مَلْعَبٌ', id:'Lapangan' },
+    // 31–45: keluarga & rumah
+    { ar:'أَبٌ', id:'Ayah' },
+    { ar:'أُمٌّ', id:'Ibu' },
+    { ar:'أَخٌ', id:'Saudara laki-laki' },
+    { ar:'أُخْتٌ', id:'Saudara perempuan' },
+    { ar:'جَدٌّ', id:'Kakek' },
+    { ar:'جَدَّةٌ', id:'Nenek' },
+    { ar:'اِبْنٌ', id:'Anak laki-laki' },
+    { ar:'بِنْتٌ', id:'Anak perempuan' },
+    { ar:'عَمٌّ', id:'Paman (saudara ayah)' },
+    { ar:'عَمَّةٌ', id:'Bibi (saudari ayah)' },
+    { ar:'خَالٌ', id:'Paman (saudara ibu)' },
+    { ar:'خَالَةٌ', id:'Bibi (saudari ibu)' },
+    { ar:'أُسْرَةٌ', id:'Keluarga' },
+    { ar:'بَيْتٌ', id:'Rumah' },
+    { ar:'غُرْفَةٌ', id:'Kamar' },
+    // 46–60: hewan
+    { ar:'قِطٌّ', id:'Kucing' },
+    { ar:'كَلْبٌ', id:'Anjing' },
+    { ar:'طَيْرٌ', id:'Burung' },
+    { ar:'أَرْنَبٌ', id:'Kelinci' },
+    { ar:'بَقَرَةٌ', id:'Sapi' },
+    { ar:'دَجَاجَةٌ', id:'Ayam betina' },
+    { ar:'خَرُوفٌ', id:'Domba' },
+    { ar:'حِصَانٌ', id:'Kuda' },
+    { ar:'جَمَلٌ', id:'Unta' },
+    { ar:'سَمَكٌ', id:'Ikan' },
+    { ar:'قِرْدٌ', id:'Monyet' },
+    { ar:'فِيلٌ', id:'Gajah' },
+    { ar:'أَسَدٌ', id:'Singa' },
+    { ar:'نَمِرٌ', id:'Harimau' },
+    { ar:'زَرَافَةٌ', id:'Jerapah' },
+  ];
 
-    function choose(idx, btn){
-      if (locked) return;
-      locked = true;
-      [...qOpts.children].forEach((el, i) => {
-        el.disabled = true;
-        if (i === current.correct)
-          el.classList.add('ring-2','ring-green-300','bg-green-50');
-      });
-
-      if (idx === current.correct) {
-        qFeedback.textContent = 'Benar! 🎉';
-        qFeedback.classList.add('text-secondary-600');
-      } else {
-        qFeedback.textContent = `Kurang tepat. Jawaban benar: ${current.id}`;
-        qFeedback.classList.add('text-primary-700');
-        btn.classList.add('ring-2','ring-red-300','bg-red-50');
+  // 2) Bangun opsi otomatis (tiga pengecoh + 1 jawaban benar), lalu acak
+  function buildItems(vocabs){
+    const allMeanings = vocabs.map(v => v.id);
+    return vocabs.map(v => {
+      // ambil 3 arti lain sebagai distractor
+      const pool = allMeanings.filter(x => x !== v.id);
+      const wrong = [];
+      for (let i = 0; i < 3 && pool.length; i++){
+        const k = Math.floor(Math.random() * pool.length);
+        wrong.push(pool.splice(k,1)[0]);
       }
+      const opts = wrong.concat([v.id]);        // masukkan jawaban benar
+      // acak opsi + dapatkan index jawaban benar
+      for (let j = opts.length - 1; j > 0; j--){
+        const k = Math.floor(Math.random() * (j + 1));
+        [opts[j], opts[k]] = [opts[k], opts[j]];
+      }
+      const correct = opts.indexOf(v.id);
+      return { ar: v.ar, id: v.id, opts, correct };
+    });
+  }
 
-      qNext.disabled = false;
+  // 3) Tambahkan ke bank soal yang ada
+  const EXTRA_ITEMS = buildItems(VOCABS);
+  QUESTIONS.push(...EXTRA_ITEMS);
+})();
+
+  const qAr = document.getElementById('q-ar');
+  const qOpts = document.getElementById('q-options');
+  const qFeedback = document.getElementById('q-feedback');
+  const qNext = document.getElementById('q-next');
+
+  let current = null;
+  let locked = false;
+
+  function pickRandom(){
+    return QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
+  }
+
+  function renderQuestion(){
+    current = pickRandom();
+    locked = false;
+    qFeedback.textContent = '';
+    qFeedback.className = 'mt-4 text-sm font-semibold';
+    qAr.textContent = current.ar;
+    qOpts.innerHTML = '';
+
+    current.opts.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className =
+        'px-4 py-2 bg-primary-100 hover:bg-primary-200 text-primary-800 rounded-lg transition disabled:opacity-60';
+      btn.textContent = opt;
+      btn.addEventListener('click', () => choose(idx, btn));
+      qOpts.appendChild(btn);
+    });
+
+    qNext.disabled = true;
+  }
+
+  function choose(idx, btn){
+    if (locked) return;
+    locked = true;
+    [...qOpts.children].forEach((el, i) => {
+      el.disabled = true;
+      if (i === current.correct)
+        el.classList.add('ring-2','ring-green-300','bg-green-50');
+    });
+
+    if (idx === current.correct) {
+      qFeedback.textContent = 'Benar! 🎉';
+      qFeedback.classList.add('text-secondary-600');
+    } else {
+      qFeedback.textContent = `Kurang tepat. Jawaban benar: ${current.id}`;
+      qFeedback.classList.add('text-primary-700');
+      btn.classList.add('ring-2','ring-red-300','bg-red-50');
     }
 
-    qNext.addEventListener('click', renderQuestion);
-    renderQuestion();
-  })();
+    qNext.disabled = false;
+  }
+
+  qNext.addEventListener('click', renderQuestion);
+  renderQuestion();
+})();
 </script>
 
 
