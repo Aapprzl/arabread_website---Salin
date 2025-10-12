@@ -1,6 +1,8 @@
-// ===== presence.js (global, konsisten lintas-tab) =====
+/* =========================
+   presence.js — GLOBAL COUNTER
+   ========================= */
 
-// Firebase config (punyamu)
+// --- 0) Firebase config (punyamu) ---
 const firebaseConfig = {
   apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
   authDomain: "tarbiyyat-lughah-presence.firebaseapp.com",
@@ -10,20 +12,37 @@ const firebaseConfig = {
   appId: "1:543639208143:web:4456bc9abff95559f277ba"
 };
 
-// Parameter
-const SCOPE = "all";
-const HEARTBEAT_MS = 15000; // 15s
-const FRESH_MS     = 30000; // 30s (2x heartbeat)
+// --- 1) Parameter (disetel “cepat”) ---
+const SCOPE        = "all";  // global counter untuk seluruh situs
+const HEARTBEAT_MS = 8000;   // kirim beat tiap 8 dtk
+const FRESH_MS     = 16000;  // dianggap online bila ts ≤ 16 dtk (≈2× heartbeat)
 
-// Session per TAB (persist saat pindah halaman)
+// --- 2) Session per TAB (persist saat pindah halaman) ---
 const SID_KEY = "presence_sid";
 let sessionId = sessionStorage.getItem(SID_KEY);
 if (!sessionId) {
-  sessionId = (crypto.randomUUID && crypto.randomUUID()) || (Date.now()+"-"+Math.random().toString(16).slice(2));
+  sessionId = (crypto.randomUUID && crypto.randomUUID())
+    || (`${Date.now()}-${Math.random().toString(16).slice(2)}`);
   sessionStorage.setItem(SID_KEY, sessionId);
 }
 
-// Inject badge bila belum ada
+// --- 3) Deteksi “navigasi internal” vs tutup TAB (smart onDisconnect) ---
+const NAV_FLAG = "presence_nav_intent";
+sessionStorage.removeItem(NAV_FLAG); // reset di awal load halaman
+
+document.addEventListener("click", (e) => {
+  const a = e.target.closest?.("a[href]");
+  if (!a) return;
+  const url = new URL(a.href, location.href);
+  if (url.hostname === location.hostname) {
+    sessionStorage.setItem(NAV_FLAG, "1"); // akan pindah halaman di situs yang sama
+  }
+});
+document.addEventListener("submit", () => {
+  sessionStorage.setItem(NAV_FLAG, "1");
+});
+
+// --- 4) Pastikan badge ada (aman kalau kamu sudah menaruhnya di HTML) ---
 if (!document.getElementById("viewer-badge")) {
   const badge = document.createElement("div");
   badge.id = "viewer-badge";
@@ -31,7 +50,9 @@ if (!document.getElementById("viewer-badge")) {
   badge.innerHTML = `👥 <span id="viewer-count">0</span> online`;
   document.addEventListener("DOMContentLoaded", () => document.body.appendChild(badge));
 }
+const countEl = () => document.getElementById("viewer-count");
 
+// --- 5) Import Firebase modular (CDN) ---
 const [{ initializeApp }, { getAuth, signInAnonymously, onAuthStateChanged },
        { getDatabase, ref, set, update, onValue, serverTimestamp }]
   = await Promise.all([
@@ -40,12 +61,11 @@ const [{ initializeApp }, { getAuth, signInAnonymously, onAuthStateChanged },
     import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"),
   ]);
 
+// --- 6) Init & sinkron waktu server ---
 const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db   = getDatabase(app);
-const countEl = () => document.getElementById("viewer-count");
 
-// === 1) Gunakan waktu server untuk sinkronisasi ===
 let serverOffset = 0;
 onValue(ref(db, ".info/serverTimeOffset"), (snap) => {
   const off = snap.val();
@@ -53,8 +73,8 @@ onValue(ref(db, ".info/serverTimeOffset"), (snap) => {
 });
 const serverNow = () => Date.now() + serverOffset;
 
-// === util hitung fresh sessions ===
-function freshCount(snap, now){
+// --- 7) Util: hitung sesi yang “fresh” (≤ FRESH_MS) ---
+function freshCount(snap, now) {
   if (!snap.exists()) return 0;
   let total = 0;
   snap.forEach(uidSnap => {
@@ -66,6 +86,7 @@ function freshCount(snap, now){
   return total;
 }
 
+// --- 8) Auth anonim + presence global (tanpa “drop saat pindah halaman”) ---
 signInAnonymously(auth).catch(console.error);
 
 onAuthStateChanged(auth, async (user) => {
@@ -74,10 +95,18 @@ onAuthStateChanged(auth, async (user) => {
 
   const presRef = ref(db, `presence/${SCOPE}/${uid}/${sessionId}`);
 
-  // Tulis/overwrite node (tanpa onDisconnect.remove → hindari “dip” saat pindah halaman)
+  // Tulis / overwrite node
   await set(presRef, { ts: serverTimestamp(), page: location.pathname, sid: sessionId });
 
-  // Heartbeat berkala + saat kembali fokus
+  // Smart onDisconnect:
+  // - Jika TIDAK ada niat navigasi → pasang remove (drop instan saat TAB ditutup)
+  // - Jika ada niat navigasi → jangan pasang (hindari “angka turun dulu”)
+  if (!sessionStorage.getItem(NAV_FLAG)) {
+    try { (await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"))
+      .onDisconnect?.(presRef).remove(); } catch {}
+  }
+
+  // Heartbeat berkala + beat instan saat balik fokus
   const beat = () => update(presRef, { ts: serverTimestamp(), page: location.pathname }).catch(()=>{});
   let timer = setInterval(beat, HEARTBEAT_MS);
   window.addEventListener("beforeunload", () => clearInterval(timer));
@@ -85,12 +114,14 @@ onAuthStateChanged(auth, async (user) => {
     if (document.hidden) { clearInterval(timer); }
     else { beat(); timer = setInterval(beat, HEARTBEAT_MS); }
   });
+  window.addEventListener("focus", beat);
+  window.addEventListener("pageshow", beat);
 
-  // === 2) Hitung hanya yang "fresh" berdasar waktu server ===
+  // Subscribe total online (fresh only, sinkron waktu server)
   const listRef = ref(db, `presence/${SCOPE}`);
   onValue(listRef, (snap) => {
-    const now = serverNow();                 // konsisten di semua tab
-    const n   = freshCount(snap, now);       // tanpa fallback
-    const el  = countEl(); if (el) el.textContent = String(n);
+    const now = serverNow();
+    const n = freshCount(snap, now);
+    const el = countEl(); if (el) el.textContent = String(n);
   });
 });
