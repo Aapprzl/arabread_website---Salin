@@ -35,6 +35,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5.75A2.75 2.75 0 0 1 6.75 3h10.5A2.75 2.75 0 0 1 20 5.75V22M4 19.5c0-1.38 1.12-2.5 2.5-2.5H20"/></svg>
         <span class="text-2xl font-bold">Tarbiyyat al-Lughah</span>
       </div>
+      
       <nav class="hidden md:flex gap-6 text-white/90">
         <a class="inline-flex items-center gap-2 hover:text-white" href="#materi">
           <i data-feather="book-open" class="w-4 h-4"></i><span class="leading-none">Materi</span>
@@ -44,7 +45,19 @@
         </a>
       </nav>
     </div>
+
+    <!-- Badge pengunjung online (global) -->
+<div id="viewer-badge"
+     class="fixed top-3 right-4 z-50 flex items-center gap-2
+            bg-yellow-100/90 px-3 py-1.5 rounded-full
+            shadow-md font-semibold text-sm text-gray-900">
+  👥 <span id="viewer-count">0</span> online
+</div>
+
+
+    
   </header>
+
 
   <!-- Hero -->
   <section class="text-center max-w-6xl mx-auto px-4 pt-10 pb-8">
@@ -384,6 +397,15 @@
   renderQuestion();
 })();
 </script>
+
+<!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
+<script>
+  window.PRESENCE_OPTIONS = { mode: "global" };
+</script>
+
+<!-- Panggil script presence -->
+<script type="module" src="./assets/presence.js"></script>
+
 
 
 
