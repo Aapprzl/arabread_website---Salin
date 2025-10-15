@@ -26,8 +26,19 @@
   <style>
     .arabic-text { font-family: 'Amiri','Scheherazade New',serif; direction: rtl; }
   </style>
+
+<link rel="manifest" href="/arabread_website---Salin/manifest.webmanifest">
+<meta name="theme-color" content="#0f766e">
+
+
 </head>
-<body class="bg-gray-50 min-h-screen">
+
+<body class="relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+
+
+
+
+
   <!-- Header -->
   <header class="bg-primary-600 text-white">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -406,6 +417,16 @@
 <!-- Panggil script presence -->
 <script type="module" src="./assets/presence.js"></script>
 
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/arabread_website---Salin/sw.js')
+        .catch(console.error);
+    });
+  }
+</script>
 
 
 
