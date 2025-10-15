@@ -212,6 +212,60 @@
     <p>&copy; 2025 Tarbiyyat al-Lughah — Media Pembelajaran Membaca Bahasa Arab MTs</p>
   </footer>
 
+  <!-- Trigger mengambang -->
+<button id="a2hs-fab"
+  class="hidden fixed right-4 bottom-4 z-[60] rounded-2xl px-4 py-3 font-semibold shadow-xl
+         bg-primary-600 text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-300
+         transition">
+  ↗️ Pasang Aplikasi
+</button>
+
+<!-- Backdrop -->
+<div id="a2hs-backdrop"
+     class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"></div>
+
+<!-- Bottom sheet -->
+<div id="a2hs-sheet"
+     class="pointer-events-none fixed inset-x-0 bottom-0 z-50 translate-y-full opacity-0
+            transition-all duration-300 ease-out">
+  <div
+    class="pointer-events-auto mx-auto w-full max-w-md rounded-t-3xl border border-primary-100
+           bg-white shadow-2xl">
+    <div class="px-5 pt-4 pb-3 flex items-center gap-3">
+      <div class="size-10 shrink-0 grid place-items-center rounded-xl bg-primary-100 text-primary-700">
+        <svg viewBox="0 0 24 24" class="size-6" fill="currentColor"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3H20a1 1 0 0 1 1 1v14.5a.5.5 0 0 1-.79.407L18 17.25l-2.21 1.657a.5.5 0 0 1-.79-.407V5H5.5A1.5 1.5 0 0 0 4 6.5V19a1 1 0 0 1-2 0V6.5A2.5 2.5 0 0 1 3 5.5Z"/></svg>
+      </div>
+      <div class="min-w-0">
+        <h3 class="text-base font-semibold text-primary-800">Pasang “Tarbiyyat al-Lughah”</h3>
+        <p class="text-sm text-slate-600">Akses cepat dari layar utama, mode offline, dan tampilan penuh layar.</p>
+      </div>
+    </div>
+
+    <!-- iOS hint (hanya ditampilkan di iOS) -->
+    <div id="ios-hint" class="hidden mx-5 mb-3 rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-700">
+      Di Safari: ketuk <span class="font-semibold">Share</span> → <span class="font-semibold">Add to Home Screen</span>.
+    </div>
+
+    <div class="px-5 pb-5 flex gap-3">
+      <button id="a2hs-cancel"
+        class="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 font-semibold text-slate-700
+               hover:bg-slate-50 transition">Nanti</button>
+      <button id="a2hs-confirm"
+        class="flex-1 rounded-xl bg-primary-600 px-4 py-3 font-semibold text-white hover:bg-primary-700
+               transition">Pasang</button>
+    </div>
+  </div>
+</div>
+
+<!-- Snackbar -->
+<div id="a2hs-snackbar"
+     class="pointer-events-none fixed left-1/2 bottom-6 z-[70] -translate-x-1/2
+            hidden rounded-xl bg-slate-900 text-white px-4 py-2 text-sm shadow-lg">
+  Aplikasi terpasang 🎉
+</div>
+
+
+
   <!-- Feather Icons -->
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script>document.addEventListener('DOMContentLoaded', () => feather.replace());</script>
@@ -427,6 +481,101 @@
     });
   }
 </script>
+
+<!-- Logika Tombol -->
+<script>
+(() => {
+  const FAB = document.getElementById('a2hs-fab');
+  const SHEET = document.getElementById('a2hs-sheet');
+  const BACKDROP = document.getElementById('a2hs-backdrop');
+  const BTN_OK = document.getElementById('a2hs-confirm');
+  const BTN_CANCEL = document.getElementById('a2hs-cancel');
+  const SNACK = document.getElementById('a2hs-snackbar');
+  const IOS_HINT = document.getElementById('ios-hint');
+
+  let deferredPrompt = null;
+  const NAG_KEY = 'a2hs:nag';
+  const COOLDOWN = 1000 * 60 * 60 * 24 * 3; // 3 hari
+
+  const isStandalone = window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone;
+  const isiOS = (() => {
+    const ua = navigator.userAgent;
+    const iOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    return iOS && !isStandalone;
+  })();
+
+  const showFab = () => FAB.classList.remove('hidden');
+  const hideFab = () => FAB.classList.add('hidden');
+
+  const openSheet = () => {
+    BACKDROP.classList.remove('hidden');
+    SHEET.classList.remove('opacity-0','translate-y-full');
+    SHEET.classList.add('opacity-100','translate-y-0');
+  };
+  const closeSheet = () => {
+    SHEET.classList.add('opacity-0','translate-y-full');
+    setTimeout(() => BACKDROP.classList.add('hidden'), 250);
+  };
+  const toast = (msg, ms=2400) => {
+    SNACK.textContent = msg;
+    SNACK.classList.remove('hidden');
+    setTimeout(() => SNACK.classList.add('hidden'), ms);
+  };
+
+  if (isStandalone) hideFab();
+
+  window.addEventListener('appinstalled', () => {
+    hideFab(); localStorage.removeItem(NAG_KEY); toast('Berhasil dipasang 🎉');
+  });
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const last = Number(localStorage.getItem(NAG_KEY) || 0);
+    if (Date.now() - last < COOLDOWN) return;
+    showFab();
+  });
+
+  FAB.addEventListener('click', () => {
+    IOS_HINT.classList.toggle('hidden', !isiOS);
+    openSheet();
+  });
+
+  BACKDROP.addEventListener('click', closeSheet);
+  BTN_CANCEL.addEventListener('click', () => {
+    localStorage.setItem(NAG_KEY, Date.now().toString());
+    closeSheet(); hideFab();
+  });
+
+  BTN_OK.addEventListener('click', async () => {
+    if (isiOS) {
+      localStorage.setItem(NAG_KEY, Date.now().toString());
+      closeSheet(); hideFab();
+      toast('Buka menu Share → Add to Home Screen');
+      return;
+    }
+    if (!deferredPrompt) { toast('Belum eligible untuk dipasang'); return; }
+
+    closeSheet(); hideFab();
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+
+    if (outcome === 'accepted') toast('Memasang aplikasi…');
+    else {
+      localStorage.setItem(NAG_KEY, Date.now().toString());
+      toast('Kamu bisa memasang nanti dari menu browser');
+    }
+  });
+
+  if (isiOS) {
+    const last = Number(localStorage.getItem(NAG_KEY) || 0);
+    if (Date.now() - last >= COOLDOWN) showFab();
+  }
+})();
+</script>
+
+
 
 
 
