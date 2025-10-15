@@ -528,18 +528,22 @@
     hideFab(); localStorage.removeItem(NAG_KEY); toast('Berhasil dipasang 🎉');
   });
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    const last = Number(localStorage.getItem(NAG_KEY) || 0);
-    if (Date.now() - last < COOLDOWN) return;
-    showFab();
-  });
+ window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('✅ Event beforeinstallprompt aktif'); // debug log
+  e.preventDefault();
+  deferredPrompt = e;
+  const last = Number(localStorage.getItem(NAG_KEY) || 0);
+  if (Date.now() - last < COOLDOWN) return;
+  showFab(); // pastikan baris ini aktif
+});
+
 
   FAB.addEventListener('click', () => {
-    IOS_HINT.classList.toggle('hidden', !isiOS);
-    openSheet();
-  });
+  IOS_HINT.classList.toggle('hidden', !isiOS);
+  hideFab();          // ⬅️ sembunyikan tombol dulu
+  openSheet();
+});
+
 
   BACKDROP.addEventListener('click', closeSheet);
   BTN_CANCEL.addEventListener('click', () => {
