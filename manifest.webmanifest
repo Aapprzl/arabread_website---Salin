@@ -1,13 +1,40 @@
 {
+  "id": "arabread.app.v1",
   "name": "ArabRead — Pembelajaran Membaca Bahasa Arab MTs",
   "short_name": "ArabRead",
+  "description": "Aplikasi web pembelajaran membaca Bahasa Arab untuk siswa MTs, berbasis website interaktif dengan kuis, audio, dan latihan kosakata.",
   "start_url": "/arabread_website---Salin/",
   "scope": "/arabread_website---Salin/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0f766e",
+  "orientation": "portrait",
+  "lang": "id",
+  "categories": ["education", "language", "arabic", "learning"],
   "icons": [
-    { "src": "/arabread_website---Salin/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/arabread_website---Salin/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "/arabread_website---Salin/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/arabread_website---Salin/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/arabread_website---Salin/assets/screenshots/homepage.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Halaman utama ArabRead"
+    },
+    {
+      "src": "/arabread_website---Salin/assets/screenshots/quiz.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Tampilan kuis kosakata"
+    }
   ]
 }
