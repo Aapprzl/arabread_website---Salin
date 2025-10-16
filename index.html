@@ -78,6 +78,74 @@
   .card3d-inner { height: 192px; }      /* md: sedikit lebih tinggi */
 }
 
+/* --- Strip warna di atas kartu --- */
+.card3d {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.card3d-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+/* strip warna menempel pada masing-masing sisi kartu */
+.card-face::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  z-index: 2;
+}
+
+/* sisi belakang */
+.card-back {
+  transform: rotateY(180deg);
+}
+
+/* efek flip */
+.card3d.flipped .card3d-inner {
+  transform: rotateY(180deg);
+}
+
+/* === Tema warna per kategori (dipasang di #grammar-cards) === */
+#grammar-cards { --accent1:#3b82f6; --accent2:#2563eb; }            /* default: Campur (biru) */
+#grammar-cards.theme-mix   { --accent1:#3b82f6; --accent2:#2563eb; } /* Campur = biru */
+#grammar-cards.theme-nahwu { --accent1:#3b82f6; --accent2:#2563eb; } /* Nahwu = biru (tetap) */
+#grammar-cards.theme-shorof{ --accent1:#22c55e; --accent2:#16a34a; } /* Shorof = hijau */
+
+/* Strip warna di atas tiap sisi kartu flip */
+.card-face{ position:relative; overflow:hidden; }
+.card-face::before{
+  content:"";
+  position:absolute; top:0; left:0; width:100%; height:10px;
+  border-top-left-radius:1rem; border-top-right-radius:1rem;
+  background: linear-gradient(to right, var(--accent1), var(--accent2));
+  z-index:2;
+}
+
+/* (pastikan flip kamu sudah seperti ini supaya tidak "turun" saat dibalik) */
+.card3d{ perspective:1000px; }
+.card3d-inner{ position:relative; transform-style:preserve-3d; transition:transform .6s ease; }
+.card3d.flipped .card3d-inner{ transform:rotateY(180deg); }
+.card-face{ position:absolute; inset:0; backface-visibility:hidden; border-radius:1rem; }
+.card-back{ transform:rotateY(180deg); }
+
+
 </style>
 
 
@@ -203,7 +271,7 @@
 </section>
 
 <!-- Kartu Gramatikal (Nahwu & Shorof) -->
-<section id="grammar-cards" class="max-w-6xl mx-auto px-4 mt-10 mb-12">
+<section id="grammar-cards" class="max-w-6xl mx-auto px-4 mt-10 mb-12 theme-mix">
   <div class="bg-white rounded-2xl shadow-lg p-6">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
       <h2 class="text-2xl font-bold text-primary-700">📘 Kartu Gramatikal</h2>
@@ -1092,12 +1160,13 @@ function sizeClassForIndo(id){
   //  B) GRAMMAR CARDS — Nahwu & Shorof
   // ==========================================================
   (function initGrammarCards(){
-    const grid   = document.getElementById('gcard-grid');
-    const bAll   = document.getElementById('gbtn-all');
-    const bNahwu = document.getElementById('gbtn-nahwu');
-    const bShorof= document.getElementById('gbtn-shorof');
-    const bShuf  = document.getElementById('gbtn-shuffle');
-    const bReset = document.getElementById('gbtn-reset');
+  const section = document.getElementById('grammar-cards'); // <-- tambahkan
+  const grid   = document.getElementById('gcard-grid');
+  const bAll   = document.getElementById('gbtn-all');
+  const bNahwu = document.getElementById('gbtn-nahwu');
+  const bShorof= document.getElementById('gbtn-shorof');
+  const bShuf  = document.getElementById('gbtn-shuffle');
+  const bReset = document.getElementById('gbtn-reset');
     if (!grid || !bAll || !bNahwu || !bShorof || !bShuf || !bReset) return; // jika section ini tidak ada
 
     // Dataset ringkas (boleh kamu tambah/ubah sesuka hati)
@@ -1218,7 +1287,14 @@ function sizeClassForIndo(id){
     }
 
     function setCat(cat){
-      currentCat = cat;
+    currentCat = cat;
+
+    // 1) Ganti tema warna pada SECTION (mengubah CSS variable untuk strip kartu)
+    section.classList.remove('theme-mix','theme-nahwu','theme-shorof');
+    if (cat === 'nahwu')      section.classList.add('theme-nahwu');
+    else if (cat === 'shorof')section.classList.add('theme-shorof');
+    else                      section.classList.add('theme-mix');
+
       // style tombol filter
       bAll.className    = 'px-3 py-1.5 rounded-lg ' + (cat==='all'    ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-700') + ' font-semibold';
       bNahwu.className  = 'px-3 py-1.5 rounded-lg ' + (cat==='nahwu'  ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-700') + ' font-semibold';
