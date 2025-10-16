@@ -47,6 +47,37 @@
     padding: 0.75rem;
   }
   .card-back { transform: rotateY(180deg); }
+
+  /* === Flip 3D dasar === */
+.card3d { perspective: 1000px; }
+.card3d-inner {
+  position: relative;
+  width: 100%;
+  height: 176px;                 /* tinggi seragam di mobile */
+  transform-style: preserve-3d;
+  transition: transform .5s ease;
+}
+.card3d.flipped .card3d-inner { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  border-radius: 0.75rem;        /* ~rounded-xl */
+  border: 1px solid rgb(219 234 254);  /* blue-100 */
+  display: flex; flex-direction: column; 
+  justify-content: center; align-items: center;
+  gap: .375rem;                  /* jarak antar baris */
+  padding: .875rem;
+  white-space: normal;           /* boleh multi-baris */
+  overflow: hidden;              /* cegah meluber */
+}
+.card-back { transform: rotateY(180deg); }
+
+/* Responsif: beri ruang lebih di layar kecil dan long text */
+@media (min-width: 768px) {
+  .card3d-inner { height: 192px; }      /* md: sedikit lebih tinggi */
+}
+
 </style>
 
 
@@ -171,6 +202,35 @@
   </div>
 </section>
 
+<!-- Kartu Gramatikal (Nahwu & Shorof) -->
+<section id="grammar-cards" class="max-w-6xl mx-auto px-4 mt-10 mb-12">
+  <div class="bg-white rounded-2xl shadow-lg p-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <h2 class="text-2xl font-bold text-primary-700">📘 Kartu Gramatikal</h2>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-sm text-gray-600">Kategori:</span>
+        <button id="gbtn-all"   class="px-3 py-1.5 rounded-lg bg-primary-600 text-white font-semibold">Campur</button>
+        <button id="gbtn-nahwu" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold">Nahwu</button>
+        <button id="gbtn-shorof"class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold">Shorof</button>
+      </div>
+    </div>
+
+    <p class="text-gray-600 mt-2">Ketuk kartu untuk melihat penjelasan singkat dan contoh.</p>
+
+    <div id="gcard-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5"></div>
+
+     <div class="mt-6 flex flex-wrap gap-3 justify-center">
+      <button id="gbtn-shuffle"
+              class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-semibold">
+        🔀 Acak 4 kartu
+      </button>
+      <button id="gbtn-reset"
+              class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">
+        ↺ Reset
+      </button>
+    </div>
+  </div>
+</section>
 
 
 
@@ -179,6 +239,37 @@
     <h2 class="text-2xl md:text-3xl font-bold text-primary-900 text-center mb-8">Pilih Materi Membaca</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Kartu: Materi Gramatikal Dasar -->
+<article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+  <!-- Header berwarna (ikuti pola: primary/secondary) -->
+  <div class="bg-primary-500 text-white text-center py-6">
+    <h3 class="arabic-text text-2xl font-bold">النَّحْوُ وَالصَّرْفُ (الأساسيات)</h3>
+    <p class="mt-1 text-white/90">Materi Gramatikal Dasar — Nahwu &amp; Shorof</p>
+  </div>
+
+  <div class="p-6 space-y-5">
+    <p class="text-gray-600">
+      Ringkasan konsep inti untuk pemula: pengertian singkat, aturan dasar, dan contoh kalimat
+      berharakat agar mudah dipahami sebelum latihan membaca.
+    </p>
+
+    <!-- Tombol aksi (konsisten dengan tombol “Mulai Belajar”) -->
+    <a href="grammar-basics.html"
+       class="flex items-center justify-center gap-2 w-full
+              bg-primary-600 hover:bg-primary-700 text-white
+              py-2.5 px-4 rounded-lg transition-colors h-11">
+      <i data-feather="book" class="w-5 h-5 shrink-0"></i>
+      <span class="leading-none font-semibold">Buka Materi</span>
+    </a>
+
+    <!-- Catatan kecil di bawah tombol (meniru pola “Urutan: …”) -->
+    <p class="text-xs text-gray-500 text-center">
+      Konten: Pengertian → Contoh → Catatan
+    </p>
+  </div>
+</article>
+
 
       <!-- Kartu: Ta'aruf / Pengenalan -->
 <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
@@ -873,6 +964,282 @@ function sizeClassForIndo(id){
 })();
 </script>
 
+
+<!-- flip kartu untuk gramatikal -->
+<script>
+/* ============================================================
+   UTIL — umum untuk flashcards & grammar cards
+============================================================ */
+(() => {
+  // Hilangkan harakat agar perhitungan panjang stabil
+  const stripHarakat = s => (s || '').replace(/[\u064B-\u065F\u0670]/g, '');
+
+  // Ukuran font adaptif utk Arab & Indonesia
+  function sizeAr(s){
+    const n = stripHarakat(s).length;
+    if (n > 28) return 'text-base';
+    if (n > 18) return 'text-lg';
+    return 'text-2xl';
+  }
+  function sizeId(s){
+    const n = (s || '').length;
+    if (n > 46) return 'text-sm';
+    if (n > 28) return 'text-base';
+    return 'text-lg';
+  }
+
+  // Shuffle aman
+  function shuffle(arr){
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // ==========================================================
+  //  A) FLASHCARDS — Kosakata (AR↔ID)
+  // ==========================================================
+  (function initVocabFlashcards(){
+    const grid   = document.getElementById('card-grid');
+    const btnSh  = document.getElementById('btn-shuffle');
+    const btnRs  = document.getElementById('btn-reset');
+    const modeAR = document.getElementById('mode-ar');
+    const modeID = document.getElementById('mode-id');
+    if (!grid || !btnSh || !btnRs || !modeAR || !modeID) return; // jika section ini tidak ada
+
+    // Sumber data: VOCABS global + fallback dari QUESTIONS (ambil {ar,id})
+    const fromQuestions = (window.QUESTIONS || [])
+      .map(q => ({ ar: q?.ar, id: q?.id }))
+      .filter(x => x && typeof x.ar === 'string' && typeof x.id === 'string');
+
+    const raw = ((window.VOCABS || []).concat(fromQuestions))
+      .filter(v => v && v.ar && v.id);
+
+    // Deduplikasi berdasarkan pasangan ar|id
+    const uniq = [];
+    const seen = new Set();
+    for (const v of raw){
+      const key = `${v.ar}|${v.id}`;
+      if (!seen.has(key)){ seen.add(key); uniq.push(v); }
+    }
+
+    let mode = 'ar';         // 'ar' = AR→ID, 'id' = ID→AR
+    let currentSlice = [];
+
+    function pick4(){ return shuffle(uniq).slice(0, 4); }
+
+    function renderCards(items){
+      grid.innerHTML = '';
+      items.forEach(v => {
+        const front = (mode === 'ar')
+          ? `<div class="arabic-text ${sizeAr(v.ar)} font-bold text-primary-800 text-center leading-relaxed">${v.ar}</div>`
+          : `<div class="${sizeId(v.id)} font-semibold text-primary-800 text-center leading-relaxed">${v.id}</div>`;
+
+        const back  = (mode === 'ar')
+          ? `<div class="${sizeId(v.id)} text-slate-800 text-center leading-relaxed">${v.id}</div>`
+          : `<div class="arabic-text ${sizeAr(v.ar)} font-bold text-primary-800 text-center leading-relaxed">${v.ar}</div>`;
+
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'card3d w-full select-none focus:outline-none';
+        card.setAttribute('aria-label', 'kartu kosakata');
+
+        card.innerHTML = `
+          <div class="card3d-inner">
+            <div class="card-face bg-primary-50">${front}</div>
+            <div class="card-face card-back bg-white">${back}</div>
+          </div>
+        `;
+        card.addEventListener('click', () => card.classList.toggle('flipped'));
+        grid.appendChild(card);
+      });
+    }
+
+    function rerender(){
+      currentSlice = pick4();
+      renderCards(currentSlice);
+    }
+
+    function setMode(newMode){
+      mode = newMode;
+      // gaya tombol
+      if (mode === 'ar'){
+        modeAR.className = 'px-3 py-1.5 rounded-lg bg-primary-600 text-white font-semibold';
+        modeID.className = 'px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold';
+      } else {
+        modeAR.className = 'px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold';
+        modeID.className = 'px-3 py-1.5 rounded-lg bg-primary-600 text-white font-semibold';
+      }
+      // render ulang isi kartu dengan set data yang sama
+      renderCards(currentSlice);
+    }
+
+    // Events
+    btnSh.addEventListener('click', rerender);
+    btnRs.addEventListener('click', () => {
+      [...grid.querySelectorAll('.card3d')].forEach(el => el.classList.remove('flipped'));
+    });
+    modeAR.addEventListener('click', () => setMode('ar'));
+    modeID.addEventListener('click', () => setMode('id'));
+
+    // Start
+    rerender();
+  })();
+
+  // ==========================================================
+  //  B) GRAMMAR CARDS — Nahwu & Shorof
+  // ==========================================================
+  (function initGrammarCards(){
+    const grid   = document.getElementById('gcard-grid');
+    const bAll   = document.getElementById('gbtn-all');
+    const bNahwu = document.getElementById('gbtn-nahwu');
+    const bShorof= document.getElementById('gbtn-shorof');
+    const bShuf  = document.getElementById('gbtn-shuffle');
+    const bReset = document.getElementById('gbtn-reset');
+    if (!grid || !bAll || !bNahwu || !bShorof || !bShuf || !bReset) return; // jika section ini tidak ada
+
+    // Dataset ringkas (boleh kamu tambah/ubah sesuka hati)
+    const GRAMMAR = [
+      // --- Nahwu ---
+      { cat:'nahwu', term_ar:'اِسْمٌ', term_id:'Isim',
+        explain_id:'Kata benda/nomina; tidak menunjukkan waktu.',
+        example_ar:'هَذَا كِتَابٌ' },
+      { cat:'nahwu', term_ar:'فِعْلٌ', term_id:'Fi‘il',
+        explain_id:'Kata kerja; menunjukkan waktu (māḍī, muḍāri‘, amr).',
+        example_ar:'قَرَأَ الطَّالِبُ الدَّرْسَ' },
+      { cat:'nahwu', term_ar:'حَرْفٌ', term_id:'Harf',
+        explain_id:'Partikel; makna sempurna jika bersama kata lain.',
+        example_ar:'إِلَى الْمَدْرَسَةِ' },
+      { cat:'nahwu', term_ar:'مُبْتَدَأٌ', term_id:'Mubtada’',
+        explain_id:'Subjek nominal di awal jumlah ismiyyah.',
+        example_ar:'الطَّالِبُ مُجْتَهِدٌ' },
+      { cat:'nahwu', term_ar:'خَبَرٌ', term_id:'Khabar',
+        explain_id:'Predikat bagi mubtada’.',
+        example_ar:'الْمُدَرِّسُ فِي الْفَصْلِ' },
+      { cat:'nahwu', term_ar:'فَاعِلٌ', term_id:'Fā‘il',
+        explain_id:'Pelaku perbuatan; biasanya marfū‘.',
+        example_ar:'كَتَبَ الْوَلَدُ الدَّرْسَ' },
+      { cat:'nahwu', term_ar:'مَفْعُولٌ بِهِ', term_id:'Maf‘ūl bih',
+        explain_id:'Objek langsung fi‘il; biasanya manṣūb.',
+        example_ar:'شَرِبْتُ الْمَاءَ' },
+      { cat:'nahwu', term_ar:'مُضَافٌ / مُضَافٌ إِلَيْهِ', term_id:'Mudāf/Mudāf Ilaih',
+        explain_id:'Rangkaian kepemilikan (iḍāfah).',
+        example_ar:'كِتَابُ الطَّالِبِ' },
+      { cat:'nahwu', term_ar:'جَارٌّ وَمَجْرُورٌ', term_id:'Jar–Majrūr',
+        explain_id:'Harf jar + isim majrūr; keterangan tempat/waktu, dll.',
+        example_ar:'فِي الْمَكْتَبَةِ' },
+      { cat:'nahwu', term_ar:'النَّعْتُ وَالْمَنْعُوتُ', term_id:'Na‘t–Man‘ūt',
+        explain_id:'Sifat mengikuti i‘rab & jenis/bilangan man‘ūt.',
+        example_ar:'طَالِبٌ مُجْتَهِدٌ' },
+
+      // --- Shorof ---
+      { cat:'shorof', term_ar:'ثُلَاثِيٌّ مُجَرَّدٌ', term_id:'Tsulātsī mujarrad',
+        explain_id:'Akar 3 huruf tanpa tambahan.',
+        example_ar:'كَتَبَ – يَكْتُبُ – اُكْتُبْ' },
+      { cat:'shorof', term_ar:'وَزْنُ فَعَلَ', term_id:'Wazan “fa‘ala”',
+        explain_id:'Pola dasar tsulātsī.',
+        example_ar:'فَعَلَ – يَفْعَلُ' },
+      { cat:'shorof', term_ar:'وَزْنُ فَعَّلَ', term_id:'Wazan “fa‘‘ala”',
+        explain_id:'Makna intensif/menjadikan.',
+        example_ar:'عَلَّمَ – يُعَلِّمُ' },
+      { cat:'shorof', term_ar:'وَزْنُ تَفَاعَلَ', term_id:'Wazan “tafā‘ala”',
+        explain_id:'Saling/melakukan bersama.',
+        example_ar:'تَعَاوَنَ – يَتَعَاوَنُ' },
+      { cat:'shorof', term_ar:'اِسْمُ الْفَاعِلِ', term_id:'Ism fā‘il',
+        explain_id:'Pelaku pekerjaan; pola “فَاعِلٌ”.',
+        example_ar:'كَاتِبٌ' },
+      { cat:'shorof', term_ar:'اِسْمُ الْمَفْعُولِ', term_id:'Ism maf‘ūl',
+        explain_id:'Yang dikenai pekerjaan; pola “مَفْعُولٌ”.',
+        example_ar:'مَكْتُوبٌ' },
+      { cat:'shorof', term_ar:'مَصْدَرٌ', term_id:'Maṣdar',
+        explain_id:'Kata dasar/nomina kejadian.',
+        example_ar:'قِرَاءَةٌ' },
+      { cat:'shorof', term_ar:'جَمْعُ مُذَكَّرٍ سَالِمٌ', term_id:'Jamak mudzakkar salim',
+        explain_id:'Jamak berakhiran ون/ين.',
+        example_ar:'مُسْلِمُونَ / مُسْلِمِينَ' },
+      { cat:'shorof', term_ar:'جَمْعُ مُؤَنَّثٍ سَالِمٌ', term_id:'Jamak muannats salim',
+        explain_id:'Jamak berakhiran ات.',
+        example_ar:'مُعَلِّمَاتٌ' },
+      { cat:'shorof', term_ar:'تَصْرِيفُ الْأَفْعَالِ', term_id:'Taṣrīf af‘āl',
+        explain_id:'Perubahan fi‘il menurut waktu/ḍamīr.',
+        example_ar:'أَقْرَأُ – نَقْرَأُ – يَقْرَأُ' },
+    ];
+
+    let currentCat = 'all';
+    let currentSlice = [];
+
+    function pool(){
+      if (currentCat === 'nahwu') return GRAMMAR.filter(g => g.cat === 'nahwu');
+      if (currentCat === 'shorof') return GRAMMAR.filter(g => g.cat === 'shorof');
+      return GRAMMAR;
+    }
+    function pick4(){ return shuffle(pool()).slice(0, 4); }
+
+    function renderCards(items){
+      grid.innerHTML = '';
+      items.forEach(v => {
+        const frontHTML = `
+          <div class="arabic-text ${sizeAr(v.term_ar)} font-bold text-primary-800 text-center leading-relaxed">
+            ${v.term_ar}
+          </div>
+          <div class="${sizeId(v.term_id)} text-slate-600 text-center leading-snug">
+            <span class="font-semibold">${v.term_id}</span>
+          </div>
+        `;
+        const backHTML = `
+          <div class="${sizeId(v.explain_id)} text-slate-800 text-center leading-relaxed">
+            <span class="font-semibold">${v.term_id}:</span> ${v.explain_id}
+          </div>
+          <div class="arabic-text ${sizeAr(v.example_ar)} text-primary-800 text-center leading-relaxed">
+            ${v.example_ar}
+          </div>
+        `;
+
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'card3d w-full select-none focus:outline-none';
+        card.setAttribute('aria-label', v.term_id);
+        card.innerHTML = `
+          <div class="card3d-inner">
+            <div class="card-face bg-primary-50">${frontHTML}</div>
+            <div class="card-face card-back bg-white">${backHTML}</div>
+          </div>
+        `;
+        card.addEventListener('click', () => card.classList.toggle('flipped'));
+        grid.appendChild(card);
+      });
+    }
+
+    function rerender(){
+      currentSlice = pick4();
+      renderCards(currentSlice);
+    }
+
+    function setCat(cat){
+      currentCat = cat;
+      // style tombol filter
+      bAll.className    = 'px-3 py-1.5 rounded-lg ' + (cat==='all'    ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-700') + ' font-semibold';
+      bNahwu.className  = 'px-3 py-1.5 rounded-lg ' + (cat==='nahwu'  ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-700') + ' font-semibold';
+      bShorof.className = 'px-3 py-1.5 rounded-lg ' + (cat==='shorof' ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-700') + ' font-semibold';
+      rerender();
+    }
+
+    // Events
+    bAll   .addEventListener('click', () => setCat('all'));
+    bNahwu .addEventListener('click', () => setCat('nahwu'));
+    bShorof.addEventListener('click', () => setCat('shorof'));
+    bShuf  .addEventListener('click', rerender);
+    bReset .addEventListener('click', () => {
+      [...grid.querySelectorAll('.card3d')].forEach(el => el.classList.remove('flipped'));
+    });
+
+    // Start
+    setCat('all');
+  })();
+})();
+</script>
 
 
 
