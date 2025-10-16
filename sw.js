@@ -10,6 +10,7 @@ const PRECACHE_ASSETS = [
   `${ROOT}`,
   `${ROOT}index.html`,
   `${ROOT}cadangan.html`,
+  `${ROOT}grammar-basics.html`,
 
   // QUIZ
   `${ROOT}quiz-animals.html`,
