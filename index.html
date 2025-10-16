@@ -104,6 +104,19 @@
   </div>
 </section>
 
+<!-- bagian pencarian kosakata -->
+ <section id="search" class="max-w-4xl mx-auto px-4 mt-8 mb-12">
+  <div class="bg-white rounded-2xl shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-primary-700 mb-3">🔍 Cari Kosakata</h2>
+    <input id="search-input"
+           type="text"
+           placeholder="Ketik kata Arab atau terjemahannya..."
+           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-400 outline-none" />
+    <div id="search-results" class="mt-4 text-gray-700"></div>
+  </div>
+</section>
+
+
 
   <!-- Materi -->
   <main id="materi" class="max-w-6xl mx-auto px-4 pb-16">
@@ -377,6 +390,10 @@
     { ar:'زَرَافَةٌ', id:'Jerapah' },
   ];
 
+  // Tambahkan ini agar VOCABS bisa diakses global
+window.VOCABS = (window.VOCABS || []).concat(VOCABS);
+
+
   // 2) Bangun opsi otomatis (tiga pengecoh + 1 jawaban benar), lalu acak
   function buildItems(vocabs){
     const allMeanings = vocabs.map(v => v.id);
@@ -579,6 +596,93 @@
 })();
 </script>
 
+
+<!-- Skript untuk pencarian kosakata -->
+ <script>
+const input = document.getElementById('search-input');
+const results = document.getElementById('search-results');
+
+input.addEventListener('input', () => {
+  const q = input.value.trim().toLowerCase();
+  results.innerHTML = '';
+
+  if (q.length === 0) return;
+
+  const filtered = VOCABS.filter(v =>
+    v.ar.includes(q) || v.id.toLowerCase().includes(q)
+  );
+
+  if (filtered.length === 0) {
+    results.innerHTML = '<p class="text-gray-500">Tidak ditemukan</p>';
+    return;
+  }
+
+  filtered.forEach(v => {
+    const item = document.createElement('div');
+    item.className = 'p-2 border-b border-gray-200';
+    item.innerHTML = `<span class="arabic-text text-lg text-primary-800">${v.ar}</span> — ${v.id}`;
+    results.appendChild(item);
+  });
+});
+ </script>
+
+ <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const input   = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+
+  // Gabungkan sumber data: VOCABS + fallback dari QUESTIONS (kalau ada)
+  const fromQuestions = (window.QUESTIONS || [])
+    .map(q => ({ ar: q?.ar, id: q?.id }))
+    .filter(x => x && typeof x.ar === 'string' && typeof x.id === 'string');
+
+  const DATA = (window.VOCABS || []).concat(fromQuestions);
+
+  // Hilangkan harakat supaya pencarian Arab tanpa harakat tetap cocok
+  const stripHarakat = s => (s || '').replace(/[\u064B-\u065F\u0670]/g, '');
+
+  function render(list){
+    results.innerHTML = '';
+    if (!list.length){
+      results.innerHTML = '<p class="text-gray-500">Tidak ditemukan</p>';
+      return;
+    }
+    list.slice(0, 30).forEach(v => {
+      const row = document.createElement('div');
+      row.className = 'p-2 border-b border-gray-200';
+      row.innerHTML =
+        `<span class="arabic-text text-lg text-primary-800">${v.ar}</span> — ${v.id}`;
+      results.appendChild(row);
+    });
+  }
+
+  function doSearch(){
+    const q = (input.value || '').trim();
+    if (!q){ results.innerHTML = ''; return; }
+
+    const qLatin = q.toLowerCase();
+    const qArab  = stripHarakat(q);
+
+    const hits = DATA.filter(v =>
+      stripHarakat(v.ar).includes(qArab) ||
+      v.id.toLowerCase().includes(qLatin)
+    );
+
+    render(hits);
+  }
+
+  // Jalankan saat mengetik
+  input.addEventListener('input', doSearch);
+
+  // Jalankan juga saat Enter ditekan
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter'){
+      e.preventDefault();  // cegah reload halaman
+      doSearch();
+    }
+  });
+});
+</script>
 
 
 
