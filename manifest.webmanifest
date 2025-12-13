@@ -1,7 +1,7 @@
 {
   "id": "arabread.app.v1",
-  "name": "ArabRead — Pembelajaran Membaca Bahasa Arab MTs",
-  "short_name": "ArabRead",
+  "name": "Tarbiyyat al-Lughah",
+  "short_name": "Tarb. Lughah",
   "description": "Aplikasi web pembelajaran membaca Bahasa Arab untuk siswa MTs, berbasis website interaktif dengan kuis, audio, dan latihan kosakata.",
   "start_url": "/arabread_website---Salin/",
   "scope": "/arabread_website---Salin/",
