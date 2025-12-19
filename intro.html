@@ -48,6 +48,22 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23000000' fill-opacity='0.02'/%3E%3C/svg%3E");
       pointer-events: none;
     }
+
+    .fade-out {
+  animation: fadeOut 0.6s ease forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
   </style>
 </head>
 
@@ -118,9 +134,15 @@
     typeLoop();
 
     startBtn.addEventListener("click", () => {
-      localStorage.setItem("arabread_entered", "1");
-      window.location.href = "index.html";
-    });
+  localStorage.setItem("arabread_entered", "1");
+
+  document.body.classList.add("fade-out");
+
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 600); // sama dengan durasi animasi
+});
+
   </script>
 
 </body>
