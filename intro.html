@@ -134,14 +134,16 @@
     typeLoop();
 
     startBtn.addEventListener("click", () => {
-  localStorage.setItem("arabread_entered", "1");
+  localStorage.setItem("arabread_intro_time", Date.now());
+  localStorage.setItem("arabread_entered", "1"); // opsional, boleh tetap ada
 
   document.body.classList.add("fade-out");
 
   setTimeout(() => {
     window.location.href = "index.html";
-  }, 600); // sama dengan durasi animasi
+  }, 600);
 });
+
 
   </script>
 

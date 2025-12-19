@@ -2,11 +2,15 @@
 <html lang="id" dir="ltr">
 
 <script>
-  // Jika belum pernah masuk, arahkan ke intro
-  if (!localStorage.getItem('arabread_entered')) {
-    window.location.replace('intro.html');
+  const now = Date.now();
+  const lastIntro = localStorage.getItem("arabread_intro_time");
+  const fiveHours = 5 * 60 * 60 * 1000;
+
+  if (!lastIntro || now - lastIntro > fiveHours) {
+    window.location.replace("intro.html");
   }
 </script>
+
 
 
 <head>
