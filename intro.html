@@ -11,23 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: {600:'#2563eb',700:'#1d4ed8'},
-            secondary: {500:'#22c55e'}
-          },
-          fontFamily: {
-            arabic: ['Amiri','Scheherazade New','serif']
-          }
-        }
-      }
-    }
-  </script>
-
   <style>
+    /* Cursor typing */
     .cursor::after {
       content: '|';
       margin-left: 4px;
@@ -36,69 +21,66 @@
     @keyframes blink {
       50% { opacity: 0; }
     }
+
+    /* Animated gradient */
+    .animated-gradient {
+      background: linear-gradient(
+        120deg,
+        #f8fafc,
+        #eef6ff,
+        #e6fffa,
+        #f0f9ff
+      );
+      background-size: 300% 300%;
+      animation: gradientMove 12s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .animated-gradient::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23000000' fill-opacity='0.02'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
   </style>
-
-  <style>
-  .animated-gradient {
-  background: linear-gradient(
-    120deg,
-    #f8fafc,
-    #eef6ff,
-    #e6fffa,
-    #f0f9ff
-  );
-  background-size: 300% 300%;
-  animation: gradientMove 12s ease infinite;
-}
-
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animated-gradient::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23000000' fill-opacity='0.02'/%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-
-</style>
-
 </head>
 
-<body class="min-h-screen flex items-center justify-center animated-gradient">
+<body class="min-h-screen animated-gradient flex items-center justify-center px-6">
 
-  <div class="text-center bg-white rounded-3xl shadow-2xl px-8 py-12 max-w-md w-full">
+  <main class="text-center max-w-2xl w-full">
 
-    <h1 class="arabic-text text-4xl font-bold text-primary-700 mb-3">
-      تربية اللغة
-    </h1>
+    <h1 class="font-bold text-blue-600 text-4xl sm:text-5xl md:text-6xl mb-3">
+  تربية اللغة
+</h1>
 
-    <p class="text-lg font-semibold text-gray-800 mb-6">
+
+    <p class="font-semibold text-gray-800 text-lg sm:text-xl md:text-2xl mb-6">
       Tarbiyyat al-Lughah
     </p>
 
-    <!-- Typing text -->
-    <div class="text-gray-600 text-base h-12 flex items-center justify-center">
-      <span id="typingText" class="cursor"></span>
+    <div class="text-gray-700 h-12 flex items-center justify-center mb-10">
+      <span id="typingText" class="cursor text-base sm:text-lg md:text-xl"></span>
     </div>
 
-    <button id="startBtn"
-      class="mt-10 w-full py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-semibold text-lg transition">
-      Mulai Belajar
-    </button>
-  </div>
+   <button id="startBtn"
+  class="mx-auto px-8 py-3 rounded-xl
+         bg-blue-600 hover:bg-blue-700
+         text-white font-semibold
+         text-base sm:text-lg
+         shadow-lg transition">
+  Mulai Belajar
+</button>
 
+
+  </main>
+
+  <!-- ✅ SCRIPT DIPINDAHKAN KE SINI (INI KUNCI) -->
   <script>
     const texts = [
       "Belajar membaca Bahasa Arab",
@@ -108,12 +90,15 @@
     ];
 
     const el = document.getElementById("typingText");
+    const startBtn = document.getElementById("startBtn");
+
     let textIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
 
     function typeLoop() {
       const current = texts[textIndex];
+
       if (!isDeleting) {
         el.textContent = current.slice(0, charIndex++);
         if (charIndex > current.length) {
@@ -126,11 +111,13 @@
           textIndex = (textIndex + 1) % texts.length;
         }
       }
+
       setTimeout(typeLoop, isDeleting ? 40 : 80);
     }
+
     typeLoop();
 
-    document.getElementById("startBtn").addEventListener("click", () => {
+    startBtn.addEventListener("click", () => {
       localStorage.setItem("arabread_entered", "1");
       window.location.href = "index.html";
     });
