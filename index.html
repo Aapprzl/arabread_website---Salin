@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
+
+<script>
+  // Jika belum pernah masuk, arahkan ke intro
+  if (!localStorage.getItem('arabread_entered')) {
+    window.location.replace('intro.html');
+  }
+</script>
+
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
