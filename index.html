@@ -235,6 +235,62 @@
   </div>
 </section>
 
+<!-- GAME WORD MATCH -->
+<div class="max-w-2xl mx-auto mt-8 sm:mt-10
+            bg-white rounded-2xl shadow-md
+            p-4 sm:p-6 md:p-8">
+
+
+  <h2 class="text-lg sm:text-xl md:text-2xl
+           font-bold text-blue-600 mb-1 text-center">
+
+    Tebak Arti Cepat
+  </h2>
+
+  <p class="text-sm sm:text-base text-gray-500 text-center mb-4">
+
+    Uji kosakata bahasa Arab kamu
+  </p>
+
+  <!-- AREA GAME -->
+  <div id="gameArea" class="hidden text-center">
+
+    <div id="timer" class="text-sm text-red-500 mb-2">
+      Waktu: 30 detik
+    </div>
+
+    <div id="arabicWord"
+     class="text-2xl sm:text-3xl md:text-4xl
+            font-bold mb-4 text-center">
+
+    </div>
+
+    <div id="options" class="grid grid-cols-1 gap-3 mb-4"></div>
+
+    <div class="text-gray-700">
+      Soal <span id="current">1</span>/10 |
+      Skor: <span id="score">0</span>
+    </div>
+
+  </div>
+
+  <!-- START -->
+  <div class="flex justify-center mt-4">
+  <button id="startBtn"
+    class="w-full sm:w-auto
+           px-6 py-2.5
+           rounded-xl
+           bg-blue-600 text-white font-semibold
+           text-sm sm:text-base
+           hover:bg-blue-700 transition">
+    Mulai Game
+  </button>
+</div>
+
+
+</div>
+
+
 <!-- bagian pencarian kosakata -->
  <section id="search" class="max-w-4xl mx-auto px-4 mt-8 mb-12">
   <div class="bg-white rounded-2xl shadow-lg p-6">
@@ -1394,6 +1450,134 @@ function sizeClassForIndo(id){
   })();
 })();
 </script>
+
+<!-- JS untuk game wordmatch -->
+<script>
+const questionBank = [
+  { arabic: "مدرسة", correct: "Sekolah", options: ["Sekolah", "Rumah", "Masjid", "Pasar"] },
+  { arabic: "كتاب", correct: "Buku", options: ["Buku", "Meja", "Tas", "Pensil"] },
+  { arabic: "قلم", correct: "Pulpen", options: ["Pulpen", "Penghapus", "Kertas", "Penggaris"] },
+  { arabic: "طالب", correct: "Siswa", options: ["Guru", "Siswa", "Petugas", "Kepala"] },
+  { arabic: "بيت", correct: "Rumah", options: ["Rumah", "Sekolah", "Kantor", "Pasar"] },
+  { arabic: "مسجد", correct: "Masjid", options: ["Masjid", "Gereja", "Rumah", "Pasar"] },
+  { arabic: "كرسي", correct: "Kursi", options: ["Meja", "Kursi", "Lemari", "Papan"] },
+  { arabic: "باب", correct: "Pintu", options: ["Jendela", "Pintu", "Atap", "Dinding"] },
+  { arabic: "ساعة", correct: "Jam", options: ["Jam", "Hari", "Waktu", "Detik"] },
+  { arabic: "قمر", correct: "Bulan", options: ["Bintang", "Matahari", "Bulan", "Awan"] },
+
+  { arabic: "شمس", correct: "Matahari", options: ["Bulan", "Matahari", "Bintang", "Langit"] },
+  { arabic: "نهر", correct: "Sungai", options: ["Gunung", "Danau", "Sungai", "Laut"] },
+  { arabic: "بحر", correct: "Laut", options: ["Sungai", "Danau", "Laut", "Kolam"] },
+  { arabic: "جبل", correct: "Gunung", options: ["Bukit", "Gunung", "Pantai", "Hutan"] },
+  { arabic: "طاولة", correct: "Meja", options: ["Kursi", "Meja", "Lemari", "Papan"] },
+  { arabic: "نافذة", correct: "Jendela", options: ["Pintu", "Jendela", "Atap", "Dinding"] },
+  { arabic: "دفتر", correct: "Buku tulis", options: ["Buku tulis", "Buku", "Kertas", "Tas"] },
+  { arabic: "حقيبة", correct: "Tas", options: ["Tas", "Sepatu", "Baju", "Topi"] },
+  { arabic: "قطة", correct: "Kucing", options: ["Kucing", "Anjing", "Kelinci", "Burung"] },
+  { arabic: "كلب", correct: "Anjing", options: ["Kucing", "Anjing", "Sapi", "Kuda"] }
+];
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+let index = 0;
+let score = 0;
+let time = 30;
+let timerInterval;
+
+const startBtn = document.getElementById("startBtn");
+const gameArea = document.getElementById("gameArea");
+const arabicWord = document.getElementById("arabicWord");
+const optionsDiv = document.getElementById("options");
+const scoreSpan = document.getElementById("score");
+const currentSpan = document.getElementById("current");
+const timerText = document.getElementById("timer");
+
+startBtn.onclick = () => {
+  startBtn.classList.add("hidden");
+  gameArea.classList.remove("hidden");
+  startGame();
+};
+
+function startGame() {
+  index = 0;
+  score = 0;
+  time = 30;
+
+  scoreSpan.textContent = 0;
+  currentSpan.textContent = 1;
+  timerText.textContent = "Waktu: 30 detik";
+
+  // 🔥 ACAK & AMBIL 10 SOAL
+  questions = shuffle([...questionBank]).slice(0, 10);
+
+  loadQuestion();
+  startTimer();
+}
+
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    time--;
+    timerText.textContent = "Waktu: " + time + " detik";
+    if (time <= 0) endGame();
+  }, 1000);
+}
+
+function loadQuestion() {
+  const q = questions[index];
+  arabicWord.textContent = q.arabic;
+  optionsDiv.innerHTML = "";
+
+  q.options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = opt;
+    btn.className =
+      "py-2 sm:py-2.5 rounded-lg border text-sm sm:text-base hover:bg-blue-50 transition";
+    btn.onclick = () => checkAnswer(btn, opt);
+    optionsDiv.appendChild(btn);
+  });
+}
+
+function checkAnswer(btn, selected) {
+  const correct = questions[index].correct;
+
+  document.querySelectorAll("#options button").forEach(b => b.disabled = true);
+
+  if (selected === correct) {
+    btn.classList.add("border-green-500");
+    score++;
+    scoreSpan.textContent = score;
+  } else {
+    btn.classList.add("border-red-500");
+  }
+
+  setTimeout(() => {
+    index++;
+    if (index >= 10) endGame();
+    else {
+      currentSpan.textContent = index + 1;
+      loadQuestion();
+    }
+  }, 700);
+}
+
+function endGame() {
+  clearInterval(timerInterval);
+  gameArea.innerHTML = `
+    <div class="text-center">
+      <p class="text-lg font-bold mb-2">Game Selesai 🎉</p>
+      <p class="mb-4">Skor kamu: <strong>${score}/10</strong></p>
+      <button onclick="location.reload()"
+        class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+        Main Lagi
+      </button>
+    </div>
+  `;
+}
+</script>
+
 
 
 
