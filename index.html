@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
 
+<script src="assets/data/vocabs.js"></script>
+
 <script src="assets/theme.js"></script>
 
 <script>
@@ -315,8 +317,8 @@
     <input id="search-input"
            type="text"
            placeholder="Ketik kata Arab atau terjemahannya..."
-           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-400 outline-none dark:text-slate-700 />
-    <div id="search-results" class="mt-4 text-gray-700 dark:text-slate-300></div>
+           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-400 outline-none dark:text-slate-600 text-slate-600" />
+    <div id="search-results" class="mt-4 text-gray-700 dark:text-slate-300"></div>
   </div>
 </section>
 
@@ -986,45 +988,56 @@ input.addEventListener('input', () => {
   filtered.forEach(v => {
     const item = document.createElement('div');
     item.className = 'p-2 border-b border-gray-200';
-    item.innerHTML = `<span class="arabic-text text-lg text-primary-800 dark:text-slate-300">${v.ar}</span> — ${v.id}`;
+    item.innerHTML = `<span class="arabic-text text-lg text-primary-800 dark:text-300">${v.ar}</span> — ${v.id}`;
     results.appendChild(item);
   });
 });
  </script>
 
- <script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   const input   = document.getElementById('search-input');
   const results = document.getElementById('search-results');
 
-  // Gabungkan sumber data: VOCABS + fallback dari QUESTIONS (kalau ada)
+  if (!input || !results) return;
+
+  // Gabungkan VOCABS + QUESTIONS
   const fromQuestions = (window.QUESTIONS || [])
     .map(q => ({ ar: q?.ar, id: q?.id }))
     .filter(x => x && typeof x.ar === 'string' && typeof x.id === 'string');
 
   const DATA = (window.VOCABS || []).concat(fromQuestions);
 
-  // Hilangkan harakat supaya pencarian Arab tanpa harakat tetap cocok
-  const stripHarakat = s => (s || '').replace(/[\u064B-\u065F\u0670]/g, '');
+  // Hilangkan harakat Arab
+  const stripHarakat = s =>
+    (s || '').replace(/[\u064B-\u065F\u0670]/g, '');
 
   function render(list){
     results.innerHTML = '';
     if (!list.length){
-      results.innerHTML = '<p class="text-gray-500 dark:text-slate-300">Tidak ditemukan</p>';
+      results.innerHTML =
+        '<p class="text-gray-500 dark:text-slate-300">Tidak ditemukan</p>';
       return;
     }
+
     list.slice(0, 30).forEach(v => {
       const row = document.createElement('div');
-      row.className = 'p-2 border-b border-gray-200';
-      row.innerHTML =
-        `<span class="arabic-text text-lg text-primary-800 dark:text-slate-300">${v.ar}</span> — ${v.id}`;
+      row.className =
+        'p-2 border-b border-gray-200 hover:bg-slate-50/10 cursor-pointer';
+      row.innerHTML = `
+        <span class="arabic-text text-lg text-primary-800 dark:text-slate-300">${v.ar}</span>
+        — ${v.id}
+      `;
       results.appendChild(row);
     });
   }
 
   function doSearch(){
-    const q = (input.value || '').trim();
-    if (!q){ results.innerHTML = ''; return; }
+    const q = input.value.trim();
+    if (!q){
+      results.innerHTML = '';
+      return;
+    }
 
     const qLatin = q.toLowerCase();
     const qArab  = stripHarakat(q);
@@ -1037,18 +1050,17 @@ document.addEventListener('DOMContentLoaded', () => {
     render(hits);
   }
 
-  // Jalankan saat mengetik
   input.addEventListener('input', doSearch);
 
-  // Jalankan juga saat Enter ditekan
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter'){
-      e.preventDefault();  // cegah reload halaman
+      e.preventDefault();
       doSearch();
     }
   });
 });
 </script>
+
 
 <!-- skrip untuk -->
  <script>
