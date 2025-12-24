@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
+
+<script src="assets/theme.js"></script>
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tarbiyyat al-Lughah — Materi Gramatikal Dasar</title>
+
 
   <!-- Fonts & Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +16,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -28,7 +33,7 @@
     .card3d{ perspective:1000px } /* hanya agar konsisten dengan style umum */
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+<body class="min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
 
   <!-- Header -->
   <header class="bg-primary-600 text-white">
@@ -45,17 +50,17 @@
   </header>
 
   <!-- Breadcrumb -->
-  <div class="max-w-6xl mx-auto px-4 py-3 text-sm text-slate-600">
-    <a href="index.html" class="text-primary-700 hover:underline">Beranda</a>
+  <div class="max-w-6xl mx-auto px-4 py-3 text-sm text-slate-600 dark:text-slate-300">
+    <a href="index.html" class="text-primary-700 dark:text-slate-300 hover:underline">Beranda</a>
     <span class="mx-2">/</span>
     <span class="font-medium">Materi Gramatikal Dasar</span>
   </div>
 
   <!-- Hero -->
   <section class="max-w-6xl mx-auto px-4">
-    <div class="bg-white rounded-2xl shadow-lg p-6">
-      <h1 class="text-2xl md:text-3xl font-bold text-primary-900">📘 Materi Gramatikal Dasar (Nahwu &amp; Shorof)</h1>
-      <p class="mt-2 text-slate-700">
+    <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6">
+      <h1 class="text-2xl md:text-3xl font-bold text-primary-900 dark:text-slate-300">📘 Materi Gramatikal Dasar (Nahwu &amp; Shorof)</h1>
+      <p class="mt-2 text-slate-700 dark:text-slate-300">
         Ringkasan konsep penting untuk pemula. Setiap kartu memuat istilah Arab, terjemah, penjelasan singkat, dan contoh berharakat.
         Gunakan kolom pencarian atau filter kategori untuk menemukan materi tertentu.
       </p>
@@ -167,23 +172,23 @@
   function cardTemplate(m, idx){
     const id = `m-${m.cat}-${idx}`;
     return `
-      <article class="bg-white rounded-2xl shadow-md border border-slate-100 overflow-hidden">
+      <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-md border border-slate-100 overflow-hidden">
         <div class="p-5">
           <div class="flex items-start justify-between gap-3">
             <div>
-              <div class="arabic-text ${sizeAr(m.term_ar)} font-bold text-primary-800 leading-relaxed">${m.term_ar}</div>
-              <div class="mt-1 text-sm text-slate-600"><span class="font-semibold">${m.term_id}</span> • <span class="uppercase tracking-wide text-xs">${m.cat}</span></div>
+              <div class="arabic-text ${sizeAr(m.term_ar)} font-bold text-primary-800 dark:text-slate-300 leading-relaxed">${m.term_ar}</div>
+              <div class="mt-1 text-sm text-slate-600 dark:text-slate-300"><span class="font-semibold">${m.term_id}</span> • <span class="uppercase tracking-wide text-xs">${m.cat}</span></div>
             </div>
-            <button class="px-3 py-1.5 rounded-lg bg-primary-50 text-primary-800 text-sm font-semibold hover:bg-primary-100 transition" data-toggle="${id}">
+            <button class="px-3 py-1.5 rounded-lg bg-primary-50 dark:bg-slate-600 text-primary-800 dark:text-slate-300 text-sm font-semibold hover:bg-primary-100 transition" data-toggle="${id}">
               Tampilkan detail
             </button>
           </div>
 
           <div id="${id}" class="mt-4 hidden">
-            <p class="${sizeId(m.explain_id)} text-slate-800 leading-relaxed">${m.explain_id}</p>
-            <div class="mt-3 p-3 rounded-xl bg-primary-50/60 border border-blue-100">
+            <p class="${sizeId(m.explain_id)} text-slate-800 dark:text-slate-300 leading-relaxed">${m.explain_id}</p>
+            <div class="mt-3 p-3 rounded-xl bg-primary-50/60 dark:bg-slate-600 border border-blue-100">
               <div class="text-xs text-slate-600 mb-1">Contoh:</div>
-              <div class="arabic-text ${sizeAr(m.example_ar)} text-primary-900 leading-relaxed text-center">${m.example_ar}</div>
+              <div class="arabic-text ${sizeAr(m.example_ar)} text-primary-900 dark:text-slate-300 leading-relaxed text-center">${m.example_ar}</div>
             </div>
           </div>
         </div>
@@ -224,6 +229,8 @@
   // init
   setTab('all');
   </script>
+
+  
 
 </body>
 </html>

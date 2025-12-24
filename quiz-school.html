@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
+
+<script src="assets/theme.js"></script>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuis Pemahaman Teks – Tema Sekolah (المدرسة) | ArabRead</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kuis Pemahaman Teks – Tema Ta'aruf (التَّعارُف) | ArabRead</title>
+
+  <!-- Fonts & Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
@@ -11,23 +16,24 @@
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
             primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
             secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
           },
-          fontFamily: { arabic: ['Amiri', 'Scheherazade New', 'serif'] }
+          fontFamily: { arabic: ['Amiri','Scheherazade New','serif'] }
         }
       }
     }
   </script>
   <style>
-    .arabic-text { font-family: 'Amiri', 'Scheherazade New', serif; direction: rtl; }
+    .arabic-text { font-family:'Amiri','Scheherazade New',serif; direction:rtl; }
   </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 min-h-screen dark:bg-slate-800 dark:text-slate-100 ">
   <!-- Header -->
   <header class="bg-primary-600 text-white shadow-lg">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -37,154 +43,60 @@
       </div>
       <nav class="hidden md:flex space-x-6">
         <a href="index.html" class="hover:text-secondary-300">Beranda</a>
-        <a href="reading-school.html" class="hover:text-secondary-300">Bacaan</a>
+        <a href="reading-taaruf.html" class="hover:text-secondary-300">Bacaan</a>
         <a href="index.html#tentang" class="hover:text-secondary-300">Tentang</a>
       </nav>
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main -->
   <main class="container mx-auto px-4 py-8">
-    <!-- Page Title -->
+    <!-- Title -->
     <div class="text-center mb-8">
-      <h1 class="text-4xl font-bold text-primary-800 arabic-text mb-2">المدرسة</h1>
-      <p class="text-2xl text-gray-700">Kuis Pemahaman Teks</p>
+      <h1 class="text-4xl font-bold text-primary-800 dark:text-slate-300 arabic-text mb-2">المدرسة</h1>
+      <p class="text-2xl text-gray-700 dark:text-slate-300">Kuis Pemahaman Teks</p>
     </div>
 
-    <!-- Quiz Section -->
-    <section class="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
-      <form id="quizForm">
-        <!-- Question 1 -->
-        <div class="mb-8 p-4 border-b border-gray-200">
-          <h3 class="text-xl font-semibold text-primary-800 mb-4">1. Siapakah tokoh utama dalam teks tersebut?</h3>
-        <div class="space-y-3">
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q1" value="A" class="mr-3">
-          <span>A. Muhammad</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q1" value="B" class="mr-3">
-          <span>B. Ahmad</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q1" value="C" class="mr-3">
-          <span>C. Ali</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q1" value="D" class="mr-3">
-          <span>D. Hasan</span>
-          </label>
-        </div>
-        </div>
+    <!-- Quiz Card -->
+    <section class="bg-white dark:bg-slate-700 shadow-lg p-8 max-w-3xl mx-auto">
+     <section class="bg-white dark:bg-slate-700 shadow-lg p-8 max-w-3xl mx-auto rounded-2xl">
 
-        <!-- Question 2 -->
-        <div class="mb-8 p-4 border-b border-gray-200">
-          <h3 class="text-xl font-semibold text-primary-800 mb-4">2. Berapa sering Ahmad pergi ke sekolah?</h3>
-        <div class="space-y-3">
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q2" value="A" class="mr-3">
-          <span>A. Setiap hari</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q2" value="B" class="mr-3">
-          <span>B. Dua kali seminggu</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q2" value="C" class="mr-3">
-          <span>C. Hanya hari Senin</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q2" value="D" class="mr-3">
-          <span>D. Seminggu sekali</span>
-          </label>
-        </div>
-        </div>
+  <div class="text-center mb-6">
+    <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-200 flex justify-center items-center gap-2">
+      🎯 Tantangan Kuis
+    </h2>
+    <p class="text-gray-600 dark:text-slate-300 text-center mb-4" id="questionText"></p>
 
-        <!-- Question 3 -->
-        <div class="mb-8 p-4 border-b border-gray-200">
-          <h3 class="text-xl font-semibold text-primary-800 mb-4">3. Mata pelajaran apa yang disebutkan dalam teks?</h3>
-        <div class="space-y-3">
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q3" value="A" class="mr-3">
-          <span>A. Bahasa Arab dan Sejarah</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q3" value="B" class="mr-3">
-          <span>B. Ilmu pengetahuan dan matematika</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q3" value="C" class="mr-3">
-          <span>C. Seni dan olahraga</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q3" value="D" class="mr-3">
-          <span>D. Agama dan bahasa Inggris</span>
-          </label>
-        </div>
-        </div>
+    <p class="arabic-text text-2xl text-center font-semibold mt-2"
+   dir="rtl"
+   id="arabicQuestion"></p>
+  </div>
 
-        <!-- Question 4 -->
-        <div class="mb-8 p-4 border-b border-gray-200">
-          <h3 class="text-xl font-semibold text-primary-800 mb-4">4. Di mana Ahmad bermain dengan teman-temannya?</h3>
-        <div class="space-y-3">
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q4" value="A" class="mr-3">
-          <span>A. Di perpustakaan</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q4" value="B" class="mr-3">
-          <span>B. Di halaman sekolah</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q4" value="C" class="mr-3">
-          <span>C. Di kelas</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q4" value="D" class="mr-3">
-          <span>D. Di kantin</span>
-          </label>
-        </div>
-        </div>
+  <div id="options" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+    <!-- tombol jawaban di-generate JS -->
+  </div>
 
-        <!-- Question 5 -->
-        <div class="mb-8 p-4">
-          <h3 class="text-xl font-semibold text-primary-800 mb-4">5. Bagaimana sikap para guru dalam mengajar?</h3>
-        <div class="space-y-3">
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q5" value="A" class="mr-3">
-          <span>A. Dengan santai</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q5" value="B" class="mr-3">
-          <span>B. Dengan sungguh-sungguh</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q5" value="C" class="mr-3">
-          <span>C. Dengan marah</span>
-          </label>
-          <label class="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-            <input type="radio" name="q5" value="D" class="mr-3">
-          <span>D. Dengan malas</span>
-          </label>
-        </div>
-        </div>
+  <p id="feedback" class="text-center font-semibold mb-4"></p>
 
-        <!-- Submit Button -->
-        <div class="text-center mt-8">
-          <button type="button" id="checkAnswers" class="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-3 px-8 rounded-lg transition">
-            Periksa Jawaban
-          </button>
-        </div>
-      </form>
+  <div class="text-center">
+    <button id="nextBtn"
+      class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-6 rounded-lg hidden">
+      Soal Berikutnya
+    </button>
+  </div>
 
-      <!-- Results Section -->
+</section>
+
+
+      <!-- Results -->
       <div id="results" class="mt-8 p-6 bg-gray-50 rounded-xl hidden">
-        <h3 class="text-xl font-semibold text-primary-800 mb-3">Hasil Kuis:</h3>
-        <p id="score" class="text-2xl font-bold text-secondary-600 mb-4"></p>
+        <h3 class="text-xl font-semibold text-primary-800 mb-3">Hasil Kuis</h3>
+        <p id="score" class="text-2xl font-bold text-secondary-600 mb-2"></p>
         <p id="feedback" class="text-lg text-gray-700"></p>
+
       </div>
 
-      <!-- Navigasi bawah (dengan tambahan tombol ke Kosa Kata) -->
+<!-- Navigasi bawah (dengan tambahan tombol ke Kosa Kata) -->
 <div class="flex flex-col sm:flex-row gap-3 justify-between mt-6">
   <a href="index.html"
      class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white w-full sm:w-auto">
@@ -204,6 +116,8 @@
   </div>
 </div>
 
+
+
     </section>
   </main>
 
@@ -212,48 +126,249 @@
     <p>&copy; 2025 Tarbiyyat al-Lughah – Kuis Tema: المدرسة</p>
   </footer>
 
+  <!-- Script -->
   <script>
-    feather.replace();
+const QUESTIONS = [
+  {
+  ar: "الْمَدْرَسَةُ",
+  question: "Apa arti kosakata berikut?",
+  correct: "Sekolah",
+  options: [
+    "Sekolah",
+    "Rumah",
+    "Pasar",
+    "Masjid"
+  ]
+},
+{
+  ar: "الطَّالِبُ",
+  question: "Apa arti kosakata berikut?",
+  correct: "Siswa (laki-laki)",
+  options: [
+    "Siswa (laki-laki)",
+    "Guru",
+    "Teman",
+    "Kepala sekolah"
+  ]
+},
+{
+  ar: "الْمُعَلِّمُ",
+  question: "Apa arti kosakata berikut?",
+  correct: "Guru (laki-laki)",
+  options: [
+    "Guru (laki-laki)",
+    "Siswa",
+    "Penjaga sekolah",
+    "Kepala sekolah"
+  ]
+},
+{
+  ar: "الْفَصْلُ",
+  question: "Apa arti kosakata berikut?",
+  correct: "Kelas",
+  options: [
+    "Kelas",
+    "Sekolah",
+    "Perpustakaan",
+    "Halaman"
+  ]
+},
+{
+  ar: "الْكِتَابُ",
+  question: "Apa arti kosakata berikut?",
+  correct: "Buku",
+  options: [
+    "Buku",
+    "Pulpen",
+    "Tas",
+    "Meja"
+  ]
+},
+ {
+  ar: "نَبْدَأُ الدِّرَاسَةَ فِي الصَّبَاحِ",
+  question: "Apa arti kalimat berikut?",
+  correct: "Kami memulai pelajaran di pagi hari",
+  options: [
+    "Kami memulai pelajaran di pagi hari",
+    "Kami pulang ke rumah",
+    "Kami bermain di sekolah",
+    "Kami belajar di malam hari"
+  ]
+},
+{
+  ar: "نَدْرُسُ اللُّغَةَ الْعَرَبِيَّةَ",
+  question: "Apa arti frasa berikut?",
+  correct: "Kami belajar bahasa Arab",
+  options: [
+    "Kami belajar bahasa Arab",
+    "Kami membaca buku",
+    "Kami masuk kelas",
+    "Kami belajar matematika"
+  ]
+},
+{
+  ar: "نَقْرَأُ الْكُتُبَ فِي الْمَكْتَبَةِ",
+  question: "Apa arti kalimat berikut?",
+  correct: "Kami membaca buku di perpustakaan",
+  options: [
+    "Kami membaca buku di perpustakaan",
+    "Kami bermain di halaman sekolah",
+    "Kami belajar di kelas",
+    "Kami pulang ke rumah"
+  ]
+},
+{
+  ar: "الْمَدْرَسَةُ مَكَانٌ لِلتَّعَلُّمِ",
+  question: "Apa arti kalimat berikut?",
+  correct: "Sekolah adalah tempat belajar",
+  options: [
+    "Sekolah adalah tempat belajar",
+    "Sekolah adalah tempat bermain",
+    "Sekolah adalah rumahku",
+    "Sekolah adalah pasar"
+  ]
+},
+{
+  ar: "أُحِبُّ مَدْرَسَتِي كَثِيرًا",
+  question: "Apa arti kalimat berikut?",
+  correct: "Aku sangat mencintai sekolahku",
+  options: [
+    "Aku sangat mencintai sekolahku",
+    "Aku pergi ke sekolah",
+    "Aku belajar bahasa Arab",
+    "Aku duduk di kelas tujuh"
+  ]
+},
+{
+  ar: "نَجْلِسُ بِانْتِظَامٍ",
+  question: "Apa arti frasa berikut?",
+  correct: "Kami duduk dengan tertib",
+  options: [
+    "Kami duduk dengan tertib",
+    "Kami masuk kelas",
+    "Kami pulang ke rumah",
+    "Kami bermain bersama"
+  ]
+},
+{
+  ar: "نَسْتَمِعُ إِلَى شَرْحِ الْمُعَلِّمِ",
+  question: "Apa arti kalimat berikut?",
+  correct: "Kami mendengarkan penjelasan guru",
+  options: [
+    "Kami mendengarkan penjelasan guru",
+    "Kami membaca buku",
+    "Kami menulis pelajaran",
+    "Kami bermain di halaman"
+  ]
+},
+{
+  ar: "نَكْتُبُ الدُّرُوسَ فِي الدَّفَاتِرِ",
+  question: "Apa arti kalimat berikut?",
+  correct: "Kami menulis pelajaran di buku tulis",
+  options: [
+    "Kami menulis pelajaran di buku tulis",
+    "Kami membaca buku di perpustakaan",
+    "Kami belajar bahasa Arab",
+    "Kami masuk kelas"
+  ]
+},
+{
+  ar: "نَلْعَبُ فِي سَاحَةِ الْمَدْرَسَةِ",
+  question: "Apa arti kalimat berikut?",
+  correct: "Kami bermain di halaman sekolah",
+  options: [
+    "Kami bermain di halaman sekolah",
+    "Kami belajar di kelas",
+    "Kami membaca buku",
+    "Kami pulang ke rumah"
+  ]
+},
+{
+  ar: "نُسَلِّمُ عَلَى الْمُعَلِّمِينَ",
+  question: "Apa arti kalimat berikut?",
+  correct: "Kami memberi salam kepada para guru",
+  options: [
+    "Kami memberi salam kepada para guru",
+    "Kami belajar bersama guru",
+    "Kami duduk di kelas",
+    "Kami membaca doa"
+  ]
+},
 
-    document.getElementById('checkAnswers').addEventListener('click', function() {
-      // Correct answers
-      const correctAnswers = {
-        q1: 'B',
-        q2: 'A', 
-        q3: 'B',
-        q4: 'B',
-        q5: 'B'
-      };
 
-      // Calculate score
-      let score = 0;
-      const form = document.getElementById('quizForm');
-      const formData = new FormData(form);
-      
-      for (let [question, answer] of formData.entries()) {
-        if (correctAnswers[question] === answer) {
-          score++;
-        }
+];
+
+// acak soal
+let shuffled = QUESTIONS.sort(() => Math.random() - 0.5);
+let index = 0;
+
+const questionEl = document.getElementById("questionText");
+const optionsEl = document.getElementById("options");
+const feedbackEl = document.getElementById("feedback");
+const nextBtn = document.getElementById("nextBtn");
+
+function loadQuestion() {
+  feedbackEl.textContent = "";
+  nextBtn.classList.add("hidden");
+  optionsEl.innerHTML = "";
+
+  const q = shuffled[index];
+
+  // tampilkan pertanyaan
+  document.getElementById("questionText").textContent = q.question;
+  document.getElementById("arabicQuestion").textContent = q.ar;
+
+  // acak opsi
+  const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+
+  shuffledOptions.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = opt;
+    btn.className =
+      "px-4 py-3 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-700 font-semibold";
+    btn.onclick = () => checkAnswer(btn, q.correct);
+    optionsEl.appendChild(btn);
+  });
+}
+
+
+function checkAnswer(button, correct) {
+  const buttons = optionsEl.querySelectorAll("button");
+  buttons.forEach(b => b.disabled = true);
+
+  if (button.textContent === correct) {
+    button.classList.remove("bg-primary-100");
+    button.classList.add("bg-green-200","text-green-800");
+    feedbackEl.textContent = "Benar! 🎉";
+    feedbackEl.className = "text-center text-green-600 font-semibold";
+  } else {
+    button.classList.remove("bg-primary-100");
+    button.classList.add("bg-red-200","text-red-800");
+    feedbackEl.textContent = `Kurang tepat. Jawaban benar: ${correct}`;
+    feedbackEl.className = "text-center text-red-600 font-semibold";
+
+    buttons.forEach(b => {
+      if (b.textContent === correct) {
+        b.classList.add("bg-green-200","text-green-800");
       }
-
-      // Display results
-      const results = document.getElementById('results');
-      const scoreElement = document.getElementById('score');
-      const feedbackElement = document.getElementById('feedback');
-
-      scoreElement.textContent = `Skor: ${score}/5`;
-      
-      if (score >= 4) {
-        feedbackElement.textContent = 'Bagus sekali! Kamu sudah memahami isi teks.';
-        feedbackElement.className = 'text-lg text-secondary-600 font-semibold';
-      } else {
-        feedbackElement.textContent = 'Coba lagi ya, pelajari kembali teksnya.';
-        feedbackElement.className = 'text-lg text-primary-600 font-semibold';
-      }
-
-      results.classList.remove('hidden');
     });
-  </script>
+  }
+
+  nextBtn.classList.remove("hidden");
+}
+
+nextBtn.onclick = () => {
+  index++;
+  if (index >= 3) {
+    index = 0;
+    shuffled = QUESTIONS.sort(() => Math.random() - 0.5);
+  }
+  loadQuestion();
+};
+
+loadQuestion();
+</script>
+
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
 <script>

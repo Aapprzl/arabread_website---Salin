@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
 
+<script src="assets/theme.js"></script>
+
 <script>
   const now = Date.now();
   const lastIntro = localStorage.getItem("arabread_intro_time");
@@ -18,6 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ArabRead — Pembelajaran Membaca Bahasa Arab MTs</title>
 
+
   <!-- Fonts & Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +28,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -166,9 +170,10 @@
 <meta name="theme-color" content="#0f766e">
 
 
+
 </head>
 
-<body class="relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+<body class="relative min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
 
   <!-- Header -->
   <header class="bg-primary-600 text-white">
@@ -177,6 +182,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5.75A2.75 2.75 0 0 1 6.75 3h10.5A2.75 2.75 0 0 1 20 5.75V22M4 19.5c0-1.38 1.12-2.5 2.5-2.5H20"/></svg>
         <span class="text-2xl font-bold">Tarbiyyat al-Lughah</span>
       </div>
+
       
       <nav class="hidden md:flex gap-6 text-white/90">
         <a class="inline-flex items-center gap-2 hover:text-white" href="#materi">
@@ -193,8 +199,15 @@
      class="fixed top-3 right-4 z-50 flex items-center gap-2
             bg-yellow-100/90 px-3 py-1.5 rounded-full
             shadow-md font-semibold text-sm text-gray-900">
-  👥 <span id="viewer-count">0</span> online
+  👥 <span id="viewer-count">0</span>online
 </div>
+
+      <button id="themeToggle"
+          class="fixed top-3 left-4 z-50 flex items-center gap-2
+            bg-yellow-100/90 px-3 py-1.5 rounded-full
+            shadow-md font-semibold text-sm text-gray-900">
+          🌙
+        </button>
 
 
     
@@ -203,27 +216,30 @@
 
   <!-- Hero -->
   <section class="text-center max-w-6xl mx-auto px-4 pt-10 pb-8">
-    <h1 class="arabic-text text-4xl font-bold text-primary-800">موقع تعليم مهارة القراءة العربية</h1>
-    <p class="mt-3 text-gray-600 text-lg">Media belajar interaktif untuk meningkatkan kemampuan membaca teks Arab berharakat bagi siswa MTs kelas 7.</p>
+    <h1 class="arabic-text text-4xl font-bold text-primary-800 dark:text-slate-300">
+  موقع تعليم اللغة العربية التفاعلي
+</h1>
+
+    <p class="mt-3 text-gray-600 dark:text-slate-300 text-lg">Media belajar interaktif untuk meningkatkan pemahaman Bahasa Arab bagi siswa MTs kelas 7.</p>
   </section>
 
 <!-- Mini Widget: Tantangan Hari Ini (Game ringan di beranda) -->
 <section id="tantangan" class="max-w-4xl mx-auto px-4 mt-6 mb-10">
-  <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+  <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6 text-center">
     <div class="inline-flex items-center gap-2 mb-3">
-      <h2 class="text-2xl font-bold text-primary-700">🎯 Tantangan Hari Ini</h2>
+      <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300">🎯 Tantangan Hari Ini</h2>
     </div>
 
     <!-- Pertanyaan -->
-    <p id="q-text" class="text-gray-700 mb-4">
-      Apa arti frasa <span id="q-ar" class="arabic-text text-xl font-bold text-primary-800">...</span> ?
+    <p id="q-text" class="text-gray-600 dark:text-slate-300 mb-4">
+      Apa arti frasa <span id="q-ar" class="arabic-text text-xl font-bold text-primary-800 dark:text-slate-300">...</span> ?
     </p>
 
     <!-- Opsi -->
     <div id="q-options" class="flex flex-wrap justify-center gap-3"></div>
 
     <!-- Feedback -->
-    <p id="q-feedback" class="mt-4 text-sm font-semibold"></p>
+    <p id="q-feedback" class="mt-4 text-sm font-semibold "></p>
 
     <!-- Tombol kontrol -->
     <div class="mt-5 flex flex-wrap gap-3 justify-center">
@@ -237,17 +253,18 @@
 
 <!-- GAME WORD MATCH -->
 <div class="max-w-2xl mx-auto mt-8 sm:mt-10
-            bg-white rounded-2xl shadow-md
+            bg-white dark:bg-slate-700
+             rounded-2xl shadow-md
             p-4 sm:p-6 md:p-8">
 
 
   <h2 class="text-lg sm:text-xl md:text-2xl
-           font-bold text-blue-600 mb-1 text-center">
+           font-bold text-primary-700 dark:text-slate-300 mb-1 text-center">
 
-    Tebak Arti Cepat
+    🤺 Tebak Arti Cepat
   </h2>
 
-  <p class="text-sm sm:text-base text-gray-500 text-center mb-4">
+  <p class="text-sm sm:text-base text-gray-500 dark:text-slate-300 text-center mb-4">
 
     Uji kosakata bahasa Arab kamu
   </p>
@@ -267,7 +284,7 @@
 
     <div id="options" class="grid grid-cols-1 gap-3 mb-4"></div>
 
-    <div class="text-gray-700">
+    <div class="text-gray-700 dark:text-slate-300">
       Soal <span id="current">1</span>/10 |
       Skor: <span id="score">0</span>
     </div>
@@ -293,24 +310,24 @@
 
 <!-- bagian pencarian kosakata -->
  <section id="search" class="max-w-4xl mx-auto px-4 mt-8 mb-12">
-  <div class="bg-white rounded-2xl shadow-lg p-6">
-    <h2 class="text-2xl font-bold text-primary-700 mb-3">🔍 Cari Kosakata</h2>
+  <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300 mb-3">🔍 Cari Kosakata</h2>
     <input id="search-input"
            type="text"
            placeholder="Ketik kata Arab atau terjemahannya..."
-           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-400 outline-none" />
-    <div id="search-results" class="mt-4 text-gray-700"></div>
+           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-400 outline-none dark:text-slate-700 />
+    <div id="search-results" class="mt-4 text-gray-700 dark:text-slate-300></div>
   </div>
 </section>
 
 
 <!-- Kartu Kosakata (Flip Cards) -->
 <section id="flashcards" class="max-w-6xl mx-auto px-4 mt-10 mb-12">
-  <div class="bg-white rounded-2xl shadow-lg p-6">
+  <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-      <h2 class="text-2xl font-bold text-primary-700">🃏 Kartu Kosakata</h2>
+      <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300">🃏 Kartu Kosakata</h2>
       <div class="flex items-center gap-2">
-        <span class="text-sm text-gray-600">Mode:</span>
+        <span class="text-sm text-gray-600 dark:text-slate-300">Mode:</span>
         <button id="mode-ar" class="px-3 py-1.5 rounded-lg bg-primary-600 text-white font-semibold">
           AR → ID
         </button>
@@ -320,7 +337,7 @@
       </div>
     </div>
 
-    <p class="text-gray-600 mt-2">Ketuk kartu untuk membaliknya. Cocok untuk penguatan memori kosakata.</p>
+    <p class="text-gray-600 dark:text-slate-300 mt-2">Ketuk kartu untuk membaliknya. Cocok untuk penguatan memori kosakata.</p>
 
     <!-- Grid kartu -->
     <div id="card-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5"></div>
@@ -341,18 +358,18 @@
 
 <!-- Kartu Gramatikal (Nahwu & Shorof) -->
 <section id="grammar-cards" class="max-w-6xl mx-auto px-4 mt-10 mb-12 theme-mix">
-  <div class="bg-white rounded-2xl shadow-lg p-6">
+  <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-      <h2 class="text-2xl font-bold text-primary-700">📘 Kartu Gramatikal</h2>
+      <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300">📘 Kartu Gramatikal</h2>
       <div class="flex flex-wrap items-center gap-2">
-        <span class="text-sm text-gray-600">Kategori:</span>
+        <span class="text-sm text-gray-600 dark:text-slate-300">Kategori:</span>
         <button id="gbtn-all"   class="px-3 py-1.5 rounded-lg bg-primary-600 text-white font-semibold">Campur</button>
         <button id="gbtn-nahwu" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold">Nahwu</button>
         <button id="gbtn-shorof"class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold">Shorof</button>
       </div>
     </div>
 
-    <p class="text-gray-600 mt-2">Ketuk kartu untuk melihat penjelasan singkat dan contoh.</p>
+    <p class="text-gray-600 dark:text-slate-300 mt-2">Ketuk kartu untuk melihat penjelasan singkat dan contoh.</p>
 
     <div id="gcard-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5"></div>
 
@@ -373,12 +390,12 @@
 
   <!-- Materi -->
   <main id="materi" class="max-w-6xl mx-auto px-4 pb-16">
-    <h2 class="text-2xl md:text-3xl font-bold text-primary-900 text-center mb-8">Pilih Materi Membaca</h2>
+    <h2 class="text-2xl md:text-3xl font-bold text-primary-900 dark:text-slate-300 text-center mb-8">Pilih Materi Membaca</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
       <!-- Kartu: Materi Gramatikal Dasar -->
-<article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+<article class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
   <!-- Header berwarna (ikuti pola: primary/secondary) -->
   <div class="bg-primary-500 text-white text-center py-6">
     <h3 class="arabic-text text-2xl font-bold">النَّحْوُ وَالصَّرْفُ (الأساسيات)</h3>
@@ -386,7 +403,7 @@
   </div>
 
   <div class="p-6 space-y-5">
-    <p class="text-gray-600">
+    <p class="text-gray-600 dark:text-slate-300">
       Ringkasan konsep inti untuk pemula: pengertian singkat, aturan dasar, dan contoh kalimat
       berharakat agar mudah dipahami sebelum latihan membaca.
     </p>
@@ -401,7 +418,7 @@
     </a>
 
     <!-- Catatan kecil di bawah tombol (meniru pola “Urutan: …”) -->
-    <p class="text-xs text-gray-500 text-center">
+    <p class="text-xs text-gray-500 dark:text-slate-300 text-center">
       Konten: Pengertian → Contoh → Catatan
     </p>
   </div>
@@ -409,13 +426,13 @@
 
 
       <!-- Kartu: Ta'aruf / Pengenalan -->
-<article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+<article class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
   <div class="bg-secondary-500 text-white text-center py-6">
     <h3 class="arabic-text text-2xl font-bold">التَّعارُف</h3>
     <p class="mt-1 text-white/90">Pengenalan / Ta'aruf</p>
   </div>
   <div class="p-6 space-y-5">
-    <p class="text-gray-600">
+    <p class="text-gray-600 dark:text-slate-300">
       Latihan membaca teks perkenalan sederhana: nama, asal, kelas, hobi, dan kalimat salam.
     </p>
     <a href="vocabulary-taaruf.html"
@@ -425,7 +442,7 @@
       <i data-feather="play" class="w-5 h-5 shrink-0"></i>
       <span class="leading-none font-semibold">Mulai Belajar</span>
     </a>
-    <p class="text-xs text-gray-500 text-center">
+    <p class="text-xs text-gray-500 dark:text-slate-300 text-center">
       Urutan: Kosakata → Baca Teks → Kuis
     </p>
   </div>
@@ -433,13 +450,13 @@
 
 
       <!-- Kartu: Sekolah -->
-      <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+      <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
         <div class="bg-primary-500 text-white text-center py-6">
           <h3 class="arabic-text text-2xl font-bold">المدرسة</h3>
           <p class="mt-1 text-white/90">Sekolah</p>
         </div>
         <div class="p-6 space-y-5">
-          <p class="text-gray-600">Latihan membaca teks sederhana tentang kegiatan di sekolah.</p>
+          <p class="text-gray-600 dark:text-slate-300">Latihan membaca teks sederhana tentang kegiatan di sekolah.</p>
           <a href="vocabulary-school.html"
              class="flex items-center justify-center gap-2 w-full
                     bg-primary-600 hover:bg-primary-700 text-white
@@ -447,18 +464,18 @@
             <i data-feather="play" class="w-5 h-5 shrink-0"></i>
             <span class="leading-none font-semibold">Mulai Belajar</span>
           </a>
-          <p class="text-xs text-gray-500 text-center">Urutan: Kosakata → Baca Teks → Kuis</p>
+          <p class="text-xs text-gray-500 dark:text-slate-300 text-center">Urutan: Kosakata → Baca Teks → Kuis</p>
         </div>
       </article>
 
       <!-- Kartu: Keluarga -->
-      <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+      <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
         <div class="bg-secondary-500 text-white text-center py-6">
           <h3 class="arabic-text text-2xl font-bold">العائلة</h3>
           <p class="mt-1 text-white/90">Keluarga</p>
         </div>
         <div class="p-6 space-y-5">
-          <p class="text-gray-600">Membaca teks tentang keluarga dan mengenal kosakata anggota keluarga.</p>
+          <p class="text-gray-600 dark:text-slate-300">Membaca teks tentang keluarga dan mengenal kosakata anggota keluarga.</p>
           <a href="vocabulary-family.html"
              class="flex items-center justify-center gap-2 w-full
                     bg-primary-600 hover:bg-primary-700 text-white
@@ -466,18 +483,18 @@
             <i data-feather="play" class="w-5 h-5 shrink-0"></i>
             <span class="leading-none font-semibold">Mulai Belajar</span>
           </a>
-          <p class="text-xs text-gray-500 text-center">Urutan: Kosakata → Baca Teks → Kuis</p>
+          <p class="text-xs text-gray-500 dark:text-slate-300 text-center">Urutan: Kosakata → Baca Teks → Kuis</p>
         </div>
       </article>
 
       <!-- Kartu: Hewan -->
-      <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
+      <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
         <div class="bg-primary-500 text-white text-center py-6">
           <h3 class="arabic-text text-2xl font-bold">الحيوانات</h3>
           <p class="mt-1 text-white/90">Hewan</p>
         </div>
         <div class="p-6 space-y-5">
-          <p class="text-gray-600">Latihan membaca teks deskriptif tentang hewan dalam bahasa Arab.</p>
+          <p class="text-gray-600 dark:text-slate-300">Latihan membaca teks deskriptif tentang hewan dalam bahasa Arab.</p>
           <a href="vocabulary-animals.html"
              class="flex items-center justify-center gap-2 w-full
                     bg-primary-600 hover:bg-primary-700 text-white
@@ -485,7 +502,7 @@
             <i data-feather="play" class="w-5 h-5 shrink-0"></i>
             <span class="leading-none font-semibold">Mulai Belajar</span>
           </a>
-          <p class="text-xs text-gray-500 text-center">Urutan: Kosakata → Baca Teks → Kuis</p>
+          <p class="text-xs text-gray-500 dark:text-slate-300 text-center">Urutan: Kosakata → Baca Teks → Kuis</p>
         </div>
       </article>
     </div>
@@ -501,38 +518,38 @@
         <i data-feather="inbox" class="w-6 h-6"></i>
         Pengumpulan Tugas
       </h3>
-      <p class="text-sm text-gray-300 mt-1">Unggah hasil latihan atau proyek kamu di sini</p>
+      <p class="text-sm text-gray-300 dark:text-slate-300 mt-1">Unggah hasil latihan atau proyek kamu di sini</p>
     </div>
 
     <!-- Body -->
-    <div class="p-8 space-y-5">
-      <p class="text-slate-700 text-center md:text-left">
+    <div class="bg-white dark:bg-slate-700 p-8 space-y-5">
+      <p class="text-slate-700 dark:text-slate-300 text-center md:text-left">
         Silakan isi form berikut untuk mengirimkan tugasmu. Pastikan file yang dikirim sudah sesuai format (PDF, DOCX, ZIP, dll)
         dan beri keterangan nama lengkap serta kelas.
       </p>
 
       <form action="mailto:icalaprizal23072003@gmail.com" method="post" enctype="text/plain" class="space-y-4">
         <div>
-          <label for="nama" class="block text-slate-700 font-semibold mb-1">Nama Lengkap</label>
+          <label for="nama" class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Nama Lengkap</label>
           <input type="text" id="nama" name="Nama" required
                  class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-gray-500 outline-none">
         </div>
 
         <div>
-          <label for="kelas" class="block text-slate-700 font-semibold mb-1">Kelas / Kelompok</label>
+          <label for="kelas" class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Kelas / Kelompok</label>
           <input type="text" id="kelas" name="Kelas"
                  class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-gray-500 outline-none">
         </div>
 
         <div>
-          <label for="pesan" class="block text-slate-700 font-semibold mb-1">Catatan / Pesan</label>
+          <label for="pesan" class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Catatan / Pesan</label>
           <textarea id="pesan" name="Pesan" rows="3"
                     class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-gray-500 outline-none"
                     placeholder="Tulis keterangan singkat tentang tugasmu..."></textarea>
         </div>
 
         <div>
-          <label class="block text-slate-700 font-semibold mb-1">File Tugas</label>
+          <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">File Tugas</label>
           <input type="file" name="File" accept=".pdf,.doc,.docx,.zip,.rar"
                  class="w-full text-slate-700 bg-white border border-slate-300 rounded-lg px-3 py-2 cursor-pointer">
         </div>
@@ -558,14 +575,14 @@
 
   <!-- Tentang -->
   <section id="tentang" class="max-w-6xl mx-auto px-4 pb-16">
-    <div class="bg-white rounded-2xl shadow-lg p-8">
-      <h2 class="text-2xl md:text-3xl font-bold text-primary-900 mb-3">Tentang Tarbiyyat al-Lughah</h2>
-      <p class="text-gray-700 leading-relaxed">
+    <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-8">
+      <h2 class="text-2xl md:text-3xl font-bold text-primary-900 dark:text-slate-300 mb-3">Tentang Tarbiyyat al-Lughah</h2>
+      <p class="text-gray-700 dark:text-slate-300 leading-relaxed">
         Tarbiyyat al-Lughah adalah media pembelajaran berbasis website yang dirancang untuk meningkatkan kemampuan membaca
         (مهارة القراءة) siswa MTs kelas 7. Alur belajar dibuat bertahap: <b>Kosakata → Baca Teks → Kuis</b>,
         agar pemahaman tumbuh secara sistematis.
       </p>
-      <p class="text-gray-600 mt-4">Dikembangkan oleh Muh. Aprizal — Mahasiswa PBA IAIN Bone, 2025.</p>
+      <p class="text-gray-600 dark:text-slate-300 mt-4">Dikembangkan oleh Muh. Aprizal — Mahasiswa PBA IAIN Bone, 2025.</p>
     </div>
   </section>
 
@@ -817,7 +834,7 @@ window.VOCABS = (window.VOCABS || []).concat(VOCABS);
       qFeedback.classList.add('text-secondary-600');
     } else {
       qFeedback.textContent = `Kurang tepat. Jawaban benar: ${current.id}`;
-      qFeedback.classList.add('text-primary-700');
+      qFeedback.classList.add('text-red-500');
       btn.classList.add('ring-2','ring-red-300','bg-red-50');
     }
 
@@ -962,14 +979,14 @@ input.addEventListener('input', () => {
   );
 
   if (filtered.length === 0) {
-    results.innerHTML = '<p class="text-gray-500">Tidak ditemukan</p>';
+    results.innerHTML = '<p class="text-gray-500 dark:text-slate-300">Tidak ditemukan</p>';
     return;
   }
 
   filtered.forEach(v => {
     const item = document.createElement('div');
     item.className = 'p-2 border-b border-gray-200';
-    item.innerHTML = `<span class="arabic-text text-lg text-primary-800">${v.ar}</span> — ${v.id}`;
+    item.innerHTML = `<span class="arabic-text text-lg text-primary-800 dark:text-slate-300">${v.ar}</span> — ${v.id}`;
     results.appendChild(item);
   });
 });
@@ -993,14 +1010,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function render(list){
     results.innerHTML = '';
     if (!list.length){
-      results.innerHTML = '<p class="text-gray-500">Tidak ditemukan</p>';
+      results.innerHTML = '<p class="text-gray-500 dark:text-slate-300">Tidak ditemukan</p>';
       return;
     }
     list.slice(0, 30).forEach(v => {
       const row = document.createElement('div');
       row.className = 'p-2 border-b border-gray-200';
       row.innerHTML =
-        `<span class="arabic-text text-lg text-primary-800">${v.ar}</span> — ${v.id}`;
+        `<span class="arabic-text text-lg text-primary-800 dark:text-slate-300">${v.ar}</span> — ${v.id}`;
       results.appendChild(row);
     });
   }
@@ -1236,12 +1253,12 @@ function sizeClassForIndo(id){
       grid.innerHTML = '';
       items.forEach(v => {
         const front = (mode === 'ar')
-          ? `<div class="arabic-text ${sizeAr(v.ar)} font-bold text-primary-800 text-center leading-relaxed">${v.ar}</div>`
-          : `<div class="${sizeId(v.id)} font-semibold text-primary-800 text-center leading-relaxed">${v.id}</div>`;
+          ? `<div class="arabic-text ${sizeAr(v.ar)} font-bold text-primary-800 dark:text-slate-300 text-center leading-relaxed">${v.ar}</div>`
+          : `<div class="${sizeId(v.id)} font-semibold text-primary-800 dark:text-slate-300 text-center leading-relaxed">${v.id}</div>`;
 
         const back  = (mode === 'ar')
-          ? `<div class="${sizeId(v.id)} text-slate-800 text-center leading-relaxed">${v.id}</div>`
-          : `<div class="arabic-text ${sizeAr(v.ar)} font-bold text-primary-800 text-center leading-relaxed">${v.ar}</div>`;
+          ? `<div class="${sizeId(v.id)} text-slate-800 dark:text-slate-300 text-center leading-relaxed">${v.id}</div>`
+          : `<div class="arabic-text ${sizeAr(v.ar)} font-bold text-primary-800 dark:text-slate-300 text-center leading-relaxed">${v.ar}</div>`;
 
         const card = document.createElement('button');
         card.type = 'button';
@@ -1250,8 +1267,8 @@ function sizeClassForIndo(id){
 
         card.innerHTML = `
           <div class="card3d-inner">
-            <div class="card-face bg-primary-50">${front}</div>
-            <div class="card-face card-back bg-white">${back}</div>
+            <div class="card-face bg-primary-50 dark:bg-slate-600">${front}</div>
+            <div class="card-face card-back bg-white dark:bg-slate-600">${back}</div>
           </div>
         `;
         card.addEventListener('click', () => card.classList.toggle('flipped'));
@@ -1384,18 +1401,18 @@ function sizeClassForIndo(id){
       grid.innerHTML = '';
       items.forEach(v => {
         const frontHTML = `
-          <div class="arabic-text ${sizeAr(v.term_ar)} font-bold text-primary-800 text-center leading-relaxed">
+          <div class="arabic-text ${sizeAr(v.term_ar)} font-bold text-primary-800 dark:text-slate-300 text-center leading-relaxed">
             ${v.term_ar}
           </div>
-          <div class="${sizeId(v.term_id)} text-slate-600 text-center leading-snug">
+          <div class="${sizeId(v.term_id)} text-slate-600 dark:text-slate-300 text-center leading-snug">
             <span class="font-semibold">${v.term_id}</span>
           </div>
         `;
         const backHTML = `
-          <div class="${sizeId(v.explain_id)} text-slate-800 text-center leading-relaxed">
+          <div class="${sizeId(v.explain_id)} text-slate-800 dark:text-slate-300 text-center leading-relaxed">
             <span class="font-semibold">${v.term_id}:</span> ${v.explain_id}
           </div>
-          <div class="arabic-text ${sizeAr(v.example_ar)} text-primary-800 text-center leading-relaxed">
+          <div class="arabic-text ${sizeAr(v.example_ar)} text-primary-800 dark:text-slate-300 text-center leading-relaxed">
             ${v.example_ar}
           </div>
         `;
@@ -1406,8 +1423,8 @@ function sizeClassForIndo(id){
         card.setAttribute('aria-label', v.term_id);
         card.innerHTML = `
           <div class="card3d-inner">
-            <div class="card-face bg-primary-50">${frontHTML}</div>
-            <div class="card-face card-back bg-white">${backHTML}</div>
+            <div class="card-face bg-primary-50 dark:bg-slate-600">${frontHTML}</div>
+            <div class="card-face card-back bg-white dark:bg-slate-600">${backHTML}</div>
           </div>
         `;
         card.addEventListener('click', () => card.classList.toggle('flipped'));
@@ -1534,7 +1551,7 @@ function loadQuestion() {
     const btn = document.createElement("button");
     btn.textContent = opt;
     btn.className =
-      "py-2 sm:py-2.5 rounded-lg border text-sm sm:text-base hover:bg-blue-50 transition";
+      "py-2 sm:py-2.5 rounded-lg border text-sm sm:text-base dark:hover:bg-slate-50/10 hover:bg-slate-100 transition";
     btn.onclick = () => checkAnswer(btn, opt);
     optionsDiv.appendChild(btn);
   });
@@ -1577,6 +1594,25 @@ function endGame() {
   `;
 }
 </script>
+
+<script>
+  const toggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+
+  // Load preferensi
+  if (localStorage.theme === 'dark') {
+    root.classList.add('dark');
+    toggle.textContent = '☀️';
+  }
+
+  toggle.addEventListener('click', () => {
+    root.classList.toggle('dark');
+    const isDark = root.classList.contains('dark');
+    toggle.textContent = isDark ? '☀️' : '🌙';
+    localStorage.theme = isDark ? 'dark' : 'light';
+  });
+</script>
+
 
 
 

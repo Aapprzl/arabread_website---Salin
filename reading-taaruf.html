@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
+
+<script src="assets/theme.js"></script>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
             colors: {
@@ -30,7 +34,7 @@
   </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-300">
   <!-- Header -->
   <header class="bg-primary-600 text-white shadow-lg">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -50,37 +54,31 @@
   <main class="container mx-auto px-4 py-8">
     <!-- Page Title -->
     <div class="text-center mb-8">
-      <h1 class="text-4xl font-bold text-primary-800 arabic-text mb-2">التَّعارُف</h1>
-      <p class="text-2xl text-gray-700">Ta'aruf / Pengenalan Diri</p>
+      <h1 class="text-4xl font-bold text-primary-800 dark:text-slate-300 arabic-text mb-2">التَّعارُف</h1>
+      <p class="text-2xl text-gray-700 dark:text-slate-300">Ta'aruf / Pengenalan Diri</p>
     </div>
 
     <!-- Reading Section -->
-    <section class="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
-      <!-- Audio Button -->
-      <div class="flex justify-center mb-6">
-        <button id="btnPlayTaaruf"
-          class="flex items-center justify-center w-16 h-16 rounded-full bg-secondary-500 hover:bg-secondary-600 text-white shadow-lg transition"
-          aria-label="Putar Audio" aria-pressed="false">
-          <i data-feather="headphones" class="w-7 h-7"></i>
-        </button>
-      </div>
+    <section class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
 
-      <!-- Audio Source -->
-      <audio id="audioTaaruf" preload="metadata">
-        <!-- Ganti file audio ini sesuai folder-mu -->
-        <source src="media/audio/dialog_taaruf.mp3" type="audio/mpeg">
-        Browser kamu tidak mendukung elemen audio.
-      </audio>
+
 
       <!-- Arabic Text -->
-      <div class="bg-gray-50 p-6 rounded-xl mb-6">
-        <p class="arabic-text text-2xl leading-loose text-center">
+      <div class="bg-gray-50 dark:bg-slate-600 p-6 rounded-xl mb-6">
+        <p id="readingText" class="arabic-text text-2xl leading-loose text-center">
           اَلسَّلَامُ عَلَيْكُمْ. &nbsp;اِسْمِي أَحْمَدُ. أَنَا مِنْ بُونِي، وَأَنَا فِي الصَّفِّ السَّابِعِ.
           هَذَا صَدِيقِي عُمَرُ. &nbsp;مِنْ أَيْنَ أَنْتَ يَا عُمَرُ؟ — أَنَا مِنْ وَاتَامْپُونْ.
           كَيْفَ حَالُكَ؟ — أَنَا بِخَيْرٍ، وَالْحَمْدُ لِلّٰهِ. &nbsp;مَا هِوَايَتُكَ؟ — هِوَايَتِي الْقِرَاءَةُ وَكُرَةُ الْقَدَمِ.
           تَشَرَّفْنَا! — تَشَرَّفْنَا بِكُمْ، إِلَى اللِّقَاءِ.
         </p>
       </div>
+
+      <div class="mt-4 mb-4 text-center">
+        <audio id="readingAudio" controls class="mx-auto w-full max-w-md">
+        Browser Anda tidak mendukung audio.
+        </audio>
+      </div>
+
 
       <!-- Translation Toggle -->
       <div class="text-center mb-6">
@@ -90,15 +88,23 @@
       </div>
 
       <!-- Translation (Initially Hidden) -->
-      <div id="translation" class="bg-primary-50 p-6 rounded-xl border border-primary-200">
-        <h3 class="text-xl font-semibold text-primary-800 mb-3">Terjemahan:</h3>
-        <p class="text-gray-700 leading-relaxed">
+      <div id="translation" class="bg-primary-50 dark:bg-slate-600 p-6 rounded-xl border border-primary-200">
+        <h3 class="text-xl font-semibold text-primary-800 dark:text-slate-300 mb-3">Terjemahan:</h3>
+        <p id="translationText" class="text-gray-700 dark:text-slate-300 leading-relaxed">
           Assalamu’alaikum. Namaku Ahmad. Saya dari Bone, dan saya kelas tujuh.
           Ini temanku, Umar. Dari mana kamu, Umar? — Saya dari Watampone.
           Bagaimana kabarmu? — Saya baik, alhamdulillah. Apa hobimu? — Hobiku membaca dan sepak bola.
           Senang berkenalan! — Sama-sama, sampai jumpa.
         </p>
       </div>
+     
+      <div class="text-center mb-6 mt-6">
+  <button id="shuffleReading"
+    class="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-2 px-6 rounded-lg transition">
+    🔀 Acak Bacaan
+  </button>
+</div>
+
 
 <!-- Navigasi bawah (dengan tambahan tombol ke Kosa Kata) -->
 <div class="flex flex-col sm:flex-row gap-3 justify-between mt-6">
@@ -148,46 +154,6 @@
       }
     });
 
-    // Audio Playback
-    (function () {
-      const btn = document.getElementById('btnPlayTaaruf');
-      const audio = document.getElementById('audioTaaruf');
-
-      function setPlayingUI(isPlaying) {
-        btn.setAttribute('aria-pressed', String(isPlaying));
-        if (isPlaying) {
-          btn.classList.add('ring-2', 'ring-green-300');
-          btn.innerHTML = '<i data-feather="pause" class="w-7 h-7"></i>';
-        } else {
-          btn.classList.remove('ring-2', 'ring-green-300');
-          btn.innerHTML = '<i data-feather="headphones" class="w-7 h-7"></i>';
-        }
-        feather.replace();
-      }
-
-      btn.addEventListener('click', async () => {
-        if (audio.paused) {
-          try {
-            await audio.play();
-            setPlayingUI(true);
-          } catch (e) {
-            alert('Gagal memutar audio. Pastikan file "media/audio/dialog_taaruf.mp3" tersedia.');
-            console.error(e);
-          }
-        } else {
-          audio.pause();
-          setPlayingUI(false);
-        }
-      });
-
-      audio.addEventListener('ended', () => setPlayingUI(false));
-      audio.addEventListener('pause', () => setPlayingUI(false));
-      audio.addEventListener('play', () => setPlayingUI(true));
-      audio.addEventListener('error', () => {
-        setPlayingUI(false);
-        alert('Tidak dapat memuat audio: media/audio/dialog_taaruf.mp3');
-      });
-    })();
   </script>
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
@@ -197,6 +163,177 @@
 
 <!-- Panggil script presence -->
 <script type="module" src="./assets/presence.js"></script>
+
+<script>
+/* =========================
+   DATA BACAAN TA'ARUF
+========================= */
+const READINGS = [
+  {
+  ar: `اَلسَّلَامُ عَلَيْكُمْ. اِسْمِي أَحْمَدُ. أَنَا مِنْ بُونِي، وَأَنَا فِي الصَّفِّ السَّابِعِ.
+مِنْ أَيْنَ أَنْتَ يَا عُمَرُ؟ أَنَا مِنْ وَاتَامْبُونِي. هَذَا صَدِيقِي عُمَرُ.
+كَيْفَ حَالُكَ؟ أَنَا بِخَيْرٍ وَالْحَمْدُ لِلّٰهِ.
+مَا هِوَايَتُكَ؟ هِوَايَتِي الْقِرَاءَةُ وَكُرَةُ الْقَدَمِ.
+تَشَرَّفْنَا بِمَعْرِفَتِكُمْ، نَرْجُو أَنْ نَتَعَارَفَ أَكْثَرَ فِي الْمُسْتَقْبَلِ.`,
+  id: `Assalamu’alaikum. Namaku Ahmad. Aku dari Bone dan duduk di kelas tujuh.
+Dari mana kamu, Umar? Aku dari Watampone. Ini temanku Umar.
+Apa kabarmu? Aku baik, alhamdulillah.
+Apa hobimu? Hobiku membaca dan bermain sepak bola.
+Senang berkenalan dengan kalian, semoga kita bisa saling mengenal lebih dekat di masa depan.`,
+  audio: "media/audio/audio-taaruf/taaruf1.mp3"
+},
+{
+  ar: `مَرْحَبًا بِكُمْ. اِسْمِي فَاطِمَةُ، وَأَنَا طَالِبَةٌ فِي الصَّفِّ السَّابِعِ.
+أَسْكُنُ مَعَ أُسْرَتِي فِي قَرْيَةٍ قَرِيبَةٍ مِنَ الْمَدْرَسَةِ.
+هَذِهِ صَدِيقَتِي عَائِشَةُ، وَهِيَ طَالِبَةٌ مُجْتَهِدَةٌ.
+كَيْفَ حَالُكِ يَا عَائِشَةُ؟ أَنَا بِخَيْرٍ.
+هَوَايَتِي الْقِرَاءَةُ وَمُسَاعَدَةُ الْوَالِدَيْنِ فِي الْبَيْتِ.
+سُعِدْنَا بِالتَّعَارُفِ، وَنَتَمَنَّى النَّجَاحَ لِلْجَمِيعِ.`,
+  id: `Halo semuanya. Namaku Fatimah dan aku siswi kelas tujuh.
+Aku tinggal bersama keluargaku di desa dekat sekolah.
+Ini temanku Aisyah, dia siswi yang rajin.
+Apa kabarmu Aisyah? Aku baik.
+Hobiku membaca dan membantu orang tua di rumah.
+Senang berkenalan, semoga kita semua sukses.`,
+audio: "media/audio/audio_taaruf/taaruf2.mp3"
+},
+{
+  ar: `اَلسَّلَامُ عَلَيْكُمْ. أَنَا عَلِيٌّ، طَالِبٌ فِي الْمَدْرَسَةِ الْمُتَوَسِّطَةِ.
+أَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ صَبَاحٍ مَعَ أَصْدِقَائِي.
+هَذَا صَدِيقِي خَالِدٌ، وَهُوَ يُحِبُّ التَّعَلُّمَ.
+كَيْفَ حَالُكَ يَا خَالِدُ؟ أَنَا بِخَيْرٍ.
+مَادَّتِي الْمُفَضَّلَةُ هِيَ اللُّغَةُ الْعَرَبِيَّةُ لِأَنَّهَا لُغَةُ الْقُرْآنِ.
+نَتَعَلَّمُ مَعًا وَنَسْعَى إِلَى النَّجَاحِ.`,
+  id: `Assalamu’alaikum. Aku Ali, siswa sekolah menengah pertama.
+Aku pergi ke sekolah setiap pagi bersama teman-temanku.
+Ini temanku Khalid, dia suka belajar.
+Apa kabarmu Khalid? Aku baik.
+Pelajaran favoritku adalah bahasa Arab karena bahasa Al-Qur’an.
+Kami belajar bersama dan berusaha meraih keberhasilan.`,
+audio: "media/audio/audio_taaruf/taaruf3.mp3"
+},
+{
+  ar: `اَلسَّلَامُ عَلَيْكُمْ. اِسْمِي خَالِدٌ، وَأَنَا طَالِبٌ فِي الصَّفِّ السَّابِعِ.
+أَسْكُنُ مَعَ أُسْرَتِي قَرِيبًا مِنَ الْمَدْرَسَةِ.
+هَذَا صَدِيقِي يُوسُفُ، وَهُوَ طَالِبٌ نَشِيطٌ.
+كَيْفَ حَالُكَ يَا يُوسُفُ؟ أَنَا بِخَيْرٍ وَالْحَمْدُ لِلّٰهِ.
+هَوَايَتِي اللَّعِبُ وَالْقِرَاءَةُ.
+نَسْعَى إِلَى التَّعَلُّمِ وَالنَّجَاحِ مَعًا.`,
+  id: `Assalamu’alaikum. Namaku Khalid dan aku siswa kelas tujuh.
+Aku tinggal bersama keluargaku dekat sekolah.
+Ini temanku Yusuf, dia siswa yang aktif.
+Apa kabarmu Yusuf? Aku baik, alhamdulillah.
+Hobiku bermain dan membaca.
+Kami berusaha belajar dan sukses bersama.`,
+audio: "media/audio/audio_taaruf/taaruf4.mp3"
+},
+{
+  ar: `مَرْحَبًا. اِسْمِي عَائِشَةُ، وَأَنَا طَالِبَةٌ فِي الْمَدْرَسَةِ الْمُتَوَسِّطَةِ.
+أَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ يَوْمٍ مَعَ صَدِيقَاتِي.
+هَذِهِ صَدِيقَتِي سَلْمَى، وَهِيَ تُحِبُّ التَّعَلُّمَ.
+كَيْفَ حَالُكِ يَا سَلْمَى؟ أَنَا بِخَيْرٍ.
+أُحِبُّ قِرَاءَةَ الْكُتُبِ وَمُسَاعَدَةَ الْوَالِدَيْنِ.
+نَتَعَاوَنُ فِي الدِّرَاسَةِ دَائِمًا.`,
+  id: `Halo. Namaku Aisyah dan aku siswi MTs.
+Aku pergi ke sekolah setiap hari bersama teman-temanku.
+Ini temanku Salma, dia suka belajar.
+Apa kabarmu Salma? Aku baik.
+Aku suka membaca buku dan membantu orang tua.
+Kami selalu bekerja sama dalam belajar.`,
+audio: "media/audio/audio_taaruf/taaruf5.mp3"
+},
+{
+  ar: `اَلسَّلَامُ عَلَيْكُمْ. أَنَا مُحَمَّدٌ، طَالِبٌ فِي الصَّفِّ السَّابِعِ.
+أُحِبُّ الذَّهَابَ إِلَى الْمَدْرَسَةِ وَتَعَلُّمَ دُرُوسٍ جَدِيدَةٍ.
+هَذَا صَدِيقِي عَبْدُ اللَّهِ، وَهُوَ طَالِبٌ مُجْتَهِدٌ.
+كَيْفَ حَالُكَ؟ أَنَا بِخَيْرٍ.
+مَادَّتِي الْمُفَضَّلَةُ هِيَ اللُّغَةُ الْعَرَبِيَّةُ.
+نَتَمَنَّى أَنْ نَكُونَ طُلَّابًا نَاجِحِينَ.`,
+  id: `Assalamu’alaikum. Aku Muhammad, siswa kelas tujuh.
+Aku suka pergi ke sekolah dan belajar pelajaran baru.
+Ini temanku Abdullah, dia siswa yang rajin.
+Apa kabarmu? Aku baik.
+Pelajaran favoritku adalah bahasa Arab.
+Kami berharap menjadi siswa yang sukses.`,
+audio: "media/audio/audio_taaruf/taaruf6.mp3"
+},
+{
+  ar: `مَرْحَبًا بِكُمْ. اِسْمِي زَيْنَبُ، وَأَنَا طَالِبَةٌ فِي الْمَدْرَسَةِ.
+أَسْكُنُ مَعَ أُسْرَتِي فِي مَنْزِلٍ بَسِيطٍ.
+هَذِهِ صَدِيقَتِي فَاطِمَةُ، وَهِيَ طَالِبَةٌ مُؤَدَّبَةٌ.
+كَيْفَ حَالُكِ؟ أَنَا بِخَيْرٍ وَالْحَمْدُ لِلّٰهِ.
+أُحِبُّ الدِّرَاسَةَ وَالْقِرَاءَةَ فِي وَقْتِ الْفَرَاغِ.`,
+  id: `Halo semuanya. Namaku Zainab dan aku siswi di sekolah.
+Aku tinggal bersama keluargaku di rumah sederhana.
+Ini temanku Fatimah, dia siswi yang sopan.
+Apa kabarmu? Aku baik, alhamdulillah.
+Aku suka belajar dan membaca di waktu luang.`,
+audio: "media/audio/audio_taaruf/taaruf7.mp3"
+},
+{
+  ar: `اَلسَّلَامُ عَلَيْكُمْ. أَنَا يُوسُفُ، طَالِبٌ فِي الْمَدْرَسَةِ الْمُتَوَسِّطَةِ.
+أَذْهَبُ إِلَى الْمَدْرَسَةِ بِالدَّرَّاجَةِ كُلَّ صَبَاحٍ.
+هَذَا صَدِيقِي عَلِيٌّ، وَهُوَ يُحِبُّ اللُّغَةَ الْعَرَبِيَّةَ.
+كَيْفَ حَالُكَ يَا عَلِيّ؟ أَنَا بِخَيْرٍ.
+أُحِبُّ الْقِرَاءَةَ وَالتَّعَلُّمَ.
+نَجْتَهِدُ فِي الدِّرَاسَةِ كُلَّ يَوْمٍ.`,
+  id: `Assalamu’alaikum. Aku Yusuf, siswa MTs.
+Aku pergi ke sekolah dengan sepeda setiap pagi.
+Ini temanku Ali, dia suka bahasa Arab.
+Apa kabarmu Ali? Aku baik.
+Aku suka membaca dan belajar.
+Kami rajin belajar setiap hari.`,
+audio: "media/audio/audio_taaruf/taaruf8.mp3"
+},
+{
+  ar: `مَرْحَبًا. اِسْمِي عَبْدُ اللَّهِ، وَأَنَا طَالِبٌ فِي الصَّفِّ السَّابِعِ.
+أَحْرِصُ عَلَى الدِّرَاسَةِ وَالْأَخْلَاقِ الْحَسَنَةِ.
+هَذَا صَدِيقِي خَالِدٌ، وَهُوَ طَالِبٌ نَشِيطٌ.
+كَيْفَ حَالُكَ؟ أَنَا بِخَيْرٍ.
+أُحِبُّ اللُّغَةَ الْعَرَبِيَّةَ وَقِرَاءَةَ الْقُرْآنِ.
+أَتَمَنَّى أَنْ أَكُونَ طَالِبًا نَاجِحًا فِي الْمُسْتَقْبَلِ.`,
+  id: `Halo. Namaku Abdullah dan aku siswa kelas tujuh.
+Aku menjaga semangat belajar dan akhlak yang baik.
+Ini temanku Khalid, dia siswa yang aktif.
+Apa kabarmu? Aku baik.
+Aku suka bahasa Arab dan membaca Al-Qur’an.
+Aku berharap menjadi siswa yang sukses di masa depan.`,
+audio: "media/audio/audio_taaruf/taaruf9.mp3"
+}
+
+  // 👉 tambahkan sampai minimal 10 bacaan
+];
+
+/* =========================
+   LOGIKA ACAK
+========================= */
+const readingEl = document.getElementById('readingText');
+const translationEl = document.getElementById('translationText');
+const shuffleBtn = document.getElementById('shuffleReading');
+
+const audioEl = document.getElementById('readingAudio');
+audioEl.src = "media/audio/audio_taaruf/taaruf0.mp3";
+audioEl.load(); // ⬅️ TAMBAHKAN INI
+
+
+shuffleBtn.addEventListener('click', () => {
+  const random = READINGS[Math.floor(Math.random() * READINGS.length)];
+
+  // ganti teks
+  readingEl.innerHTML = random.ar;
+  translationEl.innerHTML = random.id;
+
+  // ganti audio
+  audioEl.src = random.audio;
+  audioEl.load(); // WAJIB
+
+  // reset terjemahan
+  document.getElementById('translation').style.display = 'none';
+  document.getElementById('toggleTranslation').textContent = 'Tampilkan Terjemahan';
+});
+
+</script>
+
 
 
 </body>

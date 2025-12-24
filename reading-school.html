@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
+
+<script src="assets/theme.js"></script>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>المدرسة | Membaca Teks Bahasa Arab - ArabRead</title>
+  <title>التَّعارُف | Membaca Teks Bahasa Arab - ArabRead</title>
+
+  <!-- Fonts & Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
@@ -11,9 +16,10 @@
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
-          colors: {
+            colors: {
             primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
             secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
           },
@@ -23,12 +29,12 @@
     }
   </script>
   <style>
-    .arabic-text { font-family: 'Amiri', 'Scheherazade New', serif; direction: rtl; }
+    .arabic-text { font-family: 'Amiri','Scheherazade New',serif; direction: rtl; }
     #translation { display: none; }
   </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-300">
   <!-- Header -->
   <header class="bg-primary-600 text-white shadow-lg">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -38,7 +44,7 @@
       </div>
       <nav class="hidden md:flex space-x-6">
         <a href="index.html" class="hover:text-secondary-300">Beranda</a>
-        <a href="quiz-school.html" class="hover:text-secondary-300">Kuis</a>
+        <a href="quiz-taaruf.html" class="hover:text-secondary-300">Kuis</a>
         <a href="index.html#tentang" class="hover:text-secondary-300">Tentang</a>
       </nav>
     </div>
@@ -48,35 +54,34 @@
   <main class="container mx-auto px-4 py-8">
     <!-- Page Title -->
     <div class="text-center mb-8">
-      <h1 class="text-4xl font-bold text-primary-800 arabic-text mb-2">المدرسة</h1>
-      <p class="text-2xl text-gray-700">Sekolah</p>
+      <h1 class="text-4xl font-bold text-primary-800 dark:text-slate-300 arabic-text mb-2">المدرسة</h1>
+      <p class="text-2xl text-gray-700 dark:text-slate-300">Sekolah</p>
     </div>
 
     <!-- Reading Section -->
-    <section class="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
-      <!-- Audio Button -->
-      <div class="flex justify-center mb-6">
-        <button id="btnPlaySchool"
-          class="flex items-center justify-center w-16 h-16 rounded-full bg-secondary-500 hover:bg-secondary-600 text-white shadow-lg transition"
-          aria-label="Putar Audio" aria-pressed="false">
-          <i data-feather="headphones" class="w-7 h-7"></i>
-        </button>
-      </div>
+    <section class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
 
-      <!-- Audio Source -->
-      <audio id="audioSchool" preload="metadata">
-        <source src="media/audio/dialog_sekolah.mp3" type="audio/mpeg">
-        Browser kamu tidak mendukung elemen audio.
-      </audio>
+
 
       <!-- Arabic Text -->
-      <div class="bg-gray-50 p-6 rounded-xl mb-6">
-        <p class="arabic-text text-2xl leading-loose text-center">
-          أَحْمَدُ يَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ يَوْمٍ. فِي الْمَدْرَسَةِ، يَدْرُسُ أَحْمَدُ الْعُلُومَ وَالرِّيَاضِيَّاتَ.
-          يَلْعَبُ مَعَ أَصْدِقَائِهِ فِي فِنَاءِ الْمَدْرَسَةِ. الْمُعَلِّمُونَ يُعَلِّمُونَ الطُّلَّابَ بِجِدٍّ.
-          أَحْمَدُ يُحِبُّ الْمَدْرَسَةَ جِدًّا.
-        </p>
+      <div class="bg-gray-50 dark:bg-slate-600 p-6 rounded-xl mb-6">
+        <p id="readingText" class="arabic-text text-2xl leading-loose text-center">
+  اَلسَّلَامُ عَلَيْكُمْ. &nbsp;اِسْمِي أَحْمَدُ، وَأَنَا طَالِبٌ فِي الْمَدْرَسَةِ الْمُتَوَسِّطَةِ.
+  أَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ يَوْمٍ فِي الصَّبَاحِ.
+  فِي الْمَدْرَسَةِ نَتَعَلَّمُ اللُّغَةَ الْعَرَبِيَّةَ وَالرِّيَاضِيَّاتِ وَالْعُلُومَ.
+  مُعَلِّمِي يُحِبُّنَا وَيُعَلِّمُنَا بِصَبْرٍ.
+  بَعْدَ الدِّرَاسَةِ نَلْعَبُ مَعَ أَصْدِقَائِنَا فِي سَاحَةِ الْمَدْرَسَةِ.
+  أُحِبُّ مَدْرَسَتِي لِأَنَّهَا مَكَانُ الْعِلْمِ وَالتَّعَلُّمِ.
+      </p>
+
       </div>
+
+      <div class="mt-4 mb-4 text-center">
+        <audio id="readingAudio" controls class="mx-auto w-full max-w-md">
+        Browser Anda tidak mendukung audio.
+        </audio>
+      </div>
+
 
       <!-- Translation Toggle -->
       <div class="text-center mb-6">
@@ -86,16 +91,28 @@
       </div>
 
       <!-- Translation (Initially Hidden) -->
-      <div id="translation" class="bg-primary-50 p-6 rounded-xl border border-primary-200">
-        <h3 class="text-xl font-semibold text-primary-800 mb-3">Terjemahan:</h3>
-        <p class="text-gray-700 leading-relaxed">
-          Ahmad pergi ke sekolah setiap hari. Di sekolah, Ahmad belajar ilmu pengetahuan dan matematika.
-          Dia bermain dengan teman-temannya di halaman sekolah.
-          Para guru mengajar para siswa dengan sungguh-sungguh. Ahmad sangat menyukai sekolah.
-        </p>
-      </div>
+      <div id="translation" class="bg-primary-50 dark:bg-slate-600 p-6 rounded-xl border border-primary-200">
+        <h3 class="text-xl font-semibold text-primary-800 dark:text-slate-300 mb-3">Terjemahan:</h3>
+        <p id="translationText" class="text-gray-700 dark:text-slate-300 leading-relaxed">
+  Assalamu’alaikum. Namaku Ahmad, dan aku adalah seorang siswa di sekolah menengah.
+  Aku pergi ke sekolah setiap pagi.
+  Di sekolah kami belajar bahasa Arab, matematika, dan ilmu pengetahuan.
+  Guruku menyayangi kami dan mengajar dengan penuh kesabaran.
+  Setelah belajar, kami bermain bersama teman-teman di halaman sekolah.
+  Aku mencintai sekolahku karena sekolah adalah tempat ilmu dan belajar.
+</p>
 
-      <!-- Navigasi bawah (dengan tambahan tombol ke Kosa Kata) -->
+      </div>
+     
+      <div class="text-center mb-6 mt-6">
+  <button id="shuffleReading"
+    class="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-2 px-6 rounded-lg transition">
+    🔀 Acak Bacaan
+  </button>
+</div>
+
+
+<!-- Navigasi bawah (dengan tambahan tombol ke Kosa Kata) -->
 <div class="flex flex-col sm:flex-row gap-3 justify-between mt-6">
   <a href="index.html"
      class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white w-full sm:w-auto">
@@ -114,6 +131,8 @@
     </a>
   </div>
 </div>
+
+
 
     </section>
   </main>
@@ -141,46 +160,6 @@
       }
     });
 
-    // Audio Playback dari file lokal
-    (function () {
-      const btn = document.getElementById('btnPlaySchool');
-      const audio = document.getElementById('audioSchool');
-
-      function setPlayingUI(isPlaying) {
-        btn.setAttribute('aria-pressed', String(isPlaying));
-        if (isPlaying) {
-          btn.classList.add('ring-2', 'ring-green-300');
-          btn.innerHTML = '<i data-feather="pause" class="w-7 h-7"></i>';
-        } else {
-          btn.classList.remove('ring-2', 'ring-green-300');
-          btn.innerHTML = '<i data-feather="headphones" class="w-7 h-7"></i>';
-        }
-        feather.replace();
-      }
-
-      btn.addEventListener('click', async () => {
-        if (audio.paused) {
-          try {
-            await audio.play();
-            setPlayingUI(true);
-          } catch (e) {
-            alert('Gagal memutar audio. Pastikan file "media/audio/dialog_sekolah.mp3" tersedia.');
-            console.error(e);
-          }
-        } else {
-          audio.pause();
-          setPlayingUI(false);
-        }
-      });
-
-      audio.addEventListener('ended', () => setPlayingUI(false));
-      audio.addEventListener('pause', () => setPlayingUI(false));
-      audio.addEventListener('play', () => setPlayingUI(true));
-      audio.addEventListener('error', () => {
-        setPlayingUI(false);
-        alert('Tidak dapat memuat audio: media/audio/dialog_sekolah.mp3');
-      });
-    })();
   </script>
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
@@ -190,6 +169,120 @@
 
 <!-- Panggil script presence -->
 <script type="module" src="./assets/presence.js"></script>
+
+<script>
+/* =========================
+   DATA BACAAN TA'ARUF
+========================= */
+const READINGS = [
+  {
+  ar: `أَنَا طَالِبٌ فِي الْمَدْرَسَةِ الْمُتَوَسِّطَةِ، وَأُحِبُّ الذَّهَابَ إِلَى الْمَدْرَسَةِ كُلَّ يَوْمٍ.
+أَدْخُلُ الْفَصْلَ فِي الصَّبَاحِ، وَأَدْرُسُ مَعَ أَصْدِقَائِي بِفَرَحٍ وَنَشَاطٍ.
+نَدْرُسُ اللُّغَةَ الْعَرَبِيَّةَ وَالرِّيَاضِيَّاتِ وَالْعُلُومَ فِي الْفَصْلِ.
+الْمُعَلِّمُونَ يُعَلِّمُونَنَا بِصَبْرٍ وَيُسَاعِدُونَنَا عَلَى الْفَهْمِ.
+بَعْدَ الدِّرَاسَةِ، نَلْعَبُ فِي سَاحَةِ الْمَدْرَسَةِ وَنَعُودُ إِلَى الْبَيْتِ بِسُرُورٍ.`,
+  
+  id: `Aku adalah seorang siswa di sekolah menengah, dan aku suka pergi ke sekolah setiap hari.
+Aku masuk ke kelas pada pagi hari dan belajar bersama teman-temanku dengan gembira dan semangat.
+Kami belajar bahasa Arab, matematika, dan ilmu pengetahuan di kelas.
+Para guru mengajar kami dengan sabar dan membantu kami agar memahami pelajaran.
+Setelah belajar, kami bermain di halaman sekolah dan pulang ke rumah dengan senang hati.`,
+  
+  audio: "media/audio/audio-sekolah/sekolah1.mp3"
+},
+{
+  ar: `نَبْدَأُ الدِّرَاسَةَ فِي الصَّبَاحِ بِقِرَاءَةِ الدُّعَاءِ مَعًا.
+ثُمَّ نَدْخُلُ الْفُصُولَ وَنَجْلِسُ بِانْتِظَامٍ.
+نَسْتَمِعُ إِلَى شَرْحِ الْمُعَلِّمِ بِاهْتِمَامٍ.
+وَنَكْتُبُ الدُّرُوسَ فِي الدَّفَاتِرِ.
+الدِّرَاسَةُ فِي الْمَدْرَسَةِ مُفِيدَةٌ جِدًّا.`,
+  
+  id: `Kami memulai pelajaran di pagi hari dengan membaca doa bersama.
+Kemudian kami masuk ke kelas dan duduk dengan tertib.
+Kami mendengarkan penjelasan guru dengan penuh perhatian.
+Dan kami menulis pelajaran di buku tulis.
+Belajar di sekolah sangat bermanfaat.`,
+  
+  audio: "media/audio/audio-sekolah/sekolah2.mp3"
+},
+{
+  ar: `فِي الْمَدْرَسَةِ فُصُولٌ كَثِيرَةٌ وَمَكْتَبَةٌ كَبِيرَةٌ.
+نَقْرَأُ الْكُتُبَ فِي الْمَكْتَبَةِ عِنْدَ وَقْتِ الْفِسْحَةِ.
+وَنَلْتَقِي بِأَصْدِقَائِنَا فِي سَاحَةِ الْمَدْرَسَةِ.
+نَلْعَبُ وَنَتَحَدَّثُ مَعًا.
+الْمَدْرَسَةُ مَكَانٌ لِلتَّعَلُّمِ وَالصَّدَاقَةِ.`,
+  
+  id: `Di sekolah ada banyak kelas dan sebuah perpustakaan besar.
+Kami membaca buku di perpustakaan saat waktu istirahat.
+Kami bertemu teman-teman di halaman sekolah.
+Kami bermain dan berbincang bersama.
+Sekolah adalah tempat belajar dan persahabatan.`,
+  
+  audio: "media/audio/audio-sekolah/sekolah3.mp3"
+},
+{
+  ar: `نَدْرُسُ فِي الْمَدْرَسَةِ الْقُرْآنَ وَاللُّغَةَ الْعَرَبِيَّةَ.
+كَمَا نَدْرُسُ الرِّيَاضِيَّاتِ وَالْعُلُومَ.
+أُحِبُّ دَرْسَ اللُّغَةِ الْعَرَبِيَّةِ جِدًّا.
+لِأَنَّهُ دَرْسٌ سَهْلٌ وَمُمْتِعٌ.
+وَيُسَاعِدُنِي الْمُعَلِّمُ فِي الْفَهْمِ.`,
+  
+  id: `Kami belajar Al-Qur’an dan bahasa Arab di sekolah.
+Kami juga belajar matematika dan ilmu pengetahuan.
+Aku sangat suka pelajaran bahasa Arab.
+Karena pelajaran itu mudah dan menyenangkan.
+Dan guru membantu aku dalam memahami pelajaran.`,
+  
+  audio: "media/audio/audio-sekolah/sekolah4.mp3"
+},
+{
+  ar: `بَعْدَ انْتِهَاءِ الدِّرَاسَةِ، نُرَتِّبُ الْفَصْلَ مَعًا.
+ثُمَّ نُسَلِّمُ عَلَى الْمُعَلِّمِينَ.
+نَعُودُ إِلَى الْبُيُوتِ بِفَرَحٍ.
+وَنَسْتَعِدُّ لِلدِّرَاسَةِ فِي الْيَوْمِ التَّالِي.
+أُحِبُّ مَدْرَسَتِي كَثِيرًا.`,
+  
+  id: `Setelah pelajaran selesai, kami merapikan kelas bersama-sama.
+Kemudian kami memberi salam kepada para guru.
+Kami pulang ke rumah dengan gembira.
+Dan kami bersiap untuk belajar pada hari berikutnya.
+Aku sangat mencintai sekolahku.`,
+  
+  audio: "media/audio/audio-sekolah/sekolah5.mp3"
+},
+
+];
+
+/* =========================
+   LOGIKA ACAK
+========================= */
+const readingEl = document.getElementById('readingText');
+const translationEl = document.getElementById('translationText');
+const shuffleBtn = document.getElementById('shuffleReading');
+
+const audioEl = document.getElementById('readingAudio');
+audioEl.src = "media/audio/audio_sekolah/sekolah0.mp3";
+audioEl.load(); // ⬅️ TAMBAHKAN INI
+
+
+shuffleBtn.addEventListener('click', () => {
+  const random = READINGS[Math.floor(Math.random() * READINGS.length)];
+
+  // ganti teks
+  readingEl.innerHTML = random.ar;
+  translationEl.innerHTML = random.id;
+
+  // ganti audio
+  audioEl.src = random.audio;
+  audioEl.load(); // WAJIB
+
+  // reset terjemahan
+  document.getElementById('translation').style.display = 'none';
+  document.getElementById('toggleTranslation').textContent = 'Tampilkan Terjemahan';
+});
+
+</script>
+
 
 
 </body>
