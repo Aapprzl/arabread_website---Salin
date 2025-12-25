@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
+<script src="assets/data/vocabs.js"></script>
+
+<script src="assets/theme.js"></script>
+
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,22 +17,23 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
-            secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
+            primary: {50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a'},
+            secondary: {100:'#dcfce7',500:'#22c55e',600:'#16a34a'}
           },
-          fontFamily: { arabic: ['Amiri','Scheherazade New','serif'] }
+          fontFamily: { arabic:['Amiri','Scheherazade New','serif'] }
         }
       }
     }
   </script>
   <style>
-    .arabic-text { font-family: 'Amiri','Scheherazade New',serif; direction: rtl; }
+    .arabic-text { font-family:'Amiri','Scheherazade New',serif; direction:rtl; }
   </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
   <!-- Header -->
   <header class="bg-primary-600 text-white">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -45,192 +51,284 @@
 
   <!-- Hero -->
   <section class="max-w-6xl mx-auto px-4 pt-10 pb-6 text-center">
-    <h1 class="arabic-text text-4xl font-bold text-primary-800 mb-2">الحيوانات</h1>
-    <p class="text-lg text-gray-600">Kosakata Hewan</p>
+    <h1 class="arabic-text text-4xl font-bold text-primary-800 dark:text-slate-300 mb-2">الحيوانات</h1>
+    <p class="text-lg text-gray-600 dark:text-slate-300">Kosakata Tema Hewan</p>
   </section>
 
   <!-- Konten -->
   <main class="max-w-6xl mx-auto px-4 pb-16">
-    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-      <div class="px-6 py-4 border-b bg-primary-500 text-white">
+    <div class="bg-white dark:bg-slate-600 rounded-2xl shadow-lg overflow-hidden">
+      <div class="px-6 py-4 border-b bg-primary-500 dark:bg-slate-700 text-white">
         <h2 class="text-xl font-semibold">Daftar Kosakata</h2>
       </div>
 
       <div class="overflow-x-auto">
-        <!-- TABEL (md+): tanpa kolom audio -->
         <table id="vocab-table" class="hidden md:table min-w-full divide-y divide-gray-200">
-          <thead class="bg-primary-100">
+          <thead class="bg-primary-10">
             <tr>
-              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900">No</th>
-              <th class="px-4 py-3 text-sm text-right font-semibold text-primary-900">Bahasa Arab</th>
-              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900">Transliterasi</th>
-              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900">Arti Indonesia</th>
+              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900 dark:text-slate-300">No</th>
+              <th class="px-4 py-3 text-sm text-right font-semibold text-primary-900 dark:text-slate-300">Bahasa Arab</th>
+              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900 dark:text-slate-300">Transliterasi</th>
+              <th class="px-4 py-3 text-sm text-left font-semibold text-primary-900 dark:text-slate-300">Arti Indonesia</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
-            <!-- 1 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">1</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">قِطٌّ</td>
-              <td class="px-4 py-3">qiṭṭun</td>
-              <td class="px-4 py-3">Kucing</td>
-            </tr>
-            <!-- 2 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">2</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">كَلْبٌ</td>
-              <td class="px-4 py-3">kalbun</td>
-              <td class="px-4 py-3">Anjing</td>
-            </tr>
-            <!-- 3 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">3</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">طَيْرٌ</td>
-              <td class="px-4 py-3">ṭayrun</td>
-              <td class="px-4 py-3">Burung</td>
-            </tr>
-            <!-- 4 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">4</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">أَرْنَبٌ</td>
-              <td class="px-4 py-3">arnabun</td>
-              <td class="px-4 py-3">Kelinci</td>
-            </tr>
-            <!-- 5 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">5</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">بَقَرَةٌ</td>
-              <td class="px-4 py-3">baqaratun</td>
-              <td class="px-4 py-3">Sapi</td>
-            </tr>
-            <!-- 6 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">6</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">دَجَاجَةٌ</td>
-              <td class="px-4 py-3">dajājatun</td>
-              <td class="px-4 py-3">Ayam betina</td>
-            </tr>
-            <!-- 7 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">7</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">خَرُوفٌ</td>
-              <td class="px-4 py-3">kharūfun</td>
-              <td class="px-4 py-3">Domba</td>
-            </tr>
-            <!-- 8 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">8</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">حِصَانٌ</td>
-              <td class="px-4 py-3">ḥiṣānun</td>
-              <td class="px-4 py-3">Kuda</td>
-            </tr>
-            <!-- 9 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">9</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">جَمَلٌ</td>
-              <td class="px-4 py-3">jamalun</td>
-              <td class="px-4 py-3">Unta</td>
-            </tr>
-            <!-- 10 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">10</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">سَمَكٌ</td>
-              <td class="px-4 py-3">samakun</td>
-              <td class="px-4 py-3">Ikan</td>
-            </tr>
-            <!-- 11 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">11</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">قِرْدٌ</td>
-              <td class="px-4 py-3">qirdun</td>
-              <td class="px-4 py-3">Monyet</td>
-            </tr>
-            <!-- 12 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">12</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">فِيلٌ</td>
-              <td class="px-4 py-3">fīlun</td>
-              <td class="px-4 py-3">Gajah</td>
-            </tr>
-            <!-- 13 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">13</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">أَسَدٌ</td>
-              <td class="px-4 py-3">asadun</td>
-              <td class="px-4 py-3">Singa</td>
-            </tr>
-            <!-- 14 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">14</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">نَمِرٌ</td>
-              <td class="px-4 py-3">namirun</td>
-              <td class="px-4 py-3">Harimau</td>
-            </tr>
-            <!-- 15 -->
-            <tr class="hover:bg-gray-50">
-              <td class="px-4 py-3 text-sm">15</td>
-              <td class="px-4 py-3 text-xl arabic-text text-right font-semibold break-words">زَرَافَةٌ</td>
-              <td class="px-4 py-3">zarāfatun</td>
-              <td class="px-4 py-3">Jerapah</td>
-            </tr>
-          </tbody>
+  <tr class=""><td class="px-4 py-3">1</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">الْمَدْرَسَةُ</td><td class="px-4 py-3">al-madrasah</td><td class="px-4 py-3">Sekolah</td></tr>
+  <tr class=""><td class="px-4 py-3">2</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">الطَّالِبُ</td><td class="px-4 py-3">aṭ-ṭālib</td><td class="px-4 py-3">Siswa (laki-laki)</td></tr>
+  <tr class=""><td class="px-4 py-3">3</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">الطَّالِبَةُ</td><td class="px-4 py-3">aṭ-ṭālibah</td><td class="px-4 py-3">Siswi (perempuan)</td></tr>
+  <tr class=""><td class="px-4 py-3">4</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">الْفَصْلُ</td><td class="px-4 py-3">al-faṣl</td><td class="px-4 py-3">Kelas</td></tr>
+  <tr class=""><td class="px-4 py-3">5</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">الْمُعَلِّمُ</td><td class="px-4 py-3">al-muʿallim</td><td class="px-4 py-3">Guru (laki-laki)</td></tr>
+
+  <tr class=""><td class="px-4 py-3">6</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">الْمُعَلِّمَةُ</td><td class="px-4 py-3">al-muʿallimah</td><td class="px-4 py-3">Guru (perempuan)</td></tr>
+  <tr class=""><td class="px-4 py-3">7</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">الْكِتَابُ</td><td class="px-4 py-3">al-kitāb</td><td class="px-4 py-3">Buku</td></tr>
+  <tr class=""><td class="px-4 py-3">8</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">الدَّفْتَرُ</td><td class="px-4 py-3">ad-daftar</td><td class="px-4 py-3">Buku tulis</td></tr>
+  <tr class=""><td class="px-4 py-3">9</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">الْقَلَمُ</td><td class="px-4 py-3">al-qalam</td><td class="px-4 py-3">Pulpen</td></tr>
+  <tr class=""><td class="px-4 py-3">10</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">السَّبُّورَةُ</td><td class="px-4 py-3">as-sabbūrah</td><td class="px-4 py-3">Papan tulis</td></tr>
+
+  <tr class=""><td class="px-4 py-3">11</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">نَدْخُلُ الْفَصْلَ</td><td class="px-4 py-3">nadkhulu al-faṣla</td><td class="px-4 py-3">Kami masuk kelas</td></tr>
+  <tr class=""><td class="px-4 py-3">12</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">نَجْلِسُ فِي الْفَصْلِ</td><td class="px-4 py-3">najlisu fī al-faṣli</td><td class="px-4 py-3">Kami duduk di kelas</td></tr>
+  <tr class=""><td class="px-4 py-3">13</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">نَدْرُسُ فِي الْمَدْرَسَةِ</td><td class="px-4 py-3">nadrusu fī al-madrasah</td><td class="px-4 py-3">Kami belajar di sekolah</td></tr>
+  <tr class=""><td class="px-4 py-3">14</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">أُحِبُّ الْمَدْرَسَةَ</td><td class="px-4 py-3">uḥibbu al-madrasah</td><td class="px-4 py-3">Aku suka sekolah</td></tr>
+  <tr class=""><td class="px-4 py-3">15</td><td class="px-4 py-3 text-xl arabic-text text-right font-semibold">أَذْهَبُ إِلَى الْمَدْرَسَةِ</td><td class="px-4 py-3">adhhabu ilā al-madrasah</td><td class="px-4 py-3">Aku pergi ke sekolah</td></tr>
+</tbody>
+
         </table>
 
-        <!-- LIST MOBILE (otomatis dari tabel) -->
         <div id="mobile-list" class="md:hidden grid gap-3 p-3"></div>
       </div>
     </div>
+
+    <!-- Pagination -->
+  <div class="mt-6">
+  <div
+    id="pagination"
+    class="flex gap-2 overflow-x-auto px-4 py-2 scrollbar-thin scrollbar-thumb-slate-400 scrollbar-track-transparent md:justify-center md:overflow-x-visible "
+  ></div>
+
+  <!-- Garis indikator (visual saja) -->
+  <div class="h-1 mt-2 mx-4 rounded bg-slate-600/30"></div>
+</div>
+
 
     <!-- Navigasi bawah -->
     <div class="flex flex-col sm:flex-row gap-3 justify-between mt-6">
       <a href="index.html" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white">🏠 Kembali ke Beranda</a>
       <div class="flex gap-3">
         <a href="reading-animals.html" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-100 text-primary-700 hover:bg-primary-200">📖 Baca Teks</a>
-      <div class="flex gap-3">
         <a href="quiz-animals.html" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-secondary-500 hover:bg-secondary-600 text-white">📝 Kuis</a>
       </div>
     </div>
+    
   </main>
 
-  <!-- Footer -->
   <footer class="bg-primary-800 text-white text-center py-6">
     <p>&copy; 2025 Tarbiyyat al-Lughah – Kosakata Tema: الحيوانات</p>
   </footer>
 
-  <!-- Script kecil untuk membuat kartu mobile dari tabel (tanpa audio) -->
+  <!-- Script: buat kartu mobile otomatis -->
   <script>
-    (function buildMobileList() {
-      const table = document.getElementById('vocab-table');
-      const target = document.getElementById('mobile-list');
-      if (!table || !target) return;
+  function buildMobileList(){
+    const table = document.getElementById('vocab-table');
+    const target = document.getElementById('mobile-list');
+    if (!table || !target) return;
 
-      const rows = table.querySelectorAll('tbody tr');
-      target.innerHTML = '';
-      rows.forEach((tr) => {
-        const tds = tr.querySelectorAll('td');
-        if (tds.length < 4) return;
+    const rows = table.querySelectorAll('tbody tr');
+    target.innerHTML = '';
 
-        const no = tds[0].textContent.trim();
-        const arabic = tds[1].textContent.trim();
-        const translit = tds[2].textContent.trim();
-        const arti = tds[3].textContent.trim();
+    rows.forEach(tr => {
+      const tds = tr.querySelectorAll('td');
+      if (tds.length < 4) return;
 
-        const card = document.createElement('div');
-        card.className = "rounded-xl shadow bg-white p-3";
+      const [no, arabic, translit, arti] = [...tds].map(td => td.textContent.trim());
 
-        card.innerHTML = `
-          <div class="flex items-start justify-between">
-            <span class="text-xs text-gray-400">#${no}</span>
-          </div>
-          <div class="arabic-text text-2xl leading-snug text-right break-words mt-1">${arabic}</div>
-          <div class="text-xs text-gray-500 mt-1">${translit}</div>
-          <div class="text-sm text-gray-700">${arti}</div>
-        `;
+      const card = document.createElement('div');
+      card.className = "rounded-xl shadow bg-white dark:bg-slate-600 p-3";
 
-        target.appendChild(card);
-      });
-    })();
-  </script>
+      card.innerHTML = `
+        <div class="flex items-start justify-between">
+          <span class="text-xs text-gray-400 dark:text-slate-300">#${no}</span>
+        </div>
+        <div class="arabic-text text-2xl leading-snug text-right break-words mt-1">${arabic}</div>
+        <div class="text-xs text-gray-500 dark:text-slate-300 mt-1">${translit}</div>
+        <div class="text-sm text-gray-700 dark:text-slate-300">${arti}</div>
+      `;
+
+      target.appendChild(card);
+    });
+  }
+</script>
+
+
+  <script>
+  const ITEMS_PER_PAGE = 5;
+
+  const vocabData = [
+["الْحَيَوَانُ","al-ḥayawān","Hewan"],
+["الْقِطُّ","al-qiṭṭ","Kucing"],
+["الْكَلْبُ","al-kalb","Anjing"],
+["الْفَأْرُ","al-fa’r","Tikus"],
+["الْأَرْنَبُ","al-arnab","Kelinci"],
+["الْحِصَانُ","al-ḥiṣān","Kuda"],
+["الْبَقَرَةُ","al-baqarah","Sapi"],
+["الْغَنَمُ","al-ghanam","Kambing"],
+["الْخَرُوفُ","al-kharūf","Domba"],
+["الْجَمَلُ","al-jamal","Unta"],
+
+["الدَّجَاجَةُ","ad-dajājah","Ayam"],
+["الدِّيكُ","ad-dīk","Ayam jantan"],
+["الْبَطَّةُ","al-baṭṭah","Bebek"],
+["الطَّائِرُ","aṭ-ṭā’ir","Burung"],
+["الْحَمَامَةُ","al-ḥamāmah","Merpati"],
+["الْبُومَةُ","al-būmah","Burung hantu"],
+
+["السَّمَكُ","as-samak","Ikan"],
+["الْحُوتُ","al-ḥūt","Ikan besar"],
+["الدُّلْفِينُ","ad-dulfīn","Lumba-lumba"],
+["الْقِرْشُ","al-qirsh","Hiu"],
+
+["الْأَسَدُ","al-asad","Singa"],
+["النَّمِرُ","an-namir","Harimau"],
+["الذِّئْبُ","adh-dhi’b","Serigala"],
+["الثَّعْلَبُ","ath-tha‘lab","Rubah"],
+["الدُّبُّ","ad-dubb","Beruang"],
+["الْفِيلُ","al-fīl","Gajah"],
+["الزَّرَافَةُ","az-zarāfah","Jerapah"],
+["الْقِرْدُ","al-qird","Monyet"],
+
+["الثُّعْبَانُ","ath-thu‘bān","Ular"],
+["التِّمْسَاحُ","at-timsāḥ","Buaya"],
+["السَّحْلِيَّةُ","as-saḥliyyah","Kadal"],
+["الضِّفْدَعُ","aḍ-ḍifda‘","Katak"],
+
+["النَّحْلَةُ","an-naḥlah","Lebah"],
+["الْفَرَاشَةُ","al-farāshah","Kupu-kupu"],
+["الذُّبَابُ","adh-dhubāb","Lalat"],
+["النَّمْلَةُ","an-namlah","Semut"],
+["الْعَنْكَبُوتُ","al-‘ankabūt","Laba-laba"]
+
+["الْحِمَارُ","al-ḥimār","Keledai"],
+["الْجَامُوسُ","al-jāmūs","Kerbau"],
+["الْمَاعِزُ","al-mā‘iz","Kambing jantan"],
+["الْخِنْزِيرُ","al-khinzīr","Babi"],
+["الْكَلْبُ الْبَحْرِيُّ","al-kalb al-baḥrī","Anjing laut"],
+
+["الصَّقْرُ","aṣ-ṣaqr","Elang"],
+["النَّسْرُ","an-nasr","Burung nasar"],
+["الْغُرَابُ","al-ghurāb","Gagak"],
+["الْبَبْغَاءُ","al-babghā’","Burung beo"],
+["الطَّاوُوسُ","aṭ-ṭāwūs","Merak"],
+
+["السُّلَحْفَاةُ","as-sulaḥfāh","Kura-kura"],
+["الْحَرْبَاءُ","al-ḥarbā’","Bunglon"],
+["الْوَرَلُ","al-waral","Biawak"],
+
+["الأُخْطُبُوطُ","al-ukhtubūṭ","Gurita"],
+["الْقِنْدِيلُ الْبَحْرِيُّ","al-qindīl al-baḥrī","Ubur-ubur"],
+["الْسَّرَطَانُ","as-saraṭān","Kepiting"],
+["الْجَمْبَرِي","al-jambarī","Udang"],
+
+["الْجُرَادُ","al-jurād","Belalang"],
+["الْبَعُوضَةُ","al-ba‘ūḍah","Nyamuk"],
+["الْخُنْفُسَاءُ","al-khunfusā’","Kumbang"],
+["الدُّودَةُ","ad-dūdah","Cacing"],
+
+["الظَّبْيُ","aẓ-ẓaby","Rusa"],
+["الْوَعْلُ","al-wa‘l","Kambing gunung"],
+["الْخَفَّاشُ","al-khaffāsh","Kelelawar"],
+["الْقُنْفُذُ","al-qunfudh","Landak"],
+
+["الْحَيَوَانُ الْأَلِيفُ","al-ḥayawān al-alīf","Hewan peliharaan"],
+["الْحَيَوَانُ الْبَرِّيُّ","al-ḥayawān al-barrī","Hewan liar"],
+["الْحَيَوَانُ الْبَحْرِيُّ","al-ḥayawān al-baḥrī","Hewan laut"],
+["الْحَيَوَانُ الْمَائِيُّ","al-ḥayawān al-mā’ī","Hewan air"],
+
+["الْكَلْبُ الْأَلِيفُ","al-kalb al-alīf","Anjing peliharaan"],
+["الْقِطُّ الْأَلِيفُ","al-qiṭṭ al-alīf","Kucing peliharaan"],
+["الْحِصَانُ الْعَرَبِيُّ","al-ḥiṣān al-‘arabī","Kuda Arab"],
+["الْجَمَلُ الْعَرَبِيُّ","al-jamal al-‘arabī","Unta Arab"],
+
+["الطَّائِرُ الْجَمِيلُ","aṭ-ṭā’ir al-jamīl","Burung yang indah"],
+["الطَّائِرُ الصَّغِيرُ","aṭ-ṭā’ir aṣ-ṣaghīr","Burung kecil"],
+["الطَّائِرُ الْكَبِيرُ","aṭ-ṭā’ir al-kabīr","Burung besar"],
+
+["السَّمَكُ الصَّغِيرُ","as-samak aṣ-ṣaghīr","Ikan kecil"],
+["السَّمَكُ الْكَبِيرُ","as-samak al-kabīr","Ikan besar"],
+["السَّمَكُ الْمَلِيحُ","as-samak al-malīḥ","Ikan asin"],
+
+["الْأَسَدُ الْقَوِيُّ","al-asad al-qawiyy","Singa yang kuat"],
+["النَّمِرُ الْمُفْتَرِسُ","an-namir al-muftaris","Harimau buas"],
+["الذِّئْبُ الْمَاكِرُ","adh-dhi’b al-mākir","Serigala licik"],
+
+["الْفِيلُ الْكَبِيرُ","al-fīl al-kabīr","Gajah besar"],
+["الزَّرَافَةُ الطَّوِيلَةُ","az-zarāfah aṭ-ṭawīlah","Jerapah tinggi"],
+["الدُّبُّ الْأَسْوَدُ","ad-dubb al-aswad","Beruang hitam"],
+
+["الثُّعْبَانُ السَّامُّ","ath-thu‘bān as-sāmm","Ular berbisa"],
+["التِّمْسَاحُ الْكَبِيرُ","at-timsāḥ al-kabīr","Buaya besar"],
+["السُّلَحْفَاةُ الْبَطِيئَةُ","as-sulaḥfāh al-baṭī’ah","Kura-kura lambat"],
+
+["النَّحْلَةُ الصَّغِيرَةُ","an-naḥlah aṣ-ṣaghīrah","Lebah kecil"],
+["الْفَرَاشَةُ الْجَمِيلَةُ","al-farāshah al-jamīlah","Kupu-kupu indah"],
+["النَّمْلَةُ الصَّغِيرَةُ","an-namlah aṣ-ṣaghīrah","Semut kecil"]
+
+
+  ];
+
+  const tableBody = document.querySelector("#vocab-table tbody");
+  const pagination = document.getElementById("pagination");
+
+  function renderPage(page) {
+  tableBody.innerHTML = "";
+
+  const start = (page - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE; // ✅ TANPA -1
+
+  const pageItems = vocabData.slice(start, end);
+
+  pageItems.forEach((item, i) => {
+    if (!item || item.length < 3) return;
+
+    tableBody.innerHTML += `
+      <tr>
+        <td class="px-4 py-3">${start + i + 1}</td>
+        <td class="px-4 py-3 text-xl arabic-text text-right font-semibold">${item[0]}</td>
+        <td class="px-4 py-3">${item[1]}</td>
+        <td class="px-4 py-3">${item[2]}</td>
+      </tr>
+    `;
+  });
+
+  buildMobileList();
+  setActive(page);
+}
+
+
+
+
+  function buildPagination() {
+    const pages = Math.ceil(vocabData.length / ITEMS_PER_PAGE);
+    pagination.innerHTML = "";
+    for (let i = 1; i <= pages; i++) {
+      pagination.innerHTML += `
+        <button onclick="renderPage(${i})"
+          class="px-3 py-1 rounded-lg bg-primary-100 text-primary-700 hover:bg-primary-500 hover:text-white transition">
+          ${i}
+        </button>
+      `;
+    }
+  }
+
+  function setActive(page) {
+    [...pagination.children].forEach((btn, idx) => {
+      btn.classList.toggle("bg-primary-600", idx + 1 === page);
+      btn.classList.toggle("text-white", idx + 1 === page);
+    });
+  }
+
+  buildPagination();
+  renderPage(1);
+</script>
+
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
 <script>

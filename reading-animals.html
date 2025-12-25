@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
+
+<script src="assets/data/vocabs.js"></script>
+
+
+<script src="assets/theme.js"></script>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,9 +19,10 @@
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
-          colors: {
+            colors: {
             primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
             secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
           },
@@ -30,78 +37,87 @@
   </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-300">
   <!-- Header -->
   <header class="bg-primary-600 text-white shadow-lg">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center space-x-2">
         <i data-feather="book-open" class="w-8 h-8"></i>
         <h1 class="text-2xl font-bold">Tarbiyyat al-Lughah</h1>
       </div>
-      <nav class="hidden md:flex gap-6">
-        <a href="index.html" class="hover:text-white">Beranda</a>
-        <a href="quiz-animals.html" class="hover:text-white">Kuis</a>
-        <a href="index.html#tentang" class="hover:text-white">Tentang</a>
+      <nav class="hidden md:flex space-x-6">
+        <a href="index.html" class="hover:text-secondary-300">Beranda</a>
+        <a href="quiz-animals.html" class="hover:text-secondary-300">Kuis</a>
+        <a href="index.html#tentang" class="hover:text-secondary-300">Tentang</a>
       </nav>
     </div>
   </header>
 
-  <!-- Main -->
+  <!-- Main Content -->
   <main class="container mx-auto px-4 py-8">
-    <!-- Judul -->
+    <!-- Page Title -->
     <div class="text-center mb-8">
-      <h1 class="arabic-text text-4xl font-bold text-primary-800 mb-2">الحيوانات</h1>
-      <p class="text-2xl text-gray-700">Hewan</p>
+      <h1 class="text-4xl font-bold text-primary-800 dark:text-slate-300 arabic-text mb-2">الحيوانات</h1>
+      <p class="text-2xl text-gray-700 dark:text-slate-300">Membaca teks dengan tema Hewan</p>
     </div>
 
-    <!-- Card Bacaan -->
-    <section class="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
-      <!-- Tombol Audio -->
-      <div class="flex justify-center mb-6">
-        <button id="btnPlayAnimals"
-          class="flex items-center justify-center w-16 h-16 rounded-full bg-secondary-500 hover:bg-secondary-600 text-white shadow-lg transition"
-          aria-label="Putar Audio" aria-pressed="false">
-          <i data-feather="headphones" class="w-7 h-7"></i>
-        </button>
+    <!-- Reading Section -->
+    <section class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
+
+
+
+      <!-- Arabic Text -->
+      <div class="bg-gray-50 dark:bg-slate-600 p-6 rounded-xl mb-6">
+        <p id="readingText" class="arabic-text text-2xl leading-loose text-center">
+  أُسْرَتِي أُسْرَةٌ سَعِيدَةٌ. &nbsp;أَنَا أَعِيشُ مَعَ أَبِي وَأُمِّي فِي الْمَنْزِلِ.
+  أَبِي يَعْمَلُ كُلَّ يَوْمٍ، وَأُمِّي تُعْتَنِي بِالْبَيْتِ.
+  لِي أَخٌ وَأُخْتٌ، وَنَحْنُ نُحِبُّ بَعْضَنَا بَعْضًا.
+  فِي الْمَسَاءِ نَجْتَمِعُ مَعَ الْأُسْرَةِ وَنَتَحَدَّثُ مَعًا.
+  نَشْعُرُ بِالْمَحَبَّةِ وَالْأُلْفَةِ فِي بَيْتِنَا.
+  أُحِبُّ أُسْرَتِي لِأَنَّهَا مُهِمَّةٌ فِي حَيَاتِي.
+      </p>
+
+
       </div>
 
-      <!-- Audio Lokal -->
-      <audio id="audioAnimals" preload="metadata">
-        <source src="media/audio/dialog_hewan.mp3" type="audio/mpeg">
-        Browser kamu tidak mendukung elemen audio.
-      </audio>
-
-      <!-- Teks Arab -->
-      <div class="bg-gray-50 p-6 rounded-xl mb-6">
-        <p class="arabic-text text-2xl leading-loose text-center">
-          فِي الْمَدْرَسَةِ حَدِيقَةٌ فِيهَا حَيَوَانَاتٌ كَثِيرَةٌ.
-          فِي الْحَدِيقَةِ أَرْنَبٌ أَبْيَضُ وَطَائِرٌ جَمِيلٌ.
-          الْأَرْنَبُ يَأْكُلُ الْجَزَرَ، وَالطَّائِرُ يُغَنِّي عَلَى الشَّجَرَةِ.
-          يُحِبُّ الطُّلَّابُ أَنْ يُشَاهِدُوا الْحَيَوَانَاتِ بَعْدَ الدَّرْسِ.
-          وَيَتَعَلَّمُونَ أَسْمَاءَهَا فِي دَرْسِ اللُّغَةِ الْعَرَبِيَّةِ.
-        </p>
+      <div class="mt-4 mb-4 text-center">
+        <audio id="readingAudio" controls class="mx-auto w-full max-w-md">
+        Browser Anda tidak mendukung audio.
+        </audio>
       </div>
 
-      <!-- Toggle Terjemahan -->
+
+      <!-- Translation Toggle -->
       <div class="text-center mb-6">
         <button id="toggleTranslation" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-6 rounded-lg transition">
           Tampilkan Terjemahan
         </button>
       </div>
 
-      <!-- Terjemahan -->
-      <div id="translation" class="bg-primary-50 p-6 rounded-xl border border-primary-200">
-        <h3 class="text-xl font-semibold text-primary-800 mb-3">Terjemahan:</h3>
-        <p class="text-gray-700 leading-relaxed">
-          Di sekolah ada taman yang berisi banyak hewan.
-          Di taman ada seekor kelinci putih dan seekor burung yang indah.
-          Kelinci makan wortel, dan burung bernyanyi di atas pohon.
-          Para siswa senang melihat hewan-hewan itu setelah pelajaran.
-          Mereka belajar nama-nama hewan tersebut dalam pelajaran bahasa Arab.
-        </p>
-      </div>
+      <!-- Translation (Initially Hidden) -->
+      <div id="translation" class="bg-primary-50 dark:bg-slate-600 p-6 rounded-xl border border-primary-200">
+        <h3 class="text-xl font-semibold text-primary-800 dark:text-slate-300 mb-3">Terjemahan:</h3>
+        <p id="translationText" class="text-gray-700 dark:text-slate-300 leading-relaxed">
+  Aku sangat menyukai hewan. Di rumah kami ada seekor kucing peliharaan dan seekor anjing kecil.
+  Aku merawat hewan-hewan setiap hari dan memberi mereka makanan.
+  Di peternakan ada sapi, kambing, dan ayam.
+  Adapun di hutan terdapat singa yang kuat dan gajah yang besar.
+  Hewan-hewan adalah makhluk ciptaan Allah, dan kita harus menyayangi serta menjaganya.
+</p>
 
-      <!-- Navigasi bawah (dengan tambahan tombol ke Kosa Kata) -->
+
+
+      </div>
+     
+      <div class="text-center mb-6 mt-6">
+  <button id="shuffleReading"
+    class="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-2 px-6 rounded-lg transition">
+    🔀 Acak Bacaan
+  </button>
+</div>
+
+
+<!-- Navigasi bawah (dengan tambahan tombol ke Kosa Kata) -->
 <div class="flex flex-col sm:flex-row gap-3 justify-between mt-6">
   <a href="index.html"
      class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white w-full sm:w-auto">
@@ -121,6 +137,8 @@
   </div>
 </div>
 
+
+
     </section>
   </main>
 
@@ -136,49 +154,17 @@
     // Toggle Terjemahan
     document.getElementById('toggleTranslation').addEventListener('click', function() {
       const translation = document.getElementById('translation');
-      const showing = translation.style.display === 'block';
-      translation.style.display = showing ? 'none' : 'block';
-      this.textContent = showing ? 'Tampilkan Terjemahan' : 'Sembunyikan Terjemahan';
+      const button = this;
+
+      if (translation.style.display === 'block') {
+        translation.style.display = 'none';
+        button.textContent = 'Tampilkan Terjemahan';
+      } else {
+        translation.style.display = 'block';
+        button.textContent = 'Sembunyikan Terjemahan';
+      }
     });
 
-    // Audio lokal Play/Pause
-    (function () {
-      const btn = document.getElementById('btnPlayAnimals');
-      const audio = document.getElementById('audioAnimals');
-
-      function setPlayingUI(isPlaying) {
-        btn.setAttribute('aria-pressed', String(isPlaying));
-        btn.innerHTML = isPlaying
-          ? '<i data-feather="pause" class="w-7 h-7"></i>'
-          : '<i data-feather="headphones" class="w-7 h-7"></i>';
-        feather.replace();
-        btn.classList.toggle('ring-2', isPlaying);
-        btn.classList.toggle('ring-green-300', isPlaying);
-      }
-
-      btn.addEventListener('click', async () => {
-        if (audio.paused) {
-          try {
-            await audio.play();
-            setPlayingUI(true);
-          } catch (e) {
-            alert('Gagal memutar audio. Pastikan file "media/audio/dialog_hewan.mp3" tersedia.');
-            console.error(e);
-          }
-        } else {
-          audio.pause();
-          setPlayingUI(false);
-        }
-      });
-
-      audio.addEventListener('ended', () => setPlayingUI(false));
-      audio.addEventListener('pause', () => setPlayingUI(false));
-      audio.addEventListener('play', () => setPlayingUI(true));
-      audio.addEventListener('error', () => {
-        setPlayingUI(false);
-        alert('Tidak dapat memuat audio: media/audio/dialog_hewan.mp3');
-      });
-    })();
   </script>
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
@@ -188,6 +174,138 @@
 
 <!-- Panggil script presence -->
 <script type="module" src="./assets/presence.js"></script>
+
+<script>
+/* =========================
+   DATA BACAAN TA'ARUF
+========================= */
+const READINGS = [
+ 
+{
+  ar: `أَنَا أُحِبُّ الْحَيَوَانَاتِ كَثِيرًا.
+فِي بَيْتِنَا حَيَوَانَاتٌ أَلِيفَةٌ نُعْتَنِي بِهَا.
+عِنْدَنَا قِطٌّ جَمِيلٌ وَكَلْبٌ صَغِيرٌ.
+فِي الْمَزْرَعَةِ بَقَرَةٌ وَغَنَمٌ وَدَجَاجَةٌ.
+نَجِبُ أَنْ نَرْحَمَ الْحَيَوَانَاتِ وَنُحَافِظَ عَلَيْهَا.`,
+
+  id: `Aku sangat menyukai hewan.
+Di rumah kami ada hewan-hewan peliharaan yang kami rawat.
+Kami mempunyai seekor kucing yang indah dan seekor anjing kecil.
+Di peternakan ada sapi, kambing, dan ayam.
+Kita harus menyayangi hewan-hewan dan menjaganya.`,
+
+  audio: "media/audio/audio-hewan/hewan1.mp3"
+},
+{
+  ar: `فِي الْغَابَةِ حَيَوَانَاتٌ كَثِيرَةٌ.
+هُنَاكَ أَسَدٌ قَوِيٌّ وَنَمِرٌ سَرِيعٌ.
+نَرَى أَيْضًا فِيلًا كَبِيرًا وَزَرَافَةً طَوِيلَةً.
+تَعِيشُ هَذِهِ الْحَيَوَانَاتُ فِي الطَّبِيعَةِ.
+يَجِبُ عَلَيْنَا أَنْ نُحَافِظَ عَلَى الْغَابَةِ.`,
+
+  id: `Di hutan ada banyak hewan.
+Di sana ada singa yang kuat dan harimau yang cepat.
+Kami juga melihat gajah yang besar dan jerapah yang tinggi.
+Hewan-hewan ini hidup di alam.
+Kita harus menjaga hutan.`,
+
+  audio: "media/audio/audio-hewan/hewan2.mp3"
+},
+{
+  ar: `فِي الْبَحْرِ حَيَوَانَاتٌ مَائِيَّةٌ.
+نَرَى سَمَكًا صَغِيرًا وَسَمَكًا كَبِيرًا.
+هُنَاكَ دُلْفِينٌ ذَكِيٌّ وَقِرْشٌ خَطِيرٌ.
+تَسْبَحُ الْحَيَوَانَاتُ فِي الْمَاءِ بِسُهُولَةٍ.
+نُحِبُّ الْبَحْرَ وَنَحْمِي حَيَوَانَاتِهِ.`,
+
+  id: `Di laut ada hewan-hewan air.
+Kami melihat ikan kecil dan ikan besar.
+Di sana ada lumba-lumba yang cerdas dan hiu yang berbahaya.
+Hewan-hewan itu berenang di air dengan mudah.
+Kami mencintai laut dan melindungi hewan-hewannya.`,
+
+  audio: "media/audio/audio-hewan/hewan3.mp3"
+},
+{
+  ar: `فِي الْمَزْرَعَةِ حَيَوَانَاتٌ كَثِيرَةٌ.
+عِنْدَنَا بَقَرَةٌ وَغَنَمٌ وَدَجَاجَةٌ.
+يُعْطِينَا الْحَيَوَانُ طَعَامًا نَافِعًا.
+نَعْتَنِي بِحَيَوَانَاتِ الْمَزْرَعَةِ كُلَّ يَوْمٍ.
+الْحَيَوَانَاتُ نِعْمَةٌ مِنَ اللهِ.`,
+
+  id: `Di peternakan ada banyak hewan.
+Kami mempunyai sapi, kambing, dan ayam.
+Hewan-hewan memberi kita makanan yang bermanfaat.
+Kami merawat hewan-hewan peternakan setiap hari.
+Hewan adalah nikmat dari Allah.`,
+
+  audio: "media/audio/audio-hewan/hewan4.mp3"
+},
+{
+  ar: `فِي الْحَدِيقَةِ حَيَوَانَاتٌ جَمِيلَةٌ.
+نَرَى طُيُورًا مُلَوَّنَةً وَفَرَاشَاتٍ.
+يَلْعَبُ الْأَطْفَالُ وَيَنْظُرُونَ إِلَيْهَا.
+تَجْعَلُنَا الْحَيَوَانَاتُ سُعَدَاءَ.
+نُحَافِظُ عَلَى نَظَافَةِ الْحَدِيقَةِ.`,
+
+  id: `Di taman ada hewan-hewan yang indah.
+Kami melihat burung-burung berwarna dan kupu-kupu.
+Anak-anak bermain dan melihatnya.
+Hewan-hewan membuat kami bahagia.
+Kami menjaga kebersihan taman.`,
+
+  audio: "media/audio/audio-hewan/hewan5.mp3"
+},
+{
+  ar: `فِي بَيْتِنَا حَيَوَانٌ أَلِيفٌ.
+نَعْتَنِي بِالْقِطِّ وَنُلَاعِبُهُ.
+نُعْطِيهِ الطَّعَامَ وَالْمَاءَ.
+الْحَيَوَانُ يَحْتَاجُ إِلَى الرِّعَايَةِ.
+الرَّحْمَةُ بِالْحَيَوَانِ خُلُقٌ جَمِيلٌ.`,
+
+  id: `Di rumah kami ada hewan peliharaan.
+Kami merawat kucing dan bermain dengannya.
+Kami memberinya makanan dan air.
+Hewan membutuhkan perawatan.
+Menyayangi hewan adalah akhlak yang baik.`,
+
+  audio: "media/audio/audio-hewan/hewan6.mp3"
+},
+
+
+
+];
+
+/* =========================
+   LOGIKA ACAK
+========================= */
+const readingEl = document.getElementById('readingText');
+const translationEl = document.getElementById('translationText');
+const shuffleBtn = document.getElementById('shuffleReading');
+
+const audioEl = document.getElementById('readingAudio');
+audioEl.src = "media/audio/audio_keluarga/keluarga0.mp3";
+audioEl.load(); // ⬅️ TAMBAHKAN INI
+
+
+shuffleBtn.addEventListener('click', () => {
+  const random = READINGS[Math.floor(Math.random() * READINGS.length)];
+
+  // ganti teks
+  readingEl.innerHTML = random.ar;
+  translationEl.innerHTML = random.id;
+
+  // ganti audio
+  audioEl.src = random.audio;
+  audioEl.load(); // WAJIB
+
+  // reset terjemahan
+  document.getElementById('translation').style.display = 'none';
+  document.getElementById('toggleTranslation').textContent = 'Tampilkan Terjemahan';
+});
+
+</script>
+
 
 
 </body>
