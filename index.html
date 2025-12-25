@@ -2,6 +2,10 @@
 <html lang="id" dir="ltr">
 
 <script src="assets/data/vocabs.js"></script>
+<script src="assets/data/daily-questions.js"></script>
+<script src="assets/data/materials.js"></script>
+
+
 
 <script src="assets/theme.js"></script>
 
@@ -225,90 +229,6 @@
     <p class="mt-3 text-gray-600 dark:text-slate-300 text-lg">Media belajar interaktif untuk meningkatkan pemahaman Bahasa Arab bagi siswa MTs kelas 7.</p>
   </section>
 
-<!-- Mini Widget: Tantangan Hari Ini (Game ringan di beranda) -->
-<section id="tantangan" class="max-w-4xl mx-auto px-4 mt-6 mb-10">
-  <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6 text-center">
-    <div class="inline-flex items-center gap-2 mb-3">
-      <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300">🎯 Tantangan Hari Ini</h2>
-    </div>
-
-    <!-- Pertanyaan -->
-    <p id="q-text" class="text-gray-600 dark:text-slate-300 mb-4">
-      Apa arti frasa <span id="q-ar" class="arabic-text text-xl font-bold text-primary-800 dark:text-slate-300">...</span> ?
-    </p>
-
-    <!-- Opsi -->
-    <div id="q-options" class="flex flex-wrap justify-center gap-3"></div>
-
-    <!-- Feedback -->
-    <p id="q-feedback" class="mt-4 text-sm font-semibold "></p>
-
-    <!-- Tombol kontrol -->
-    <div class="mt-5 flex flex-wrap gap-3 justify-center">
-      <button id="q-next"
-              class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white disabled:opacity-50 disabled:cursor-not-allowed">
-        Soal Berikutnya
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- GAME WORD MATCH -->
-<div class="max-w-2xl mx-auto mt-8 sm:mt-10
-            bg-white dark:bg-slate-700
-             rounded-2xl shadow-md
-            p-4 sm:p-6 md:p-8">
-
-
-  <h2 class="text-lg sm:text-xl md:text-2xl
-           font-bold text-primary-700 dark:text-slate-300 mb-1 text-center">
-
-    🤺 Tebak Arti Cepat
-  </h2>
-
-  <p class="text-sm sm:text-base text-gray-500 dark:text-slate-300 text-center mb-4">
-
-    Uji kosakata bahasa Arab kamu
-  </p>
-
-  <!-- AREA GAME -->
-  <div id="gameArea" class="hidden text-center">
-
-    <div id="timer" class="text-sm text-red-500 mb-2">
-      Waktu: 30 detik
-    </div>
-
-    <div id="arabicWord"
-     class="text-2xl sm:text-3xl md:text-4xl
-            font-bold mb-4 text-center">
-
-    </div>
-
-    <div id="options" class="grid grid-cols-1 gap-3 mb-4"></div>
-
-    <div class="text-gray-700 dark:text-slate-300">
-      Soal <span id="current">1</span>/10 |
-      Skor: <span id="score">0</span>
-    </div>
-
-  </div>
-
-  <!-- START -->
-  <div class="flex justify-center mt-4">
-  <button id="startBtn"
-    class="w-full sm:w-auto
-           px-6 py-2.5
-           rounded-xl
-           bg-blue-600 text-white font-semibold
-           text-sm sm:text-base
-           hover:bg-blue-700 transition">
-    Mulai Game
-  </button>
-</div>
-
-
-</div>
-
 
 <!-- bagian pencarian kosakata -->
  <section id="search" class="max-w-4xl mx-auto px-4 mt-8 mb-12">
@@ -358,35 +278,42 @@
   </div>
 </section>
 
-<!-- Kartu Gramatikal (Nahwu & Shorof) -->
-<section id="grammar-cards" class="max-w-6xl mx-auto px-4 mt-10 mb-12 theme-mix">
+<!-- Kartu Gramatikal (Campur) -->
+<section id="grammar-cards" class="max-w-6xl mx-auto px-4 mt-10 mb-12">
   <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6">
+
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-      <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300">📘 Kartu Gramatikal</h2>
-      <div class="flex flex-wrap items-center gap-2">
-        <span class="text-sm text-gray-600 dark:text-slate-300">Kategori:</span>
-        <button id="gbtn-all"   class="px-3 py-1.5 rounded-lg bg-primary-600 text-white font-semibold">Campur</button>
-        <button id="gbtn-nahwu" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold">Nahwu</button>
-        <button id="gbtn-shorof"class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold">Shorof</button>
-      </div>
+      <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300">
+        📘 Kartu Gramatikal
+      </h2>
     </div>
 
-    <p class="text-gray-600 dark:text-slate-300 mt-2">Ketuk kartu untuk melihat penjelasan singkat dan contoh.</p>
+    <p class="text-gray-600 dark:text-slate-300 mt-2">
+      Ketuk kartu untuk melihat penjelasan singkat dan contoh.  
+      Empat kartu akan ditampilkan secara acak dari seluruh materi.
+    </p>
 
+    <!-- Grid kartu -->
     <div id="gcard-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5"></div>
 
-     <div class="mt-6 flex flex-wrap gap-3 justify-center">
-      <button id="gbtn-shuffle"
-              class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-semibold">
+    <!-- Kontrol -->
+    <div class="mt-6 flex flex-wrap gap-3 justify-center">
+      <button
+        id="gbtn-shuffle"
+        class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-semibold">
         🔀 Acak 4 kartu
       </button>
-      <button id="gbtn-reset"
-              class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">
+
+      <button
+        id="gbtn-reset"
+        class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">
         ↺ Reset
       </button>
     </div>
+
   </div>
 </section>
+
 
 
 
@@ -652,202 +579,6 @@
   <script>document.addEventListener('DOMContentLoaded', () => feather.replace());</script>
 
 
-<script>
-(function(){
-  const QUESTIONS = [
-    // ====== TA'ARUF ======
-    { ar: 'مَا اسْمُكَ؟', id: 'Siapa namamu?', opts: ['Apa kabarmu?','Di mana rumahmu?','Siapa namamu?','Apa hobimu?'], correct: 2 },
-    { ar: 'مِنْ أَيْنَ أَنْتَ؟', id: 'Dari mana kamu? (laki-laki)', opts: ['Di kelas berapa?','Dari mana kamu? (laki-laki)','Apa hobimu?','Siapa namamu?'], correct: 1 },
-    { ar: 'كَيْفَ حَالُكَ؟', id: 'Apa kabarmu?', opts: ['Apa kabarmu?','Siapa namamu?','Di mana rumahmu?','Kamu kelas berapa?'], correct: 0 },
-    { ar: 'كَمْ عُمْرُكَ؟', id: 'Berapa usiamu?', opts: ['Apa hobimu?','Berapa usiamu?','Dari mana kamu?','Di mana kamu belajar?'], correct: 1 },
-    { ar: 'السَّلَامُ عَلَيْكُمْ', id: 'Assalamu’alaikum', opts: ['Selamat pagi','Assalamu’alaikum','Sampai jumpa','Terima kasih'], correct: 1 },
-    { ar: 'وَعَلَيْكُمُ السَّلَامُ', id: 'Wa’alaikumussalam', opts: ['Wa’alaikumussalam','Selamat malam','Sampai besok','Apa kabarmu?'], correct: 0 },
-    { ar: 'إِلَى اللِّقَاءِ', id: 'Sampai jumpa', opts: ['Selamat datang','Sampai jumpa','Selamat siang','Selamat tidur'], correct: 1 },
-    { ar: 'مَا هِوَايَتُكَ؟', id: 'Apa hobimu?', opts: ['Apa hobimu?','Berapa umurmu?','Siapa namamu?','Dari mana kamu?'], correct: 0 },
-
-    // ====== KELUARGA ======
-    { ar: 'هَذَا أَبِي', id: 'Ini ayahku', opts: ['Ini ayahku','Ini ibuku','Ini kakakku','Ini guruku'], correct: 0 },
-    { ar: 'هَذِهِ أُمِّي', id: 'Ini ibuku', opts: ['Ini ibuku','Ini ayahku','Ini temanku','Ini adikku'], correct: 0 },
-    { ar: 'لِي أَخٌ وَأُخْتٌ', id: 'Aku punya saudara laki-laki dan perempuan', opts: ['Aku punya saudara laki-laki dan perempuan','Aku tidak punya saudara','Aku punya dua paman','Aku punya teman baru'], correct: 0 },
-    { ar: 'جَدِّي كَبِيرُ السِّنِّ', id: 'Kakekku sudah tua', opts: ['Kakekku sudah tua','Ayahku seorang guru','Saudaraku sedang belajar','Ibuku memasak'], correct: 0 },
-
-    // ====== SEKOLAH ======
-    { ar: 'أَيْنَ فَصْلُكَ؟', id: 'Di mana kelasmu?', opts: ['Di mana kelasmu?','Siapa gurumu?','Kapan libur?','Berapa umurmu?'], correct: 0 },
-    { ar: 'مَتَى يَبْدَأُ الدَّرْسُ؟', id: 'Kapan pelajaran dimulai?', opts: ['Kapan pelajaran dimulai?','Kapan kamu tidur?','Kapan kamu makan?','Kapan kamu bermain?'], correct: 0 },
-    { ar: 'أَنَا فِي الصَّفِّ السَّابِعِ', id: 'Saya di kelas tujuh', opts: ['Saya di kelas tujuh','Saya dari Bone','Saya lapar','Saya bahagia'], correct: 0 },
-    { ar: 'هَذَا مُعَلِّمُ اللُّغَةِ الْعَرَبِيَّةِ', id: 'Ini guru bahasa Arab', opts: ['Ini guru bahasa Arab','Ini teman sekelas','Ini kepala sekolah','Ini penjaga sekolah'], correct: 0 },
-    { ar: 'أُحِبُّ دَرْسَ الرِّيَاضِيَّاتِ', id: 'Saya suka pelajaran Matematika', opts: ['Saya suka pelajaran Matematika','Saya tidak suka olahraga','Saya benci musik','Saya senang bermain'], correct: 0 },
-
-    // ====== HEWAN ======
-    { ar: 'الْقِطَّةُ حَيَوَانٌ أَلِيفٌ', id: 'Kucing adalah hewan jinak', opts: ['Kucing adalah hewan jinak','Singa adalah hewan jinak','Ikan adalah mamalia','Kuda adalah burung'], correct: 0 },
-    { ar: 'أُرَبِّي سَمَكَةً', id: 'Saya memelihara ikan', opts: ['Saya memelihara ikan','Saya memelihara burung','Saya memelihara kuda','Saya memelihara ayam'], correct: 0 },
-    { ar: 'الطِّفْلُ يُحِبُّ الأَرَانِبَ', id: 'Anak itu suka kelinci', opts: ['Anak itu suka kelinci','Ayah suka harimau','Nenek takut kucing','Guru membeli kambing'], correct: 0 },
-    { ar: 'يَطِيرُ الطَّائِرُ فِي السَّمَاءِ', id: 'Burung terbang di langit', opts: ['Burung terbang di langit','Ikan berenang di air','Kuda berjalan di jalan','Kucing tidur di rumah'], correct: 0 }
-  ];
-
-  // ========== TAMBAHAN SOAL (AUTO-GENERATED) ==========
-// Tempelkan blok ini SETELAH deklarasi const QUESTIONS = [...] milikmu
-
-(function addExtraVocab(){
-  // 1) Daftar kosakata baru: {ar, id}
-  //    (Duplikat yang sudah ada di bank awalmu sengaja TIDAK dimasukkan)
-  const VOCABS = [
-    // 4
-    { ar:'مَا اسْمُكِ؟', id:'Siapa namamu? (perempuan)' },
-    // 5
-    { ar:'اسْمِي ...', id:'Namaku …' },
-    // 7
-    { ar:'مِنْ أَيْنَ أَنْتِ؟', id:'Dari mana kamu? (perempuan)' },
-    // 8
-    { ar:'أَنَا مِنْ بُونِي', id:'Saya dari Bone' },
-    // 9
-    { ar:'كَيْفَ حَالُكَ؟', id:'Bagaimana kabarmu? (laki-laki)' },
-    // 10
-    { ar:'أَنَا بِخَيْرٍ، وَالْحَمْدُ لِلّٰهِ', id:'Saya baik, alhamdulillah' },
-    // 11
-    { ar:'فِي أَيِّ صَفٍّ أَنْتَ؟', id:'Kamu di kelas berapa? (laki-laki)' },
-    // 14
-    { ar:'هِوَايَتِي الْقِرَاءَةُ', id:'Hobiku membaca' },
-    // 16–30: sekolah
-    { ar:'مَدْرَسَةٌ', id:'Sekolah' },
-    { ar:'مُعَلِّمٌ', id:'Guru (laki-laki)' },
-    { ar:'مُعَلِّمَةٌ', id:'Guru (perempuan)' },
-    { ar:'طَالِبٌ', id:'Siswa (laki-laki)' },
-    { ar:'طَالِبَةٌ', id:'Siswa (perempuan)' },
-    { ar:'فَصْلٌ', id:'Kelas / ruang kelas' },
-    { ar:'كِتَابٌ', id:'Buku' },
-    { ar:'قَلَمٌ', id:'Pena / pulpen' },
-    { ar:'سَبُّورَةٌ', id:'Papan tulis' },
-    { ar:'كُرْسِيٌّ', id:'Kursi' },
-    { ar:'مَكْتَبٌ', id:'Meja' },
-    { ar:'حَقِيبَةٌ', id:'Tas' },
-    { ar:'مُدِيرٌ', id:'Kepala sekolah' },
-    { ar:'مَكْتَبَةٌ', id:'Perpustakaan' },
-    { ar:'مَلْعَبٌ', id:'Lapangan' },
-    // 31–45: keluarga & rumah
-    { ar:'أَبٌ', id:'Ayah' },
-    { ar:'أُمٌّ', id:'Ibu' },
-    { ar:'أَخٌ', id:'Saudara laki-laki' },
-    { ar:'أُخْتٌ', id:'Saudara perempuan' },
-    { ar:'جَدٌّ', id:'Kakek' },
-    { ar:'جَدَّةٌ', id:'Nenek' },
-    { ar:'اِبْنٌ', id:'Anak laki-laki' },
-    { ar:'بِنْتٌ', id:'Anak perempuan' },
-    { ar:'عَمٌّ', id:'Paman (saudara ayah)' },
-    { ar:'عَمَّةٌ', id:'Bibi (saudari ayah)' },
-    { ar:'خَالٌ', id:'Paman (saudara ibu)' },
-    { ar:'خَالَةٌ', id:'Bibi (saudari ibu)' },
-    { ar:'أُسْرَةٌ', id:'Keluarga' },
-    { ar:'بَيْتٌ', id:'Rumah' },
-    { ar:'غُرْفَةٌ', id:'Kamar' },
-    // 46–60: hewan
-    { ar:'قِطٌّ', id:'Kucing' },
-    { ar:'كَلْبٌ', id:'Anjing' },
-    { ar:'طَيْرٌ', id:'Burung' },
-    { ar:'أَرْنَبٌ', id:'Kelinci' },
-    { ar:'بَقَرَةٌ', id:'Sapi' },
-    { ar:'دَجَاجَةٌ', id:'Ayam betina' },
-    { ar:'خَرُوفٌ', id:'Domba' },
-    { ar:'حِصَانٌ', id:'Kuda' },
-    { ar:'جَمَلٌ', id:'Unta' },
-    { ar:'سَمَكٌ', id:'Ikan' },
-    { ar:'قِرْدٌ', id:'Monyet' },
-    { ar:'فِيلٌ', id:'Gajah' },
-    { ar:'أَسَدٌ', id:'Singa' },
-    { ar:'نَمِرٌ', id:'Harimau' },
-    { ar:'زَرَافَةٌ', id:'Jerapah' },
-  ];
-
-  // Tambahkan ini agar VOCABS bisa diakses global
-window.VOCABS = (window.VOCABS || []).concat(VOCABS);
-
-
-  // 2) Bangun opsi otomatis (tiga pengecoh + 1 jawaban benar), lalu acak
-  function buildItems(vocabs){
-    const allMeanings = vocabs.map(v => v.id);
-    return vocabs.map(v => {
-      // ambil 3 arti lain sebagai distractor
-      const pool = allMeanings.filter(x => x !== v.id);
-      const wrong = [];
-      for (let i = 0; i < 3 && pool.length; i++){
-        const k = Math.floor(Math.random() * pool.length);
-        wrong.push(pool.splice(k,1)[0]);
-      }
-      const opts = wrong.concat([v.id]);        // masukkan jawaban benar
-      // acak opsi + dapatkan index jawaban benar
-      for (let j = opts.length - 1; j > 0; j--){
-        const k = Math.floor(Math.random() * (j + 1));
-        [opts[j], opts[k]] = [opts[k], opts[j]];
-      }
-      const correct = opts.indexOf(v.id);
-      return { ar: v.ar, id: v.id, opts, correct };
-    });
-  }
-
-  // 3) Tambahkan ke bank soal yang ada
-  const EXTRA_ITEMS = buildItems(VOCABS);
-  QUESTIONS.push(...EXTRA_ITEMS);
-})();
-
-  const qAr = document.getElementById('q-ar');
-  const qOpts = document.getElementById('q-options');
-  const qFeedback = document.getElementById('q-feedback');
-  const qNext = document.getElementById('q-next');
-
-  let current = null;
-  let locked = false;
-
-  function pickRandom(){
-    return QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
-  }
-
-  function renderQuestion(){
-    current = pickRandom();
-    locked = false;
-    qFeedback.textContent = '';
-    qFeedback.className = 'mt-4 text-sm font-semibold';
-    qAr.textContent = current.ar;
-    qOpts.innerHTML = '';
-
-    current.opts.forEach((opt, idx) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className =
-        'px-4 py-2 bg-primary-100 hover:bg-primary-200 text-primary-800 rounded-lg transition disabled:opacity-60';
-      btn.textContent = opt;
-      btn.addEventListener('click', () => choose(idx, btn));
-      qOpts.appendChild(btn);
-    });
-
-    qNext.disabled = true;
-  }
-
-  function choose(idx, btn){
-    if (locked) return;
-    locked = true;
-    [...qOpts.children].forEach((el, i) => {
-      el.disabled = true;
-      if (i === current.correct)
-        el.classList.add('ring-2','ring-green-300','bg-green-50');
-    });
-
-    if (idx === current.correct) {
-      qFeedback.textContent = 'Benar! 🎉';
-      qFeedback.classList.add('text-secondary-600');
-    } else {
-      qFeedback.textContent = `Kurang tepat. Jawaban benar: ${current.id}`;
-      qFeedback.classList.add('text-red-500');
-      btn.classList.add('ring-2','ring-red-300','bg-red-50');
-    }
-
-    qNext.disabled = false;
-  }
-
-  qNext.addEventListener('click', renderQuestion);
-  renderQuestion();
-})();
-</script>
-
 <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
 <script>
   window.PRESENCE_OPTIONS = { mode: "global" };
@@ -1062,78 +793,100 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-<!-- skrip untuk -->
- <script>
+<!-- JS UNTUK LOGIKA KARTU FLIP KOSAKATA -->
+<script>
 (() => {
+  /* =====================
+     GUARD DOM
+  ===================== */
   const grid   = document.getElementById('card-grid');
   const btnSh  = document.getElementById('btn-shuffle');
   const btnRs  = document.getElementById('btn-reset');
   const modeAR = document.getElementById('mode-ar');
   const modeID = document.getElementById('mode-id');
 
-  // Ambil data dari VOCABS + fallback dari QUESTIONS (ambil pasangan ar-id)
+  if (!grid || !btnSh || !btnRs || !modeAR || !modeID) {
+    console.warn('Flip vocab: elemen DOM tidak lengkap');
+    return;
+  }
+
+  /* =====================
+     AMBIL DATA
+  ===================== */
   const fromQuestions = (window.QUESTIONS || [])
     .map(q => ({ ar: q?.ar, id: q?.id }))
-    .filter(x => x && typeof x.ar === 'string' && typeof x.id === 'string');
+    .filter(x => typeof x?.ar === 'string' && typeof x?.id === 'string');
 
-  // Gabungkan & deduplikasi (berdasarkan pasangan ar|id)
   const raw = ((window.VOCABS || []).concat(fromQuestions))
-    .filter(v => v && v.ar && v.id);
+    .filter(v => typeof v?.ar === 'string' && typeof v?.id === 'string');
+
+  // deduplikasi ar|id
   const uniq = [];
   const seen = new Set();
   for (const v of raw) {
     const key = `${v.ar}|${v.id}`;
-    if (!seen.has(key)) { seen.add(key); uniq.push(v); }
+    if (!seen.has(key)) {
+      seen.add(key);
+      uniq.push(v);
+    }
   }
 
-  let mode = 'ar'; // 'ar' = AR → ID, 'id' = ID → AR
+  if (!uniq.length) {
+    console.warn('Flip vocab: bank kosakata kosong');
+    return;
+  }
+
+  /* =====================
+     STATE
+  ===================== */
+  let mode = 'ar';          // 'ar' | 'id'
   let currentSlice = [];
 
-  function shuffle(arr) {
+  /* =====================
+     UTIL
+  ===================== */
+  const shuffle = arr => {
     const a = arr.slice();
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
-  }
+  };
 
-  function pick4() {
-    return shuffle(uniq).slice(0, 4);
-  }
+  const pick4 = () => shuffle(uniq).slice(0, 4);
 
-  // hilangkan harakat untuk hitung panjang
-const stripHarakat = s => (s || '').replace(/[\u064B-\u065F\u0670]/g, '');
+  const stripHarakat = s => (s || '').replace(/[\u064B-\u065F\u0670]/g, '');
 
-// pilih kelas font berdasarkan panjang teks
-function sizeClassForArabic(ar){
-  const len = stripHarakat(ar).length;
-  if (len > 28) return 'text-base';       // sangat panjang
-  if (len > 18) return 'text-lg';         // panjang
-  return 'text-2xl';                      // normal/pendek
-}
+  const sizeClassForArabic = ar => {
+    const len = stripHarakat(ar).length;
+    if (len > 28) return 'text-base';
+    if (len > 18) return 'text-lg';
+    return 'text-2xl';
+  };
 
-function sizeClassForIndo(id){
-  const len = (id || '').length;
-  if (len > 36) return 'text-sm';
-  if (len > 22) return 'text-base';
-  return 'text-xl';
-}
+  const sizeClassForIndo = id => {
+    const len = (id || '').length;
+    if (len > 36) return 'text-sm';
+    if (len > 22) return 'text-base';
+    return 'text-xl';
+  };
 
+  /* =====================
+     RENDER
+  ===================== */
   function renderCards(items) {
     grid.innerHTML = '';
+
     items.forEach(v => {
-      // isi sesuai mode
-      const front = (mode === 'ar')
-      ? `<div class="arabic-text ${sizeClassForArabic(v.ar)} font-bold text-primary-800 text-center leading-relaxed">${v.ar}</div>`
-      : `<div class="${sizeClassForIndo(v.id)} font-semibold text-primary-800 text-center leading-relaxed">${v.id}</div>`;
+      const front = mode === 'ar'
+        ? `<div class="arabic-text ${sizeClassForArabic(v.ar)} font-bold text-primary-800 text-center leading-relaxed">${v.ar}</div>`
+        : `<div class="${sizeClassForIndo(v.id)} font-semibold text-primary-800 text-center leading-relaxed">${v.id}</div>`;
 
-      const back = (mode === 'ar')
-      ? `<div class="${sizeClassForIndo(v.id)} text-slate-800 text-center leading-relaxed">${v.id}</div>`
-      : `<div class="arabic-text ${sizeClassForArabic(v.ar)} font-bold text-primary-800 text-center leading-relaxed">${v.ar}</div>`;
+      const back = mode === 'ar'
+        ? `<div class="${sizeClassForIndo(v.id)} text-slate-800 text-center leading-relaxed">${v.id}</div>`
+        : `<div class="arabic-text ${sizeClassForArabic(v.ar)} font-bold text-primary-800 text-center leading-relaxed">${v.ar}</div>`;
 
-
-      // elemen kartu
       const card = document.createElement('button');
       card.type = 'button';
       card.className = 'card3d w-full select-none focus:outline-none';
@@ -1150,7 +903,6 @@ function sizeClassForIndo(id){
         </div>
       `;
 
-      // klik untuk flip
       card.addEventListener('click', () => {
         card.classList.toggle('flipped');
       });
@@ -1164,17 +916,19 @@ function sizeClassForIndo(id){
     renderCards(currentSlice);
   }
 
-  // Tombol-tombol
+  /* =====================
+     EVENTS
+  ===================== */
   btnSh.addEventListener('click', rerender);
+
   btnRs.addEventListener('click', () => {
-    // tutup semua (hapus class flipped)
-    [...grid.querySelectorAll('.card3d')].forEach(el => el.classList.remove('flipped'));
+    grid.querySelectorAll('.card3d')
+      .forEach(el => el.classList.remove('flipped'));
   });
 
-  // Ganti mode
   function setMode(newMode) {
     mode = newMode;
-    // styling tombol mode
+
     if (mode === 'ar') {
       modeAR.className = 'px-3 py-1.5 rounded-lg bg-primary-600 text-white font-semibold';
       modeID.className = 'px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold';
@@ -1182,431 +936,155 @@ function sizeClassForIndo(id){
       modeAR.className = 'px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold';
       modeID.className = 'px-3 py-1.5 rounded-lg bg-primary-600 text-white font-semibold';
     }
-    // render ulang isi kartu dengan mode baru,
-    // tetap menggunakan 4 item yang sama supaya user bisa bandingkan
+
     renderCards(currentSlice);
   }
 
   modeAR.addEventListener('click', () => setMode('ar'));
   modeID.addEventListener('click', () => setMode('id'));
 
-  // Pertama kali tampil
+  /* =====================
+     INIT
+  ===================== */
   rerender();
 })();
 </script>
 
 
+
 <!-- flip kartu untuk gramatikal -->
 <script>
-/* ============================================================
-   UTIL — umum untuk flashcards & grammar cards
-============================================================ */
 (() => {
-  // Hilangkan harakat agar perhitungan panjang stabil
+  /* =====================
+     GUARD DOM
+  ===================== */
+  const grid   = document.getElementById('gcard-grid');
+  const btnSh  = document.getElementById('gbtn-shuffle');
+  const btnRs  = document.getElementById('gbtn-reset');
+  if (!grid || !btnSh || !btnRs) {
+    console.warn('Grammar cards: elemen DOM tidak lengkap');
+    return;
+  }
+
+  /* =====================
+     AMBIL DATA DARI MATERIALS
+  ===================== */
+  const RAW = window.MATERIALS || [];
+
+  const GRAMMAR = RAW.filter(m =>
+    m &&
+    typeof m.term_ar === 'string' &&
+    typeof m.term_id === 'string' &&
+    typeof m.explain_id === 'string' &&
+    typeof m.example_ar === 'string'
+  );
+
+  if (!GRAMMAR.length) {
+    console.warn('Grammar cards: data MATERIALS kosong');
+    return;
+  }
+
+  /* =====================
+     UTIL
+  ===================== */
   const stripHarakat = s => (s || '').replace(/[\u064B-\u065F\u0670]/g, '');
 
-  // Ukuran font adaptif utk Arab & Indonesia
-  function sizeAr(s){
+  const sizeAr = s => {
     const n = stripHarakat(s).length;
     if (n > 28) return 'text-base';
     if (n > 18) return 'text-lg';
     return 'text-2xl';
-  }
-  function sizeId(s){
+  };
+
+  const sizeId = s => {
     const n = (s || '').length;
     if (n > 46) return 'text-sm';
     if (n > 28) return 'text-base';
     return 'text-lg';
-  }
+  };
 
-  // Shuffle aman
-  function shuffle(arr){
+  const shuffle = arr => {
     const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--){
+    for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
+  };
+
+  const pick4 = () => shuffle(GRAMMAR).slice(0, 4);
+
+  /* =====================
+     RENDER
+  ===================== */
+  let currentSlice = [];
+
+  function render(items) {
+    grid.innerHTML = '';
+
+    items.forEach(v => {
+      const front = `
+        <div class="arabic-text ${sizeAr(v.term_ar)} font-bold text-primary-800 text-center">
+          ${v.term_ar}
+        </div>
+        <div class="${sizeId(v.term_id)} text-slate-600 text-center mt-1">
+          ${v.term_id}
+        </div>
+      `;
+
+      const back = `
+        <div class="${sizeId(v.explain_id)} text-slate-800 text-center leading-relaxed">
+          <span class="font-semibold">${v.term_id}:</span> ${v.explain_id}
+        </div>
+        <div class="arabic-text ${sizeAr(v.example_ar)} text-primary-800 text-center mt-2">
+          ${v.example_ar}
+        </div>
+      `;
+
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'card3d w-full select-none focus:outline-none';
+      card.setAttribute('aria-label', v.term_id);
+
+      card.innerHTML = `
+        <div class="card3d-inner">
+          <div class="card-face bg-primary-50">${front}</div>
+          <div class="card-face card-back bg-white">${back}</div>
+        </div>
+      `;
+
+      card.addEventListener('click', () =>
+        card.classList.toggle('flipped')
+      );
+
+      grid.appendChild(card);
+    });
   }
 
-  // ==========================================================
-  //  A) FLASHCARDS — Kosakata (AR↔ID)
-  // ==========================================================
-  (function initVocabFlashcards(){
-    const grid   = document.getElementById('card-grid');
-    const btnSh  = document.getElementById('btn-shuffle');
-    const btnRs  = document.getElementById('btn-reset');
-    const modeAR = document.getElementById('mode-ar');
-    const modeID = document.getElementById('mode-id');
-    if (!grid || !btnSh || !btnRs || !modeAR || !modeID) return; // jika section ini tidak ada
+  function rerender() {
+    currentSlice = pick4();
+    render(currentSlice);
+  }
 
-    // Sumber data: VOCABS global + fallback dari QUESTIONS (ambil {ar,id})
-    const fromQuestions = (window.QUESTIONS || [])
-      .map(q => ({ ar: q?.ar, id: q?.id }))
-      .filter(x => x && typeof x.ar === 'string' && typeof x.id === 'string');
+  /* =====================
+     EVENTS
+  ===================== */
+  btnSh.addEventListener('click', rerender);
+  btnRs.addEventListener('click', () => {
+    grid.querySelectorAll('.card3d')
+      .forEach(c => c.classList.remove('flipped'));
+  });
 
-    const raw = ((window.VOCABS || []).concat(fromQuestions))
-      .filter(v => v && v.ar && v.id);
-
-    // Deduplikasi berdasarkan pasangan ar|id
-    const uniq = [];
-    const seen = new Set();
-    for (const v of raw){
-      const key = `${v.ar}|${v.id}`;
-      if (!seen.has(key)){ seen.add(key); uniq.push(v); }
-    }
-
-    let mode = 'ar';         // 'ar' = AR→ID, 'id' = ID→AR
-    let currentSlice = [];
-
-    function pick4(){ return shuffle(uniq).slice(0, 4); }
-
-    function renderCards(items){
-      grid.innerHTML = '';
-      items.forEach(v => {
-        const front = (mode === 'ar')
-          ? `<div class="arabic-text ${sizeAr(v.ar)} font-bold text-primary-800 dark:text-slate-300 text-center leading-relaxed">${v.ar}</div>`
-          : `<div class="${sizeId(v.id)} font-semibold text-primary-800 dark:text-slate-300 text-center leading-relaxed">${v.id}</div>`;
-
-        const back  = (mode === 'ar')
-          ? `<div class="${sizeId(v.id)} text-slate-800 dark:text-slate-300 text-center leading-relaxed">${v.id}</div>`
-          : `<div class="arabic-text ${sizeAr(v.ar)} font-bold text-primary-800 dark:text-slate-300 text-center leading-relaxed">${v.ar}</div>`;
-
-        const card = document.createElement('button');
-        card.type = 'button';
-        card.className = 'card3d w-full select-none focus:outline-none';
-        card.setAttribute('aria-label', 'kartu kosakata');
-
-        card.innerHTML = `
-          <div class="card3d-inner">
-            <div class="card-face bg-primary-50 dark:bg-slate-600">${front}</div>
-            <div class="card-face card-back bg-white dark:bg-slate-600">${back}</div>
-          </div>
-        `;
-        card.addEventListener('click', () => card.classList.toggle('flipped'));
-        grid.appendChild(card);
-      });
-    }
-
-    function rerender(){
-      currentSlice = pick4();
-      renderCards(currentSlice);
-    }
-
-    function setMode(newMode){
-      mode = newMode;
-      // gaya tombol
-      if (mode === 'ar'){
-        modeAR.className = 'px-3 py-1.5 rounded-lg bg-primary-600 text-white font-semibold';
-        modeID.className = 'px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold';
-      } else {
-        modeAR.className = 'px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold';
-        modeID.className = 'px-3 py-1.5 rounded-lg bg-primary-600 text-white font-semibold';
-      }
-      // render ulang isi kartu dengan set data yang sama
-      renderCards(currentSlice);
-    }
-
-    // Events
-    btnSh.addEventListener('click', rerender);
-    btnRs.addEventListener('click', () => {
-      [...grid.querySelectorAll('.card3d')].forEach(el => el.classList.remove('flipped'));
-    });
-    modeAR.addEventListener('click', () => setMode('ar'));
-    modeID.addEventListener('click', () => setMode('id'));
-
-    // Start
-    rerender();
-  })();
-
-  // ==========================================================
-  //  B) GRAMMAR CARDS — Nahwu & Shorof
-  // ==========================================================
-  (function initGrammarCards(){
-  const section = document.getElementById('grammar-cards'); // <-- tambahkan
-  const grid   = document.getElementById('gcard-grid');
-  const bAll   = document.getElementById('gbtn-all');
-  const bNahwu = document.getElementById('gbtn-nahwu');
-  const bShorof= document.getElementById('gbtn-shorof');
-  const bShuf  = document.getElementById('gbtn-shuffle');
-  const bReset = document.getElementById('gbtn-reset');
-    if (!grid || !bAll || !bNahwu || !bShorof || !bShuf || !bReset) return; // jika section ini tidak ada
-
-    // Dataset ringkas (boleh kamu tambah/ubah sesuka hati)
-    const GRAMMAR = [
-      // --- Nahwu ---
-      { cat:'nahwu', term_ar:'اِسْمٌ', term_id:'Isim',
-        explain_id:'Kata benda/nomina; tidak menunjukkan waktu.',
-        example_ar:'هَذَا كِتَابٌ' },
-      { cat:'nahwu', term_ar:'فِعْلٌ', term_id:'Fi‘il',
-        explain_id:'Kata kerja; menunjukkan waktu (māḍī, muḍāri‘, amr).',
-        example_ar:'قَرَأَ الطَّالِبُ الدَّرْسَ' },
-      { cat:'nahwu', term_ar:'حَرْفٌ', term_id:'Harf',
-        explain_id:'Partikel; makna sempurna jika bersama kata lain.',
-        example_ar:'إِلَى الْمَدْرَسَةِ' },
-      { cat:'nahwu', term_ar:'مُبْتَدَأٌ', term_id:'Mubtada’',
-        explain_id:'Subjek nominal di awal jumlah ismiyyah.',
-        example_ar:'الطَّالِبُ مُجْتَهِدٌ' },
-      { cat:'nahwu', term_ar:'خَبَرٌ', term_id:'Khabar',
-        explain_id:'Predikat bagi mubtada’.',
-        example_ar:'الْمُدَرِّسُ فِي الْفَصْلِ' },
-      { cat:'nahwu', term_ar:'فَاعِلٌ', term_id:'Fā‘il',
-        explain_id:'Pelaku perbuatan; biasanya marfū‘.',
-        example_ar:'كَتَبَ الْوَلَدُ الدَّرْسَ' },
-      { cat:'nahwu', term_ar:'مَفْعُولٌ بِهِ', term_id:'Maf‘ūl bih',
-        explain_id:'Objek langsung fi‘il; biasanya manṣūb.',
-        example_ar:'شَرِبْتُ الْمَاءَ' },
-      { cat:'nahwu', term_ar:'مُضَافٌ / مُضَافٌ إِلَيْهِ', term_id:'Mudāf/Mudāf Ilaih',
-        explain_id:'Rangkaian kepemilikan (iḍāfah).',
-        example_ar:'كِتَابُ الطَّالِبِ' },
-      { cat:'nahwu', term_ar:'جَارٌّ وَمَجْرُورٌ', term_id:'Jar–Majrūr',
-        explain_id:'Harf jar + isim majrūr; keterangan tempat/waktu, dll.',
-        example_ar:'فِي الْمَكْتَبَةِ' },
-      { cat:'nahwu', term_ar:'النَّعْتُ وَالْمَنْعُوتُ', term_id:'Na‘t–Man‘ūt',
-        explain_id:'Sifat mengikuti i‘rab & jenis/bilangan man‘ūt.',
-        example_ar:'طَالِبٌ مُجْتَهِدٌ' },
-
-      // --- Shorof ---
-      { cat:'shorof', term_ar:'ثُلَاثِيٌّ مُجَرَّدٌ', term_id:'Tsulātsī mujarrad',
-        explain_id:'Akar 3 huruf tanpa tambahan.',
-        example_ar:'كَتَبَ – يَكْتُبُ – اُكْتُبْ' },
-      { cat:'shorof', term_ar:'وَزْنُ فَعَلَ', term_id:'Wazan “fa‘ala”',
-        explain_id:'Pola dasar tsulātsī.',
-        example_ar:'فَعَلَ – يَفْعَلُ' },
-      { cat:'shorof', term_ar:'وَزْنُ فَعَّلَ', term_id:'Wazan “fa‘‘ala”',
-        explain_id:'Makna intensif/menjadikan.',
-        example_ar:'عَلَّمَ – يُعَلِّمُ' },
-      { cat:'shorof', term_ar:'وَزْنُ تَفَاعَلَ', term_id:'Wazan “tafā‘ala”',
-        explain_id:'Saling/melakukan bersama.',
-        example_ar:'تَعَاوَنَ – يَتَعَاوَنُ' },
-      { cat:'shorof', term_ar:'اِسْمُ الْفَاعِلِ', term_id:'Ism fā‘il',
-        explain_id:'Pelaku pekerjaan; pola “فَاعِلٌ”.',
-        example_ar:'كَاتِبٌ' },
-      { cat:'shorof', term_ar:'اِسْمُ الْمَفْعُولِ', term_id:'Ism maf‘ūl',
-        explain_id:'Yang dikenai pekerjaan; pola “مَفْعُولٌ”.',
-        example_ar:'مَكْتُوبٌ' },
-      { cat:'shorof', term_ar:'مَصْدَرٌ', term_id:'Maṣdar',
-        explain_id:'Kata dasar/nomina kejadian.',
-        example_ar:'قِرَاءَةٌ' },
-      { cat:'shorof', term_ar:'جَمْعُ مُذَكَّرٍ سَالِمٌ', term_id:'Jamak mudzakkar salim',
-        explain_id:'Jamak berakhiran ون/ين.',
-        example_ar:'مُسْلِمُونَ / مُسْلِمِينَ' },
-      { cat:'shorof', term_ar:'جَمْعُ مُؤَنَّثٍ سَالِمٌ', term_id:'Jamak muannats salim',
-        explain_id:'Jamak berakhiran ات.',
-        example_ar:'مُعَلِّمَاتٌ' },
-      { cat:'shorof', term_ar:'تَصْرِيفُ الْأَفْعَالِ', term_id:'Taṣrīf af‘āl',
-        explain_id:'Perubahan fi‘il menurut waktu/ḍamīr.',
-        example_ar:'أَقْرَأُ – نَقْرَأُ – يَقْرَأُ' },
-    ];
-
-    let currentCat = 'all';
-    let currentSlice = [];
-
-    function pool(){
-      if (currentCat === 'nahwu') return GRAMMAR.filter(g => g.cat === 'nahwu');
-      if (currentCat === 'shorof') return GRAMMAR.filter(g => g.cat === 'shorof');
-      return GRAMMAR;
-    }
-    function pick4(){ return shuffle(pool()).slice(0, 4); }
-
-    function renderCards(items){
-      grid.innerHTML = '';
-      items.forEach(v => {
-        const frontHTML = `
-          <div class="arabic-text ${sizeAr(v.term_ar)} font-bold text-primary-800 dark:text-slate-300 text-center leading-relaxed">
-            ${v.term_ar}
-          </div>
-          <div class="${sizeId(v.term_id)} text-slate-600 dark:text-slate-300 text-center leading-snug">
-            <span class="font-semibold">${v.term_id}</span>
-          </div>
-        `;
-        const backHTML = `
-          <div class="${sizeId(v.explain_id)} text-slate-800 dark:text-slate-300 text-center leading-relaxed">
-            <span class="font-semibold">${v.term_id}:</span> ${v.explain_id}
-          </div>
-          <div class="arabic-text ${sizeAr(v.example_ar)} text-primary-800 dark:text-slate-300 text-center leading-relaxed">
-            ${v.example_ar}
-          </div>
-        `;
-
-        const card = document.createElement('button');
-        card.type = 'button';
-        card.className = 'card3d w-full select-none focus:outline-none';
-        card.setAttribute('aria-label', v.term_id);
-        card.innerHTML = `
-          <div class="card3d-inner">
-            <div class="card-face bg-primary-50 dark:bg-slate-600">${frontHTML}</div>
-            <div class="card-face card-back bg-white dark:bg-slate-600">${backHTML}</div>
-          </div>
-        `;
-        card.addEventListener('click', () => card.classList.toggle('flipped'));
-        grid.appendChild(card);
-      });
-    }
-
-    function rerender(){
-      currentSlice = pick4();
-      renderCards(currentSlice);
-    }
-
-    function setCat(cat){
-    currentCat = cat;
-
-    // 1) Ganti tema warna pada SECTION (mengubah CSS variable untuk strip kartu)
-    section.classList.remove('theme-mix','theme-nahwu','theme-shorof');
-    if (cat === 'nahwu')      section.classList.add('theme-nahwu');
-    else if (cat === 'shorof')section.classList.add('theme-shorof');
-    else                      section.classList.add('theme-mix');
-
-      // style tombol filter
-      bAll.className    = 'px-3 py-1.5 rounded-lg ' + (cat==='all'    ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-700') + ' font-semibold';
-      bNahwu.className  = 'px-3 py-1.5 rounded-lg ' + (cat==='nahwu'  ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-700') + ' font-semibold';
-      bShorof.className = 'px-3 py-1.5 rounded-lg ' + (cat==='shorof' ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-700') + ' font-semibold';
-      rerender();
-    }
-
-    // Events
-    bAll   .addEventListener('click', () => setCat('all'));
-    bNahwu .addEventListener('click', () => setCat('nahwu'));
-    bShorof.addEventListener('click', () => setCat('shorof'));
-    bShuf  .addEventListener('click', rerender);
-    bReset .addEventListener('click', () => {
-      [...grid.querySelectorAll('.card3d')].forEach(el => el.classList.remove('flipped'));
-    });
-
-    // Start
-    setCat('all');
-  })();
+  /* =====================
+     INIT
+  ===================== */
+  rerender();
 })();
 </script>
 
-<!-- JS untuk game wordmatch -->
-<script>
-const questionBank = [
-  { arabic: "مدرسة", correct: "Sekolah", options: ["Sekolah", "Rumah", "Masjid", "Pasar"] },
-  { arabic: "كتاب", correct: "Buku", options: ["Buku", "Meja", "Tas", "Pensil"] },
-  { arabic: "قلم", correct: "Pulpen", options: ["Pulpen", "Penghapus", "Kertas", "Penggaris"] },
-  { arabic: "طالب", correct: "Siswa", options: ["Guru", "Siswa", "Petugas", "Kepala"] },
-  { arabic: "بيت", correct: "Rumah", options: ["Rumah", "Sekolah", "Kantor", "Pasar"] },
-  { arabic: "مسجد", correct: "Masjid", options: ["Masjid", "Gereja", "Rumah", "Pasar"] },
-  { arabic: "كرسي", correct: "Kursi", options: ["Meja", "Kursi", "Lemari", "Papan"] },
-  { arabic: "باب", correct: "Pintu", options: ["Jendela", "Pintu", "Atap", "Dinding"] },
-  { arabic: "ساعة", correct: "Jam", options: ["Jam", "Hari", "Waktu", "Detik"] },
-  { arabic: "قمر", correct: "Bulan", options: ["Bintang", "Matahari", "Bulan", "Awan"] },
-
-  { arabic: "شمس", correct: "Matahari", options: ["Bulan", "Matahari", "Bintang", "Langit"] },
-  { arabic: "نهر", correct: "Sungai", options: ["Gunung", "Danau", "Sungai", "Laut"] },
-  { arabic: "بحر", correct: "Laut", options: ["Sungai", "Danau", "Laut", "Kolam"] },
-  { arabic: "جبل", correct: "Gunung", options: ["Bukit", "Gunung", "Pantai", "Hutan"] },
-  { arabic: "طاولة", correct: "Meja", options: ["Kursi", "Meja", "Lemari", "Papan"] },
-  { arabic: "نافذة", correct: "Jendela", options: ["Pintu", "Jendela", "Atap", "Dinding"] },
-  { arabic: "دفتر", correct: "Buku tulis", options: ["Buku tulis", "Buku", "Kertas", "Tas"] },
-  { arabic: "حقيبة", correct: "Tas", options: ["Tas", "Sepatu", "Baju", "Topi"] },
-  { arabic: "قطة", correct: "Kucing", options: ["Kucing", "Anjing", "Kelinci", "Burung"] },
-  { arabic: "كلب", correct: "Anjing", options: ["Kucing", "Anjing", "Sapi", "Kuda"] }
-];
-
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-let index = 0;
-let score = 0;
-let time = 30;
-let timerInterval;
-
-const startBtn = document.getElementById("startBtn");
-const gameArea = document.getElementById("gameArea");
-const arabicWord = document.getElementById("arabicWord");
-const optionsDiv = document.getElementById("options");
-const scoreSpan = document.getElementById("score");
-const currentSpan = document.getElementById("current");
-const timerText = document.getElementById("timer");
-
-startBtn.onclick = () => {
-  startBtn.classList.add("hidden");
-  gameArea.classList.remove("hidden");
-  startGame();
-};
-
-function startGame() {
-  index = 0;
-  score = 0;
-  time = 30;
-
-  scoreSpan.textContent = 0;
-  currentSpan.textContent = 1;
-  timerText.textContent = "Waktu: 30 detik";
-
-  // 🔥 ACAK & AMBIL 10 SOAL
-  questions = shuffle([...questionBank]).slice(0, 10);
-
-  loadQuestion();
-  startTimer();
-}
 
 
-function startTimer() {
-  timerInterval = setInterval(() => {
-    time--;
-    timerText.textContent = "Waktu: " + time + " detik";
-    if (time <= 0) endGame();
-  }, 1000);
-}
-
-function loadQuestion() {
-  const q = questions[index];
-  arabicWord.textContent = q.arabic;
-  optionsDiv.innerHTML = "";
-
-  q.options.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.textContent = opt;
-    btn.className =
-      "py-2 sm:py-2.5 rounded-lg border text-sm sm:text-base dark:hover:bg-slate-50/10 hover:bg-slate-100 transition";
-    btn.onclick = () => checkAnswer(btn, opt);
-    optionsDiv.appendChild(btn);
-  });
-}
-
-function checkAnswer(btn, selected) {
-  const correct = questions[index].correct;
-
-  document.querySelectorAll("#options button").forEach(b => b.disabled = true);
-
-  if (selected === correct) {
-    btn.classList.add("border-green-500");
-    score++;
-    scoreSpan.textContent = score;
-  } else {
-    btn.classList.add("border-red-500");
-  }
-
-  setTimeout(() => {
-    index++;
-    if (index >= 10) endGame();
-    else {
-      currentSpan.textContent = index + 1;
-      loadQuestion();
-    }
-  }, 700);
-}
-
-function endGame() {
-  clearInterval(timerInterval);
-  gameArea.innerHTML = `
-    <div class="text-center">
-      <p class="text-lg font-bold mb-2">Game Selesai 🎉</p>
-      <p class="mb-4">Skor kamu: <strong>${score}/10</strong></p>
-      <button onclick="location.reload()"
-        class="px-4 py-2 bg-blue-600 text-white rounded-lg">
-        Main Lagi
-      </button>
-    </div>
-  `;
-}
-</script>
-
+<!-- JS UNTUK DARKMODE -->
 <script>
   const toggle = document.getElementById('themeToggle');
   const root = document.documentElement;

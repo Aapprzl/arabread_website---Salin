@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
 
+<script src="assets/data/materials.js"></script>
+
 <script src="assets/data/vocabs.js"></script>
 
 
@@ -34,9 +36,14 @@
   <style>
     .arabic-text{ font-family:'Amiri','Scheherazade New',serif; direction: rtl; }
     .card3d{ perspective:1000px } /* hanya agar konsisten dengan style umum */
+
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
   </style>
 </head>
-<body class="min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
+<body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
+
 
   <!-- Header -->
   <header class="bg-primary-600 text-white">
@@ -63,30 +70,75 @@
   <section class="max-w-6xl mx-auto px-4">
     <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6">
       <h1 class="text-2xl md:text-3xl font-bold text-primary-900 dark:text-slate-300">📘 Materi Gramatikal Dasar (Nahwu &amp; Shorof)</h1>
-      <p class="mt-2 text-slate-700 dark:text-slate-300">
+      <p class="mt-2 text-slate-700 dark:text-slate-300 mb-3">
         Ringkasan konsep penting untuk pemula. Setiap kartu memuat istilah Arab, terjemah, penjelasan singkat, dan contoh berharakat.
         Gunakan kolom pencarian atau filter kategori untuk menemukan materi tertentu.
       </p>
 
       <!-- Filter bar -->
-      <div class="mt-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div class="inline-flex rounded-lg overflow-hidden shadow-sm">
-          <button id="tab-all" class="px-4 py-2 bg-primary-600 text-white font-semibold">Semua</button>
-          <button id="tab-nahwu" class="px-4 py-2 bg-white text-slate-700 border border-slate-200">Nahwu</button>
-          <button id="tab-shorof" class="px-4 py-2 bg-white text-slate-700 border border-slate-200">Shorof</button>
-        </div>
-        <div class="flex-1 md:max-w-sm">
-          <label for="filter-input" class="sr-only">Cari materi</label>
-          <input id="filter-input" type="text" placeholder="Cari: mubtada, maf‘ul, fa‘ala, masdar, dst."
-                 class="w-full rounded-lg border border-slate-200 px-3 py-2 focus:ring-2 focus:ring-primary-400 outline-none"/>
-        </div>
-      </div>
+      <div class="md:flex md:items-start md:justify-between md:gap-4">
+
+  <div class="grid grid-cols-2 gap-2 md:flex md:flex-wrap md:gap-1 md:max-w-[70%]">
+
+
+    <button id="tab-all" class="flex-shrink-0 px-4 py-2 bg-primary-600 text-white font-semibold">Semua</button>
+    <button id="tab-nahwu" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Nahwu</button>
+    <button id="tab-isim" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Isim</button>
+    <button id="tab-fiil" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Fi‘il</button>
+    <button id="tab-harf" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Harf</button>
+
+
+
+    <button id="tab-kaana" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Kaana Bersaudara</button>
+    <button id="tab-inna" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Inna Bersaudara</button>
+    <button id="tab-jar" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Huruf Jar</button>
+    <button id="tab-istitsna" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Istitsnā’</button>
+    <button id="tab-nida" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Nidā’</button>
+    <button id="tab-laa-naafiy" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Lā Nāfiy lil-Jins</button>
+    <button id="tab-athaf" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Huruf ‘Athaf</button>
+    <button id="tab-tawkid" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Tawkīd</button>
+    <button id="tab-istiqbal" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Istiqbāl</button>
+    <button id="tab-huruf-nashab" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Huruf Nashab</button>
+    <button id="tab-huruf-jazm" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Huruf Jazm</button>
+    <button id="tab-laa-nahy" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Lā Nahy</button>
+    <button id="tab-syarth" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Syarth</button>
+    <button id="tab-istifham" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Istifham</button>
+    <button id="tab-zharf" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Zharf</button>
+    <button id="tab-maushul" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Isim Maushul</button>
+    <button id="tab-isyarah" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Isyarah Qaribah</button>
+    <button id="tab-isyarah-baidah" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Isyārah Ba‘īdah</button>
+    <button id="tab-dhamir-rafa" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Dhamir Rafa‘ Munfasil</button>
+    <button id="tab-dhamir-rafa-muttashil" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Dhamir Rafa‘ Muttashil</button>
+    <button id="tab-dhamir-nj-muttashil" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Dhamir Nashab & Jar Muttashil</button>
+    <button id="tab-dhamir-nashab" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Dhamir Nashab Munfasil</button>
+
+
+
+
+
+    <button id="tab-shorof" class="flex-shrink-0 px-4 py-2 bg-white text-slate-700 border border-slate-200">Shorof</button>
+
+  </div>
+
+  <div class="mt-4 md:mt-0 md:w-[30%]">
+    <label for="filter-input" class="sr-only">Cari materi</label>
+    <input id="filter-input" type="text"
+      placeholder="Cari: mubtada, maf‘ul, fa‘ala, masdar, dst."
+      class="w-full rounded-lg border border-slate-200 px-3 py-2 focus:ring-2 focus:ring-primary-400 outline-none dark:text-slate-600"/>
+  </div>
+
+</div>
+
+
     </div>
   </section>
 
   <!-- Cards -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <div id="cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  <main class="max-w-6xl mx-auto px-4 py-8 flex-grow">
+
+    <div id="cards-grid"
+     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+
 
     <!-- Bottom nav -->
     <div class="mt-8 flex flex-wrap gap-3 justify-center">
@@ -104,33 +156,7 @@
 
   <!-- DATA + RENDER -->
   <script>
-  // Dataset materi (boleh kamu tambah)
-  const MATERIALS = [
-    // Nahwu
-    {cat:'nahwu', term_ar:'اِسْمٌ', term_id:'Isim', explain_id:'Kata benda/nomina; tidak menunjukkan waktu.', example_ar:'هَذَا كِتَابٌ'},
-    {cat:'nahwu', term_ar:'فِعْلٌ', term_id:'Fi‘il', explain_id:'Kata kerja; menunjukkan waktu (māḍī, muḍāri‘, amr).', example_ar:'قَرَأَ الطَّالِبُ الدَّرْسَ'},
-    {cat:'nahwu', term_ar:'حَرْفٌ', term_id:'Harf', explain_id:'Partikel; makna lengkap bila bersama kata lain.', example_ar:'إِلَى الْمَدْرَسَةِ'},
-    {cat:'nahwu', term_ar:'مُبْتَدَأٌ', term_id:'Mubtada’', explain_id:'Subjek dalam jumlah ismiyyah (biasanya marfū‘).', example_ar:'الطَّالِبُ مُجْتَهِدٌ'},
-    {cat:'nahwu', term_ar:'خَبَرٌ', term_id:'Khabar', explain_id:'Predikat untuk mubtada’.', example_ar:'الْمُدَرِّسُ فِي الْفَصْلِ'},
-    {cat:'nahwu', term_ar:'فَاعِلٌ', term_id:'Fā‘il', explain_id:'Pelaku perbuatan; biasanya marfū‘.', example_ar:'كَتَبَ الْوَلَدُ الدَّرْسَ'},
-    {cat:'nahwu', term_ar:'مَفْعُولٌ بِهِ', term_id:'Maf‘ūl bih', explain_id:'Objek langsung fi‘il; biasanya manṣūb.', example_ar:'شَرِبْتُ الْمَاءَ'},
-    {cat:'nahwu', term_ar:'مُضَافٌ / مُضَافٌ إِلَيْهِ', term_id:'Mudāf/Mudāf Ilaih', explain_id:'Kepemilikan (iḍāfah): A milik B.', example_ar:'كِتَابُ الطَّالِبِ'},
-    {cat:'nahwu', term_ar:'جَارٌّ وَمَجْرُورٌ', term_id:'Jar–Majrūr', explain_id:'Harf jar + isim majrūr; sering jadi keterangan.', example_ar:'فِي الْمَكْتَبَةِ'},
-    {cat:'nahwu', term_ar:'النَّعْتُ وَالْمَنْعُوتُ', term_id:'Na‘t–Man‘ūt', explain_id:'Sifat mengikuti i‘rab & jenis/bilangan yang disifati.', example_ar:'طَالِبٌ مُجْتَهِدٌ'},
-
-    // Shorof
-    {cat:'shorof', term_ar:'ثُلَاثِيٌّ مُجَرَّدٌ', term_id:'Tsulātsī mujarrad', explain_id:'Akar 3 huruf tanpa tambahan.', example_ar:'كَتَبَ – يَكْتُبُ – اُكْتُبْ'},
-    {cat:'shorof', term_ar:'وَزْنُ فَعَلَ', term_id:'Wazan “fa‘ala”', explain_id:'Pola dasar tsulātsī.', example_ar:'فَعَلَ – يَفْعَلُ'},
-    {cat:'shorof', term_ar:'وَزْنُ فَعَّلَ', term_id:'Wazan “fa‘‘ala”', explain_id:'Makna intensif/menjadikan.', example_ar:'عَلَّمَ – يُعَلِّمُ'},
-    {cat:'shorof', term_ar:'وَزْنُ تَفَاعَلَ', term_id:'Wazan “tafā‘ala”', explain_id:'Saling/melakukan bersama.', example_ar:'تَعَاوَنَ – يَتَعَاوَنُ'},
-    {cat:'shorof', term_ar:'اِسْمُ الْفَاعِلِ', term_id:'Ism fā‘il', explain_id:'Pelaku; pola “فَاعِلٌ”.', example_ar:'كَاتِبٌ'},
-    {cat:'shorof', term_ar:'اِسْمُ الْمَفْعُولِ', term_id:'Ism maf‘ūl', explain_id:'Yang dikenai; pola “مَفْعُولٌ”.', example_ar:'مَكْتُوبٌ'},
-    {cat:'shorof', term_ar:'مَصْدَرٌ', term_id:'Maṣdar', explain_id:'Kata dasar/nomina kejadian.', example_ar:'قِرَاءَةٌ'},
-    {cat:'shorof', term_ar:'تَصْرِيفُ الْأَفْعَالِ', term_id:'Taṣrīf af‘āl', explain_id:'Perubahan fi‘il menurut waktu & ḍamīr.', example_ar:'أَقْرَأُ – نَقْرَأُ – يَقْرَأُ'},
-    {cat:'shorof', term_ar:'جَمْعُ مُذَكَّرٍ سَالِمٌ', term_id:'Jamak mudzakkar salim', explain_id:'Jamak berakhiran ون/ين.', example_ar:'مُسْلِمُونَ / مُسْلِمِينَ'},
-    {cat:'shorof', term_ar:'جَمْعُ مُؤَنَّثٍ سَالِمٌ', term_id:'Jamak muannats salim', explain_id:'Jamak berakhiran ات.', example_ar:'مُعَلِّمَاتٌ'},
-  ];
-
+  
   // Util: tipografi adaptif
   const stripHarakat = s => (s||'').replace(/[\u064B-\u065F\u0670]/g,'');
   const sizeAr = s => {
@@ -155,27 +181,72 @@
   const grid = document.getElementById('cards-grid');
   const tabAll = document.getElementById('tab-all');
   const tabNah = document.getElementById('tab-nahwu');
+  const tabIsim = document.getElementById('tab-isim');
+  const tabFiil = document.getElementById('tab-fiil');
+  const tabHarf = document.getElementById('tab-harf');
+
+
+
+  const tabKaa = document.getElementById('tab-kaana');
+  const tabInn = document.getElementById('tab-inna');
+  const tabJar = document.getElementById('tab-jar');
+  const tabNid = document.getElementById('tab-nida');
+  const tabSya = document.getElementById('tab-syarth');
+  const tabIst = document.getElementById('tab-istifham');
+  const tabZha = document.getElementById('tab-zharf');
+  const tabMau = document.getElementById('tab-maushul');
+  const tabIsy = document.getElementById('tab-isyarah');
+  const tabIsyB = document.getElementById('tab-isyarah-baidah');
+  const tabDhaR = document.getElementById('tab-dhamir-rafa');
+  const tabDhaRM = document.getElementById('tab-dhamir-rafa-muttashil');
+  const tabDhaNJ = document.getElementById('tab-dhamir-nj-muttashil');
+  const tabDhaN = document.getElementById('tab-dhamir-nashab');
+  const tabIstis = document.getElementById('tab-istitsna');
+  const tabLaaN = document.getElementById('tab-laa-naafiy');
+  const tabAth = document.getElementById('tab-athaf');
+  const tabTaw = document.getElementById('tab-tawkid');
+  const tabHns = document.getElementById('tab-huruf-nashab');
+  const tabIstq = document.getElementById('tab-istiqbal');
+  const tabHjz = document.getElementById('tab-huruf-jazm');
+  const tabLaaH = document.getElementById('tab-laa-nahy');
+
   const tabSho = document.getElementById('tab-shorof');
   const input = document.getElementById('filter-input');
 
+
+  function normalizeText(str = '') {
+  return stripHarakat(str)
+    .toLowerCase()
+    .replace(/[‘’']/g, '') // samakan petik
+    .replace(/\s+/g, '');
+}
+
+
   function applyFilter(){
-    let list = MATERIALS.slice();
-    if (activeTab !== 'all') list = list.filter(m => m.cat === activeTab);
-    if (query.trim()){
-      const q = query.toLowerCase();
-      list = list.filter(m =>
-        m.term_id.toLowerCase().includes(q) ||
-        stripHarakat(m.term_ar).includes(stripHarakat(q)) ||
-        m.explain_id.toLowerCase().includes(q)
-      );
-    }
-    return list;
+  let list = MATERIALS.slice();
+
+  if (activeTab !== 'all')
+    list = list.filter(m => m.cat === activeTab);
+
+  if (query.trim()){
+    const q = normalizeText(query);
+
+    list = list.filter(m =>
+      normalizeText(m.term_id).includes(q) ||
+      normalizeText(m.term_ar).includes(q) ||
+      normalizeText(m.explain_id).includes(q) ||
+      normalizeText(m.example_ar).includes(q) ||
+      normalizeText(m.example_id).includes(q)
+    );
   }
+  return list;
+}
+
 
   function cardTemplate(m, idx){
     const id = `m-${m.cat}-${idx}`;
     return `
-      <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-md border border-slate-100 overflow-hidden">
+      <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-md border border-slate-100 overflow-hidden w-full">
         <div class="p-5">
           <div class="flex items-start justify-between gap-3">
             <div>
@@ -187,12 +258,26 @@
             </button>
           </div>
 
-          <div id="${id}" class="mt-4 hidden">
+          <div id="${id}" class="mt-4 hidden transition-all duration-300 ease-in-out">
             <p class="${sizeId(m.explain_id)} text-slate-800 dark:text-slate-300 leading-relaxed">${m.explain_id}</p>
+
             <div class="mt-3 p-3 rounded-xl bg-primary-50/60 dark:bg-slate-600 border border-blue-100">
               <div class="text-xs text-slate-600 mb-1">Contoh:</div>
-              <div class="arabic-text ${sizeAr(m.example_ar)} text-primary-900 dark:text-slate-300 leading-relaxed text-center">${m.example_ar}</div>
-            </div>
+
+            <!-- Contoh Arab -->
+              <div class="arabic-text ${sizeAr(m.example_ar)} text-primary-900 dark:text-slate-300 leading-relaxed text-center">
+              ${m.example_ar}
+              </div>
+
+              <!-- Arti Indonesia (opsional) -->
+              ${m.example_id ? `
+              <div class="mt-2 text-sm text-slate-600 dark:text-slate-300 text-center italic">
+              Artinya: ${m.example_id}
+              </div>
+              ` : ''}
+              </div>
+
+
           </div>
         </div>
       </article>
@@ -205,14 +290,30 @@
       <div class="col-span-full text-center text-slate-500">Tidak ada materi yang cocok dengan pencarian.</div>
     `;
 
-    // attach toggle listeners
-    grid.querySelectorAll('[data-toggle]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const t = document.getElementById(btn.dataset.toggle);
-        const hidden = t.classList.toggle('hidden');
-        btn.textContent = hidden ? 'Tampilkan detail' : 'Sembunyikan';
-      });
+    // attach toggle listeners (accordion: hanya satu terbuka)
+grid.querySelectorAll('[data-toggle]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const targetId = btn.dataset.toggle;
+    const target = document.getElementById(targetId);
+
+    // 1. Tutup semua detail lain
+    grid.querySelectorAll('[id^="m-"]').forEach(detail => {
+      if (detail.id !== targetId) {
+        detail.classList.add('hidden');
+      }
     });
+
+    // 2. Reset semua tombol
+    grid.querySelectorAll('[data-toggle]').forEach(b => {
+      if (b !== btn) b.textContent = 'Tampilkan detail';
+    });
+
+    // 3. Toggle detail yang diklik
+    const isHidden = target.classList.toggle('hidden');
+    btn.textContent = isHidden ? 'Tampilkan detail' : 'Sembunyikan';
+  });
+});
+
   }
 
   // Tab switching
@@ -221,11 +322,125 @@
     tabAll.className = 'px-4 py-2 ' + (tab==='all' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
     tabNah.className = 'px-4 py-2 ' + (tab==='nahwu' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
     tabSho.className = 'px-4 py-2 ' + (tab==='shorof' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
+    tabKaa.className = 'px-4 py-2 ' + (tab==='kaana' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
+    tabInn.className = 'px-4 py-2 ' + (tab==='inna' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
+     tabJar.className = 'px-4 py-2 ' + (tab==='jar' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
+     tabNid.className = 'px-4 py-2 ' + (tab==='nida' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
+     tabSya.className = 'px-4 py-2 ' + (tab==='syarth' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
+     tabIst.className = 'px-4 py-2 ' + (tab==='istifham' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
+     tabZha.className = 'px-4 py-2 ' + (tab==='zharf' ? 'bg-primary-600 text-white font-semibold'
+    : 'bg-white text-slate-700 border border-slate-200');
+
+    tabMau.className = 'px-4 py-2 ' + (tab==='maushul'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabIsy.className = 'px-4 py-2 ' + (tab==='isyarah'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabIsyB.className = 'px-4 py-2 ' + (tab==='isyarah-baidah'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabDhaR.className = 'px-4 py-2 ' + (tab==='dhamir-rafa'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabDhaRM.className = 'px-4 py-2 ' + (tab==='dhamir-rafa-muttashil'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabDhaNJ.className = 'px-4 py-2 ' + (tab==='dhamir-nj-muttashil'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabDhaN.className = 'px-4 py-2 ' + (tab==='dhamir-nashab'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabIstis.className = 'px-4 py-2 ' + (tab==='istitsna'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+    tabLaaN.className = 'px-4 py-2 ' + (tab==='laa-naafiy'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabAth.className = 'px-4 py-2 ' + (tab==='athaf'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabTaw.className = 'px-4 py-2 ' + (tab==='tawkid'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabHns.className = 'px-4 py-2 ' + (tab==='huruf-nashab'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabIstq.className = 'px-4 py-2 ' + (tab==='istiqbal'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabHjz.className = 'px-4 py-2 ' + (tab==='huruf-jazm'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabLaaH.className = 'px-4 py-2 ' + (tab==='laa-nahy'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabFiil.className = 'px-4 py-2 ' + (tab==='fiil'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabIsim.className = 'px-4 py-2 ' + (tab==='isim'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+  tabHarf.className = 'px-4 py-2 ' + (tab==='harf'
+  ? 'bg-primary-600 text-white font-semibold'
+  : 'bg-white text-slate-700 border border-slate-200');
+
+
     render();
   }
 
   tabAll.addEventListener('click', () => setTab('all'));
   tabNah.addEventListener('click', () => setTab('nahwu'));
+  tabIsim.addEventListener('click', () => setTab('isim'));
+  tabFiil.addEventListener('click', () => setTab('fiil'));
+  tabHarf.addEventListener('click', () => setTab('harf'));
+
+
+
+
+  tabKaa.addEventListener('click', () => setTab('kaana'));
+  tabInn.addEventListener('click', () => setTab('inna'));
+  tabJar.addEventListener('click', () => setTab('jar'));
+  tabNid.addEventListener('click', () => setTab('nida'));
+  tabSya.addEventListener('click', () => setTab('syarth'));
+  tabIst.addEventListener('click', () => setTab('istifham'));
+  tabZha.addEventListener('click', () => setTab('zharf'));
+  tabMau.addEventListener('click', () => setTab('maushul'));
+  tabIsy.addEventListener('click', () => setTab('isyarah'));
+  tabIsyB.addEventListener('click', () => setTab('isyarah-baidah'));
+  tabDhaR.addEventListener('click', () => setTab('dhamir-rafa'));
+  tabDhaRM.addEventListener('click', () => setTab('dhamir-rafa-muttashil'));
+  tabDhaNJ.addEventListener('click', () => setTab('dhamir-nj-muttashil'));
+  tabDhaN.addEventListener('click', () => setTab('dhamir-nashab'));
+  tabIstis.addEventListener('click', () => setTab('istitsna'));
+  tabLaaN.addEventListener('click', () => setTab('laa-naafiy'));
+  tabAth.addEventListener('click', () => setTab('athaf'));
+  tabTaw.addEventListener('click', () => setTab('tawkid'));
+  tabHns.addEventListener('click', () => setTab('huruf-nashab'));
+  tabIstq.addEventListener('click', () => setTab('istiqbal'));
+  tabHjz.addEventListener('click', () => setTab('huruf-jazm'));
+  tabLaaH.addEventListener('click', () => setTab('laa-nahy'));
+
+
+
   tabSho.addEventListener('click', () => setTab('shorof'));
   input.addEventListener('input', (e) => { query = e.target.value; render(); });
 
