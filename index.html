@@ -4,6 +4,8 @@
 <script src="assets/data/vocabs.js"></script>
 <script src="assets/data/daily-questions.js"></script>
 <script src="assets/data/materials.js"></script>
+<script src="assets/data/ebooks.js"></script>
+
 
 
 
@@ -435,6 +437,55 @@
         </div>
       </article>
     </div>
+
+<!-- ===============================
+     PERPUSTAKAAN E-BOOK
+================================== -->
+<section id="ebook-library" class="max-w-6xl mx-auto px-4 py-12">
+  <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-8">
+
+    <div class="text-center mb-8">
+      <h2 class="text-2xl md:text-3xl font-bold text-primary-900 dark:text-slate-300">
+        📚 Perpustakaan E-Book
+      </h2>
+      <p class="text-gray-600 dark:text-slate-300 mt-2">
+        Bacaan mandiri untuk memperkuat keterampilan membaca Bahasa Arab
+      </p>
+    </div>
+
+    <!-- Grid kategori -->
+    <div id="ebook-categories"
+         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <!-- Diisi oleh JavaScript -->
+    </div>
+
+    <!-- Daftar buku per kategori -->
+<div id="ebook-list-wrapper" class="hidden mt-10">
+
+  <div class="flex items-center justify-between mb-6">
+    <h3 id="ebook-list-title"
+        class="text-xl md:text-2xl font-bold text-primary-800 dark:text-slate-200">
+      📚 Koleksi E-Book
+    </h3>
+
+    <button id="ebook-back"
+            class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200
+                   text-slate-700 font-semibold">
+      ← Kembali
+    </button>
+  </div>
+
+  <div id="ebook-list"
+       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <!-- kartu buku diisi JS -->
+  </div>
+
+</div>
+
+
+  </div>
+</section>
+
 
 
 <!-- ===============================
@@ -1233,7 +1284,186 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+<!-- JS UNTUK E-BOOK -->
+ <script>
+(() => {
+  const wrap = document.getElementById('ebook-categories');
+  if (!wrap || !window.EBOOKS) return;
 
+  // Definisi kategori (FINAL)
+  const CATEGORIES = {
+    mts7: {
+      label: 'MTs Kelas 7',
+      icon: '📘',
+      desc: 'Buku bacaan dan materi pendukung untuk siswa kelas 7'
+    },
+    mts8: {
+      label: 'MTs Kelas 8',
+      icon: '📗',
+      desc: 'Buku bacaan dan materi pendukung untuk siswa kelas 8'
+    },
+    mts9: {
+      label: 'MTs Kelas 9',
+      icon: '📕',
+      desc: 'Buku bacaan dan materi pendukung untuk siswa kelas 9'
+    },
+    novel: {
+      label: 'Novel Arab',
+      icon: '📖',
+      desc: 'Bacaan cerita dan novel ringan berbahasa Arab'
+    },
+    kisah: {
+      label: 'Kisah Islami',
+      icon: '🕌',
+      desc: 'Kisah teladan dan cerita Islami dalam bahasa Arab'
+    }
+  };
+
+  // Ambil kategori yang benar-benar punya ebook
+  const usedCategories = new Set(
+    window.EBOOKS.map(e => e.category)
+  );
+
+  Object.keys(CATEGORIES).forEach(key => {
+    if (!usedCategories.has(key)) return;
+
+    const c = CATEGORIES[key];
+
+    const card = document.createElement('article');
+    card.className =
+      'bg-slate-50 dark:bg-slate-800 border border-slate-200 ' +
+      'rounded-2xl shadow-md p-6 flex flex-col justify-between';
+
+    card.innerHTML = `
+      <div>
+        <div class="text-4xl mb-4">${c.icon}</div>
+        <h3 class="text-xl font-bold text-primary-800 dark:text-slate-200">
+          ${c.label}
+        </h3>
+        <p class="text-gray-600 dark:text-slate-300 mt-2">
+          ${c.desc}
+        </p>
+      </div>
+
+      <button
+        data-category="${key}"
+        class="mt-6 inline-flex items-center justify-center gap-2
+               bg-primary-600 hover:bg-primary-700 text-white
+               py-2.5 rounded-lg font-semibold transition">
+        📂 Lihat Koleksi
+      </button>
+    `;
+
+    wrap.appendChild(card);
+  });
+})();
+</script>
+
+<!-- PEMBUKA BUKUNYA -->
+<script>
+(() => {
+  const catWrap   = document.getElementById('ebook-categories');
+  const listWrap  = document.getElementById('ebook-list-wrapper');
+  const listEl    = document.getElementById('ebook-list');
+  const titleEl   = document.getElementById('ebook-list-title');
+  const backBtn   = document.getElementById('ebook-back');
+
+  if (!catWrap || !listWrap || !listEl || !window.EBOOKS) return;
+
+  const CATEGORY_LABEL = {
+    mts7: 'MTs Kelas 7',
+    mts8: 'MTs Kelas 8',
+    mts9: 'MTs Kelas 9',
+    novel: 'Novel Arab',
+    kisah: 'Kisah Islami'
+  };
+
+  // Render daftar buku
+  function renderBooks(category) {
+    listEl.innerHTML = '';
+
+    const books = window.EBOOKS.filter(b => b.category === category);
+
+    titleEl.textContent = `📚 ${CATEGORY_LABEL[category] || 'Koleksi E-Book'}`;
+
+    if (!books.length) {
+      listEl.innerHTML =
+        `<p class="text-gray-500 dark:text-slate-300">
+          Belum ada e-book pada kategori ini.
+        </p>`;
+      return;
+    }
+
+    books.forEach(b => {
+      const card = document.createElement('article');
+      card.className =
+        'bg-white dark:bg-slate-700 border border-slate-200 ' +
+        'rounded-2xl shadow-md p-6 flex flex-col justify-between';
+
+      card.innerHTML = `
+  <div class="flex gap-4 items-start">
+
+    <!-- COVER -->
+    <img src="${b.cover || 'ebooks/covers/default.png'}"
+         alt="Cover ${b.title_id}"
+         class="w-24 h-32 object-cover rounded-lg shadow-md flex-shrink-0">
+
+    <!-- INFO -->
+    <div class="flex-1">
+      <div class="arabic-text text-lg font-bold text-primary-800 dark:text-slate-300">
+        ${b.title_ar}
+      </div>
+      <div class="text-gray-600 dark:text-slate-300">
+        ${b.title_id}
+      </div>
+      <div class="mt-1 text-xs text-slate-500 dark:text-slate-300">
+        📄 ${b.type.toUpperCase()}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mt-5 flex gap-2">
+    <a href="${b.file}" target="_blank"
+       class="flex-1 text-center bg-primary-600 hover:bg-primary-700
+              text-white py-2 rounded-lg font-semibold">
+      📖 Baca
+    </a>
+
+    <a href="${b.file}" download
+       class="flex-1 text-center bg-slate-100 hover:bg-slate-200
+              text-slate-700 py-2 rounded-lg font-semibold">
+      ⬇️ Unduh
+    </a>
+  </div>
+`;
+
+
+      listEl.appendChild(card);
+    });
+  }
+
+  // Klik kategori
+  catWrap.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-category]');
+    if (!btn) return;
+
+    const cat = btn.dataset.category;
+
+    catWrap.classList.add('hidden');
+    listWrap.classList.remove('hidden');
+
+    renderBooks(cat);
+  });
+
+  // Tombol kembali
+  backBtn.addEventListener('click', () => {
+    listWrap.classList.add('hidden');
+    catWrap.classList.remove('hidden');
+    listEl.innerHTML = '';
+  });
+})();
+</script>
 
 
 
