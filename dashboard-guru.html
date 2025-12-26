@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard Guru</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex flex-col bg-slate-800 text-slate-100">
+
+  <!-- ===== HEADER DASHBOARD GURU ===== -->
+  <header class="bg-blue-600 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <!-- Logo / Judul -->
+      <div class="flex items-center gap-3">
+        <span class="text-xl">📚</span>
+        <h1 class="text-lg font-bold tracking-wide">
+          Tarbiyyat al-Lughah
+        </h1>
+      </div>
+
+      <!-- Menu Kanan -->
+      <div class="flex items-center gap-4 text-sm">
+        <span class="hidden sm:inline text-blue-100">
+          Dashboard Guru
+        </span>
+
+        <a href="index.html"
+           class="bg-blue-500 hover:bg-blue-700
+                  px-4 py-2 rounded-lg transition font-medium">
+          ⬅ Kembali ke Beranda
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===== MAIN (PENYANGGA FOOTER) ===== -->
+  <main class="flex-grow flex items-center justify-center">
+
+    <!-- ===============================
+         LOGIN GURU
+    ================================ -->
+    <section id="login-section" class="w-full max-w-6xl px-4 py-12">
+      <article class="bg-white dark:bg-slate-700
+                      border border-slate-200
+                      rounded-2xl shadow-lg overflow-hidden">
+
+        <div class="bg-gradient-to-r from-emerald-600 to-emerald-800
+                    text-white py-6 text-center">
+          <h3 class="text-2xl font-bold flex items-center justify-center gap-2">
+            🔐 Login Dashboard Guru
+          </h3>
+          <p class="text-sm text-emerald-100 mt-1">
+            Khusus guru untuk mengakses data pengumpulan tugas
+          </p>
+        </div>
+
+        <div class="p-8 max-w-md mx-auto space-y-5">
+          <input id="emailGuru" type="email"
+                 placeholder="Email Guru"
+                 class="w-full p-3 border border-slate-300 rounded-lg dark:text-slate-500">
+
+          <input id="passwordGuru" type="password"
+                 placeholder="Password"
+                 class="w-full p-3 border border-slate-300 rounded-lg dark:text-slate-500">
+
+          <button id="btnLoginGuru"
+                  class="w-full bg-emerald-600 hover:bg-emerald-700
+                         text-white py-3 rounded-lg font-semibold">
+            🔑 Masuk
+          </button>
+
+          <p id="loginError"
+             class="text-sm text-center text-red-500 hidden">
+            Email atau password salah
+          </p>
+        </div>
+
+      </article>
+    </section>
+
+    <!-- ===============================
+         DASHBOARD TUGAS (HIDDEN DEFAULT)
+    ================================ -->
+    <section id="dashboard-section"
+             class="w-full max-w-6xl px-4 py-12 hidden">
+
+      <article class="bg-white dark:bg-slate-700
+                      border border-slate-200
+                      rounded-2xl shadow-lg overflow-hidden">
+
+        <div class="bg-gradient-to-r from-emerald-600 to-emerald-800
+                    text-white py-6 flex items-center justify-between px-6">
+          <div>
+            <h3 class="text-2xl font-bold flex items-center gap-2">
+              📊 Dashboard Tugas
+            </h3>
+            <p class="text-sm text-emerald-100">
+              Daftar tugas yang telah dikumpulkan siswa
+            </p>
+          </div>
+
+          <button id="btnLogout"
+                  class="bg-red-500 hover:bg-red-600
+                         text-white px-4 py-2 rounded-lg text-sm font-semibold">
+            Logout
+          </button>
+        </div>
+
+        <div class="p-6 overflow-x-auto">
+          <table class="w-full border-collapse text-sm">
+            <thead>
+              <tr class="bg-slate-100 dark:bg-slate-600 text-left">
+                <th class="p-3 border">No</th>
+                <th class="p-3 border">Nama</th>
+                <th class="p-3 border">Kelas</th>
+                <th class="p-3 border">Catatan</th>
+                <th class="p-3 border">Waktu</th>
+                <th class="p-3 border text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tabelSubmissions">
+              <tr>
+                <td colspan="5" class="p-4 text-center text-slate-500">
+                  Memuat data...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </article>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER (PASTI NEMPEL) ===== -->
+  <footer class="bg-blue-700 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-6 text-center text-sm">
+      <p class="opacity-90">
+        © 2025 <strong>Tarbiyyat al-Lughah</strong> —
+        Media Pembelajaran Membaca Bahasa Arab MTs
+      </p>
+      <p class="opacity-75 mt-1">
+        Dikembangkan oleh Muh. Aprizal — Mahasiswa PBA IAIN Bone
+      </p>
+    </div>
+  </footer>
+
+  
+
+</body>
+
+
+<script type="module">
+  import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    orderBy
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+  import {
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+
+  // ===============================
+  // FIREBASE INIT (AMAN)
+  // ===============================
+  const firebaseConfig = {
+    apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
+    authDomain: "tarbiyyat-lughah-presence.firebaseapp.com",
+    projectId: "tarbiyyat-lughah-presence",
+  };
+
+  const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // ===============================
+  // ELEMENTS
+  // ===============================
+  const loginSection = document.getElementById("login-section");
+  const dashboardSection = document.getElementById("dashboard-section");
+  const loginError = document.getElementById("loginError");
+  const btnLogin = document.getElementById("btnLoginGuru");
+  const btnLogout = document.getElementById("btnLogout");
+
+  let dashboardLoaded = false; // ⛔ anti double load
+
+  // ===============================
+  // LOGIN
+  // ===============================
+  btnLogin.addEventListener("click", async () => {
+    const email = document.getElementById("emailGuru").value.trim();
+    const password = document.getElementById("passwordGuru").value.trim();
+
+    loginError.classList.add("hidden");
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.error("LOGIN ERROR:", err.code);
+      loginError.textContent = "Email atau password salah";
+      loginError.classList.remove("hidden");
+    }
+  });
+
+  // ===============================
+  // AUTH GUARD (KUNCI UTAMA)
+  // ===============================
+  onAuthStateChanged(auth, async (user) => {
+
+    // ❌ TIDAK LOGIN
+    if (!user) {
+      loginSection.classList.remove("hidden");
+      dashboardSection.classList.add("hidden");
+      dashboardLoaded = false;
+      return;
+    }
+
+    // ❌ ANONYMOUS → LOGOUT PAKSA
+    if (user.isAnonymous) {
+      await signOut(auth);
+      loginSection.classList.remove("hidden");
+      dashboardSection.classList.add("hidden");
+      dashboardLoaded = false;
+      return;
+    }
+
+    // ✅ LOGIN EMAIL / PASSWORD
+    loginSection.classList.add("hidden");
+    dashboardSection.classList.remove("hidden");
+
+    if (!dashboardLoaded) {
+      loadDashboard();
+      dashboardLoaded = true;
+    }
+  });
+
+  // ===============================
+  // LOGOUT
+  // ===============================
+  btnLogout.addEventListener("click", async () => {
+    await signOut(auth);
+    dashboardLoaded = false;
+  });
+
+  // ===============================
+  // LOAD DASHBOARD
+  // ===============================
+  async function loadDashboard() {
+    const tbody = document.getElementById("tabelSubmissions");
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="p-4 text-center">Memuat data...</td>
+      </tr>
+    `;
+
+    try {
+      const q = query(
+        collection(db, "submissions"),
+        orderBy("createdAt", "desc")
+      );
+
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="p-4 text-center text-slate-400">
+              Belum ada tugas
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = "";
+      let no = 1;
+
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        const waktu = d.createdAt?.toDate().toLocaleString("id-ID") || "-";
+
+        tbody.innerHTML += `
+  <tr>
+    <td class="p-3 border">${no++}</td>
+    <td class="p-3 border">${d.nama}</td>
+    <td class="p-3 border">${d.kelas}</td>
+    <td class="p-3 border">${d.catatan || "-"}</td>
+    <td class="p-3 border">${waktu}</td>
+    <td class="p-3 border text-center">
+      <button
+        class="bg-red-500 hover:bg-red-600
+               text-white px-3 py-1 rounded text-xs"
+        data-id="${doc.id}">
+        🗑 Hapus
+      </button>
+    </td>
+  </tr>
+`;
+
+      });
+
+    } catch (err) {
+      console.error("LOAD DASHBOARD ERROR:", err);
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5" class="p-4 text-center text-red-400">
+            Gagal memuat data
+          </td>
+        </tr>
+      `;
+    }
+  }
+
+  // ===============================
+// DELETE SUBMISSION
+// ===============================
+document.addEventListener("click", async (e) => {
+  if (!e.target.matches("[data-id]")) return;
+
+  const id = e.target.dataset.id;
+
+  const yakin = confirm("Yakin ingin menghapus tugas ini?");
+  if (!yakin) return;
+
+  try {
+    await deleteDoc(doc(db, "submissions", id));
+    loadDashboard(); // refresh tabel
+  } catch (err) {
+    alert("Gagal menghapus data");
+    console.error(err);
+  }
+});
+
+</script>
+
+
+
+
+</body>
+</html>
