@@ -2,6 +2,8 @@
 <html lang="id" dir="ltr">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Dashboard Guru</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -57,7 +59,8 @@
           </p>
         </div>
 
-        <div class="p-8 max-w-md mx-auto space-y-5">
+        <div class="p-5 sm:p-8 max-w-md mx-auto space-y-4 sm:space-y-5">
+
           <input id="emailGuru" type="email"
                  placeholder="Email Guru"
                  class="w-full p-3 border border-slate-300 rounded-lg dark:text-slate-500">
@@ -85,14 +88,19 @@
          DASHBOARD TUGAS (HIDDEN DEFAULT)
     ================================ -->
     <section id="dashboard-section"
-             class="w-full max-w-6xl px-4 py-12 hidden">
+  class="w-full max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-12 hidden">
+
 
       <article class="bg-white dark:bg-slate-700
                       border border-slate-200
                       rounded-2xl shadow-lg overflow-hidden">
 
         <div class="bg-gradient-to-r from-emerald-600 to-emerald-800
-                    text-white py-6 flex items-center justify-between px-6">
+            text-white py-4 sm:py-6
+            flex flex-col sm:flex-row
+            gap-3 sm:gap-0
+            sm:items-center sm:justify-between px-4 sm:px-6">
+
           <div>
             <h3 class="text-2xl font-bold flex items-center gap-2">
               📊 Dashboard Tugas
@@ -109,8 +117,10 @@
           </button>
         </div>
 
-        <div class="p-6 overflow-x-auto">
-          <table class="w-full border-collapse text-sm">
+        <div class="p-3 sm:p-6 overflow-x-auto">
+
+          <table class="min-w-[700px] w-full border-collapse text-sm">
+
             <thead>
               <tr class="bg-slate-100 dark:bg-slate-600 text-left">
                 <th class="p-3 border">No</th>
@@ -304,14 +314,13 @@
     <td class="p-3 border">${d.kelas}</td>
     <td class="p-3 border">${d.catatan || "-"}</td>
     <td class="p-3 border">${waktu}</td>
-    <td class="p-3 border text-center">
-      <button
-        class="bg-red-500 hover:bg-red-600
-               text-white px-3 py-1 rounded text-xs"
-        data-id="${doc.id}">
-        🗑 Hapus
-      </button>
-    </td>
+    <td class="p-2 border text-center whitespace-nowrap">
+  <button class="bg-red-500 hover:bg-red-600
+                 text-white px-3 py-1 rounded text-xs">
+    🗑 Hapus
+  </button>
+</td>
+
   </tr>
 `;
 
