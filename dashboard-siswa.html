@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Siswa</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {}
+  }
+}
+</script>
+
+
+</head>
+
+<body class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100">
+
+<!-- ================= HEADER ================= -->
+<header class="bg-blue-600 text-white shadow">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <h1 class="font-bold text-lg">🎓 Dashboard Siswa</h1>
+    <a href="index.html"
+       class="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-semibold">
+      ⬅ Beranda
+    </a>
+      <button
+  id="darkToggle"
+  class="ml-3 px-3 py-2 rounded-lg bg-white/20 text-white hover:bg-white/30 transition"
+  title="Toggle Dark Mode"
+>
+  🌙
+</button>
+  </div>
+
+</header>
+
+
+<main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+
+<!-- ================= LOGIN SISWA ================= -->
+<section id="login-section" class="max-w-md mx-auto">
+  <article class="bg-white rounded-2xl shadow-lg overflow-hidden dark:bg-slate-600">
+
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 text-center">
+      <h2 class="text-2xl font-bold">🔐 Login Siswa</h2>
+      <p class="text-sm text-blue-100 mt-1">
+        Masuk ke Dashboard Siswa
+      </p>
+    </div>
+
+    <div class="p-6 space-y-4">
+      <input id="email"
+             type="email"
+             placeholder="Email Siswa"
+             class="w-full border rounded-lg px-4 py-2
+         bg-white dark:bg-slate-700
+         text-slate-800 dark:text-slate-100
+         border-slate-300 dark:border-slate-600
+         focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <input id="password"
+             type="password"
+             placeholder="Password"
+             class="w-full border rounded-lg px-4 py-2
+         bg-white dark:bg-slate-700
+         text-slate-800 dark:text-slate-100
+         border-slate-300 dark:border-slate-600
+         focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <button id="btnLogin"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold">
+        🔓 Masuk
+      </button>
+
+      <p id="error"
+         class="text-sm text-center text-red-500 hidden">
+        Login gagal
+      </p>
+    </div>
+
+  </article>
+</section>
+
+<!-- ================= DASHBOARD SISWA ================= -->
+<section id="dashboard-section" class="hidden">
+
+  <div class="grid grid-cols-1 md:grid-cols-10 gap-6">
+
+    <!-- ===== IDENTITAS ===== -->
+    <aside class="md:col-span-3 space-y-4">
+
+      <div class="bg-white rounded-xl shadow p-5 dark:bg-slate-700">
+        <h2 class="font-bold text-lg mb-3">👤 Identitas Siswa</h2>
+
+        <div class="space-y-2 text-sm">
+          <p><b>Nama:</b> <span id="nama">-</span></p>
+          <p><b>NISN:</b> <span id="nisn">-</span></p>
+          <p><b>Kelas:</b> <span id="kelas">-</span></p>
+          <p><b>Gender:</b> <span id="gender">-</span></p>
+          <p>
+            <b>Status:</b>
+            <span class="inline-flex items-center gap-2 text-green-600 font-semibold">
+              <span class="w-2.5 h-2.5 bg-green-500 rounded-full"></span>
+              Online
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <button id="btnLogout"
+              class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-semibold">
+        🚪 Logout
+      </button>
+
+
+      <!-- ================= RANKING SISWA (SIDEBAR) ================= -->
+<div class="mt-4 bg-slate-700 rounded-xl p-4 text-sm">
+  <h3 class="font-bold mb-3 flex items-center gap-2">
+    🏆 Ranking Siswa
+  </h3>
+
+  <!-- TOP 3 -->
+  <div id="top3Ranking" class="space-y-1 mb-3 max-h-28 overflow-y-auto">
+    <span class="text-xs text-slate-300">Memuat ranking...</span>
+  </div>
+
+  <hr class="my-3 border-slate-600">
+
+  <!-- POSISI PRIBADI -->
+  <div id="myRanking" class="text-slate-300">
+    Memuat peringkat kamu...
+  </div>
+</div>
+
+
+    </aside>
+
+
+    <!-- ===== KONTEN ===== -->
+    <section class="md:col-span-7">
+      <div class="bg-white rounded-xl shadow p-6 dark:bg-slate-700">
+        <h2 class="font-bold text-lg mb-3">🎮 Area Game & Kuis</h2>
+
+        <!-- ================= KUIS TA'ARUF ================= -->
+<section class="mt-6">
+  <div class="bg-white dark:bg-slate-600 rounded-xl shadow p-6">
+    <h2 class="font-bold text-lg mb-3">📝 Kuis Ta’aruf</h2>
+
+    <p class="text-sm text-slate-500 dark:text-slate-300 mb-4">
+      Kuis pengenalan diri (pilihan ganda)
+    </p>
+
+    <p id="taarufBestScore" class="text-sm text-blue-400 mt-1">
+      Skor terbaik: -
+    </p>
+
+    <p id="taarufAttempts" class="text-xs text-slate-400">
+      Sudah mengerjakan: -
+    </p>
+
+
+
+    <button
+      id="btnStartQuiz"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
+    >
+      ▶ Mulai Kuis
+    </button>
+
+    <div id="quizBox" class="mt-6 hidden">
+      <p id="quizQuestion" class="font-semibold mb-4"></p>
+
+      <div id="quizOptions" class="space-y-2"></div>
+
+      <p id="quizFeedback" class="mt-4 font-semibold"></p>
+
+      <button
+        id="nextQuestion"
+        class="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg hidden"
+      >
+        Soal Berikutnya
+      </button>
+    </div>
+  </div>
+</section>
+
+
+
+</div>
+</section>
+
+
+  </div>
+
+      <!-- ================= KIRIM TUGAS ================= -->
+<section class="mt-6">
+  <div class="bg-white rounded-xl shadow p-6 dark:bg-slate-600">
+    <h2 class="font-bold text-lg mb-4">📤 Kirim Tugas</h2>
+
+    <div class="space-y-4">
+      <textarea id="catatanTugas"
+        class="w-full border rounded-lg px-4 py-2
+         bg-white dark:bg-slate-700
+         text-slate-800 dark:text-slate-100
+         border-slate-300 dark:border-slate-600
+         focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Catatan tugas (opsional)"></textarea>
+
+      <input type="url"
+        id="driveLink"
+        class="w-full border rounded-lg px-4 py-2
+         bg-white dark:bg-slate-700
+         text-slate-800 dark:text-slate-100
+         border-slate-300 dark:border-slate-600
+         focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Tempelkan link Google Drive tugas di sini"
+        required />
+
+      <button id="btnKirimTugas"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold">
+        🚀 Kirim Tugas
+      </button>
+
+      <p id="uploadStatus"
+        class="text-sm text-center hidden"></p>
+    </div>
+  </div>
+</section>
+
+
+</section>
+</main>
+
+<footer class="bg-blue-700 text-white text-center py-4 text-sm">
+  © 2025 Tarbiyyat al-Lughah
+</footer>
+
+<!-- ================= FIREBASE LOGIC ================= -->
+<script type="module">
+/* ================= FIREBASE IMPORT ================= */
+import { initializeApp, getApps } from
+  "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from
+  "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from
+  "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+import {
+  getDatabase,
+  ref,
+  set,
+  onValue,
+  onDisconnect,
+  serverTimestamp
+} from
+  "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+import {
+  addDoc,
+  collection,
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+  import {
+  getDocs,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+
+
+/* ================= FIREBASE INIT ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
+  authDomain: "tarbiyyat-lughah-presence.firebaseapp.com",
+  projectId: "tarbiyyat-lughah-presence",
+  databaseURL: "https://tarbiyyat-lughah-presence-default-rtdb.asia-southeast1.firebasedatabase.app",
+};
+
+
+const app  = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const rtdb = getDatabase(app);
+
+
+/* ================= DOM ================= */
+const loginSection = document.getElementById("login-section");
+const dashSection  = document.getElementById("dashboard-section");
+
+const emailInput = document.getElementById("email");
+const passInput  = document.getElementById("password");
+const btnLogin   = document.getElementById("btnLogin");
+const btnLogout  = document.getElementById("btnLogout");
+const errorBox   = document.getElementById("error");
+
+const elNama   = document.getElementById("nama");
+const elNisn   = document.getElementById("nisn");
+const elKelas  = document.getElementById("kelas");
+const elGender = document.getElementById("gender");
+
+let currentUser = null;
+
+/* ================= UI ================= */
+function showLogin() {
+  loginSection.classList.remove("hidden");
+  dashSection.classList.add("hidden");
+}
+
+function showDashboard() {
+  loginSection.classList.add("hidden");
+  dashSection.classList.remove("hidden");
+}
+
+function setText(el, val) {
+  el.textContent = val || "-";
+}
+
+/* ================= LOGIN ================= */
+btnLogin.addEventListener("click", async () => {
+  errorBox.classList.add("hidden");
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      emailInput.value.trim(),
+      passInput.value.trim()
+    );
+  } catch {
+    errorBox.textContent = "Email atau password salah";
+    errorBox.classList.remove("hidden");
+  }
+});
+
+/* ================= AUTH ================= */
+onAuthStateChanged(auth, async (user) => {
+  // 1️⃣ BELUM LOGIN
+  if (!user) {
+    showLogin();
+    return;
+  }
+
+  // 2️⃣ AMBIL DATA USER DARI FIRESTORE
+  const userRef  = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) {
+    await signOut(auth);
+    showLogin();
+    return;
+  }
+
+  const userData = userSnap.data();
+
+  // 3️⃣ WAJIB GANTI PASSWORD
+  if (userData.mustChangePassword === true) {
+    window.location.href = "ganti-password.html";
+    return;
+  }
+
+  // // 4️⃣ CEK ROLE
+  // if (userData.role !== "student") {
+  //   await signOut(auth);
+  //   showLogin();
+  //   return;
+  // }
+
+  const snap = await getDoc(doc(db, "users", user.uid));
+  if (!snap.exists() || snap.data().role !== "student") {
+    await signOut(auth);
+    showLogin();
+    return;
+  }
+
+  currentUser = user;
+  renderIdentitas(snap.data());
+  setupPresence(user.uid);
+  showDashboard();
+
+    // 🔑 PENTING: pastikan context SUDAH ADA
+  window.__APP_CONTEXT__ = {
+    db,
+    auth,
+    getCurrentUser: () => currentUser
+  };
+
+    // ✅ BARU load kuis
+  await import("./assets/js/quiz-taaruf.js");
+
+
+
+const QUIZ_ID = "taaruf-1";
+
+async function loadQuizTaarufStatus() {
+  // 🔒 pastikan user sudah login
+  if (!currentUser) return;
+
+  const elBestScore = document.getElementById("taarufBestScore");
+  const elAttempts  = document.getElementById("taarufAttempts");
+  if (!elBestScore || !elAttempts) return;
+
+  
+
+  // 1️⃣ ambil skor terbaik dari users
+  onSnapshot(doc(db, "users", user.uid), (snap) => {
+  if (!snap.exists()) return;
+
+  const data = snap.data();
+  const bestScore = data.poin ?? 0;
+
+  elBestScore.textContent = `Skor terbaik: ${bestScore}`;
+});
+
+
+  // 2️⃣ hitung jumlah attempt
+  onSnapshot(
+  query(
+    collection(db, "quizResults"),
+    where("uid", "==", user.uid),
+    where("quizId", "==", QUIZ_ID)
+  ),
+  (snap) => {
+    elAttempts.textContent =
+      `Sudah mengerjakan: ${snap.size} kali`;
+  }
+  );
+
+  elAttempts.textContent = `Sudah mengerjakan: ${qSnap.size} kali`;
+}
+
+window.loadQuizTaarufStatus = loadQuizTaarufStatus;
+
+    // 🔥 SETELAH LOGIN SISWA BERHASIL
+  await loadQuizTaarufStatus();
+  loadRankingForStudent();
+
+
+});
+
+
+
+
+
+/* ================= PRESENCE (FIX FINAL) ================= */
+function setupPresence(uid) {
+  const statusRef = ref(rtdb, `status/${uid}`);
+  const connectedRef = ref(rtdb, ".info/connected");
+
+  onValue(connectedRef, (snap) => {
+    if (snap.val() === true) {
+      // saat benar-benar terkoneksi
+      onDisconnect(statusRef).set({
+        online: false,
+        lastSeen: serverTimestamp()
+      });
+
+  // Saat online
+  set(statusRef, {
+    online: true,
+    lastSeen: serverTimestamp()
+  });
+}
+  });
+}
+
+/* ================= RENDER ================= */
+function renderIdentitas(data) {
+  setText(elNama, data.nama);
+  setText(elNisn, data.nisn);
+  setText(elKelas, data.kelas);
+  setText(elGender, data.gender);
+}
+
+/* ================= LOGOUT ================= */
+btnLogout.addEventListener("click", async () => {
+  if (currentUser) {
+    const statusRef = ref(rtdb, `status/${currentUser.uid}`);
+    await set(statusRef, {
+      online: false,
+      lastSeen: serverTimestamp()
+    });
+  }
+  await signOut(auth);
+  showLogin();
+});
+
+// JS TEMPAT KIRIM TUGAS
+const btnKirim = document.getElementById("btnKirimTugas");
+const inputCatatan = document.getElementById("catatanTugas");
+const inputLink = document.getElementById("driveLink");
+const statusBox = document.getElementById("uploadStatus");
+
+btnKirim.addEventListener("click", async () => {
+  if (!currentUser) return;
+
+  const link = inputLink.value.trim();
+  if (!link.startsWith("http")) {
+    alert("Masukkan link Google Drive yang valid");
+    return;
+  }
+
+  btnKirim.disabled = true;
+  statusBox.className = "text-sm text-center text-blue-600";
+  statusBox.textContent = "Mengirim tugas...";
+  statusBox.classList.remove("hidden");
+
+  try {
+    const snapUser = await getDoc(doc(db, "users", currentUser.uid));
+    const user = snapUser.data();
+
+    await addDoc(collection(db, "submissions"), {
+      uid: currentUser.uid,
+      nama: user.nama,
+      nisn: user.nisn,
+      kelas: user.kelas,
+      catatan: inputCatatan.value || "-",
+      driveLink: link,
+      
+      // 🔑 DUA WAKTU
+  createdAt: serverTimestamp(),     // waktu server (utama)
+  createdAtClient: Date.now()        // cadangan
+    });
+
+    statusBox.className = "text-sm text-center text-green-600";
+    statusBox.textContent = "✅ Tugas berhasil dikirim";
+
+    inputCatatan.value = "";
+    inputLink.value = "";
+  } catch (err) {
+    console.error(err);
+    statusBox.className = "text-sm text-center text-red-600";
+    statusBox.textContent = "❌ Gagal mengirim tugas";
+  }
+
+  btnKirim.disabled = false;
+});
+
+
+// ================= RANKING SISWA (TOP 3 + POSISI PRIBADI) =================
+import {
+  orderBy,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+function loadRankingForStudent() {
+  const top3Box = document.getElementById("top3Ranking");
+  const myBox   = document.getElementById("myRanking");
+
+  const q = query(
+    collection(db, "leaderboard"),
+    orderBy("poinTotal", "desc")
+  );
+
+  onSnapshot(q, (snapshot) => {
+    const list = [];
+
+    snapshot.forEach(docSnap => {
+      list.push({ uid: docSnap.id, ...docSnap.data() });
+    });
+
+    // ===== TOP 3 =====
+    top3Box.innerHTML = "";
+    list.slice(0, 3).forEach((s, i) => {
+      const medal = ["🥇","🥈","🥉"][i];
+      top3Box.innerHTML += `
+        <div class="flex justify-between">
+          <span>${medal} ${s.nama} (${s.kelas})</span>
+          <b>${s.poinTotal}</b>
+        </div>
+      `;
+    });
+
+    // ===== POSISI PRIBADI =====
+    const myIndex = list.findIndex(s => s.uid === currentUser.uid);
+    if (myIndex !== -1) {
+      myBox.innerHTML = `
+        📍 <b>Peringkat kamu:</b><br>
+        #${myIndex + 1} dari ${list.length} siswa<br>
+        Total poin: <b>${list[myIndex].poinTotal}</b>
+      `;
+    }
+  });
+}
+
+
+
+</script>
+
+<!-- JS DARK MODE -->
+<script>
+const html = document.documentElement;
+const toggle = document.getElementById("darkToggle");
+
+// cek preferensi awal
+if (localStorage.theme === "dark") {
+  html.classList.add("dark");
+  toggle.textContent = "☀️";
+}
+
+// toggle klik
+toggle.addEventListener("click", () => {
+  html.classList.toggle("dark");
+
+  if (html.classList.contains("dark")) {
+    localStorage.theme = "dark";
+    toggle.textContent = "☀️";
+  } else {
+    localStorage.theme = "light";
+    toggle.textContent = "🌙";
+  }
+});
+</script>
+
+
+  <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
+<script>
+  window.PRESENCE_OPTIONS = { mode: "global" };
+</script>
+
+<!-- Panggil script presence -->
+<script type="module" src="./assets/presence.js"></script>
+
+<!-- DATA SOAL -->
+<script src="assets/data/vocabs.js"></script>
+
+
+
+
+
+
+</body>
+</html>

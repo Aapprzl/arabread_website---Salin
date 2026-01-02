@@ -162,6 +162,180 @@
           </table>
         </div>
 
+
+<!-- ===============================
+     MANAJEMEN SISWA
+=============================== -->
+<div class="mt-10">
+
+  <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+    👥 Manajemen Siswa
+  </h3>
+
+  <!-- 🔑 PADDING WRAPPER (SAMA DENGAN TABEL ATAS) -->
+  <div class="p-3 sm:p-6 overflow-x-auto">
+
+    <table class="min-w-[700px] w-full border-collapse text-sm">
+
+      <thead>
+        <tr class="bg-slate-100 dark:bg-slate-600 text-left">
+          <th class="p-3 border text-slate-700 dark:text-slate-100">No</th>
+          <th class="p-3 border text-slate-700 dark:text-slate-100">Nama</th>
+          <th class="p-3 border text-slate-700 dark:text-slate-100">NISN</th>
+          <th class="p-3 border text-slate-700 dark:text-slate-100">Kelas</th>
+          <th class="p-3 border text-slate-700 dark:text-slate-100">Gender</th>
+          <th class="p-3 border text-slate-700 dark:text-slate-100">Status</th>
+          <th class="p-3 border text-center text-slate-700 dark:text-slate-100">Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody id="tabelSiswa">
+        <tr>
+          <td colspan="7"
+              class="p-4 border text-center text-slate-700 dark:text-slate-200">
+            Memuat data siswa...
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+</div>
+
+
+<!-- ================= NILAI SISWA ================= -->
+<section class="mt-8">
+  <h2 class="text-xl font-bold mb-4">📊 Nilai Kuis Siswa</h2>
+
+  <div class="overflow-x-auto rounded-lg shadow">
+    <table class="min-w-full bg-white dark:bg-slate-800 text-sm">
+      <thead class="bg-slate-100 dark:bg-slate-700">
+        <tr>
+          <th class="px-3 py-2 text-left">No</th>
+          <th class="px-3 py-2 text-left">Nama</th>
+          <th class="px-3 py-2 text-left">Kelas</th>
+          <th class="px-3 py-2 text-left">Kuis</th>
+          <th class="px-3 py-2 text-center">Skor</th>
+          <th class="px-3 py-2 text-left">Waktu</th>
+          <th class="px-3 py-2 text-left">Aksi</th>
+
+        </tr>
+      </thead>
+      <tbody id="nilaiTableBody">
+        <tr>
+          <td colspan="6" class="px-4 py-6 text-center text-slate-500">
+            Memuat data nilai...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ================= TOTAL POIN SISWA ================= -->
+<section class="mt-8">
+  <h2 class="text-xl font-bold mb-4">🏆 Total Poin Siswa</h2>
+
+  <button
+    id="resetPoinBtn"
+    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+    🔄 Reset Poin Hari Ini
+  </button>
+  <button
+  id="resetPoinTotalBtn"
+  class="ml-2 bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+  ⚠️ Reset Total Sepanjang Waktu
+</button>
+
+  <div class="overflow-x-auto rounded-lg shadow">
+    <table class="min-w-full bg-white dark:bg-slate-800 text-sm">
+      <thead class="bg-slate-100 dark:bg-slate-700">
+        <tr>
+          <th class="px-3 py-2">No</th>
+          <th class="px-3 py-2">Nama</th>
+          <th class="px-3 py-2">Kelas</th>
+          <th class="px-3 py-2 text-center">Poin Aktif</th>
+          <th class="px-3 py-2 text-center">Total Sepanjang Waktu</th>
+        </tr>
+      </thead>
+      <tbody id="poinTableBody">
+        <tr>
+          <td colspan="5" class="px-4 py-6 text-center text-slate-500">
+            Memuat data poin...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= RANKING SISWA ================= -->
+<section class="mt-8">
+  <h2 class="text-xl font-bold mb-4">🏆 Ranking Siswa</h2>
+
+  <div class="overflow-x-auto rounded-lg shadow">
+    <table class="min-w-full bg-white dark:bg-slate-800 text-sm">
+      <thead class="bg-slate-100 dark:bg-slate-700">
+        <tr>
+          <th class="px-3 py-2 text-center">Rank</th>
+          <th class="px-3 py-2">Nama</th>
+          <th class="px-3 py-2">Kelas</th>
+          <th class="px-3 py-2 text-center">Total Poin</th>
+        </tr>
+      </thead>
+      <tbody id="rankingTableBody">
+        <tr>
+          <td colspan="4" class="px-4 py-6 text-center text-slate-500">
+            Memuat ranking...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+
+<!-- ============================= -->
+<!-- CARD: DAFTAR SISWA BARU -->
+<!-- ============================= -->
+<div class="mt-6 bg-slate-700 border border-slate-500 rounded-xl p-5">
+  <h3 class="text-white font-semibold mb-4">➕ Daftarkan Siswa</h3>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+    <input id="inputNama" type="text"
+      placeholder="Nama Siswa"
+      class="px-3 py-2 rounded-lg bg-slate-800 text-white border border-slate-500">
+
+    <input id="inputNisn" type="text"
+      placeholder="NISN"
+      class="px-3 py-2 rounded-lg bg-slate-800 text-white border border-slate-500">
+
+    <input id="inputKelas" type="text"
+      placeholder="Kelas (contoh: 7A)"
+      class="px-3 py-2 rounded-lg bg-slate-800 text-white border border-slate-500">
+
+    <select id="inputGender"
+      class="px-3 py-2 rounded-lg bg-slate-800 text-white border border-slate-500">
+       <option value="">Pilih Gender</option>
+      <option value="Laki-laki">Laki-laki</option>
+      <option value="Perempuan">Perempuan</option>
+    </select>
+
+  </div>
+
+  <button id="btnSimpanSiswa"
+    class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+    💾 Simpan ke Database
+  </button>
+
+  <p id="infoSimpanSiswa" class="mt-3 text-sm"></p>
+</div>
+
+
       </article>
     </section>
 
@@ -180,228 +354,629 @@
     </div>
   </footer>
 
-  
 
 </body>
 
-
+<!-- MAIN LOGIKA -->
 <script type="module">
-  import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-  import {
-    getAuth,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+/* ======================================================
+   1. FIREBASE IMPORT
+====================================================== */
+import { initializeApp, getApps } from
+  "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 
-  import {
-    getFirestore,
-    collection,
-    getDocs,
-    query,
-    orderBy
-  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from
+  "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-  import {
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  setDoc,
   deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+  updateDoc,
+  doc,
+  query,
+  where,
+  orderBy,
+  serverTimestamp,
+  onSnapshot,
+} from
+  "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+import {
+  getDatabase,
+  ref,
+  onValue,
+} from
+  "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+  import { getFunctions, httpsCallable } 
+  from "https://www.gstatic.com/firebasejs/9.23.0/firebase-functions.js";
 
 
-  // ===============================
-  // FIREBASE INIT (AMAN)
-  // ===============================
-  const firebaseConfig = {
-    apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
-    authDomain: "tarbiyyat-lughah-presence.firebaseapp.com",
-    projectId: "tarbiyyat-lughah-presence",
-  };
 
-  const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+/* ======================================================
+   2. FIREBASE INIT
+====================================================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
+  authDomain: "tarbiyyat-lughah-presence.firebaseapp.com",
+  projectId: "tarbiyyat-lughah-presence",
+  databaseURL: "https://tarbiyyat-lughah-presence-default-rtdb.asia-southeast1.firebasedatabase.app",
+};
 
-  // ===============================
-  // ELEMENTS
-  // ===============================
-  const loginSection = document.getElementById("login-section");
-  const dashboardSection = document.getElementById("dashboard-section");
-  const loginError = document.getElementById("loginError");
-  const btnLogin = document.getElementById("btnLoginGuru");
-  const btnLogout = document.getElementById("btnLogout");
+const app  = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const rtdb = getDatabase(app);
 
-  let dashboardLoaded = false; // ⛔ anti double load
+/* ======================================================
+   3. DOM ELEMENTS
+====================================================== */
+const loginSection     = document.getElementById("login-section");
+const dashboardSection = document.getElementById("dashboard-section");
 
-  // ===============================
-  // LOGIN
-  // ===============================
-  btnLogin.addEventListener("click", async () => {
-    const email = document.getElementById("emailGuru").value.trim();
-    const password = document.getElementById("passwordGuru").value.trim();
+const emailInput    = document.getElementById("emailGuru");
+const passwordInput = document.getElementById("passwordGuru");
+const loginError    = document.getElementById("loginError");
 
-    loginError.classList.add("hidden");
+const btnLogin  = document.getElementById("btnLoginGuru");
+const btnLogout = document.getElementById("btnLogout");
 
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      console.error("LOGIN ERROR:", err.code);
-      loginError.textContent = "Email atau password salah";
-      loginError.classList.remove("hidden");
-    }
-  });
+const tabelSubmissions = document.getElementById("tabelSubmissions");
+const tabelSiswa       = document.getElementById("tabelSiswa");
 
-  // ===============================
-  // AUTH GUARD (KUNCI UTAMA)
-  // ===============================
-  onAuthStateChanged(auth, async (user) => {
+/* ======================================================
+   4. GLOBAL STATE
+====================================================== */
+let dashboardLoaded = false;
+let statusSiswa = {};   // realtime status
+let dataSiswa   = [];   // cache data siswa
 
-    // ❌ TIDAK LOGIN
-    if (!user) {
-      loginSection.classList.remove("hidden");
-      dashboardSection.classList.add("hidden");
-      dashboardLoaded = false;
-      return;
-    }
+/* ======================================================
+   5. UI HELPER
+====================================================== */
+function showLogin() {
+  loginSection.classList.remove("hidden");
+  dashboardSection.classList.add("hidden");
+}
 
-    // ❌ ANONYMOUS → LOGOUT PAKSA
-    if (user.isAnonymous) {
-      await signOut(auth);
-      loginSection.classList.remove("hidden");
-      dashboardSection.classList.add("hidden");
-      dashboardLoaded = false;
-      return;
-    }
+function showDashboard() {
+  loginSection.classList.add("hidden");
+  dashboardSection.classList.remove("hidden");
+}
 
-    // ✅ LOGIN EMAIL / PASSWORD
-    loginSection.classList.add("hidden");
-    dashboardSection.classList.remove("hidden");
+/* ======================================================
+   6. LOGIN & AUTH GUARD
+====================================================== */
+btnLogin.addEventListener("click", async () => {
+  loginError.classList.add("hidden");
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      emailInput.value.trim(),
+      passwordInput.value.trim()
+    );
+  } catch {
+    loginError.textContent = "Email atau password salah";
+    loginError.classList.remove("hidden");
+  }
+});
 
-    if (!dashboardLoaded) {
-      loadDashboard();
-      dashboardLoaded = true;
-    }
-  });
+btnLogout.addEventListener("click", async () => {
+  await signOut(auth);
+  dashboardLoaded = false;
+  showLogin();
+});
 
-  // ===============================
-  // LOGOUT
-  // ===============================
-  btnLogout.addEventListener("click", async () => {
-    await signOut(auth);
+onAuthStateChanged(auth, async (user) => {
+  if (!user || user.isAnonymous) {
+    showLogin();
     dashboardLoaded = false;
-  });
+    return;
+  }
 
-  // ===============================
-  // LOAD DASHBOARD
-  // ===============================
-  async function loadDashboard() {
-    const tbody = document.getElementById("tabelSubmissions");
+  const userRef = doc(db, "users", user.uid);
+  const snap = await getDoc(userRef);
 
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="6" class="p-4 text-center dark:text-slate-100 text-slate-700">Memuat data...</td>
-      </tr>
-    `;
+  // auto create guru
+  if (!snap.exists()) {
+    await setDoc(userRef, {
+      email: user.email,
+      role: "guru",
+      createdAt: serverTimestamp()
+    });
+    location.reload();
+    return;
+  }
 
-    try {
-      const q = query(
-        collection(db, "submissions"),
-        orderBy("createdAt", "desc")
-      );
+  if (snap.data().role !== "guru") {
+    showLogin();
+    dashboardLoaded = false;
+    return;
+  }
 
-      const snapshot = await getDocs(q);
+  showDashboard();
 
-      if (snapshot.empty) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6" class="p-4 text-center text-slate-700 dark:text-slate-200">
-              Belum ada tugas
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      tbody.innerHTML = "";
-      let no = 1;
-
-      snapshot.forEach(doc => {
-        const d = doc.data();
-        const waktu = d.createdAt?.toDate().toLocaleString("id-ID") || "-";
-
-        tbody.innerHTML += `
-  <tr>
-    <td class="p-3 border">${no++}</td>
-    <td class="p-3 border">${d.nama}</td>
-    <td class="p-3 border">${d.kelas}</td>
-    <td class="p-3 border">${d.catatan || "-"}</td>
-
-    <!-- FILE (HARUS SEBELUM WAKTU) -->
-    <td class="p-3 border text-center">
-      ${
-        d.driveLink
-          ? `<a href="${d.driveLink}" target="_blank"
-               class="inline-flex items-center gap-1
-                      bg-blue-500 hover:bg-blue-600
-                      text-white text-xs px-3 py-1 rounded-lg">
-               📎 Buka
-             </a>`
-          : `<span class="text-slate-400 text-xs">-</span>`
-      }
-    </td>
-
-    <!-- WAKTU -->
-    <td class="p-3 border">${waktu}</td>
-
-    <!-- AKSI -->
-    <td class="p-3 border text-center">
-      <button
-        class="bg-red-500 hover:bg-red-600
-               text-white text-xs px-3 py-1 rounded-lg"
-        onclick="hapusTugas('${doc.id}')">
-        🗑 Hapus
-      </button>
-    </td>
-  </tr>
-`;
+  // 🔥 Load tabel nilai siswa
+  loadNilaiSiswa();
+  loadPoinSiswa();
+  loadRankingSiswa();
 
 
 
-      });
 
-    } catch (err) {
-      console.error("LOAD DASHBOARD ERROR:", err);
+  if (!dashboardLoaded) {
+    loadDashboard();
+    loadSiswa();
+    listenStatusRealtime();
+    dashboardLoaded = true;
+  }
+});
+
+// ================= RANKING SISWA (REALTIME) =================
+function loadRankingSiswa() {
+  const tbody = document.getElementById("rankingTableBody");
+
+  const q = query(
+    collection(db, "users"),
+    where("role", "==", "student"),
+    orderBy("poinTotal", "desc")
+  );
+
+  onSnapshot(q, (snapshot) => {
+    tbody.innerHTML = "";
+
+    if (snapshot.empty) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="6" class="p-4 text-center text-red-400">
-            Gagal memuat data
+          <td colspan="4" class="px-4 py-6 text-center text-slate-500">
+            Belum ada ranking
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    let rank = 1;
+
+    snapshot.forEach((docSnap) => {
+      const d = docSnap.data();
+
+      tbody.innerHTML += `
+        <tr class="border-t border-slate-700">
+          <td class="px-3 py-2 text-center font-bold">
+            ${rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : rank}
+          </td>
+          <td class="px-3 py-2">${d.nama}</td>
+          <td class="px-3 py-2">${d.kelas}</td>
+          <td class="px-3 py-2 text-center font-bold text-emerald-500">
+            ${d.poinTotal ?? 0}
+          </td>
+        </tr>
+      `;
+
+      rank++;
+    });
+  });
+}
+
+
+/* ======================================================
+   7. DASHBOARD TUGAS
+====================================================== */
+function loadDashboard() {
+  tabelSubmissions.innerHTML = `
+    <tr><td colspan="7" class="p-4 text-center">Memuat...</td></tr>
+  `;
+
+  const q = query(
+    collection(db, "submissions"),
+    orderBy("createdAt", "desc")
+  );
+
+  onSnapshot(q, (snap) => {
+    if (snap.empty) {
+      tabelSubmissions.innerHTML = `
+        <tr><td colspan="7" class="p-4 text-center">Belum ada tugas</td></tr>
+      `;
+      return;
+    }
+
+    tabelSubmissions.innerHTML = "";
+    let no = 1;
+
+    snap.forEach((d) => {
+      const data = d.data();
+      let waktu = "-";
+
+      if (data.createdAt && typeof data.createdAt.toDate === "function") {
+        waktu = data.createdAt.toDate().toLocaleString("id-ID");
+      } else if (data.createdAtClient) {
+        waktu = new Date(data.createdAtClient).toLocaleString("id-ID");
+      }
+
+      tabelSubmissions.innerHTML += `
+        <tr>
+          <td class="p-3 border">${no++}</td>
+          <td class="p-3 border">${data.nama}</td>
+          <td class="p-3 border">${data.kelas}</td>
+          <td class="p-3 border">${data.catatan || "-"}</td>
+          <td class="p-3 border text-center">
+            ${
+              data.driveLink
+                ? `<a href="${data.driveLink}" target="_blank"
+                     class="bg-blue-500 text-white px-3 py-1 rounded text-xs">📎 Buka</a>`
+                : "-"
+            }
+          </td>
+          <td class="p-3 border">${waktu}</td>
+          <td class="p-3 border text-center">
+            <button onclick="hapusTugas('${d.id}')"
+              class="bg-red-500 text-white px-3 py-1 rounded text-xs">
+              🗑 Hapus
+            </button>
+          </td>
+        </tr>
+      `;
+    });
+  });
+}
+
+
+window.hapusTugas = async (id) => {
+  if (!confirm("Hapus tugas ini?")) return;
+  await deleteDoc(doc(db, "submissions", id));
+  // ❌ TIDAK perlu loadDashboard()
+};
+
+
+/* ======================================================
+   8. REALTIME STATUS SISWA
+====================================================== */
+function listenStatusRealtime() {
+  onValue(ref(rtdb, "status"), (snap) => {
+    statusSiswa = snap.val() || {};
+    renderTabelSiswa();
+  });
+}
+
+/* ======================================================
+   9. MANAJEMEN SISWA
+====================================================== */
+async function loadSiswa() {
+  const snap = await getDocs(collection(db, "users"));
+  dataSiswa = [];
+
+  snap.forEach((docu) => {
+    const d = docu.data();
+    if (d.role !== "student") return;
+    dataSiswa.push({ uid: docu.id, ...d });
+  });
+
+  renderTabelSiswa();
+}
+
+function renderTabelSiswa() {
+  // reset tabel sebelum render (WAJIB)
+tabelSiswa.innerHTML = "";
+let no = 1;
+
+// pastikan dataSiswa benar-benar array
+if (!Array.isArray(dataSiswa)) return;
+
+dataSiswa.forEach((d) => {
+  // proteksi data
+  const uid = d.uid || "";
+  const nama = d.nama || "-";
+  const nisn = d.nisn || "-";
+  const kelas = d.kelas || "-";
+  const gender = d.gender || "-";
+
+  // status online (aman walau statusSiswa belum ada)
+  const online = !!(uid && statusSiswa?.[uid]?.online === true);
+
+  tabelSiswa.innerHTML += `
+    <tr>
+      <td class="p-3 border">${no++}</td>
+
+      <td class="p-3 border">${nama}</td>
+      <td class="p-3 border">${nisn}</td>
+      <td class="p-3 border">${kelas}</td>
+      <td class="p-3 border">${gender}</td>
+
+      <td class="p-3 border">
+        <span class="text-xs font-semibold ${
+          online ? "text-green-500" : "text-slate-400"
+        }">
+          ● ${online ? "Online" : "Offline"}
+        </span>
+      </td>
+
+      <td class="p-3 border text-center">
+        ${
+          uid
+            ? `<button onclick="hapusSiswa('${uid}')"
+                class="bg-red-500 hover:bg-red-600
+                       text-white px-3 py-1 rounded text-xs">
+                🗑
+              </button>`
+            : `<span class="text-slate-400 text-xs">-</span>`
+        }
+      </td>
+    </tr>
+  `;
+});
+
+}
+
+window.hapusSiswa = async (uid) => {
+  if (!confirm("Hapus siswa ini?")) return;
+  await deleteDoc(doc(db, "users", uid));
+  loadSiswa();
+};
+
+
+/* ======================================================
+   10. DAFTARKAN SISWA BARU (CLOUD FUNCTION)
+====================================================== */
+document.getElementById("btnSimpanSiswa").addEventListener("click", async () => {
+  const nama = inputNama.value.trim();
+  const nisn = inputNisn.value.trim();
+  const kelas = inputKelas.value.trim();
+  const gender = inputGender.value;
+
+  if (!nama || !nisn || !kelas || !gender) {
+    alert("Data belum lengkap");
+    return;
+  }
+
+  const payload = { nama, nisn, kelas, gender };
+  console.log("DATA DIKIRIM:", payload);
+
+  try {
+    const res = await fetch(
+      "https://asia-southeast1-tarbiyyat-lughah-presence.cloudfunctions.net/createStudentAccount",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Gagal membuat siswa");
+    }
+
+    alert(
+      `Siswa berhasil dibuat!\n\nEmail: ${data.email}\nPassword: ${data.password}`
+    );
+
+    inputNama.value = "";
+    inputNisn.value = "";
+    inputKelas.value = "";
+    inputGender.value = "";
+
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+});
+
+
+
+
+
+// ================= NILAI SISWA REALTIME =================
+function loadNilaiSiswa() {
+  const tbody = document.getElementById("nilaiTableBody");
+
+  const q = query(
+    collection(db, "quizResults"),
+    orderBy("createdAt", "desc")
+  );
+
+  onSnapshot(q, (snapshot) => {
+    tbody.innerHTML = "";
+
+    if (snapshot.empty) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" class="px-4 py-6 text-center text-slate-500">
+            Belum ada data nilai
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    let no = 1;
+    snapshot.forEach((doc) => {
+      const d = doc.data();
+      const waktu = d.createdAt?.toDate
+        ? d.createdAt.toDate().toLocaleString("id-ID")
+        : "-";
+
+      tbody.innerHTML += `
+        <tr class="border-t border-slate-200 dark:border-slate-700">
+          <td class="px-3 py-2">${no++}</td>
+          <td class="px-3 py-2">${d.nama}</td>
+          <td class="px-3 py-2">${d.kelas}</td>
+          <td class="px-3 py-2">${d.quizTitle}</td>
+          <td class="px-3 py-2 text-center font-bold">
+            ${d.score} / ${d.totalSoal}
+          </td>
+          <td class="px-3 py-2">${waktu}</td>
+          <td class="text-center">
+            <button
+            onclick="hapusNilai('${doc.id}')"
+            class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs">
+            🗑 Hapus
+            </button>
+          </td>
+        </tr>
+      `;
+    });
+  });
+}
+
+
+// ================= TOTAL POIN SISWA (REALTIME) =================
+function loadPoinSiswa() {
+  const tbody = document.getElementById("poinTableBody");
+
+  onSnapshot(collection(db, "users"), (snapshot) => {
+    tbody.innerHTML = "";
+    let no = 1;
+
+    snapshot.forEach((docSnap) => {
+      const d = docSnap.data();
+
+      // hanya tampilkan siswa
+      if (d.role !== "student") return;
+
+      tbody.innerHTML += `
+        <tr class="border-t border-slate-700">
+          <td class="px-3 py-2">${no++}</td>
+          <td class="px-3 py-2">${d.nama}</td>
+          <td class="px-3 py-2">${d.kelas}</td>
+          <td class="px-3 py-2 text-center font-bold text-blue-500">
+            ${d.poin ?? 0}
+          </td>
+          <td class="px-3 py-2 text-center text-slate-400">
+            ${d.poinTotal ?? 0}
+          </td>
+        </tr>
+      `;
+    });
+
+    // jika belum ada siswa
+    if (tbody.innerHTML === "") {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5" class="px-4 py-6 text-center text-slate-500">
+            Belum ada data poin
           </td>
         </tr>
       `;
     }
-  }
+  });
+}
 
-  // ===============================
-// DELETE SUBMISSION
-// ===============================
-document.addEventListener("click", async (e) => {
-  if (!e.target.matches("[data-id]")) return;
+// RESET POIN
+const resetBtn = document.getElementById("resetPoinBtn");
 
-  const id = e.target.dataset.id;
+resetBtn.addEventListener("click", async () => {
+  const yakin = confirm(
+    "Yakin reset poin hari ini?\n\n" +
+    "✔ Poin aktif akan di-reset\n" +
+    "✖ Total sepanjang waktu tetap"
+  );
 
-  const yakin = confirm("Yakin ingin menghapus tugas ini?");
   if (!yakin) return;
 
   try {
-    await deleteDoc(doc(db, "submissions", id));
-    loadDashboard(); // refresh tabel
+    const snapshot = await getDocs(collection(db, "users"));
+
+    for (const docSnap of snapshot.docs) {
+      const data = docSnap.data();
+
+      // hanya reset siswa
+      if (data.role === "student") {
+        await updateDoc(doc(db, "users", docSnap.id), {
+          poin: 0
+        });
+      }
+    }
+
+    alert("✅ Poin hari ini berhasil di-reset!");
   } catch (err) {
-    alert("Gagal menghapus data");
     console.error(err);
+    alert("❌ Gagal reset poin");
   }
 });
 
+// ================= RESET TOTAL POIN SEPANJANG WAKTU =================
+const resetTotalBtn = document.getElementById("resetPoinTotalBtn");
+
+resetTotalBtn.addEventListener("click", async () => {
+  const yakin = confirm(
+    "⚠️ PERINGATAN KERAS ⚠️\n\n" +
+    "Kamu akan MERESet:\n" +
+    "• Poin aktif\n" +
+    "• Total poin sepanjang waktu\n\n" +
+    "❗ Data TIDAK bisa dikembalikan.\n\n" +
+    "Klik OK untuk lanjut."
+  );
+
+  if (!yakin) return;
+
+  try {
+    const snapshot = await getDocs(collection(db, "users"));
+
+    for (const docSnap of snapshot.docs) {
+      const data = docSnap.data();
+
+      if (data.role === "student") {
+        await updateDoc(doc(db, "users", docSnap.id), {
+          poin: 0,
+          poinTotal: 0
+        });
+      }
+    }
+
+    alert("✅ Semua poin siswa berhasil di-reset total!");
+  } catch (err) {
+    console.error(err);
+    alert("❌ Gagal reset total poin");
+  }
+});
+
+
+
+// FITUR HAPUS HASIL 
+window.hapusNilai = async function (docId) {
+  const yakin = confirm(
+    "Yakin hapus data nilai ini?\n\n" +
+    "❗ Data yang dihapus tidak bisa dikembalikan."
+  );
+
+  if (!yakin) return;
+
+  try {
+    await deleteDoc(doc(db, "quizResults", docId));
+    alert("✅ Data nilai berhasil dihapus");
+  } catch (err) {
+    console.error(err);
+    alert("❌ Gagal menghapus data");
+  }
+};
+
+
+
+
+
+
 </script>
 
+
+
+  <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
+<script>
+  window.PRESENCE_OPTIONS = { mode: "global" };
+</script>
+
+<!-- Panggil script presence -->
+<script type="module" src="./assets/presence.js"></script>
 
 
 
