@@ -370,10 +370,10 @@ onAuthStateChanged(auth, async (user) => {
   const userData = userSnap.data();
 
   // 3️⃣ WAJIB GANTI PASSWORD
-  if (userData.mustChangePassword === true) {
-    window.location.href = "ganti-password.html";
-    return;
-  }
+  // if (userData.mustChangePassword === true) {
+  //   window.location.href = "ganti-password.html";
+  //   return;
+  // }
 
   // // 4️⃣ CEK ROLE
   // if (userData.role !== "student") {

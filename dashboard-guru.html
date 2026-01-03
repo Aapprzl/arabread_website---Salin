@@ -243,11 +243,11 @@
     class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
     🔄 Reset Poin Hari Ini
   </button>
-  <button
+  <!-- <button
   id="resetPoinTotalBtn"
   class="ml-2 bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
   ⚠️ Reset Total Sepanjang Waktu
-</button>
+</button> -->
 
   <div class="overflow-x-auto rounded-lg shadow">
     <table class="min-w-full bg-white dark:bg-slate-800 text-sm">
@@ -333,6 +333,22 @@
   </button>
 
   <p id="infoSimpanSiswa" class="mt-3 text-sm"></p>
+<!-- UNTUK MENCETAK -->
+  <div id="akunResult"
+     class="hidden mt-4 p-4 rounded-lg bg-slate-800 text-white text-sm space-y-2">
+
+  <p class="font-semibold text-emerald-400">✅ Akun berhasil dibuat</p>
+
+  <p><b>Nama:</b> <span id="resNama"></span></p>
+  <p><b>Email:</b> <span id="resEmail"></span></p>
+  <p><b>Password:</b> <span id="resPassword"></span></p>
+
+  <button id="btnCetakPdf"
+    class="mt-3 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg">
+    📄 Cetak PDF
+  </button>
+</div>
+
 </div>
 
 
@@ -356,6 +372,10 @@
 
 
 </body>
+
+<!-- UNTUK CETAK -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
 
 <!-- MAIN LOGIKA -->
 <script type="module">
@@ -526,8 +546,7 @@ function loadRankingSiswa() {
   const tbody = document.getElementById("rankingTableBody");
 
   const q = query(
-    collection(db, "users"),
-    where("role", "==", "student"),
+    collection(db, "leaderboard"),
     orderBy("poinTotal", "desc")
   );
 
@@ -555,8 +574,8 @@ function loadRankingSiswa() {
           <td class="px-3 py-2 text-center font-bold">
             ${rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : rank}
           </td>
-          <td class="px-3 py-2">${d.nama}</td>
-          <td class="px-3 py-2">${d.kelas}</td>
+          <td class="px-3 py-2">${d.nama ?? "-"}</td>
+          <td class="px-3 py-2">${d.kelas ?? "-"}</td>
           <td class="px-3 py-2 text-center font-bold text-emerald-500">
             ${d.poinTotal ?? 0}
           </td>
@@ -567,6 +586,7 @@ function loadRankingSiswa() {
     });
   });
 }
+
 
 
 /* ======================================================
@@ -727,10 +747,12 @@ window.hapusSiswa = async (uid) => {
 /* ======================================================
    10. DAFTARKAN SISWA BARU (CLOUD FUNCTION)
 ====================================================== */
+
 document.getElementById("btnSimpanSiswa").addEventListener("click", async () => {
-  const nama = inputNama.value.trim();
-  const nisn = inputNisn.value.trim();
-  const kelas = inputKelas.value.trim();
+
+  const nama   = inputNama.value.trim();
+  const nisn   = inputNisn.value.trim();
+  const kelas  = inputKelas.value.trim();
   const gender = inputGender.value;
 
   if (!nama || !nisn || !kelas || !gender) {
@@ -742,6 +764,7 @@ document.getElementById("btnSimpanSiswa").addEventListener("click", async () => 
   console.log("DATA DIKIRIM:", payload);
 
   try {
+    // 1️⃣ KIRIM KE CLOUD FUNCTION
     const res = await fetch(
       "https://asia-southeast1-tarbiyyat-lughah-presence.cloudfunctions.net/createStudentAccount",
       {
@@ -751,16 +774,34 @@ document.getElementById("btnSimpanSiswa").addEventListener("click", async () => 
       }
     );
 
+    // 2️⃣ AMBIL RESPONSE JSON
     const data = await res.json();
 
     if (!res.ok) {
       throw new Error(data.error || "Gagal membuat siswa");
     }
 
-    alert(
-      `Siswa berhasil dibuat!\n\nEmail: ${data.email}\nPassword: ${data.password}`
-    );
+    // 3️⃣ TAMPILKAN HASIL AKUN
+    document.getElementById("akunResult").classList.remove("hidden");
+    document.getElementById("resNama").textContent     = nama;
+    document.getElementById("resEmail").textContent    = data.email;
+    document.getElementById("resPassword").textContent = data.password;
 
+    // 4️⃣ SIAPKAN DATA PDF
+    const dataPdf = {
+      nama,
+      nisn,
+      kelas,
+      email: data.email,
+      password: data.password
+    };
+
+    // 5️⃣ CETAK PDF SAAT TOMBOL DIKLIK
+    document.getElementById("btnCetakPdf").onclick = () => {
+      generateAkunPdf(dataPdf);
+    };
+
+    // 6️⃣ RESET FORM
     inputNama.value = "";
     inputNisn.value = "";
     inputKelas.value = "";
@@ -768,9 +809,10 @@ document.getElementById("btnSimpanSiswa").addEventListener("click", async () => 
 
   } catch (err) {
     console.error(err);
-    alert(err.message);
+    alert("❌ " + err.message);
   }
 });
+
 
 
 
@@ -834,43 +876,55 @@ function loadNilaiSiswa() {
 function loadPoinSiswa() {
   const tbody = document.getElementById("poinTableBody");
 
-  onSnapshot(collection(db, "users"), (snapshot) => {
-    tbody.innerHTML = "";
-    let no = 1;
+  // 1️⃣ Ambil leaderboard (TOTAL POIN)
+  onSnapshot(collection(db, "leaderboard"), (lbSnap) => {
+    const leaderboardMap = {};
 
-    snapshot.forEach((docSnap) => {
-      const d = docSnap.data();
-
-      // hanya tampilkan siswa
-      if (d.role !== "student") return;
-
-      tbody.innerHTML += `
-        <tr class="border-t border-slate-700">
-          <td class="px-3 py-2">${no++}</td>
-          <td class="px-3 py-2">${d.nama}</td>
-          <td class="px-3 py-2">${d.kelas}</td>
-          <td class="px-3 py-2 text-center font-bold text-blue-500">
-            ${d.poin ?? 0}
-          </td>
-          <td class="px-3 py-2 text-center text-slate-400">
-            ${d.poinTotal ?? 0}
-          </td>
-        </tr>
-      `;
+    lbSnap.forEach(docSnap => {
+      leaderboardMap[docSnap.id] = docSnap.data().poinTotal ?? 0;
     });
 
-    // jika belum ada siswa
-    if (tbody.innerHTML === "") {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="5" class="px-4 py-6 text-center text-slate-500">
-            Belum ada data poin
-          </td>
-        </tr>
-      `;
-    }
+    // 2️⃣ Ambil data siswa (POIN AKTIF)
+    onSnapshot(collection(db, "users"), (userSnap) => {
+      tbody.innerHTML = "";
+      let no = 1;
+
+      userSnap.forEach((docSnap) => {
+        const d = docSnap.data();
+        const uid = docSnap.id;
+
+        if (d.role !== "student") return;
+
+        const totalPoin = leaderboardMap[uid] ?? 0;
+
+        tbody.innerHTML += `
+          <tr class="border-t border-slate-700">
+            <td class="px-3 py-2">${no++}</td>
+            <td class="px-3 py-2">${d.nama}</td>
+            <td class="px-3 py-2">${d.kelas}</td>
+            <td class="px-3 py-2 text-center font-bold text-blue-500">
+              ${d.poin ?? 0}
+            </td>
+            <td class="px-3 py-2 text-center font-bold text-emerald-400">
+              ${totalPoin}
+            </td>
+          </tr>
+        `;
+      });
+
+      if (tbody.innerHTML === "") {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="px-4 py-6 text-center text-slate-500">
+              Belum ada data poin
+            </td>
+          </tr>
+        `;
+      }
+    });
   });
 }
+
 
 // RESET POIN
 const resetBtn = document.getElementById("resetPoinBtn");
@@ -963,6 +1017,56 @@ window.hapusNilai = async function (docId) {
 
 
 
+// UNTUK MENCETAK
+function generateAkunPdf(data) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(16);
+  doc.text("AKUN SISWA", 105, 20, { align: "center" });
+
+  doc.setFontSize(11);
+  doc.text("Tarbiyyat al-Lughah", 105, 28, { align: "center" });
+
+  doc.line(20, 32, 190, 32);
+
+  let y = 45;
+  const line = (label, value) => {
+    doc.text(`${label}`, 30, y);
+    doc.text(`: ${value}`, 70, y);
+    y += 8;
+  };
+
+  line("Nama", data.nama);
+  line("NISN", data.nisn);
+  line("Kelas", data.kelas);
+
+  y += 6;
+
+  line("Email", data.email);
+  line("Password Awal", data.password);
+
+  y += 10;
+
+  doc.setFontSize(10);
+  doc.text(
+    "CATATAN:\n- Password ini hanya untuk login pertama\n- Siswa WAJIB mengganti password\n- Jangan dibagikan ke orang lain",
+    30,
+    y
+  );
+
+  doc.setFontSize(9);
+  doc.text(
+    `Dicetak pada: ${new Date().toLocaleString("id-ID")}`,
+    30,
+    280
+  );
+
+  const fileName = `akun-siswa-${data.nama}-${data.kelas}.pdf`
+    .replace(/\s+/g, "_");
+
+  doc.save(fileName);
+}
 
 
 

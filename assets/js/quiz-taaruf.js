@@ -225,7 +225,7 @@ async function finishQuiz() {
   btnStart.classList.remove("opacity-50");
 
   await saveResult();
-  await updateLeaderboard(quizState.score);
+  
 
 
 }
@@ -285,7 +285,6 @@ async function saveResult() {
 
   await updateDoc(userRef, {
     poin: best,                    // skor terbaik
-    poinTotal: prevTotal + score   // total sepanjang waktu
   });
 
   // 5️⃣ UPDATE LEADERBOARD
@@ -294,62 +293,14 @@ async function saveResult() {
     {
       nama: user.nama,
       kelas: user.kelas,
-      poinTotal: prevTotal + score
+      poinTotal: increment(score)
     },
     { merge: true }
   );
 }
 
 
-async function updateLeaderboard(poin) {
-  console.log("🔥 updateLeaderboard DIPANGGIL, poin:", poin);
 
-  if (!window.__APP_CONTEXT__) {
-    console.log("❌ __APP_CONTEXT TIDAK ADA");
-    return;
-  }
-
-  const { db, getCurrentUser } = window.__APP_CONTEXT__;
-
-  const userAuth = getCurrentUser();
-  console.log("👤 userAuth:", userAuth);
-
-  if (!userAuth) {
-    console.log("❌ userAuth NULL");
-    return;
-  }
-
-  const userRef = doc(db, "users", userAuth.uid);
-  const userSnap = await getDoc(userRef);
-
-  console.log("📄 userSnap exists:", userSnap.exists());
-
-  if (!userSnap.exists()) {
-    console.log("❌ user TIDAK ADA di collection users");
-    return;
-  }
-
-  const user = userSnap.data();
-  console.log("✅ DATA USER:", user);
-
-  const lbRef = doc(db, "leaderboard", userAuth.uid);
-
-  await setDoc(
-    lbRef,
-    {
-      nama: user.nama,
-      kelas: user.kelas,
-      poinTotal: increment(poin),
-      updatedAt: serverTimestamp(),
-    },
-    { merge: true }
-  );
-
-  console.log("🏆 LEADERBOARD BERHASIL DISIMPAN");
-
-
-
-}
 
 
 
