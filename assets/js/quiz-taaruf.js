@@ -20,7 +20,8 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-import { setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { setDoc, increment } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
 
 
 // ===============================
@@ -224,20 +225,21 @@ async function finishQuiz() {
   btnStart.classList.remove("opacity-50");
 
   await saveResult();
+  await updateLeaderboard(quizState.score);
 
-  if (window.loadQuizTaarufStatus) {
-    window.loadQuizTaarufStatus();
-  }
+
 }
 
 // ===============================
 // SIMPAN KE FIRESTORE
 // ===============================
 async function saveResult() {
-  const authUser = getCurrentUser();
+  const authUser = await getCurrentUser();
   if (!authUser) return;
 
-  const userRef = doc(db, "users", authUser.uid);
+  const uid = authUser.uid;
+
+  const userRef  = doc(db, "users", uid);
   const userSnap = await getDoc(userRef);
 
   if (!userSnap.exists()) {
@@ -246,30 +248,25 @@ async function saveResult() {
   }
 
   const user = userSnap.data();
+  const score = quizState.score;
 
   // 1️⃣ SIMPAN RIWAYAT KUIS
   await addDoc(collection(db, "quizResults"), {
-    uid: authUser.uid,
+    uid,
     nama: user.nama,
     kelas: user.kelas,
     quizId: QUIZ_ID,
     quizTitle: QUIZ_TITLE,
-    score: quizState.score,
+    score,
     totalSoal: quizData.length,
     createdAt: serverTimestamp()
   });
 
-  await updateDoc(doc(db, "users", uid), {
-  bestScore: Math.max(score, oldBestScore),
-  attemptCount: increment(1),
-});
-
-
-  // 2️⃣ AMBIL SEMUA RIWAYAT KUIS TA'ARUF SISWA
+  // 2️⃣ AMBIL SEMUA RIWAYAT KUIS TA'ARUF
   const qSnap = await getDocs(
     query(
       collection(db, "quizResults"),
-      where("uid", "==", authUser.uid),
+      where("uid", "==", uid),
       where("quizId", "==", QUIZ_ID)
     )
   );
@@ -283,22 +280,79 @@ async function saveResult() {
     }
   });
 
-  // 4️⃣ UPDATE PROFIL SISWA
- const prevTotal = user.poinTotal ?? 0;
+  // 4️⃣ UPDATE DATA SISWA
+  const prevTotal = user.poinTotal ?? 0;
 
-await updateDoc(userRef, {
-  poin: best,                             // skor terbaik
-  poinTotal: prevTotal + quizState.score // akumulasi sepanjang waktu
-});
+  await updateDoc(userRef, {
+    poin: best,                    // skor terbaik
+    poinTotal: prevTotal + score   // total sepanjang waktu
+  });
+
+  // 5️⃣ UPDATE LEADERBOARD
+  await setDoc(
+    doc(db, "leaderboard", uid),
+    {
+      nama: user.nama,
+      kelas: user.kelas,
+      poinTotal: prevTotal + score
+    },
+    { merge: true }
+  );
+}
 
 
-await setDoc(doc(db, "leaderboard", uid), {
-  nama: user.nama,
-  kelas: user.kelas,
-  poinTotal: prevTotal + quizState.score
-}, { merge: true });
+async function updateLeaderboard(poin) {
+  console.log("🔥 updateLeaderboard DIPANGGIL, poin:", poin);
+
+  if (!window.__APP_CONTEXT__) {
+    console.log("❌ __APP_CONTEXT TIDAK ADA");
+    return;
+  }
+
+  const { db, getCurrentUser } = window.__APP_CONTEXT__;
+
+  const userAuth = getCurrentUser();
+  console.log("👤 userAuth:", userAuth);
+
+  if (!userAuth) {
+    console.log("❌ userAuth NULL");
+    return;
+  }
+
+  const userRef = doc(db, "users", userAuth.uid);
+  const userSnap = await getDoc(userRef);
+
+  console.log("📄 userSnap exists:", userSnap.exists());
+
+  if (!userSnap.exists()) {
+    console.log("❌ user TIDAK ADA di collection users");
+    return;
+  }
+
+  const user = userSnap.data();
+  console.log("✅ DATA USER:", user);
+
+  const lbRef = doc(db, "leaderboard", userAuth.uid);
+
+  await setDoc(
+    lbRef,
+    {
+      nama: user.nama,
+      kelas: user.kelas,
+      poinTotal: increment(poin),
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true }
+  );
+
+  console.log("🏆 LEADERBOARD BERHASIL DISIMPAN");
+
 
 
 }
+
+
+
+
 
 

@@ -409,41 +409,35 @@ onAuthStateChanged(auth, async (user) => {
 const QUIZ_ID = "taaruf-1";
 
 async function loadQuizTaarufStatus() {
-  // 🔒 pastikan user sudah login
   if (!currentUser) return;
 
   const elBestScore = document.getElementById("taarufBestScore");
   const elAttempts  = document.getElementById("taarufAttempts");
   if (!elBestScore || !elAttempts) return;
 
-  
-
-  // 1️⃣ ambil skor terbaik dari users
-  onSnapshot(doc(db, "users", user.uid), (snap) => {
-  if (!snap.exists()) return;
-
-  const data = snap.data();
-  const bestScore = data.poin ?? 0;
-
-  elBestScore.textContent = `Skor terbaik: ${bestScore}`;
-});
-
-
-  // 2️⃣ hitung jumlah attempt
-  onSnapshot(
-  query(
+  // ambil SEMUA hasil kuis taaruf milik siswa ini
+  const q = query(
     collection(db, "quizResults"),
-    where("uid", "==", user.uid),
+    where("uid", "==", currentUser.uid),
     where("quizId", "==", QUIZ_ID)
-  ),
-  (snap) => {
-    elAttempts.textContent =
-      `Sudah mengerjakan: ${snap.size} kali`;
-  }
   );
 
-  elAttempts.textContent = `Sudah mengerjakan: ${qSnap.size} kali`;
+  onSnapshot(q, (snap) => {
+  let bestScore = 0;
+
+  snap.forEach(docSnap => {
+    const d = docSnap.data();
+    if (typeof d.score === "number") {
+      bestScore = Math.max(bestScore, d.score);
+    }
+  });
+
+  elBestScore.textContent = `Skor terbaik: ${bestScore}`;
+  elAttempts.textContent  = `Sudah mengerjakan: ${snap.size} kali`;
+});
+
 }
+
 
 window.loadQuizTaarufStatus = loadQuizTaarufStatus;
 
@@ -559,9 +553,14 @@ import {
   onSnapshot
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-function loadRankingForStudent() {
+async function loadRankingForStudent() {
   const top3Box = document.getElementById("top3Ranking");
   const myBox   = document.getElementById("myRanking");
+
+  if (!currentUser) {
+    myBox.innerHTML = "User belum login";
+    return;
+  }
 
   const q = query(
     collection(db, "leaderboard"),
@@ -572,7 +571,10 @@ function loadRankingForStudent() {
     const list = [];
 
     snapshot.forEach(docSnap => {
-      list.push({ uid: docSnap.id, ...docSnap.data() });
+      list.push({
+        uid: docSnap.id,
+        ...docSnap.data()
+      });
     });
 
     // ===== TOP 3 =====
@@ -589,15 +591,20 @@ function loadRankingForStudent() {
 
     // ===== POSISI PRIBADI =====
     const myIndex = list.findIndex(s => s.uid === currentUser.uid);
+
     if (myIndex !== -1) {
       myBox.innerHTML = `
         📍 <b>Peringkat kamu:</b><br>
         #${myIndex + 1} dari ${list.length} siswa<br>
         Total poin: <b>${list[myIndex].poinTotal}</b>
       `;
+    } else {
+      myBox.innerHTML = "Kamu belum masuk ranking";
     }
   });
 }
+
+
 
 
 
