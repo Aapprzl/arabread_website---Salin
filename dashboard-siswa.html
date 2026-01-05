@@ -152,28 +152,43 @@ tailwind.config = {
         <!-- ================= KUIS TA'ARUF ================= -->
 <section class="mt-6">
   <div class="bg-white dark:bg-slate-600 rounded-xl shadow p-6">
-    <h2 class="font-bold text-lg mb-3">📝 Kuis Ta’aruf</h2>
+    <h2 class="font-bold text-lg mb-3">📝 Kuis</h2>
 
-    <p class="text-sm text-slate-500 dark:text-slate-300 mb-4">
-      Kuis pengenalan diri (pilihan ganda)
-    </p>
+    <div class="mt-4">
+  <p class="text-sm font-semibold mb-2 text-slate-600 dark:text-slate-300">
+    Pilih Tema:
+  </p>
 
-    <p id="taarufBestScore" class="text-sm text-blue-400 mt-1">
+  <div class="flex flex-wrap gap-3">
+
+    <button
+      id="btnThemeTaaruf"
+      class="inline-flex items-center gap-2
+         bg-blue-600 hover:bg-blue-700
+         text-white px-4 py-2 rounded-lg font-semibold">
+  ▶     Ta’aruf
+    </button>
+
+    <button
+      id="btnThemeSekolah"
+      class="inline-flex items-center gap-2
+         bg-blue-600 hover:bg-blue-700
+         text-white px-4 py-2 rounded-lg font-semibold">
+         ▶ Mulai Tema Sekolah
+      </button>
+  </div>
+</div>
+
+
+
+    <p id="quizBestScore" class="text-sm text-blue-400 mt-1">
       Skor terbaik: -
     </p>
 
-    <p id="taarufAttempts" class="text-xs text-slate-400">
+    <p id="quizAttempts" class="text-xs text-slate-400">
       Sudah mengerjakan: -
     </p>
 
-
-
-    <button
-      id="btnStartQuiz"
-      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
-    >
-      ▶ Mulai Kuis
-    </button>
 
     <div id="quizBox" class="mt-6 hidden">
       <p id="quizQuestion" class="font-semibold mb-4"></p>
@@ -243,7 +258,9 @@ tailwind.config = {
   © 2025 Tarbiyyat al-Lughah
 </footer>
 
-<!-- ================= FIREBASE LOGIC ================= -->
+<!-- DATA SOAL -->
+<script src="assets/data/vocabs.js"></script>
+
 <script type="module">
 /* ================= FIREBASE IMPORT ================= */
 import { initializeApp, getApps } from
@@ -287,6 +304,7 @@ import {
 
 
 
+
 /* ================= FIREBASE INIT ================= */
 const firebaseConfig = {
   apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
@@ -318,6 +336,12 @@ const elKelas  = document.getElementById("kelas");
 const elGender = document.getElementById("gender");
 
 let currentUser = null;
+let presenceInitialized = false;
+
+let unsubscribeUserSnapshot = null;
+let unsubscribeRanking = null;
+let statusRefGlobal = null;
+
 
 /* ================= UI ================= */
 function showLogin() {
@@ -349,130 +373,119 @@ btnLogin.addEventListener("click", async () => {
   }
 });
 
-/* ================= AUTH ================= */
+/* ================= AUTH (FINAL) ================= */
 onAuthStateChanged(auth, async (user) => {
-  // 1️⃣ BELUM LOGIN
+
+  // ================= BELUM LOGIN =================
   if (!user) {
+    unsubscribeUserSnapshot?.();
+    unsubscribeUserSnapshot = null;
+
     showLogin();
     return;
   }
 
-  // 2️⃣ AMBIL DATA USER DARI FIRESTORE
-  const userRef  = doc(db, "users", user.uid);
-  const userSnap = await getDoc(userRef);
-
-  if (!userSnap.exists()) {
-    await signOut(auth);
-    showLogin();
-    return;
-  }
-
-  const userData = userSnap.data();
-
-  // 3️⃣ WAJIB GANTI PASSWORD
-  // if (userData.mustChangePassword === true) {
-  //   window.location.href = "ganti-password.html";
-  //   return;
-  // }
-
-  // // 4️⃣ CEK ROLE
-  // if (userData.role !== "student") {
-  //   await signOut(auth);
-  //   showLogin();
-  //   return;
-  // }
-
-  const snap = await getDoc(doc(db, "users", user.uid));
-  if (!snap.exists() || snap.data().role !== "student") {
-    await signOut(auth);
-    showLogin();
-    return;
-  }
-
+  // ================= LOGIN =================
   currentUser = user;
-  renderIdentitas(snap.data());
-  setupPresence(user.uid);
-  showDashboard();
 
-    // 🔑 PENTING: pastikan context SUDAH ADA
+  // 🔥 PASANG PRESENCE SEKALI SAJA
+setupStudentPresence(user.uid);
+
+  // ⛔ pastikan tidak dobel listener
+  unsubscribeUserSnapshot?.();
+  unsubscribeUserSnapshot = null;
+
+  const userRef = doc(db, "users", user.uid);
+
+  unsubscribeUserSnapshot = onSnapshot(userRef, async (snap) => {
+
+    // ❌ user dihapus
+    if (!snap.exists()) {
+      await signOut(auth);
+      showLogin();
+      return;
+    }
+
+    const data = snap.data();
+
+    // ❌ bukan student
+    if (data.role !== "student") {
+      await signOut(auth);
+      showLogin();
+      return;
+    }
+
+    // ================= RENDER IDENTITAS =================
+    renderIdentitas(data);
+
+    // ================= STATUS KUIS (REALTIME) =================
+    const elBestScore = document.getElementById("quizBestScore");
+    const elAttempts  = document.getElementById("quizAttempts");
+
+    if (elBestScore) {
+      elBestScore.textContent =
+        `Skor terbaik: ${data.skorTerbaik ?? 0}`;
+    }
+
+    if (elAttempts) {
+      elAttempts.textContent =
+        `Sudah mengerjakan: ${data.jumlahMain ?? 0} kali`;
+    }
+
+    // ================= TAMPILKAN DASHBOARD =================
+    showDashboard();
+
+    // ⚠️ aman dipanggil berulang karena hanya read
+    loadRankingForStudent();
+  });
+
+  // ================= CONTEXT GLOBAL (WAJIB UNTUK KUIS) =================
   window.__APP_CONTEXT__ = {
     db,
     auth,
-    getCurrentUser: () => currentUser
+    getCurrentUser: () => auth.currentUser
   };
 
-    // ✅ BARU load kuis
-  await import("./assets/js/quiz-taaruf.js");
+  // ================= LOAD KUIS SETELAH AUTH SIAP =================
+  const quizModule = await import("./assets/js/quiz-taaruf.js");
 
-
-
-const QUIZ_ID = "taaruf-1";
-
-async function loadQuizTaarufStatus() {
-  if (!currentUser) return;
-
-  const elBestScore = document.getElementById("taarufBestScore");
-  const elAttempts  = document.getElementById("taarufAttempts");
-  if (!elBestScore || !elAttempts) return;
-
-  // ambil SEMUA hasil kuis taaruf milik siswa ini
-  const q = query(
-    collection(db, "quizResults"),
-    where("uid", "==", currentUser.uid),
-    where("quizId", "==", QUIZ_ID)
-  );
-
-  onSnapshot(q, (snap) => {
-  let bestScore = 0;
-
-  snap.forEach(docSnap => {
-    const d = docSnap.data();
-    if (typeof d.score === "number") {
-      bestScore = Math.max(bestScore, d.score);
-    }
-  });
-
-  elBestScore.textContent = `Skor terbaik: ${bestScore}`;
-  elAttempts.textContent  = `Sudah mengerjakan: ${snap.size} kali`;
+  if (quizModule?.initQuiz) {
+    quizModule.initQuiz();
+  }
 });
 
-}
+// ===============================
+// PRESENCE SISWA (ANTI FALSE OFFLINE)
+// ===============================
+function setupStudentPresence(uid) {
+  if (presenceInitialized) return; // ⛔ hanya sekali
+  presenceInitialized = true;
 
-
-window.loadQuizTaarufStatus = loadQuizTaarufStatus;
-
-    // 🔥 SETELAH LOGIN SISWA BERHASIL
-  await loadQuizTaarufStatus();
-  loadRankingForStudent();
-
-
-});
-
-
-
-
-
-/* ================= PRESENCE (FIX FINAL) ================= */
-function setupPresence(uid) {
+  const rtdb = getDatabase();
   const statusRef = ref(rtdb, `status/${uid}`);
   const connectedRef = ref(rtdb, ".info/connected");
 
-  onValue(connectedRef, (snap) => {
-    if (snap.val() === true) {
-      // saat benar-benar terkoneksi
-      onDisconnect(statusRef).set({
-        online: false,
-        lastSeen: serverTimestamp()
-      });
+  statusRefGlobal = statusRef;
 
-  // Saat online
-  set(statusRef, {
-    online: true,
-    lastSeen: serverTimestamp()
+  onValue(connectedRef, (snap) => {
+    if (snap.val() === false) return;
+
+    // 🔴 auto-offline saat tab ditutup / koneksi mati
+    onDisconnect(statusRef).set({
+      state: "offline",
+      lastChanged: serverTimestamp()
+    });
+
+    // 🟢 online
+    set(statusRef, {
+      state: "online",
+      lastChanged: serverTimestamp()
+    });
   });
 }
-  });
-}
+
+
+
 
 /* ================= RENDER ================= */
 function renderIdentitas(data) {
@@ -482,18 +495,82 @@ function renderIdentitas(data) {
   setText(elGender, data.gender);
 }
 
-/* ================= LOGOUT ================= */
+
+
+// /* ================= LOGOUT ================= */
+// btnLogout.addEventListener("click", async () => {
+//   try {
+//     // 1️⃣ STOP LISTENER FIRESTORE
+//     unsubscribeUserSnapshot?.();
+//     unsubscribeRanking?.();
+
+//     unsubscribeUserSnapshot = null;
+//     unsubscribeRanking = null;
+
+//     // 2️⃣ HENTIKAN QUIZ (kalau ada)
+//     window.stopActiveQuiz?.();
+
+//     // 🔴 3️⃣ PAKSA STATUS OFFLINE
+//     if (statusRefGlobal) {
+//       await set(statusRefGlobal, {
+//         state: "offline",
+//         lastChanged: Date.now()
+//       });
+//     }
+
+//     // 4️⃣ SIGN OUT AUTH
+//     await signOut(auth);
+
+//     showLogin();
+
+//   } catch (err) {
+//     console.error("Logout error:", err);
+//   }
+// });
+
+/* ================= LOGOUT SISWA ================= */
 btnLogout.addEventListener("click", async () => {
-  if (currentUser) {
-    const statusRef = ref(rtdb, `status/${currentUser.uid}`);
-    await set(statusRef, {
-      online: false,
-      lastSeen: serverTimestamp()
-    });
+  try {
+    // 1️⃣ STOP LISTENER FIRESTORE
+    unsubscribeUserSnapshot?.();
+    unsubscribeRanking?.();
+
+    unsubscribeUserSnapshot = null;
+    unsubscribeRanking = null;
+
+    // 2️⃣ HENTIKAN QUIZ (kalau ada)
+    window.stopActiveQuiz?.();
+
+    // 🔴 3️⃣ PAKSA OFFLINE (REALTIME DATABASE)
+    const user = auth.currentUser;
+    if (user) {
+      const rtdb = getDatabase();
+      const statusRef = ref(rtdb, `status/${user.uid}`);
+
+      await set(statusRef, {
+        state: "offline",
+        lastChanged: serverTimestamp()
+      });
+    }
+
+    // 🔑 RESET STATE PRESENCE (INI TAMBAHAN)
+    presenceInitialized = false;
+    statusRefGlobal = null;
+
+    // 4️⃣ SIGN OUT AUTH
+    await signOut(auth);
+
+    showLogin();
+
+  } catch (err) {
+    console.error("Logout error:", err);
   }
-  await signOut(auth);
-  showLogin();
 });
+
+
+
+
+
 
 // JS TEMPAT KIRIM TUGAS
 const btnKirim = document.getElementById("btnKirimTugas");
@@ -567,7 +644,8 @@ async function loadRankingForStudent() {
     orderBy("poinTotal", "desc")
   );
 
-  onSnapshot(q, (snapshot) => {
+  unsubscribeRanking = onSnapshot(q, (snapshot) => {
+
     const list = [];
 
     snapshot.forEach(docSnap => {
@@ -605,6 +683,13 @@ async function loadRankingForStudent() {
 }
 
 
+// ================= GLOBAL QUIZ CONTROLLER =================
+window.stopActiveQuiz = () => {
+  if (window.__ACTIVE_QUIZ__?.stop) {
+    window.__ACTIVE_QUIZ__.stop();
+  }
+  window.__ACTIVE_QUIZ__ = null;
+};
 
 
 
@@ -637,15 +722,14 @@ toggle.addEventListener("click", () => {
 
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
-<script>
+<!-- <script>
   window.PRESENCE_OPTIONS = { mode: "global" };
 </script>
 
-<!-- Panggil script presence -->
-<script type="module" src="./assets/presence.js"></script>
 
-<!-- DATA SOAL -->
-<script src="assets/data/vocabs.js"></script>
+<script type="module" src="./assets/presence.js"></script> -->
+
+
 
 
 

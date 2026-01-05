@@ -35,17 +35,24 @@ exports.createStudentAccount = onRequest(
           displayName: nama
         });
 
-        // 2. Simpan ke Firestore
-        await admin.firestore().collection("users").doc(user.uid).set({
-          uid: user.uid,
-          nama,
-          nisn,
-          kelas,
-          gender,
-          role: "student",
-          mustChangePassword: true,
-          createdAt: admin.firestore.FieldValue.serverTimestamp()
-        });
+        // 2. Simpan ke Firestore (INISIALISASI LENGKAP)
+await admin.firestore().collection("users").doc(user.uid).set({
+  uid: user.uid,
+  nama,
+  nisn,
+  kelas,
+  gender,
+  role: "student",
+
+  // 🔑 WAJIB ADA SEJAK AWAL
+  jumlahMain: 0,
+  skorTerbaik: 0,
+  poinTotal: 0,
+
+  mustChangePassword: true,
+  createdAt: admin.firestore.FieldValue.serverTimestamp()
+});
+
 
         res.json({
           uid: user.uid,

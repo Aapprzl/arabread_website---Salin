@@ -205,9 +205,10 @@
 
 
 <!-- ================= NILAI SISWA ================= -->
-<section class="mt-8">
+<div class="mt-10">
   <h2 class="text-xl font-bold mb-4">📊 Nilai Kuis Siswa</h2>
-
+  
+  <div class="p-3 sm:p-6 overflow-x-auto">
   <div class="overflow-x-auto rounded-lg shadow">
     <table class="min-w-full bg-white dark:bg-slate-800 text-sm">
       <thead class="bg-slate-100 dark:bg-slate-700">
@@ -224,77 +225,110 @@
       </thead>
       <tbody id="nilaiTableBody">
         <tr>
-          <td colspan="6" class="px-4 py-6 text-center text-slate-500">
+          <td colspan="6" class="p-4 border text-center text-slate-700 dark:text-slate-200">
             Memuat data nilai...
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-</section>
+  </div>
+</div>
+
 
 
 <!-- ================= TOTAL POIN SISWA ================= -->
-<section class="mt-8">
-  <h2 class="text-xl font-bold mb-4">🏆 Total Poin Siswa</h2>
+<div class="mt-10">
+
+  <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+    🏆 Total Poin Siswa
+  </h3>
 
   <button
     id="resetPoinBtn"
     class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
     🔄 Reset Poin Hari Ini
   </button>
-  <!-- <button
-  id="resetPoinTotalBtn"
-  class="ml-2 bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
-  ⚠️ Reset Total Sepanjang Waktu
-</button> -->
 
-  <div class="overflow-x-auto rounded-lg shadow">
-    <table class="min-w-full bg-white dark:bg-slate-800 text-sm">
-      <thead class="bg-slate-100 dark:bg-slate-700">
-        <tr>
-          <th class="px-3 py-2">No</th>
-          <th class="px-3 py-2">Nama</th>
-          <th class="px-3 py-2">Kelas</th>
-          <th class="px-3 py-2 text-center">Poin Aktif</th>
-          <th class="px-3 py-2 text-center">Total Sepanjang Waktu</th>
+  <button
+    id="resetPoinTotalBtn"
+    class="ml-2 bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+    ⚠️ Reset Total Sepanjang Waktu
+  </button>
+
+  <!-- 🔑 PADDING WRAPPER (SAMA DENGAN MANAJEMEN SISWA) -->
+  <div class="p-3 sm:p-6 overflow-x-auto">
+
+    <table class="min-w-[700px] w-full border-collapse text-sm">
+
+      <thead>
+        <tr class="bg-slate-100 dark:bg-slate-600 text-left">
+          <th class="p-3 border text-slate-700 dark:text-slate-100">No</th>
+          <th class="p-3 border text-slate-700 dark:text-slate-100">Nama</th>
+          <th class="p-3 border text-slate-700 dark:text-slate-100">Kelas</th>
+          <th class="p-3 border text-center text-slate-700 dark:text-slate-100">
+            Poin Aktif
+          </th>
+          <th class="p-3 border text-center text-slate-700 dark:text-slate-100">
+            Total Sepanjang Waktu
+          </th>
         </tr>
       </thead>
+
       <tbody id="poinTableBody">
         <tr>
-          <td colspan="5" class="px-4 py-6 text-center text-slate-500">
+          <td colspan="5"
+              class="p-4 border text-center text-slate-700 dark:text-slate-200">
             Memuat data poin...
           </td>
         </tr>
       </tbody>
+
     </table>
+
   </div>
-</section>
+</div>
+
 
 <!-- ================= RANKING SISWA ================= -->
-<section class="mt-8">
-  <h2 class="text-xl font-bold mb-4">🏆 Ranking Siswa</h2>
+<div class="mt-10">
 
-  <div class="overflow-x-auto rounded-lg shadow">
-    <table class="min-w-full bg-white dark:bg-slate-800 text-sm">
-      <thead class="bg-slate-100 dark:bg-slate-700">
-        <tr>
-          <th class="px-3 py-2 text-center">Rank</th>
-          <th class="px-3 py-2">Nama</th>
-          <th class="px-3 py-2">Kelas</th>
-          <th class="px-3 py-2 text-center">Total Poin</th>
+  <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+    🏆 Ranking Siswa
+  </h3>
+
+  <!-- 🔑 PADDING WRAPPER (SAMA DENGAN MANAJEMEN SISWA) -->
+  <div class="p-3 sm:p-6 overflow-x-auto">
+
+    <table class="min-w-[700px] w-full border-collapse text-sm">
+
+      <thead>
+        <tr class="bg-slate-100 dark:bg-slate-600 text-left">
+          <th class="p-3 border text-center text-slate-700 dark:text-slate-100">
+            Rank
+          </th>
+          <th class="p-3 border text-slate-700 dark:text-slate-100">Nama</th>
+          <th class="p-3 border text-slate-700 dark:text-slate-100">Kelas</th>
+          <th class="p-3 border text-center text-slate-700 dark:text-slate-100">
+            Total Poin
+          </th>
         </tr>
       </thead>
+
       <tbody id="rankingTableBody">
         <tr>
-          <td colspan="4" class="px-4 py-6 text-center text-slate-500">
+          <td colspan="4"
+              class="p-4 border text-center text-slate-700 dark:text-slate-200">
             Memuat ranking...
           </td>
         </tr>
       </tbody>
+
     </table>
+
   </div>
-</section>
+</div>
+
 
 
 
@@ -422,6 +456,8 @@ import {
 
 
 
+
+
 /* ======================================================
    2. FIREBASE INIT
 ====================================================== */
@@ -457,8 +493,37 @@ const tabelSiswa       = document.getElementById("tabelSiswa");
    4. GLOBAL STATE
 ====================================================== */
 let dashboardLoaded = false;
-let statusSiswa = {};   // realtime status
+// let unsubscribeLeaderboard = null;
+
+
 let dataSiswa   = [];   // cache data siswa
+// let leaderboardMap = {};
+let unsubUsers = null;
+
+
+// -----LOAD DATA SISWA REALTIME
+function listenDataSiswaRealtime() {
+  if (unsubUsers) unsubUsers();
+
+  const q = query(
+    collection(db, "users"),
+    where("role", "==", "student")
+  );
+
+  unsubUsers = onSnapshot(q, (snap) => {
+    dataSiswa = snap.docs.map(d => ({
+      uid: d.id,
+      ...d.data()
+    }));
+
+    console.log("🔥 DATA SISWA REALTIME:", dataSiswa);
+
+    renderTabelSiswa(dataSiswa);
+    renderPoinTable(dataSiswa);
+    renderRankingFromUsers(dataSiswa); // ⬅️ INI KUNCI
+  });
+}
+
 
 /* ======================================================
    5. UI HELPER
@@ -472,6 +537,31 @@ function showDashboard() {
   loginSection.classList.add("hidden");
   dashboardSection.classList.remove("hidden");
 }
+
+// ================= STATUS SISWA REALTIME =================
+function listenStudentStatus(uid, el) {
+  const statusRef = ref(rtdb, `status/${uid}`);
+
+  onValue(statusRef, (snap) => {
+    if (!snap.exists()) {
+      el.innerHTML = `<span class="text-slate-400 text-xs">● Offline</span>`;
+      return;
+    }
+
+    const data = snap.val();
+    const last = data.lastChanged || 0;
+    const now = Date.now();
+
+    // ⏱️ jika lebih dari 20 detik → anggap offline
+    if (data.state === "online" && (now - last < 20000)) {
+      el.innerHTML = `<span class="text-green-500 text-xs">● Online</span>`;
+    } else {
+      el.innerHTML = `<span class="text-slate-400 text-xs">● Offline</span>`;
+    }
+  });
+}
+
+
 
 /* ======================================================
    6. LOGIN & AUTH GUARD
@@ -506,7 +596,6 @@ onAuthStateChanged(auth, async (user) => {
   const userRef = doc(db, "users", user.uid);
   const snap = await getDoc(userRef);
 
-  // auto create guru
   if (!snap.exists()) {
     await setDoc(userRef, {
       email: user.email,
@@ -524,69 +613,20 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   showDashboard();
-
-  // 🔥 Load tabel nilai siswa
-  loadNilaiSiswa();
-  loadPoinSiswa();
-  loadRankingSiswa();
+  // loadLeaderboard();
+  listenDataSiswaRealtime();
 
 
 
 
   if (!dashboardLoaded) {
-    loadDashboard();
-    loadSiswa();
-    listenStatusRealtime();
+    loadDashboard();        // TUGAS
+    loadNilaiSiswa();       // NILAI KUIS
+    // loadSiswa();            // DATA SISWA
+  
     dashboardLoaded = true;
   }
 });
-
-// ================= RANKING SISWA (REALTIME) =================
-function loadRankingSiswa() {
-  const tbody = document.getElementById("rankingTableBody");
-
-  const q = query(
-    collection(db, "leaderboard"),
-    orderBy("poinTotal", "desc")
-  );
-
-  onSnapshot(q, (snapshot) => {
-    tbody.innerHTML = "";
-
-    if (snapshot.empty) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="4" class="px-4 py-6 text-center text-slate-500">
-            Belum ada ranking
-          </td>
-        </tr>
-      `;
-      return;
-    }
-
-    let rank = 1;
-
-    snapshot.forEach((docSnap) => {
-      const d = docSnap.data();
-
-      tbody.innerHTML += `
-        <tr class="border-t border-slate-700">
-          <td class="px-3 py-2 text-center font-bold">
-            ${rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : rank}
-          </td>
-          <td class="px-3 py-2">${d.nama ?? "-"}</td>
-          <td class="px-3 py-2">${d.kelas ?? "-"}</td>
-          <td class="px-3 py-2 text-center font-bold text-emerald-500">
-            ${d.poinTotal ?? 0}
-          </td>
-        </tr>
-      `;
-
-      rank++;
-    });
-  });
-}
-
 
 
 /* ======================================================
@@ -658,15 +698,8 @@ window.hapusTugas = async (id) => {
 };
 
 
-/* ======================================================
-   8. REALTIME STATUS SISWA
-====================================================== */
-function listenStatusRealtime() {
-  onValue(ref(rtdb, "status"), (snap) => {
-    statusSiswa = snap.val() || {};
-    renderTabelSiswa();
-  });
-}
+
+
 
 /* ======================================================
    9. MANAJEMEN SISWA
@@ -685,63 +718,72 @@ async function loadSiswa() {
 }
 
 function renderTabelSiswa() {
-  // reset tabel sebelum render (WAJIB)
-tabelSiswa.innerHTML = "";
-let no = 1;
+  tabelSiswa.innerHTML = "";
+  let no = 1;
 
-// pastikan dataSiswa benar-benar array
-if (!Array.isArray(dataSiswa)) return;
+  if (!Array.isArray(dataSiswa)) return;
 
-dataSiswa.forEach((d) => {
-  // proteksi data
-  const uid = d.uid || "";
-  const nama = d.nama || "-";
-  const nisn = d.nisn || "-";
-  const kelas = d.kelas || "-";
-  const gender = d.gender || "-";
+  dataSiswa.forEach((d) => {
+    const uid = d.uid;
+    const nama = d.nama || "-";
+    const nisn = d.nisn || "-";
+    const kelas = d.kelas || "-";
+    const gender = d.gender || "-";
 
-  // status online (aman walau statusSiswa belum ada)
-  const online = !!(uid && statusSiswa?.[uid]?.online === true);
+    const statusId = `status-${uid}`;
 
-  tabelSiswa.innerHTML += `
-    <tr>
-      <td class="p-3 border">${no++}</td>
+    tabelSiswa.innerHTML += `
+      <tr>
+        <td class="p-3 border">${no++}</td>
+        <td class="p-3 border">${nama}</td>
+        <td class="p-3 border">${nisn}</td>
+        <td class="p-3 border">${kelas}</td>
+        <td class="p-3 border">${gender}</td>
 
-      <td class="p-3 border">${nama}</td>
-      <td class="p-3 border">${nisn}</td>
-      <td class="p-3 border">${kelas}</td>
-      <td class="p-3 border">${gender}</td>
+        <td class="p-3 border" id="${statusId}">
+          <span class="text-slate-400 text-xs">● Offline</span>
+        </td>
 
-      <td class="p-3 border">
-        <span class="text-xs font-semibold ${
-          online ? "text-green-500" : "text-slate-400"
-        }">
-          ● ${online ? "Online" : "Offline"}
-        </span>
-      </td>
+        <td class="p-3 border text-center">
+          <button onclick="hapusSiswa('${uid}')"
+            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs">
+            🗑
+          </button>
+        </td>
+      </tr>
+    `;
 
-      <td class="p-3 border text-center">
-        ${
-          uid
-            ? `<button onclick="hapusSiswa('${uid}')"
-                class="bg-red-500 hover:bg-red-600
-                       text-white px-3 py-1 rounded text-xs">
-                🗑
-              </button>`
-            : `<span class="text-slate-400 text-xs">-</span>`
-        }
-      </td>
-    </tr>
-  `;
-});
-
+    // ✅ PASANG LISTENER STATUS DI SINI
+    const statusEl = document.getElementById(statusId);
+    if (statusEl && uid) {
+      listenStudentStatus(uid, statusEl);
+    }
+  });
 }
+
 
 window.hapusSiswa = async (uid) => {
   if (!confirm("Hapus siswa ini?")) return;
-  await deleteDoc(doc(db, "users", uid));
-  loadSiswa();
+
+  try {
+    // 1️⃣ HAPUS DATA SISWA
+    await deleteDoc(doc(db, "users", uid));
+
+    // 2️⃣ HAPUS LEADERBOARD (INI YANG HILANG)
+    await deleteDoc(doc(db, "leaderboard", uid));
+
+    // (opsional tapi bagus)
+    console.log("Siswa & leaderboard terhapus:", uid);
+
+    // 3️⃣ RELOAD DATA
+    loadSiswa();
+
+  } catch (err) {
+    console.error("Gagal menghapus siswa:", err);
+    alert("Terjadi kesalahan saat menghapus siswa");
+  }
 };
+
 
 
 /* ======================================================
@@ -814,10 +856,6 @@ document.getElementById("btnSimpanSiswa").addEventListener("click", async () => 
 });
 
 
-
-
-
-
 // ================= NILAI SISWA REALTIME =================
 function loadNilaiSiswa() {
   const tbody = document.getElementById("nilaiTableBody");
@@ -871,59 +909,69 @@ function loadNilaiSiswa() {
   });
 }
 
-
-// ================= TOTAL POIN SISWA (REALTIME) =================
-function loadPoinSiswa() {
+// RENDER TOTAL POIN
+function renderPoinTable() {
   const tbody = document.getElementById("poinTableBody");
+  if (!tbody) return;
 
-  // 1️⃣ Ambil leaderboard (TOTAL POIN)
-  onSnapshot(collection(db, "leaderboard"), (lbSnap) => {
-    const leaderboardMap = {};
+  tbody.innerHTML = "";
+  let no = 1;
 
-    lbSnap.forEach(docSnap => {
-      leaderboardMap[docSnap.id] = docSnap.data().poinTotal ?? 0;
-    });
-
-    // 2️⃣ Ambil data siswa (POIN AKTIF)
-    onSnapshot(collection(db, "users"), (userSnap) => {
-      tbody.innerHTML = "";
-      let no = 1;
-
-      userSnap.forEach((docSnap) => {
-        const d = docSnap.data();
-        const uid = docSnap.id;
-
-        if (d.role !== "student") return;
-
-        const totalPoin = leaderboardMap[uid] ?? 0;
-
-        tbody.innerHTML += `
-          <tr class="border-t border-slate-700">
-            <td class="px-3 py-2">${no++}</td>
-            <td class="px-3 py-2">${d.nama}</td>
-            <td class="px-3 py-2">${d.kelas}</td>
-            <td class="px-3 py-2 text-center font-bold text-blue-500">
-              ${d.poin ?? 0}
-            </td>
-            <td class="px-3 py-2 text-center font-bold text-emerald-400">
-              ${totalPoin}
-            </td>
-          </tr>
-        `;
-      });
-
-      if (tbody.innerHTML === "") {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="5" class="px-4 py-6 text-center text-slate-500">
-              Belum ada data poin
-            </td>
-          </tr>
-        `;
-      }
-    });
+  dataSiswa.forEach(s => {
+    tbody.innerHTML += `
+      <tr>
+        <td class="p-3 border">${no++}</td>
+        <td class="p-3 border">${s.nama}</td>
+        <td class="p-3 border">${s.kelas}</td>
+        <td class="p-3 border text-center font-bold">-</td>
+        <td class="p-3 border text-center">
+          ${s.poinTotal ?? 0}
+        </td>
+      </tr>
+    `;
   });
 }
+
+// ===============================
+// RENDER RANKING SISWA
+// ===============================
+function renderRankingFromUsers(users) {
+  const tbody = document.getElementById("rankingTableBody");
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+
+  if (!Array.isArray(users) || users.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4" class="text-center py-4 text-slate-500">
+          Belum ada data ranking
+        </td>
+      </tr>`;
+    return;
+  }
+
+  const sorted = [...users].sort(
+    (a, b) => (Number(b.poinTotal) || 0) - (Number(a.poinTotal) || 0)
+  );
+
+  sorted.forEach((u, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td class="p-3 border text-center font-bold">${i + 1}</td>
+        <td class="p-3 border">${u.nama ?? "-"}</td>
+        <td class="p-3 border">${u.kelas ?? "-"}</td>
+        <td class="p-3 border text-center font-bold">
+          ${u.poinTotal ?? 0}
+        </td>
+      </tr>
+    `;
+  });
+}
+
+
+console.log("DATA SISWA:", dataSiswa);
+
 
 
 // RESET POIN
@@ -963,29 +1011,18 @@ resetBtn.addEventListener("click", async () => {
 const resetTotalBtn = document.getElementById("resetPoinTotalBtn");
 
 resetTotalBtn.addEventListener("click", async () => {
-  const yakin = confirm(
-    "⚠️ PERINGATAN KERAS ⚠️\n\n" +
-    "Kamu akan MERESet:\n" +
-    "• Poin aktif\n" +
-    "• Total poin sepanjang waktu\n\n" +
-    "❗ Data TIDAK bisa dikembalikan.\n\n" +
-    "Klik OK untuk lanjut."
-  );
-
-  if (!yakin) return;
+  if (!confirm("Reset SEMUA poin siswa?")) return;
 
   try {
-    const snapshot = await getDocs(collection(db, "users"));
+    const snapshot = await getDocs(
+      query(collection(db, "users"), where("role", "==", "student"))
+    );
 
-    for (const docSnap of snapshot.docs) {
-      const data = docSnap.data();
-
-      if (data.role === "student") {
-        await updateDoc(doc(db, "users", docSnap.id), {
-          poin: 0,
-          poinTotal: 0
-        });
-      }
+    for (const u of snapshot.docs) {
+      await updateDoc(doc(db, "users", u.id), {
+        poin: 0,
+        poinTotal: 0
+      });
     }
 
     alert("✅ Semua poin siswa berhasil di-reset total!");
@@ -994,6 +1031,7 @@ resetTotalBtn.addEventListener("click", async () => {
     alert("❌ Gagal reset total poin");
   }
 });
+
 
 
 

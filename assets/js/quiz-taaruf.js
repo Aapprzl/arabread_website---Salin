@@ -1,6 +1,12 @@
-// ===============================
-// QUIZ TA'ARUF — FINAL VERSION
-// ===============================
+let ACTIVE_THEME = null;
+
+let ACTIVE_QUIZ_ID = null;
+let ACTIVE_QUIZ_TITLE = null;
+
+
+window.stopActiveQuiz?.();
+
+
 
 import {
   addDoc,
@@ -32,34 +38,39 @@ const { db, getCurrentUser } = window.__APP_CONTEXT__;
 // ===============================
 // KONFIGURASI
 // ===============================
-const QUIZ_ID    = "taaruf-1";
-const QUIZ_TITLE = "Kuis Ta'aruf";
 const TOTAL_TIME = 30;
-const PENALTY    = 5;
+
 
 // ===============================
-// AMBIL DATA SOAL
+// HELPER: SHUFFLE (WAJIB ADA)
 // ===============================
-const sourceVocabs = window.VOCABS.filter(v => v.tema === "taaruf");
-
 function shuffle(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
-const quizData = shuffle(sourceVocabs).map(v => {
-  const correct = v.id;
-  const wrongs = shuffle(
-    sourceVocabs.filter(x => x.id !== correct).map(x => x.id)
-  ).slice(0, 3);
 
-  const options = shuffle([correct, ...wrongs]);
+// ===============================
+// AMBIL DATA SOAL
+// ===============================
+function buildQuizData(theme) {
+  const source = window.VOCABS.filter(v => v.tema === theme);
 
-  return {
-    question: `Apa arti dari "${v.ar}"?`,
-    options,
-    correctIndex: options.indexOf(correct)
-  };
-});
+  return shuffle(source).map(v => {
+    const correct = v.id;
+    const wrongs = shuffle(
+      source.filter(x => x.id !== correct).map(x => x.id)
+    ).slice(0, 3);
+
+    const options = shuffle([correct, ...wrongs]);
+
+    return {
+      question: `Apa arti dari "${v.ar}"?`,
+      options,
+      correctIndex: options.indexOf(correct)
+    };
+  });
+}
+
 
 // ===============================
 // STATE
@@ -71,7 +82,8 @@ const quizState = {
   timeLeft: TOTAL_TIME,
   timer: null,
   answered: false,
-  finished: false
+  finished: false,
+  data: []
 };
 
 
@@ -79,7 +91,10 @@ const quizState = {
 // ===============================
 // ELEMENT
 // ===============================
-const btnStart = document.getElementById("btnStartQuiz");
+const btnThemeTaaruf  = document.getElementById("btnThemeTaaruf");
+const btnThemeSekolah = document.getElementById("btnThemeSekolah");
+
+// const btnStart = document.getElementById("btnStartQuiz");
 const quizBox  = document.getElementById("quizBox");
 const qText    = document.getElementById("quizQuestion");
 const optsBox  = document.getElementById("quizOptions");
@@ -94,20 +109,46 @@ quizBox.prepend(timerEl);
 // ===============================
 // START QUIZ
 // ===============================
-btnStart.onclick = () => {
+function startQuiz(theme, quizId, quizTitle) {
+
+  if (!window.VOCABS || !Array.isArray(window.VOCABS)) {
+  alert("Data soal belum siap");
+  return;
+}
+
+
+  ACTIVE_THEME = theme;
+
+  ACTIVE_QUIZ_ID = quizId;
+  ACTIVE_QUIZ_TITLE = quizTitle;
+
   quizState.index = 0;
   quizState.score = 0;
   quizState.timeLeft = TOTAL_TIME;
   quizState.finished = false;
   quizState.answered = false;
 
-  btnStart.disabled = true;
-  btnStart.classList.add("opacity-50");
+  quizState.data = buildQuizData(theme);
 
   quizBox.classList.remove("hidden");
+
   startTimer();
   loadQuestion();
-};
+}
+
+// ---
+ if (btnThemeTaaruf) {
+  btnThemeTaaruf.onclick = () => {
+    startQuiz("taaruf", "taaruf-1", "Kuis Ta'aruf");
+  };
+}
+
+if (btnThemeSekolah) {
+  btnThemeSekolah.onclick = () => {
+    startQuiz("sekolah", "school-1", "Kuis Sekolah");
+  };
+}
+// ------
 
 
 
@@ -140,7 +181,8 @@ function loadQuestion() {
   btnNext.classList.add("hidden");
   feedback.textContent = "";
 
-  const q = quizData[quizState.index];
+  const q = quizState.data[quizState.index];
+
   if (!q) return finishQuiz();
 
   qText.textContent = q.question;
@@ -165,7 +207,8 @@ function checkAnswer(selectedIndex) {
   if (quizState.answered) return;
   quizState.answered = true;
 
-  const q = quizData[quizState.index];
+  const q = quizState.data[quizState.index];
+
   const buttons = optsBox.querySelectorAll("button");
 
   buttons.forEach((btn, i) => {
@@ -218,11 +261,12 @@ async function finishQuiz() {
   timerEl.textContent = "";
 
   feedback.textContent =
-    `Skor kamu: ${quizState.score} / ${quizData.length}`;
+  `Skor kamu: ${quizState.score} / ${quizState.data.length}`;
+
   feedback.className = "font-bold text-blue-500";
 
-  btnStart.disabled = false;
-  btnStart.classList.remove("opacity-50");
+  // btnStart.disabled = false;
+  // btnStart.classList.remove("opacity-50");
 
   await saveResult();
   
@@ -234,69 +278,107 @@ async function finishQuiz() {
 // SIMPAN KE FIRESTORE
 // ===============================
 async function saveResult() {
-  const authUser = await getCurrentUser();
+  const authUser = getCurrentUser();
   if (!authUser) return;
 
   const uid = authUser.uid;
+  const score = quizState.score;
 
-  const userRef  = doc(db, "users", uid);
+  const userRef = doc(db, "users", uid);
   const userSnap = await getDoc(userRef);
 
   if (!userSnap.exists()) {
-    console.error("Data siswa tidak ditemukan di Firestore");
+    console.error("Data siswa tidak ditemukan");
     return;
   }
 
   const user = userSnap.data();
-  const score = quizState.score;
+  const skorLama = user.skorTerbaik ?? 0;
 
+  // ===============================
   // 1️⃣ SIMPAN RIWAYAT KUIS
+  // ===============================
   await addDoc(collection(db, "quizResults"), {
     uid,
     nama: user.nama,
     kelas: user.kelas,
-    quizId: QUIZ_ID,
-    quizTitle: QUIZ_TITLE,
+    quizId: ACTIVE_QUIZ_ID,
+    quizTitle: ACTIVE_QUIZ_TITLE,
     score,
-    totalSoal: quizData.length,
+    totalSoal: quizState.data.length,
     createdAt: serverTimestamp()
   });
 
-  // 2️⃣ AMBIL SEMUA RIWAYAT KUIS TA'ARUF
-  const qSnap = await getDocs(
-    query(
-      collection(db, "quizResults"),
-      where("uid", "==", uid),
-      where("quizId", "==", QUIZ_ID)
-    )
-  );
+  // ===============================
+// 2️⃣ HITUNG TOTAL BARU (AMAN)
+// ===============================
+const prevTotal = typeof user.poinTotal === "number"
+  ? user.poinTotal
+  : 0;
 
-  // 3️⃣ HITUNG SKOR TERBAIK
-  let best = 0;
-  qSnap.forEach(d => {
-    const data = d.data();
-    if (typeof data.score === "number") {
-      best = Math.max(best, data.score);
+const newTotal = prevTotal + score;
+
+const updateData = {
+  jumlahMain: increment(1),
+  skorTerbaik: score > skorLama ? score : skorLama,
+  poinTotal: newTotal
+};
+
+await updateDoc(userRef, updateData);
+
+
+  // ===============================
+// 3️⃣ UPDATE LEADERBOARD (SUMBER DARI USERS)
+// ===============================
+await setDoc(
+  doc(db, "leaderboard", uid),
+  {
+    uid,
+    nama: user.nama,
+    kelas: user.kelas,
+    poinTotal: newTotal,
+    updatedAt: serverTimestamp()
+  },
+  { merge: true }
+);
+
+}
+
+
+// ================= DAFTARKAN KUIS TA'ARUF SEBAGAI AKTIF =================
+window.__ACTIVE_QUIZ__ = {
+  stop() {
+    // hentikan timer jika masih jalan
+    if (quizState && quizState.timer) {
+      clearInterval(quizState.timer);
+      quizState.timer = null;
     }
-  });
 
-  // 4️⃣ UPDATE DATA SISWA
-  const prevTotal = user.poinTotal ?? 0;
+    // sembunyikan quizBox
+    const quizBox = document.getElementById("quizBox");
+    if (quizBox) quizBox.classList.add("hidden");
+  }
+};
 
-  await updateDoc(userRef, {
-    poin: best,                    // skor terbaik
-  });
 
-  // 5️⃣ UPDATE LEADERBOARD
-  await setDoc(
-    doc(db, "leaderboard", uid),
-    {
-      nama: user.nama,
-      kelas: user.kelas,
-      poinTotal: increment(score)
-    },
-    { merge: true }
-  );
+export function initQuiz() {
+  const btnTaaruf  = document.getElementById("btnThemeTaaruf");
+  const btnSekolah = document.getElementById("btnThemeSekolah");
+
+  if (!btnTaaruf || !btnSekolah) {
+    console.warn("❌ Tombol kuis tidak ditemukan");
+    return;
+  }
+
+  btnTaaruf.onclick = () => {
+    startQuiz("taaruf", "taaruf-1", "Kuis Ta'aruf");
+  };
+
+  btnSekolah.onclick = () => {
+    startQuiz("sekolah", "school-1", "Kuis Sekolah");
+  };
+
+  console.log("✅ Kuis siap dimainkan");
 }
 
 
