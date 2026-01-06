@@ -9,11 +9,13 @@ function generatePassword(length = 8) {
 
 
 const { onRequest } = require("firebase-functions/v2/https");
+const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cors = require("cors")({ origin: true });
 
 admin.initializeApp();
 
+// ----
 exports.createStudentAccount = onRequest(
   { region: "asia-southeast1" },
   async (req, res) => {
@@ -66,3 +68,36 @@ await admin.firestore().collection("users").doc(user.uid).set({
     });
   }
 );
+
+
+// ==========================================
+// 🔥 CLEANUP ANONYMOUS USERS (PRO LEVEL)
+// ==========================================
+exports.cleanupAnonymousUsers = functions.https.onRequest(async (req, res) => {
+  try {
+    let deletedCount = 0;
+    let nextPageToken = undefined;
+
+    do {
+      const result = await admin.auth().listUsers(1000, nextPageToken);
+      nextPageToken = result.pageToken;
+
+      for (const user of result.users) {
+        if (user.providerData.length === 0) {
+          // user anonymous
+          await admin.auth().deleteUser(user.uid);
+          deletedCount++;
+        }
+      }
+    } while (nextPageToken);
+
+    return res.status(200).send(
+      `✅ Cleanup selesai. ${deletedCount} anonymous users dihapus`
+    );
+  } catch (error) {
+    console.error("Cleanup error:", error);
+    return res.status(500).send(
+      "❌ Gagal cleanup anonymous users: " + error.message
+    );
+  }
+});
