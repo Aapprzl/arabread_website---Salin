@@ -26,7 +26,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ArabRead — Pembelajaran Membaca Bahasa Arab MTs</title>
+  <title>Tarbiyyat Al-Lughah — Pembelajaran Membaca Bahasa Arab MTs</title>
 
 
   <!-- Fonts & Tailwind -->
@@ -181,7 +181,7 @@
 
 </head>
 
-<body class="relative min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
+<body class="relative min-h-screen bg-slate-100 dark:bg-slate-800 dark:text-slate-100">
 
   <!-- Header -->
   <header class="bg-primary-600 text-white">
@@ -217,23 +217,24 @@
 
 
   <!-- Hero -->
+   <div class="bg-slate-200 e dark:bg-slate-700 rounded-2xl shadow-lg p-6">
   <section class="text-center max-w-6xl mx-auto px-4 pt-10 pb-8">
-    <h1 class="arabic-text text-4xl font-bold text-primary-800 dark:text-slate-300">
+    <h1 class="arabic-text text-4xl font-bold text-primary-800 dark:text-slate-300 mb-12">
   موقع تعليم اللغة العربية التفاعلي
 </h1>
 
-    <p class="mt-3 text-gray-600 dark:text-slate-300 text-lg">Media belajar interaktif untuk meningkatkan pemahaman Bahasa Arab bagi siswa MTs kelas 7.</p>
+    <p class="mt-3 text-gray-600 dark:text-slate-300 text-lg font-semibold">Media belajar interaktif untuk meningkatkan pemahaman Bahasa Arab bagi siswa MTs kelas 7.</p>
   </section>
-
+  </div>
 
 <!-- bagian pencarian kosakata -->
  <section id="search" class="max-w-4xl mx-auto px-4 mt-8 mb-12">
-  <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6">
+  <div class="bg-slate-200 e dark:bg-slate-700 rounded-2xl shadow-lg p-6">
     <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300 mb-3">🔍 Cari Kosakata</h2>
     <input id="search-input"
            type="text"
            placeholder="Ketik kata Arab atau terjemahannya..."
-           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-400 outline-none dark:text-slate-600 text-slate-600" />
+           class=" bg-slate-300 w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-400 outline-none dark:text-slate-600 text-slate-600" />
     <div id="search-results" class="mt-4 text-gray-700 dark:text-slate-300"></div>
   </div>
 </section>
@@ -241,7 +242,7 @@
 
 <!-- Kartu Kosakata (Flip Cards) -->
 <section id="flashcards" class="max-w-6xl mx-auto px-4 mt-10 mb-12">
-  <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6">
+  <div class="bg-slate-200 dark:bg-slate-700 rounded-2xl shadow-lg p-6">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
       <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300">🃏 Kartu Kosakata</h2>
       <div class="flex items-center gap-2">
@@ -255,7 +256,7 @@
       </div>
     </div>
 
-    <p class="text-gray-600 dark:text-slate-300 mt-2">Ketuk kartu untuk membaliknya. Cocok untuk penguatan memori kosakata.</p>
+    <p class="text-gray-600 dark:text-slate-300 mt-2 font-semibold">Ketuk kartu untuk membaliknya. Cocok untuk penguatan memori kosakata.</p>
 
     <!-- Grid kartu -->
     <div id="card-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5"></div>
@@ -276,7 +277,7 @@
 
 <!-- Kartu Gramatikal (Campur) -->
 <section id="grammar-cards" class="max-w-6xl mx-auto px-4 mt-10 mb-12">
-  <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-6">
+  <div class="bg-slate-200 dark:bg-slate-700 rounded-2xl shadow-lg p-6">
 
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
       <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300">
@@ -284,7 +285,7 @@
       </h2>
     </div>
 
-    <p class="text-gray-600 dark:text-slate-300 mt-2">
+    <p class="text-gray-600 dark:text-slate-300 mt-2 font-semibold">
       Ketuk kartu untuk melihat penjelasan singkat dan contoh.  
       Empat kartu akan ditampilkan secara acak dari seluruh materi.
     </p>
@@ -322,7 +323,7 @@
       <!-- Kartu: Materi Gramatikal Dasar -->
 <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
   <!-- Header berwarna (ikuti pola: primary/secondary) -->
-  <div class="bg-primary-500 text-white text-center py-6">
+  <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white text-center py-6">
     <h3 class="arabic-text text-2xl font-bold">النَّحْوُ وَالصَّرْفُ (الأساسيات)</h3>
     <p class="mt-1 text-white/90">Materi Gramatikal Dasar — Nahwu &amp; Shorof</p>
   </div>
@@ -352,7 +353,7 @@
 
       <!-- Kartu: Ta'aruf / Pengenalan -->
 <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
-  <div class="bg-secondary-500 text-white text-center py-6">
+  <div class="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white text-center py-6">
     <h3 class="arabic-text text-2xl font-bold">التَّعارُف</h3>
     <p class="mt-1 text-white/90">Pengenalan / Ta'aruf</p>
   </div>
@@ -376,7 +377,7 @@
 
       <!-- Kartu: Sekolah -->
       <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
-        <div class="bg-primary-500 text-white text-center py-6">
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white text-center py-6">
           <h3 class="arabic-text text-2xl font-bold">المدرسة</h3>
           <p class="mt-1 text-white/90">Sekolah</p>
         </div>
@@ -395,7 +396,7 @@
 
       <!-- Kartu: Keluarga -->
       <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
-        <div class="bg-secondary-500 text-white text-center py-6">
+        <div class="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white text-center py-6">
           <h3 class="arabic-text text-2xl font-bold">العائلة</h3>
           <p class="mt-1 text-white/90">Keluarga</p>
         </div>
@@ -414,7 +415,7 @@
 
       <!-- Kartu: Hewan -->
       <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
-        <div class="bg-primary-500 text-white text-center py-6">
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white text-center py-6">
           <h3 class="arabic-text text-2xl font-bold">الحيوانات</h3>
           <p class="mt-1 text-white/90">Hewan</p>
         </div>
@@ -436,13 +437,13 @@
      PERPUSTAKAAN E-BOOK
 ================================== -->
 <section id="ebook-library" class="max-w-6xl mx-auto px-4 py-12">
-  <div class="bg-white dark:bg-slate-700 rounded-2xl shadow-lg p-8">
+  <div class="bg-slate-200 dark:bg-slate-700 rounded-2xl shadow-lg p-8">
 
     <div class="text-center mb-8">
       <h2 class="text-2xl md:text-3xl font-bold text-primary-900 dark:text-slate-300">
         📚 Perpustakaan E-Book
       </h2>
-      <p class="text-gray-600 dark:text-slate-300 mt-2">
+      <p class="text-gray-600 dark:text-slate-300 mt-2 font-semibold">
         Bacaan mandiri untuk memperkuat keterampilan membaca Bahasa Arab
       </p>
     </div>

@@ -29,7 +29,7 @@
 
 </head>
 
-<body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100">
+<body class="min-h-screen flex flex-col bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100">
 
 
   <!-- ===== HEADER DASHBOARD GURU ===== -->
@@ -37,16 +37,14 @@
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
       <!-- Logo / Judul -->
-      <div class="flex items-center gap-3">
-        <span class="text-xl">📚</span>
-        <h1 class="text-lg font-bold tracking-wide">
-          Tarbiyyat al-Lughah
-        </h1>
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5.75A2.75 2.75 0 0 1 6.75 3h10.5A2.75 2.75 0 0 1 20 5.75V22M4 19.5c0-1.38 1.12-2.5 2.5-2.5H20"/></svg>
+        <span class="text-2xl font-bold">Tarbiyyat al-Lughah</span>
       </div>
 
       <!-- Menu Kanan -->
       <div class="flex items-center gap-4 text-sm">
-        <span class="hidden sm:inline text-blue-100">
+        <span class="hidden sm:inline text-blue-100 font-bold">
           Dashboard Guru
         </span>
 
@@ -55,6 +53,13 @@
                   px-4 py-2 rounded-lg transition font-medium">
           ⬅ Kembali ke Beranda
         </a>
+        <button
+        id="darkToggle"
+        class="ml-3 px-3 py-2 rounded-lg bg-white/20 text-white hover:bg-white/30 transition"
+        title="Toggle Dark Mode"
+        >
+        🌙
+      </button>
       </div>
 
     </div>
@@ -71,8 +76,7 @@
                       border border-slate-200
                       rounded-2xl shadow-lg overflow-hidden">
 
-        <div class="bg-gradient-to-r from-emerald-600 to-emerald-800
-                    text-white py-6 text-center">
+        <div class="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white py-6 text-center">
           <h3 class="text-2xl font-bold flex items-center justify-center gap-2">
             🔐 Login Dashboard Guru
           </h3>
@@ -123,10 +127,10 @@
 
           <div>
             <h3 class="text-2xl font-bold flex items-center gap-2">
-              📊 Dashboard Tugas
+              📊 Dashboard GURU
             </h3>
             <p class="text-sm text-emerald-100">
-              Daftar tugas yang telah dikumpulkan siswa
+              Tempat guru mengelola data siswa
             </p>
           </div>
 
@@ -137,12 +141,14 @@
           </button>
         </div>
 
+        <!-- DASHBOARD TUGAS -->
+
         <div class="p-3 sm:p-6 overflow-x-auto">
 
           <table class="min-w-[700px] w-full border-collapse text-sm">
 
             <thead>
-              <tr class="bg-slate-100 dark:bg-slate-600 text-left text-slate-500">
+              <tr class="bg-slate-300 dark:bg-slate-600 text-left text-slate-500">
                 <th class="p-3 border text-slate-700 dark:text-slate-100">No</th>
                 <th class="p-3 border text-slate-700 dark:text-slate-100">Nama</th>
                 <th class="p-3 border text-slate-700 dark:text-slate-100">Kelas</th>
@@ -168,7 +174,7 @@
 =============================== -->
 <div class="mt-10">
 
-  <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+  <h3 class="text-xl font-bold flex items-center gap-2 ml-6">
     👥 Manajemen Siswa
   </h3>
 
@@ -178,7 +184,7 @@
     <table class="min-w-[700px] w-full border-collapse text-sm">
 
       <thead>
-        <tr class="bg-slate-100 dark:bg-slate-600 text-left">
+        <tr class="bg-slate-300 dark:bg-slate-600 text-left">
           <th class="p-3 border text-slate-700 dark:text-slate-100">No</th>
           <th class="p-3 border text-slate-700 dark:text-slate-100">Nama</th>
           <th class="p-3 border text-slate-700 dark:text-slate-100">NISN</th>
@@ -206,12 +212,12 @@
 
 <!-- ================= NILAI SISWA ================= -->
 <div class="mt-10">
-  <h2 class="text-xl font-bold mb-4">📊 Nilai Kuis Siswa</h2>
+  <h2 class="text-xl font-bold ml-6">📊 Nilai Kuis Siswa</h2>
   
   <div class="p-3 sm:p-6 overflow-x-auto">
   <div class="overflow-x-auto rounded-lg shadow">
     <table class="min-w-full bg-white dark:bg-slate-800 text-sm">
-      <thead class="bg-slate-100 dark:bg-slate-700">
+      <thead class="bg-slate-300 dark:bg-slate-500">
         <tr>
           <th class="px-3 py-2 text-left">No</th>
           <th class="px-3 py-2 text-left">Nama</th>
@@ -240,13 +246,14 @@
 <!-- ================= TOTAL POIN SISWA ================= -->
 <div class="mt-10">
 
+  <div class="ml-6">
   <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
     🏆 Total Poin Siswa
   </h3>
 
   <button
     id="resetPoinBtn"
-    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold mb-2 ml-2">
     🔄 Reset Poin Hari Ini
   </button>
 
@@ -255,6 +262,7 @@
     class="ml-2 bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
     ⚠️ Reset Total Sepanjang Waktu
   </button>
+  </div>
 
   <!-- 🔑 PADDING WRAPPER (SAMA DENGAN MANAJEMEN SISWA) -->
   <div class="p-3 sm:p-6 overflow-x-auto">
@@ -262,7 +270,7 @@
     <table class="min-w-[700px] w-full border-collapse text-sm">
 
       <thead>
-        <tr class="bg-slate-100 dark:bg-slate-600 text-left">
+        <tr class="bg-slate-300 dark:bg-slate-600 text-left">
           <th class="p-3 border text-slate-700 dark:text-slate-100">No</th>
           <th class="p-3 border text-slate-700 dark:text-slate-100">Nama</th>
           <th class="p-3 border text-slate-700 dark:text-slate-100">Kelas</th>
@@ -293,7 +301,7 @@
 <!-- ================= RANKING SISWA ================= -->
 <div class="mt-10">
 
-  <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+  <h3 class="text-xl font-bold mb-4 flex items-center gap-2 ml-6">
     🏆 Ranking Siswa
   </h3>
 
@@ -303,7 +311,7 @@
     <table class="min-w-[700px] w-full border-collapse text-sm">
 
       <thead>
-        <tr class="bg-slate-100 dark:bg-slate-600 text-left">
+        <tr class="bg-slate-300 dark:bg-slate-600 text-left">
           <th class="p-3 border text-center text-slate-700 dark:text-slate-100">
             Rank
           </th>
@@ -335,25 +343,25 @@
 <!-- ============================= -->
 <!-- CARD: DAFTAR SISWA BARU -->
 <!-- ============================= -->
-<div class="mt-6 bg-slate-700 border border-slate-500 rounded-xl p-5">
-  <h3 class="text-white font-semibold mb-4">➕ Daftarkan Siswa</h3>
+<div class="mt-6 bg-slate-100 dark:bg-slate-700  rounded-xl p-5">
+  <h3 class="text-slate-700 dark:text-slate-100 font-semibold mb-4">➕ Daftarkan Siswa</h3>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 
     <input id="inputNama" type="text"
       placeholder="Nama Siswa"
-      class="px-3 py-2 rounded-lg bg-slate-800 text-white border border-slate-500">
+      class="px-3 py-2 rounded-lg bg-slate-300 dark:bg-slate-800 text-slate-700 dark:text-slate-100 border border-slate-500">
 
     <input id="inputNisn" type="text"
       placeholder="NISN"
-      class="px-3 py-2 rounded-lg bg-slate-800 text-white border border-slate-500">
+      class="px-3 py-2 rounded-lg bg-slate-300 dark:bg-slate-800 text-slate-700 dark:text-slate-100 border border-slate-500">
 
     <input id="inputKelas" type="text"
       placeholder="Kelas (contoh: 7A)"
-      class="px-3 py-2 rounded-lg bg-slate-800 text-white border border-slate-500">
+      class="px-3 py-2 rounded-lg bg-slate-300 dark:bg-slate-800 text-slate-700 dark:text-slate-100 border border-slate-500">
 
     <select id="inputGender"
-      class="px-3 py-2 rounded-lg bg-slate-800 text-white border border-slate-500">
+      class="px-3 py-2 rounded-lg bg-slate-300 dark:bg-slate-800 text-slate-700 dark:text-slate-100 border border-slate-500">
        <option value="">Pilih Gender</option>
       <option value="Laki-laki">Laki-laki</option>
       <option value="Perempuan">Perempuan</option>
@@ -404,8 +412,6 @@
     </div>
   </footer>
 
-
-</body>
 
 <!-- UNTUK CETAK -->
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
@@ -665,22 +671,22 @@ function loadDashboard() {
 
       tabelSubmissions.innerHTML += `
         <tr>
-          <td class="p-3 border">${no++}</td>
-          <td class="p-3 border">${data.nama}</td>
-          <td class="p-3 border">${data.kelas}</td>
-          <td class="p-3 border">${data.catatan || "-"}</td>
-          <td class="p-3 border text-center">
+          <td class="p-3 border font-semibold">${no++}</td>
+          <td class="p-3 border font-semibold">${data.nama}</td>
+          <td class="p-3 border font-bold">${data.kelas}</td>
+          <td class="p-3 border font-semibold">${data.catatan || "-"}</td>
+          <td class="p-3 border text-center font-semibold">
             ${
               data.driveLink
                 ? `<a href="${data.driveLink}" target="_blank"
-                     class="bg-blue-500 text-white px-3 py-1 rounded text-xs">📎 Buka</a>`
+                     class="bg-blue-500 text-white px-3 py-1 rounded text-xs font-semibold">📎 Buka</a>`
                 : "-"
             }
           </td>
-          <td class="p-3 border">${waktu}</td>
-          <td class="p-3 border text-center">
+          <td class="p-3 border font-semibold">${waktu}</td>
+          <td class="p-3 border text-center font-semibold">
             <button onclick="hapusTugas('${d.id}')"
-              class="bg-red-500 text-white px-3 py-1 rounded text-xs">
+              class="bg-red-500 text-white px-3 py-1 rounded text-xs font-semibold">
               🗑 Hapus
             </button>
           </td>
@@ -734,20 +740,20 @@ function renderTabelSiswa() {
 
     tabelSiswa.innerHTML += `
       <tr>
-        <td class="p-3 border">${no++}</td>
-        <td class="p-3 border">${nama}</td>
-        <td class="p-3 border">${nisn}</td>
-        <td class="p-3 border">${kelas}</td>
-        <td class="p-3 border">${gender}</td>
+        <td class="p-3 border font-semibold">${no++}</td>
+        <td class="p-3 border font-semibold">${nama}</td>
+        <td class="p-3 border font-semibold">${nisn}</td>
+        <td class="p-3 border font-bold">${kelas}</td>
+        <td class="p-3 border font-semibold">${gender}</td>
 
-        <td class="p-3 border" id="${statusId}">
+        <td class="p-3 border font-semibold" id="${statusId}">
           <span class="text-slate-400 text-xs">● Offline</span>
         </td>
 
-        <td class="p-3 border text-center">
+        <td class="p-3 border text-center font-semibold">
           <button onclick="hapusSiswa('${uid}')"
-            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs">
-            🗑
+            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs font-semibold">
+            🗑 Hapus
           </button>
         </td>
       </tr>
@@ -887,15 +893,15 @@ function loadNilaiSiswa() {
         : "-";
 
       tbody.innerHTML += `
-        <tr class="border-t border-slate-200 dark:border-slate-700">
-          <td class="px-3 py-2">${no++}</td>
-          <td class="px-3 py-2">${d.nama}</td>
-          <td class="px-3 py-2">${d.kelas}</td>
-          <td class="px-3 py-2">${d.quizTitle}</td>
+        <tr class="border-t border-slate-200 dark:border-slate-500">
+          <td class="px-3 py-2 font-semibold">${no++}</td>
+          <td class="px-3 py-2 font-semibold">${d.nama}</td>
+          <td class="px-3 py-2 font-semibold">${d.kelas}</td>
+          <td class="px-3 py-2 font-semibold">${d.quizTitle}</td>
           <td class="px-3 py-2 text-center font-bold">
             ${d.score} / ${d.totalSoal}
           </td>
-          <td class="px-3 py-2">${waktu}</td>
+          <td class="px-3 py-2 font-semibold">${waktu}</td>
           <td class="text-center">
             <button
             onclick="hapusNilai('${doc.id}')"
@@ -920,11 +926,11 @@ function renderPoinTable() {
   dataSiswa.forEach(s => {
     tbody.innerHTML += `
       <tr>
-        <td class="p-3 border">${no++}</td>
-        <td class="p-3 border">${s.nama}</td>
-        <td class="p-3 border">${s.kelas}</td>
+        <td class="p-3 border font-bold">${no++}</td>
+        <td class="p-3 border font-semibold">${s.nama}</td>
+        <td class="p-3 border font-bold">${s.kelas}</td>
         <td class="p-3 border text-center font-bold">-</td>
-        <td class="p-3 border text-center">
+        <td class="p-3 border text-center font-bold">
           ${s.poinTotal ?? 0}
         </td>
       </tr>
@@ -959,8 +965,8 @@ function renderRankingFromUsers(users) {
     tbody.innerHTML += `
       <tr>
         <td class="p-3 border text-center font-bold">${i + 1}</td>
-        <td class="p-3 border">${u.nama ?? "-"}</td>
-        <td class="p-3 border">${u.kelas ?? "-"}</td>
+        <td class="p-3 border font-semibold">${u.nama ?? "-"}</td>
+        <td class="p-3 border font-bold">${u.kelas ?? "-"}</td>
         <td class="p-3 border text-center font-bold">
           ${u.poinTotal ?? 0}
         </td>
@@ -1110,7 +1116,30 @@ function generateAkunPdf(data) {
 
 </script>
 
+<!-- JS DARK MODE -->
+<script>
+const html = document.documentElement;
+const toggle = document.getElementById("darkToggle");
 
+// cek preferensi awal
+if (localStorage.theme === "dark") {
+  html.classList.add("dark");
+  toggle.textContent = "☀️";
+}
+
+// toggle klik
+toggle.addEventListener("click", () => {
+  html.classList.toggle("dark");
+
+  if (html.classList.contains("dark")) {
+    localStorage.theme = "dark";
+    toggle.textContent = "☀️";
+  } else {
+    localStorage.theme = "light";
+    toggle.textContent = "🌙";
+  }
+});
+</script>
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
 <script>

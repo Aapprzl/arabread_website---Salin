@@ -21,62 +21,68 @@ tailwind.config = {
 
 </head>
 
-<body class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100">
+<body class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 flex flex-col min-h-screen">
 
 <!-- ================= HEADER ================= -->
-<header class="bg-blue-600 text-white shadow">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    <h1 class="font-bold text-lg">🎓 Dashboard Siswa</h1>
-    <a href="index.html"
-       class="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-semibold">
-      ⬅ Beranda
-    </a>
-      <button
-  id="darkToggle"
-  class="ml-3 px-3 py-2 rounded-lg bg-white/20 text-white hover:bg-white/30 transition"
-  title="Toggle Dark Mode"
->
-  🌙
-</button>
-  </div>
+<header class="bg-blue-600 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-</header>
+      <!-- Logo / Judul -->
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5.75A2.75 2.75 0 0 1 6.75 3h10.5A2.75 2.75 0 0 1 20 5.75V22M4 19.5c0-1.38 1.12-2.5 2.5-2.5H20"/></svg>
+        <span class="text-2xl font-bold">Tarbiyyat al-Lughah</span>
+      </div>
+
+      <!-- Menu Kanan -->
+      <div class="flex items-center gap-4 text-sm">
+        <span class="hidden sm:inline text-blue-100 font-bold">
+          Dashboard Siswa
+        </span>
+
+        <a href="index.html"
+           class="bg-blue-500 hover:bg-blue-700
+                  px-4 py-2 rounded-lg transition font-medium">
+          ⬅ Kembali ke Beranda
+        </a>
+        <button
+        id="darkToggle"
+        class="ml-3 px-3 py-2 rounded-lg bg-white/20 text-white hover:bg-white/30 transition"
+        title="Toggle Dark Mode"
+        >
+        🌙
+      </button>
+      </div>
+
+    </div>
+  </header>
 
 
 <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
 
 <!-- ================= LOGIN SISWA ================= -->
-<section id="login-section" class="max-w-md mx-auto">
-  <article class="bg-white rounded-2xl shadow-lg overflow-hidden dark:bg-slate-600">
+<section id="login-section" class="w-full max-w-6xl px-4 py-12">
+      <article class="bg-white dark:bg-slate-700
+                      border border-slate-200
+                      rounded-2xl shadow-lg overflow-hidden">
 
     <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-6 text-center">
-      <h2 class="text-2xl font-bold">🔐 Login Siswa</h2>
-      <p class="text-sm text-blue-100 mt-1">
-        Masuk ke Dashboard Siswa
-      </p>
+      <h3 class="text-2xl font-bold flex items-center justify-center gap-2">🔐 Login Siswa</h3>
+      <p class="text-sm text-emerald-100 mt-1"></p>
     </div>
 
-    <div class="p-6 space-y-4">
+    <div class="p-5 sm:p-8 max-w-md mx-auto space-y-4 sm:space-y-5">
       <input id="email"
              type="email"
              placeholder="Email Siswa"
-             class="w-full border rounded-lg px-4 py-2
-         bg-white dark:bg-slate-700
-         text-slate-800 dark:text-slate-100
-         border-slate-300 dark:border-slate-600
-         focus:outline-none focus:ring-2 focus:ring-blue-500">
+             class="w-full p-3 border border-slate-300 rounded-lg text-slate-500 dark:text-slate-500">
 
       <input id="password"
              type="password"
              placeholder="Password"
-             class="w-full border rounded-lg px-4 py-2
-         bg-white dark:bg-slate-700
-         text-slate-800 dark:text-slate-100
-         border-slate-300 dark:border-slate-600
-         focus:outline-none focus:ring-2 focus:ring-blue-500">
+             class="w-full p-3 border border-slate-300 rounded-lg text-slate-500 dark:text-slate-500">
 
       <button id="btnLogin"
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold">
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 rounded-lg font-semibold">
         🔓 Masuk
       </button>
 
@@ -97,7 +103,7 @@ tailwind.config = {
     <!-- ===== IDENTITAS ===== -->
     <aside class="md:col-span-3 space-y-4">
 
-      <div class="bg-white rounded-xl shadow p-5 dark:bg-slate-700">
+      <div class="bg-slate-200 rounded-xl shadow p-5 dark:bg-slate-700">
         <h2 class="font-bold text-lg mb-3">👤 Identitas Siswa</h2>
 
         <div class="space-y-2 text-sm">
@@ -122,7 +128,7 @@ tailwind.config = {
 
 
       <!-- ================= RANKING SISWA (SIDEBAR) ================= -->
-<div class="mt-4 bg-slate-700 rounded-xl p-4 text-sm">
+<div class="mt-4 bg-slate-200 shadow dark:bg-slate-700 rounded-xl p-5">
   <h3 class="font-bold mb-3 flex items-center gap-2">
     🏆 Ranking Siswa
   </h3>
@@ -135,7 +141,7 @@ tailwind.config = {
   <hr class="my-3 border-slate-600">
 
   <!-- POSISI PRIBADI -->
-  <div id="myRanking" class="text-slate-300">
+  <div id="myRanking" class=" text-slate-700 dark:text-slate-300">
     Memuat peringkat kamu...
   </div>
 </div>
@@ -146,12 +152,12 @@ tailwind.config = {
 
     <!-- ===== KONTEN ===== -->
     <section class="md:col-span-7">
-      <div class="bg-white rounded-xl shadow p-6 dark:bg-slate-700">
+      <div class="bg-slate-200 rounded-xl shadow p-6 dark:bg-slate-700">
         <h2 class="font-bold text-lg mb-3">🎮 Area Game & Kuis</h2>
 
         <!-- ================= KUIS TA'ARUF ================= -->
 <section class="mt-6">
-  <div class="bg-white dark:bg-slate-600 rounded-xl shadow p-6">
+  <div class="bg-slate-100 dark:bg-slate-600 rounded-xl shadow p-6">
     <h2 class="font-bold text-lg mb-3">📝 Kuis</h2>
 
     <div class="mt-4">
@@ -181,11 +187,11 @@ tailwind.config = {
 
 
 
-    <p id="quizBestScore" class="text-sm text-blue-400 mt-1">
+    <p id="quizBestScore" class="text-sm font-semibold text-blue-400 mt-1">
       Skor terbaik: -
     </p>
 
-    <p id="quizAttempts" class="text-xs text-slate-400">
+    <p id="quizAttempts" class="text-xs font-semibold text-slate-500 dark:text-slate-300">
       Sudah mengerjakan: -
     </p>
 
@@ -217,7 +223,7 @@ tailwind.config = {
 
       <!-- ================= KIRIM TUGAS ================= -->
 <section class="mt-6">
-  <div class="bg-white rounded-xl shadow p-6 dark:bg-slate-600">
+  <div class="bg-slate-200 rounded-xl shadow p-6 dark:bg-slate-600">
     <h2 class="font-bold text-lg mb-4">📤 Kirim Tugas</h2>
 
     <div class="space-y-4">
@@ -254,9 +260,18 @@ tailwind.config = {
 </section>
 </main>
 
-<footer class="bg-blue-700 text-white text-center py-4 text-sm">
-  © 2025 Tarbiyyat al-Lughah
-</footer>
+ <!-- ===== FOOTER (PASTI NEMPEL) ===== -->
+  <footer class="bg-blue-700 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-6 text-center text-sm">
+      <p class="opacity-90">
+        © 2025 <strong>Tarbiyyat al-Lughah</strong> —
+        Media Pembelajaran Membaca Bahasa Arab MTs
+      </p>
+      <p class="opacity-75 mt-1">
+        Dikembangkan oleh Muh. Aprizal — Mahasiswa PBA IAIN Bone
+      </p>
+    </div>
+  </footer>
 
 <!-- DATA SOAL -->
 <script src="assets/data/vocabs.js"></script>
@@ -719,20 +734,6 @@ toggle.addEventListener("click", () => {
   }
 });
 </script>
-
-
-  <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
-<!-- <script>
-  window.PRESENCE_OPTIONS = { mode: "global" };
-</script>
-
-
-<script type="module" src="./assets/presence.js"></script> -->
-
-
-
-
-
 
 
 
