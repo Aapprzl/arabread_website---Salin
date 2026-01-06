@@ -50,6 +50,13 @@
         <a href="index.html#tentang" class="hover:text-secondary-300">Tentang</a>
       </nav>
     </div>
+
+     <button id="themeToggle"
+          class="fixed top-3 left-4 z-50 flex items-center gap-2
+            bg-yellow-100/90 px-3 py-1.5 rounded-full
+            shadow-md font-semibold text-sm text-gray-900">
+          🌙
+        </button>
   </header>
 
   <!-- Main -->
@@ -491,6 +498,25 @@ loadQuestion();
 <!-- Panggil script presence -->
 <script type="module" src="./assets/presence.js"></script>
 
+
+<!-- JS UNTUK DARKMODE -->
+<script>
+  const toggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+
+  // Load preferensi
+  if (localStorage.theme === 'dark') {
+    root.classList.add('dark');
+    toggle.textContent = '☀️';
+  }
+
+  toggle.addEventListener('click', () => {
+    root.classList.toggle('dark');
+    const isDark = root.classList.contains('dark');
+    toggle.textContent = isDark ? '☀️' : '🌙';
+    localStorage.theme = isDark ? 'dark' : 'light';
+  });
+</script>
 
 </body>
 </html>
