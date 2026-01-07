@@ -13,8 +13,10 @@
   },
   "main": "index.js",
   "dependencies": {
+    "canvas": "^3.2.0",
     "firebase-admin": "^13.6.0",
-    "firebase-functions": "^7.0.2"
+    "firebase-functions": "^7.0.2",
+    "pdf-poppler": "^0.2.3"
   },
   "devDependencies": {
     "firebase-functions-test": "^3.4.1"
