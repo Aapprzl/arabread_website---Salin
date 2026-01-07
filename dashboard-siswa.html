@@ -242,6 +242,19 @@ tailwind.config = {
   </div>
 </section>
 
+<!-- ===============================
+     SESI BELAJAR SISWA
+=============================== -->
+<section class="mt-6">
+  <h3 class="text-xl font-bold mb-3 flex items-center gap-2">
+    📘 Sesi Belajar
+  </h3>
+
+  <div id="sessionList" class="space-y-3">
+    <p class="text-sm text-slate-400">Memuat sesi belajar...</p>
+  </div>
+
+</section>
 
 
 </div>
@@ -492,6 +505,8 @@ setupStudentPresence(user.uid);
 
     // ================= TAMPILKAN DASHBOARD =================
     showDashboard();
+    // AKTIFKAN REALTIME
+    listenLearningSessionsRealtime();
 
     // ⚠️ aman dipanggil berulang karena hanya read
     loadRankingForStudent();
@@ -592,6 +607,126 @@ btnLogout.addEventListener("click", async () => {
     console.error("Logout error:", err);
   }
 });
+
+
+// FUNGSI ACAK KOSAKATA untuk sesi belajar siswa 
+function getRandomVocabsByTema(tema, limit = 5) {
+  if (!window.VOCABS || !Array.isArray(window.VOCABS)) return [];
+
+  const filtered = window.VOCABS.filter(v => v.tema === tema);
+  if (filtered.length === 0) return [];
+
+  const shuffled = [...filtered];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled.slice(0, limit);
+}
+
+
+// REALTIME SESI BELAJAR SISWA
+const sessionList = document.getElementById("sessionList");
+
+function listenLearningSessionsRealtime() {
+  sessionList.innerHTML =
+    `<p class="text-sm text-slate-400">Memuat sesi belajar...</p>`;
+
+  const q = query(
+    collection(db, "learningSessions"),
+    where("isActive", "==", true),
+    orderBy("order", "asc")
+  );
+
+  onSnapshot(q, (snapshot) => {
+    if (snapshot.empty) {
+      sessionList.innerHTML =
+        `<p class="text-sm text-slate-400">Belum ada sesi belajar.</p>`;
+      return;
+    }
+
+    sessionList.innerHTML = "";
+
+    snapshot.forEach(docSnap => {
+      const s = docSnap.data();
+
+      const wrapper = document.createElement("div");
+      wrapper.className =
+        "bg-slate-200 dark:bg-slate-700 rounded-xl overflow-hidden";
+
+      // HEADER
+      const header = document.createElement("button");
+      header.type = "button";
+      header.className =
+        "w-full flex justify-between items-center px-4 py-3 text-left font-semibold hover:bg-slate-300 dark:hover:bg-slate-600";
+
+      header.innerHTML = `
+        <span>📘 Pertemuan ${s.order} – ${s.title}</span>
+        <span class="arrow transition-transform">▶</span>
+      `;
+
+      // DETAIL
+      const detail = document.createElement("div");
+      detail.className =
+        "hidden px-4 py-3 text-sm space-y-4 border-t border-slate-300 dark:border-slate-600 session-detail";
+
+      // 🔹 Kosakata wajib (otomatis sesuai tema)
+      const vocabs = getRandomVocabsByTema(s.theme, 5);
+
+
+      const vocabHTML = vocabs.map(v => `
+        <div class="flex justify-between bg-slate-800/50 rounded px-3 py-2">
+          <span class="font-arab text-lg">${v.ar}</span>
+          <span class="text-slate-300">${v.id}</span>
+        </div>
+      `).join("");
+
+      detail.innerHTML = `
+        <div>
+          <h5 class="font-semibold mb-2">📗 Kosakata Wajib Hari Ini</h5>
+          <div class="space-y-2">${vocabHTML}</div>
+        </div>
+
+        ${s.dailyTaskText ? `
+          <div class="bg-slate-800/50 rounded-lg p-3">
+            <h5 class="font-semibold mb-1">📝 Tugas Harian</h5>
+            <p class="text-sm leading-relaxed">${s.dailyTaskText}</p>
+          </div>
+        ` : ""}
+      `;
+
+      // TOGGLE (accordion)
+      header.addEventListener("click", () => {
+        const isOpen = !detail.classList.contains("hidden");
+
+        sessionList.querySelectorAll(".session-detail").forEach(d => {
+          d.classList.add("hidden");
+          d.previousSibling
+            ?.querySelector(".arrow")
+            ?.style.setProperty("transform", "rotate(0deg)");
+        });
+
+        if (!isOpen) {
+          detail.classList.remove("hidden");
+          header.querySelector(".arrow").style.transform = "rotate(90deg)";
+        }
+      });
+
+      wrapper.appendChild(header);
+      wrapper.appendChild(detail);
+      sessionList.appendChild(wrapper);
+    });
+  }, (err) => {
+    console.error(err);
+    sessionList.innerHTML =
+      `<p class="text-sm text-red-500">Gagal memuat sesi belajar</p>`;
+  });
+}
+
+
+
+
 
 
 

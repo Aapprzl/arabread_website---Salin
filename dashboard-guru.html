@@ -218,7 +218,137 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
 </div>
 
 
-<!-- ================= NILAI SISWA ================= -->
+<!-- TABEL SESI BELAJAR -->
+<div class="mt-8">
+  <h3 class="text-lg font-semibold mb-3">📋 Daftar Sesi Harian</h3>
+
+  <div class="overflow-x-auto rounded-xl border border-slate-600">
+    <table class="w-full text-sm">
+      <thead class="bg-slate-800 text-slate-300">
+        <tr>
+          <th class="px-3 py-2 text-left">Pert.</th>
+          <th class="px-3 py-2 text-left">Judul</th>
+          <th class="px-3 py-2 text-left">Tema</th>
+          <th class="px-3 py-2 text-center">Status</th>
+          <th class="px-3 py-2 text-center">Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="sessionTableBody" class="divide-y divide-slate-700">
+        <tr>
+          <td colspan="5" class="px-3 py-4 text-center text-slate-400">
+            Memuat data sesi...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ===============================
+     SESI BELAJAR (VERSI SEDERHANA)
+=============================== -->
+<div class="mt-12">
+  <h3 class="text-xl font-bold flex items-center gap-2 ml-6 mb-4">
+    📘 Sesi Belajar (Harian)
+  </h3>
+
+  <div class="p-3 sm:p-6 flex justify-center">
+  <div class="w-full max-w-5xl bg-slate-200 dark:bg-slate-700 rounded-2xl p-4 sm:p-6">
+
+
+      <!-- IDENTITAS -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+
+        <!-- Pertemuan -->
+        <div>
+          <label class="text-sm font-semibold">Pertemuan Ke</label>
+          <input id="sessionOrder" type="number"
+            class="w-full mt-1 p-2 rounded-lg border
+                   bg-white dark:bg-slate-800
+                   border-slate-300 dark:border-slate-600"
+            placeholder="1">
+        </div>
+
+        <!-- Judul -->
+        <div class="md:col-span-2">
+          <label class="text-sm font-semibold">Judul Pertemuan</label>
+          <input id="sessionTitle" type="text"
+            class="w-full mt-1 p-2 rounded-lg border
+                   bg-white dark:bg-slate-800
+                   border-slate-300 dark:border-slate-600"
+            placeholder="Pertemuan 2 – Ta’aruf">
+        </div>
+
+        <!-- Status -->
+        <div>
+          <label class="text-sm font-semibold">Status</label>
+          <select id="sessionActive"
+            class="w-full mt-1 p-2 rounded-lg border
+                   bg-white dark:bg-slate-800
+                   border-slate-300 dark:border-slate-600">
+            <option value="true">Aktif</option>
+            <option value="false">Nonaktif</option>
+          </select>
+        </div>
+
+        <!-- Tema -->
+        <div class="md:col-span-4">
+          <label class="text-sm font-semibold">Tema Kosakata</label>
+          <select id="sessionTheme"
+            class="w-full mt-1 p-2 rounded-lg border
+                   bg-white dark:bg-slate-800
+                   border-slate-300 dark:border-slate-600">
+            <option value="">-- Pilih Tema --</option>
+            <option value="taaruf">Ta’aruf</option>
+            <option value="keluarga">Keluarga</option>
+            <option value="sekolah">Sekolah</option>
+            <option value="hewan">Binatang</option>
+          </select>
+          <p class="text-xs text-slate-500 mt-1">
+            * Kosakata wajib akan dipilih otomatis (acak 5 kata)
+          </p>
+        </div>
+
+      </div>
+
+      <!-- TUGAS HARIAN -->
+      <div class="mb-6">
+        <label class="text-sm font-semibold">📝 Tugas Harian (Instruksi)</label>
+        <textarea id="dailyTaskText" rows="3"
+          class="w-full mt-1 p-3 rounded-lg border
+                 bg-white dark:bg-slate-800
+                 border-slate-300 dark:border-slate-600"
+          placeholder="Contoh: Hafalkan 5 kosakata di atas dan buat 3 kalimat perkenalan diri."></textarea>
+
+        <p class="text-xs text-slate-500 mt-1">
+          * Siswa akan mengumpulkan tugas di menu Kirim Tugas
+        </p>
+      </div>
+
+      <!-- AKSI -->
+      <div class="pt-4 border-t border-slate-300 dark:border-slate-600">
+        <button id="btnSaveSession"
+          class="w-full bg-emerald-600 hover:bg-emerald-700
+                 text-white py-3 rounded-xl font-semibold text-lg">
+          💾 Simpan Sesi Harian
+        </button>
+
+        <p id="sessionMsg"
+          class="text-sm text-green-400 mt-3 hidden text-center">
+          Sesi harian berhasil disimpan
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- ================= NILAI KUIS SISWA ================= -->
 <div class="mt-10">
   <h2 class="text-xl font-bold ml-6">📊 Nilai Kuis Siswa</h2>
   
@@ -783,6 +913,9 @@ onAuthStateChanged(auth, async (user) => {
   // loadLeaderboard();
   listenDataSiswaRealtime();
   loadEbookTable();
+  // AKTIFKAN REALTIME
+loadSessionsForGuruRealtime();
+
 
 
 
@@ -1718,6 +1851,185 @@ window.closeEditEbook = () => {
   EDIT_ID = null;
   editEbookModal.classList.add("hidden");
 };
+
+
+// LOGIC SIMPAN SESI BELAJAR (VERSI BARU - HARIAN)
+const btnSaveSession = document.getElementById("btnSaveSession");
+const msg = document.getElementById("sessionMsg");
+
+btnSaveSession.addEventListener("click", async () => {
+  const order = Number(document.getElementById("sessionOrder").value);
+  const title = document.getElementById("sessionTitle").value.trim();
+  const theme = document.getElementById("sessionTheme").value;
+  const dailyTaskText =
+    document.getElementById("dailyTaskText").value.trim();
+
+  const isActive =
+    document.getElementById("sessionActive").value === "true";
+
+  // VALIDASI MINIMAL (WAJIB)
+  if (!order || !title || !theme) {
+    alert("Pertemuan, judul, dan tema wajib diisi");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "learningSessions"), {
+      order,
+      title,
+      theme,
+      dailyTaskText,
+      isActive,
+      createdAt: serverTimestamp()
+    });
+
+    // pesan sukses
+    msg.classList.remove("hidden");
+    msg.textContent = "Sesi harian berhasil disimpan";
+
+    // reset form
+    document.querySelectorAll(
+      "#sessionOrder, #sessionTitle, #sessionTheme, #dailyTaskText"
+    ).forEach(el => el.value = "");
+
+    document.getElementById("sessionActive").value = "true";
+
+  } catch (err) {
+    console.error(err);
+    alert("Gagal menyimpan sesi");
+  }
+});
+
+
+
+
+
+// LOAD DATA SESI BELAJAR (REALTIME)
+const sessionTableBody = document.getElementById("sessionTableBody");
+
+function loadSessionsForGuruRealtime() {
+  sessionTableBody.innerHTML = `
+    <tr>
+      <td colspan="5" class="px-3 py-4 text-center text-slate-400">
+        Memuat data sesi...
+      </td>
+    </tr>
+  `;
+
+  try {
+    const q = query(
+      collection(db, "learningSessions"),
+      orderBy("order", "asc")
+    );
+
+    onSnapshot(q, (snap) => {
+      if (snap.empty) {
+        sessionTableBody.innerHTML = `
+          <tr>
+            <td colspan="5" class="px-3 py-4 text-center text-slate-400">
+              Belum ada sesi
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      sessionTableBody.innerHTML = "";
+
+      snap.forEach(docSnap => {
+        const s = docSnap.data();
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td class="px-3 py-2">${s.order}</td>
+          <td class="px-3 py-2 font-medium">${s.title}</td>
+          <td class="px-3 py-2 capitalize">${s.theme}</td>
+
+          <td class="px-3 py-2 text-center">
+            <button
+              class="toggleStatus px-3 py-1 rounded-full text-xs font-semibold
+                ${s.isActive ? "bg-green-600" : "bg-slate-600"}"
+              data-id="${docSnap.id}"
+              data-active="${s.isActive}">
+              ${s.isActive ? "Aktif" : "Nonaktif"}
+            </button>
+          </td>
+
+          <td class="px-3 py-2 text-center">
+            <button
+              class="deleteSession text-red-400 hover:text-red-600"
+              data-id="${docSnap.id}">
+              🗑 Hapus
+            </button>
+          </td>
+        `;
+
+        sessionTableBody.appendChild(tr);
+      });
+    });
+
+  } catch (err) {
+    console.error(err);
+    sessionTableBody.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-3 py-4 text-center text-red-500">
+          Gagal memuat data sesi
+        </td>
+      </tr>
+    `;
+  }
+}
+
+
+// TOMBOL ON/OFF SESI BELAJAR
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".toggleStatus");
+  if (!btn) return;
+
+  const id = btn.dataset.id;
+  const current = btn.dataset.active === "true";
+  const newStatus = !current;
+
+  btn.disabled = true;
+  btn.textContent = "Menyimpan...";
+
+  try {
+    await updateDoc(doc(db, "learningSessions", id), {
+      isActive: newStatus
+    });
+    // TIDAK perlu ubah UI manual
+    // onSnapshot() akan update UI otomatis
+
+  } catch (err) {
+    console.error(err);
+    alert("Gagal mengubah status sesi");
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+// EVENT DELEGATION: HAPUS SESI
+sessionTableBody.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".deleteSession");
+  if (!btn) return;
+
+  const sessionId = btn.dataset.id;
+
+  const confirmDelete = confirm(
+    "Yakin ingin menghapus sesi ini?\nData yang dihapus tidak bisa dikembalikan."
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    await deleteDoc(doc(db, "learningSessions", sessionId));
+    // ❗ TIDAK PERLU reload / refresh
+    // onSnapshot akan otomatis update tabel
+  } catch (err) {
+    console.error(err);
+    alert("Gagal menghapus sesi");
+  }
+});
 
 
 </script>
