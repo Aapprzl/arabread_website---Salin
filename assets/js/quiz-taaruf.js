@@ -93,6 +93,9 @@ const quizState = {
 // ===============================
 const btnThemeTaaruf  = document.getElementById("btnThemeTaaruf");
 const btnThemeSekolah = document.getElementById("btnThemeSekolah");
+const btnThemeKeluarga = document.getElementById("btnThemeKeluarga");
+const btnThemeHewan = document.getElementById("btnThemeHewan");
+
 
 // const btnStart = document.getElementById("btnStartQuiz");
 const quizBox  = document.getElementById("quizBox");
@@ -148,6 +151,20 @@ if (btnThemeSekolah) {
     startQuiz("sekolah", "school-1", "Kuis Sekolah");
   };
 }
+
+if (btnThemeKeluarga) {
+  btnThemeKeluarga.onclick = () => {
+    startQuiz("keluarga", "keluarga-1", "Kuis Keluarga");
+  };
+}
+
+if (btnThemeHewan) {
+  btnThemeHewan.onclick = () => {
+    startQuiz("hewan", "hewan-1", "Kuis Binatang");
+  };
+}
+
+
 // ------
 
 
