@@ -38,7 +38,7 @@ const { db, getCurrentUser } = window.__APP_CONTEXT__;
 // ===============================
 // KONFIGURASI
 // ===============================
-const TOTAL_TIME = 30;
+const TOTAL_TIME = 60;
 
 
 // ===============================
@@ -199,10 +199,34 @@ function loadQuestion() {
   feedback.textContent = "";
 
   const q = quizState.data[quizState.index];
-
   if (!q) return finishQuiz();
 
-  qText.textContent = q.question;
+  // ===== PISAHKAN TEKS INDONESIA & ARAB =====
+  // q.question contoh: Apa arti dari "الثعلب"?
+  const arabMatch = q.question.match(/"(.*?)"/);
+  const arabText = arabMatch ? arabMatch[1] : "";
+
+  // Bersihkan isi soal
+  qText.innerHTML = "";
+  qText.className = "text-center mb-4";
+
+  // Label Indonesia
+  const label = document.createElement("div");
+  label.textContent = "Apa arti dari:";
+  label.className = "text-sm text-slate-400 mb-2";
+
+  // Teks Arab (DIBESARKAN)
+  const arab = document.createElement("div");
+  arab.textContent = arabText;
+  arab.className =
+    "text-2xl font-semibold leading-relaxed text-center";
+  arab.style.direction = "rtl";
+  arab.style.fontFamily = "'Amiri','Scheherazade New',serif";
+
+  qText.appendChild(label);
+  qText.appendChild(arab);
+
+  // ===== OPSI JAWABAN (TIDAK DIUBAH) =====
   optsBox.innerHTML = "";
 
   q.options.forEach((text, i) => {
@@ -214,6 +238,7 @@ function loadQuestion() {
     optsBox.appendChild(btn);
   });
 }
+
 
 
 
