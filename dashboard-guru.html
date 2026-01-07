@@ -782,7 +782,8 @@ onAuthStateChanged(auth, async (user) => {
   showDashboard();
   // loadLeaderboard();
   listenDataSiswaRealtime();
-  loadEbookAdmin();
+  loadEbookTable();
+
 
 
 
@@ -1287,14 +1288,16 @@ function generateAkunPdf(data) {
 
 
 
-// LOGIC UPLOAD PDF BOOKS
+// ===============================
+// LOGIC UPLOAD PDF BOOKS (FINAL)
+// ===============================
 const storage = getStorage();
 
 document.getElementById("btnUploadEbook").onclick = async () => {
-  const titleAr = ebookTitleAr.value.trim();
-  const titleId = ebookTitleId.value.trim();
+  const titleAr  = ebookTitleAr.value.trim();
+  const titleId  = ebookTitleId.value.trim();
   const category = ebookCategory.value;
-  const file = ebookFile.files[0];
+  const file     = ebookFile.files[0];
   const statusEl = ebookUploadStatus;
 
   if (!titleAr || !titleId || !file) {
@@ -1303,10 +1306,9 @@ document.getElementById("btnUploadEbook").onclick = async () => {
   }
 
   if (!currentUser) {
-  alert("User belum login");
-  return;
-}
-
+    alert("User belum login");
+    return;
+  }
 
   try {
     statusEl.textContent = "⏳ Mengupload PDF...";
@@ -1314,19 +1316,22 @@ document.getElementById("btnUploadEbook").onclick = async () => {
     statusEl.classList.remove("hidden");
 
     // ===============================
-    // 1️⃣ UPLOAD PDF
+    // 1️⃣ SET ID & PATH (PENTING)
     // ===============================
-    const ebookId = Date.now().toString();
-    const pdfRef = storageRef(
-      storage,
-      `ebooks/${category}/${ebookId}.pdf`
-    );
+    const ebookId   = Date.now().toString();
 
+    const pdfPath   = `ebooks/${category}/${ebookId}.pdf`;
+    const coverPath = `ebooks/covers/${ebookId}.png`;
+
+    // ===============================
+    // 2️⃣ UPLOAD PDF
+    // ===============================
+    const pdfRef = storageRef(storage, pdfPath);
     await uploadBytes(pdfRef, file);
     const pdfUrl = await getDownloadURL(pdfRef);
 
     // ===============================
-    // 2️⃣ GENERATE COVER (PDF.JS)
+    // 3️⃣ GENERATE COVER (PDF.JS)
     // ===============================
     const pdfData = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
@@ -1336,40 +1341,40 @@ document.getElementById("btnUploadEbook").onclick = async () => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
-    canvas.width = viewport.width;
+    canvas.width  = viewport.width;
     canvas.height = viewport.height;
 
-    await page.render({
-      canvasContext: ctx,
-      viewport
-    }).promise;
+    await page.render({ canvasContext: ctx, viewport }).promise;
 
     const blob = await new Promise(resolve =>
       canvas.toBlob(resolve, "image/png")
     );
 
     // ===============================
-    // 3️⃣ UPLOAD COVER
+    // 4️⃣ UPLOAD COVER
     // ===============================
     statusEl.textContent = "⏳ Mengupload cover...";
-    const coverRef = storageRef(
-      storage,
-      `ebooks/covers/${ebookId}.png`
-    );
-
+    const coverRef = storageRef(storage, coverPath);
     await uploadBytes(coverRef, blob);
     const coverUrl = await getDownloadURL(coverRef);
 
     // ===============================
-    // 4️⃣ SIMPAN METADATA
+    // 5️⃣ SIMPAN METADATA (FINAL)
     // ===============================
     await addDoc(collection(db, "ebooks"), {
       title_ar: titleAr,
       title_id: titleId,
       category,
       level: ebookCategory.options[ebookCategory.selectedIndex].text,
+
+      // URL (untuk dibuka)
       fileUrl: pdfUrl,
       coverUrl,
+
+      // 🔥 PATH (UNTUK HAPUS)
+      filePath: pdfPath,
+      coverPath: coverPath,
+
       uploadedBy: currentUser.uid,
       createdAt: serverTimestamp()
     });
@@ -1388,6 +1393,7 @@ document.getElementById("btnUploadEbook").onclick = async () => {
     statusEl.className = "text-red-500";
   }
 };
+
 
 
 /* ===============================
@@ -1488,21 +1494,50 @@ async function loadEbookTable() {
 
 loadEbookTable();
 
-// HAPUS BUKUNYA
+/* ===============================
+   HAPUS E-BOOK (FIRESTORE + STORAGE)
+================================= */
 window.deleteEbook = async function (ebookId) {
   const ok = confirm("Yakin ingin menghapus e-book ini?");
   if (!ok) return;
 
   try {
-    await deleteDoc(doc(db, "ebooks", ebookId));
+    // 1️⃣ Ambil data ebook dulu
+    const ebookRef = doc(db, "ebooks", ebookId);
+    const snap = await getDoc(ebookRef);
+
+    if (!snap.exists()) {
+      alert("Data e-book tidak ditemukan");
+      return;
+    }
+
+    const ebook = snap.data();
+
+    // 2️⃣ Hapus PDF dari Storage
+    if (ebook.filePath) {
+      const pdfRef = storageRef(storage, ebook.filePath);
+      await deleteObject(pdfRef);
+    }
+
+    // 3️⃣ Hapus cover dari Storage
+    if (ebook.coverPath) {
+      const coverRef = storageRef(storage, ebook.coverPath);
+      await deleteObject(coverRef);
+    }
+
+    // 4️⃣ Hapus dokumen Firestore
+    await deleteDoc(ebookRef);
+
     alert("✅ E-book berhasil dihapus");
+
+    // 5️⃣ Reload tabel
     loadEbookTable();
+
   } catch (err) {
     console.error(err);
     alert("❌ Gagal menghapus e-book");
   }
 };
-
 
 // EDIT BUKU
 let EDIT_ID = null;
