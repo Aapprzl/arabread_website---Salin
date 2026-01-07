@@ -806,70 +806,93 @@ function loadDashboard() {
     <tr><td colspan="7" class="p-4 text-center">Memuat...</td></tr>
   `;
 
+  // 🔥 QUERY HARUS DIDEFINISIKAN
   const q = query(
     collection(db, "submissions"),
     orderBy("createdAt", "desc")
   );
 
-  onSnapshot(q, (snap) => {
-    if (snap.empty) {
-      tabelSubmissions.innerHTML = `
-        <tr><td colspan="7" class="p-4 text-center">Belum ada tugas</td></tr>
-      `;
-      return;
-    }
-// ERROR HANDLER
-    (error) => {
-  console.warn("Firestore listener error:", error);
-}
-
-
-    tabelSubmissions.innerHTML = "";
-    let no = 1;
-
-    snap.forEach((d) => {
-      const data = d.data();
-      let waktu = "-";
-
-      if (data.createdAt && typeof data.createdAt.toDate === "function") {
-        waktu = data.createdAt.toDate().toLocaleString("id-ID");
-      } else if (data.createdAtClient) {
-        waktu = new Date(data.createdAtClient).toLocaleString("id-ID");
+  onSnapshot(
+    q,
+    (snap) => {
+      if (snap.empty) {
+        tabelSubmissions.innerHTML = `
+          <tr><td colspan="7" class="p-4 text-center">Belum ada tugas</td></tr>
+        `;
+        return;
       }
 
-      tabelSubmissions.innerHTML += `
-        <tr>
-          <td class="p-3 border font-semibold">${no++}</td>
-          <td class="p-3 border font-semibold">${data.nama}</td>
-          <td class="p-3 border font-bold">${data.kelas}</td>
-          <td class="p-3 border font-semibold">${data.catatan || "-"}</td>
-          <td class="p-3 border text-center font-semibold">
-            ${
-              data.driveLink
-                ? `<a href="${data.driveLink}" target="_blank"
-                     class="bg-blue-500 text-white px-3 py-1 rounded text-xs font-semibold">📎 Buka</a>`
-                : "-"
-            }
-          </td>
-          <td class="p-3 border font-semibold">${waktu}</td>
-          <td class="p-3 border text-center font-semibold">
-            <button onclick="hapusTugas('${d.id}')"
-              class="bg-red-500 text-white px-3 py-1 rounded text-xs font-semibold">
-              🗑 Hapus
-            </button>
-          </td>
-        </tr>
-      `;
-    });
-  });
+      tabelSubmissions.innerHTML = "";
+      let no = 1;
+
+      snap.forEach((d) => {
+        const data = d.data();
+        let waktu = "-";
+
+        if (data.createdAt?.toDate) {
+          waktu = data.createdAt.toDate().toLocaleString("id-ID");
+        } else if (data.createdAtClient) {
+          waktu = new Date(data.createdAtClient).toLocaleString("id-ID");
+        }
+
+        tabelSubmissions.innerHTML += `
+          <tr>
+            <td class="p-3 border">${no++}</td>
+            <td class="p-3 border font-semibold">${data.nama}</td>
+            <td class="p-3 border font-bold">${data.kelas}</td>
+            <td class="p-3 border">${data.catatan || "-"}</td>
+            <td class="p-3 border text-center">
+              ${
+                data.fileUrl
+                  ? `<a href="${data.fileUrl}" target="_blank"
+                       class="bg-blue-500 text-white px-3 py-1 rounded text-xs">
+                       📎 Buka
+                     </a>`
+                  : "-"
+              }
+            </td>
+            <td class="p-3 border">${waktu}</td>
+            <td class="p-3 border text-center">
+              <button
+                onclick="hapusTugas('${d.id}', '${data.filePath || ""}')"
+                class="bg-red-500 text-white px-3 py-1 rounded">
+                Hapus
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    },
+    (error) => {
+      console.warn("Firestore listener error:", error);
+    }
+  );
 }
 
 
-window.hapusTugas = async (id) => {
-  if (!confirm("Hapus tugas ini?")) return;
-  await deleteDoc(doc(db, "submissions", id));
-  // ❌ TIDAK perlu loadDashboard()
+
+// 🌍 WAJIB GLOBAL KARENA DIPANGGIL DARI HTML
+window.hapusTugas = async function (docId, filePath) {
+  if (!confirm("Yakin ingin menghapus tugas ini?")) return;
+
+  try {
+    // 1️⃣ HAPUS FILE DI STORAGE
+    if (filePath) {
+      const fileRef = storageRef(storage, filePath);
+      await deleteObject(fileRef);
+    }
+
+    // 2️⃣ HAPUS DOKUMEN FIRESTORE
+    await deleteDoc(doc(db, "submissions", docId));
+
+    alert("✅ Tugas berhasil dihapus");
+
+  } catch (err) {
+    console.error("HAPUS ERROR:", err);
+    alert("❌ Gagal menghapus tugas");
+  }
 };
+
 
 
 
