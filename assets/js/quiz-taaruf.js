@@ -201,39 +201,43 @@ function loadQuestion() {
   const q = quizState.data[quizState.index];
   if (!q) return finishQuiz();
 
-  // ===== PISAHKAN TEKS INDONESIA & ARAB =====
-  // q.question contoh: Apa arti dari "الثعلب"?
   const arabMatch = q.question.match(/"(.*?)"/);
   const arabText = arabMatch ? arabMatch[1] : "";
 
-  // Bersihkan isi soal
   qText.innerHTML = "";
-  qText.className = "text-center mb-4";
+  // MENGURANGI MARGIN: dari mb-8 menjadi mb-4
+  qText.className = "text-center mb-4 py-2"; 
 
-  // Label Indonesia
   const label = document.createElement("div");
   label.textContent = "Apa arti dari:";
-  label.className = "text-sm text-slate-400 mb-2";
+  // MENGURANGI SPASI BAWAH LABEL: dari mb-4 menjadi mb-1
+  label.className = "text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-400 mb-1";
 
-  // Teks Arab (DIBESARKAN)
   const arab = document.createElement("div");
   arab.textContent = arabText;
-  arab.className =
-    "text-2xl font-semibold leading-relaxed text-center";
+  
+  // OPTIMASI JARAK ARAB:
+  // leading-[1.6] : jarak antar baris yang lebih rapat namun tetap aman untuk harakat
+  // text-3xl : ukuran sedikit lebih kecil agar tidak memakan terlalu banyak ruang vertikal
+  arab.className = "text-3xl md:text-5xl font-bold leading-[1.6] text-slate-800 dark:text-white transition-all";
+  
   arab.style.direction = "rtl";
-  arab.style.fontFamily = "'Amiri','Scheherazade New',serif";
+  arab.style.fontFamily = "'Amiri', 'Scheherazade New', serif";
 
   qText.appendChild(label);
   qText.appendChild(arab);
 
-  // ===== OPSI JAWABAN (TIDAK DIUBAH) =====
   optsBox.innerHTML = "";
-
   q.options.forEach((text, i) => {
     const btn = document.createElement("button");
     btn.textContent = text;
-    btn.className =
-      "w-full text-left border rounded-lg px-4 py-2 hover:bg-blue-100 dark:hover:bg-slate-600";
+    // MENGURANGI PADDING TOMBOL: dari py-4 menjadi py-3
+    btn.className = 
+      "w-full text-center md:text-left border-2 border-slate-100 dark:border-slate-700 rounded-xl px-6 py-3 " +
+      "text-slate-700 dark:text-slate-200 font-semibold shadow-sm " +
+      "hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-slate-700/50 " +
+      "transition-all duration-200 active:scale-[0.98]";
+      
     btn.onclick = () => checkAnswer(i);
     optsBox.appendChild(btn);
   });

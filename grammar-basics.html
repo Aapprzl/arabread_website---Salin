@@ -41,6 +41,29 @@
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
   </style>
+
+  <style>
+  .tab-btn {
+    padding: 0.625rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background-color: #ffffff;
+    color: #64748b;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease;
+  }
+
+  .dark .tab-btn {
+    background-color: #1e293b;
+    color: #94a3b8;
+    border-color: #334155;
+  }
+</style>
+
+
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
 
@@ -83,119 +106,76 @@
 </header>
 
   <!-- Breadcrumb -->
-  <nav class="max-w-7xl mx-auto px-4 md:px-6 py-4" aria-label="Breadcrumb">
-  <div class="flex items-center flex-wrap gap-2 text-xs md:text-sm">
-    
-    <a href="index.html" 
-       class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/30 dark:hover:text-blue-300 transition-all">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-      Beranda
-    </a>
-
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-slate-300 dark:text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-
-    <span class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold bg-white dark:bg-slate-900 shadow-sm">
-      Gramatikal Dasar
-    </span>
-
+<nav class="max-w-6xl mx-auto px-6 py-4">
+  <div class="flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+    <a href="index.html" class="hover:text-blue-600 transition-colors">Beranda</a>
+    <span>/</span>
+    <span class="text-blue-600 dark:text-blue-400">Gramatikal Dasar</span>
   </div>
 </nav>
 
   <!-- Hero -->
-  <section class="max-w-7xl mx-auto px-4 mt-4 md:mt-8 mb-10">
-  <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-    
-    <div class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700/50">
-      <div class="flex flex-col md:flex-row md:items-center gap-4">
-        <div class="hidden md:flex p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl text-blue-600 dark:text-blue-400">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        </div>
-        <div class="flex-1">
-          <h1 class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white leading-tight">
-            📘 Materi Gramatikal Dasar <span class="text-blue-600 dark:text-blue-400 md:text-2xl block md:inline">(Nahwu & Shorof)</span>
-          </h1>
-          <p class="mt-2 text-sm md:text-base text-slate-600 dark:text-slate-400">
-            Setiap kartu memuat istilah Arab, terjemah, penjelasan, dan contoh berharakat. Gunakan pencarian atau filter kategori di bawah ini.
-          </p>
-        </div>
-      </div>
+<div class="max-w-6xl mx-auto px-6 mb-12">
+  <div class="mb-6">
+    <h5 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500 mb-3 ml-2">Tahap 1: Mengenal Kata (Al-Kalimah)</h5>
+    <div class="flex flex-wrap gap-2">
+      <button id="tab-isim" class="tab-btn">Isim</button>
+      <button id="tab-fiil" class="tab-btn">Fi'il</button>
+      <button id="tab-harf" class="tab-btn">Huruf</button>
+      <button id="tab-shorof" class="tab-btn">Shorof Dasar</button>
     </div>
-
-    <div class="p-4 md:p-8 space-y-6">
-      <div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
-        
-        <div class="w-full md:max-w-[70%]">
-          <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3 ml-1">Kategori Filter:</p>
-          
-          <div class="grid grid-cols-2 gap-2 md:flex md:flex-wrap md:gap-2">
-            <button id="tab-all" class="px-3 py-2 bg-blue-600 text-white rounded-lg font-bold text-xs md:text-sm shadow-md transition-all active:scale-95">Semua</button>
-            <button id="tab-nahwu" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Nahwu</button>
-            <button id="tab-isim" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Isim</button>
-            <button id="tab-fiil" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Fi‘il</button>
-            <button id="tab-harf" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Harf</button>
-            <button id="tab-kaana" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Kaana Bersaudara</button>
-            <button id="tab-inna" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Inna Bersaudara</button>
-            <button id="tab-jar" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Huruf Jar</button>
-            <button id="tab-istitsna" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Istitsnā’</button>
-            <button id="tab-nida" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Nidā’</button>
-            <button id="tab-laa-naafiy" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Lā Nāfiy lil-Jins</button>
-            <button id="tab-athaf" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Huruf ‘Athaf</button>
-            <button id="tab-tawkid" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Tawkīd</button>
-            <button id="tab-istiqbal" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Istiqbāl</button>
-            <button id="tab-huruf-nashab" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Huruf Nashab</button>
-            <button id="tab-huruf-jazm" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Huruf Jazm</button>
-            <button id="tab-laa-nahy" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Lā Nahy</button>
-            <button id="tab-syarth" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Syarth</button>
-            <button id="tab-istifham" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Istifham</button>
-            <button id="tab-zharf" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Zharf</button>
-            <button id="tab-maushul" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Isim Maushul</button>
-            <button id="tab-isyarah" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Isyarah Qaribah</button>
-            <button id="tab-isyarah-baidah" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Isyārah Ba‘īdah</button>
-            <button id="tab-dhamir-rafa" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Dhamir Rafa‘ Munfasil</button>
-            <button id="tab-dhamir-rafa-muttashil" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Dhamir Rafa‘ Muttashil</button>
-            <button id="tab-dhamir-nj-muttashil" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Dhamir Nashab & Jar Muttashil</button>
-            <button id="tab-dhamir-nashab" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Dhamir Nashab Munfasil</button>
-            <button id="tab-shorof" class="px-3 py-2 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-lg text-xs md:text-sm hover:bg-slate-50 transition-all">Shorof</button>
-          </div>
-        </div>
-
-        <div class="w-full md:w-[28%]">
-          <label for="filter-input" class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 ml-1">Cari Materi:</label>
-          <div class="relative group">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-            </span>
-            <input id="filter-input" type="text"
-              placeholder="Contoh: isim, fa'ala..."
-              class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all dark:text-white" />
-          </div>
-        </div>
-
-      </div>
-    </div>
-
   </div>
-</section>
+
+  <div class="mb-6">
+    <h5 class="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-500 mb-3 ml-2">Tahap 2: Struktur Kalimat (Al-Jumlah)</h5>
+    <div class="flex flex-wrap gap-2">
+      <button id="tab-kaana" class="tab-btn">Kaana & Saudara</button>
+      <button id="tab-inna" class="tab-btn">Inna & Saudara</button>
+      <button id="tab-nida" class="tab-btn">Nida (Panggilan)</button>
+      <button id="tab-maushul" class="tab-btn">Isim Maushul</button>
+      <button id="tab-isyarah" class="tab-btn">Isim Isyarah</button>
+    </div>
+  </div>
+</div>
 
   <!-- Cards -->
-  <main class="max-w-6xl mx-auto px-4 py-8 flex-grow">
-
-    <div id="cards-grid"
-     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
-
-
-    <!-- Bottom nav -->
-    <div class="mt-8 flex flex-wrap gap-3 justify-center">
-      <a href="index.html" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold">← Kembali ke Beranda</a>
-      <!-- Sesuaikan href di bawah jika perlu -->
-      <a href="#grammar-cards" onclick="window.location='index.html#grammar-cards'; return false;"
-         class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-semibold">Buka Kartu Flip</a>
+ <main class="max-w-6xl mx-auto px-4 py-8 flex-grow">
+  
+  <div id="cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 items-start">
     </div>
-  </main>
+
+  <div class="mt-16 flex flex-col md:flex-row items-center justify-center gap-4 border-t border-slate-100 dark:border-slate-800/50 pt-10">
+    
+    <a href="index.html" 
+       class="w-full md:w-auto flex items-center justify-center gap-3 px-6 py-3.5 rounded-2xl 
+              bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold 
+              border border-slate-200 dark:border-slate-700 shadow-sm
+              hover:bg-slate-50 dark:hover:bg-slate-700 transition-all active:scale-95 text-sm uppercase tracking-widest">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Beranda
+    </a>
+
+    <a href="index.html#flashcards"
+       class="w-full md:w-auto flex items-center justify-center gap-3 px-8 py-3.5 rounded-2xl 
+              bg-blue-600 hover:bg-blue-700 text-white font-black 
+              shadow-lg shadow-blue-500/25 transition-all active:scale-95 text-sm uppercase tracking-widest">
+      <span>🃏</span>
+      Buka Kartu Flip
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </a>
+
+  </div>
+  
+  <div class="mt-10 text-center">
+    <p class="text-[10px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-[0.5em]">
+      Tarbiyyat al-Lughah &bull; Dasar Gramatikal
+    </p>
+  </div>
+</main>
 
   <!-- Footer -->
   <footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors mt-12">
@@ -224,299 +204,204 @@
   </div>
 </footer>
 
-  <!-- DATA + RENDER -->
-  <script>
+<style>
+  /* Animasi & Tipografi */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+  .font-arab { font-family: 'Amiri', serif; }
   
-  // Util: tipografi adaptif
-  const stripHarakat = s => (s||'').replace(/[\u064B-\u065F\u0670]/g,'');
+  /* Lock horizontal scroll */
+  html, body { max-width: 100vw; overflow-x: hidden; }
+</style>
+
+<style>
+  #cards-grid {
+    display: grid;
+    /* Mobile: 1 kolom, Tablet: 2 kolom, Desktop: 3 kolom */
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    #cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  
+  @media (min-width: 1024px) {
+    #cards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>
+
+<script>
+  // 1. UTILITAS & TIPOGRAFI ADAPTIF
+  const stripHarakat = s => (s || '').replace(/[\u064B-\u065F\u0670]/g, '');
+  
   const sizeAr = s => {
     const n = stripHarakat(s).length;
-    if (n > 28) return 'text-base';
-    if (n > 18) return 'text-lg';
-    return 'text-2xl';
-  };
-  const sizeId = s => {
-    const n = (s||'').length;
-    if (n > 80) return 'text-xs';
-    if (n > 56) return 'text-sm';
-    if (n > 34) return 'text-base';
-    return 'text-lg';
+    if (n > 28) return 'text-2xl';
+    if (n > 18) return 'text-3xl';
+    return 'text-4xl';
   };
 
-  // State
-  let activeTab = 'all'; // 'all' | 'nahwu' | 'shorof'
+  const sizeId = s => {
+    const n = (s || '').length;
+    return n > 80 ? 'text-sm' : 'text-base';
+  };
+
+  // 2. STATE MANAGEMENT
+  let activeTab = 'all';
   let query = '';
 
-  // Elements
+  // 3. ELEMENTS
   const grid = document.getElementById('cards-grid');
-  const tabAll = document.getElementById('tab-all');
-  const tabNah = document.getElementById('tab-nahwu');
-  const tabIsim = document.getElementById('tab-isim');
-  const tabFiil = document.getElementById('tab-fiil');
-  const tabHarf = document.getElementById('tab-harf');
-
-
-
-  const tabKaa = document.getElementById('tab-kaana');
-  const tabInn = document.getElementById('tab-inna');
-  const tabJar = document.getElementById('tab-jar');
-  const tabNid = document.getElementById('tab-nida');
-  const tabSya = document.getElementById('tab-syarth');
-  const tabIst = document.getElementById('tab-istifham');
-  const tabZha = document.getElementById('tab-zharf');
-  const tabMau = document.getElementById('tab-maushul');
-  const tabIsy = document.getElementById('tab-isyarah');
-  const tabIsyB = document.getElementById('tab-isyarah-baidah');
-  const tabDhaR = document.getElementById('tab-dhamir-rafa');
-  const tabDhaRM = document.getElementById('tab-dhamir-rafa-muttashil');
-  const tabDhaNJ = document.getElementById('tab-dhamir-nj-muttashil');
-  const tabDhaN = document.getElementById('tab-dhamir-nashab');
-  const tabIstis = document.getElementById('tab-istitsna');
-  const tabLaaN = document.getElementById('tab-laa-naafiy');
-  const tabAth = document.getElementById('tab-athaf');
-  const tabTaw = document.getElementById('tab-tawkid');
-  const tabHns = document.getElementById('tab-huruf-nashab');
-  const tabIstq = document.getElementById('tab-istiqbal');
-  const tabHjz = document.getElementById('tab-huruf-jazm');
-  const tabLaaH = document.getElementById('tab-laa-nahy');
-
-  const tabSho = document.getElementById('tab-shorof');
   const input = document.getElementById('filter-input');
+  // Pastikan ID tab di HTML Anda menggunakan format id="tab-nama"
+  const getAllTabs = () => document.querySelectorAll('[id^="tab-"]');
 
-
+  // 4. LOGIKA PENDUKUNG
   function normalizeText(str = '') {
-  return stripHarakat(str)
-    .toLowerCase()
-    .replace(/[‘’']/g, '') // samakan petik
-    .replace(/\s+/g, '');
-}
-
-
-  function applyFilter(){
-  let list = MATERIALS.slice();
-
-  if (activeTab !== 'all')
-    list = list.filter(m => m.cat === activeTab);
-
-  if (query.trim()){
-    const q = normalizeText(query);
-
-    list = list.filter(m =>
-      normalizeText(m.term_id).includes(q) ||
-      normalizeText(m.term_ar).includes(q) ||
-      normalizeText(m.explain_id).includes(q) ||
-      normalizeText(m.example_ar).includes(q) ||
-      normalizeText(m.example_id).includes(q)
-    );
+    return stripHarakat(str).toLowerCase().replace(/[‘’']/g, '').replace(/\s+/g, '');
   }
-  return list;
-}
 
+  function updateHeroProgress(tab) {
+    const steps = {
+      t1: ['all', 'isim', 'fiil', 'harf', 'shorof'],
+      t2: ['kaana', 'inna', 'nida', 'maushul', 'isyarah', 'jar', 'syarth', 'istifham', 'zharf']
+    };
+    const heroSteps = document.querySelectorAll('.grid > div'); // Mengambil 3 kotak tahap di hero
+    if (heroSteps.length < 3) return;
 
-  function cardTemplate(m, idx){
-    const id = `m-${m.cat}-${idx}`;
-    return `
-      <article class="bg-white dark:bg-slate-700 rounded-2xl shadow-md border border-slate-100 overflow-hidden w-full">
-        <div class="p-5">
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <div class="arabic-text ${sizeAr(m.term_ar)} font-bold text-primary-800 dark:text-slate-300 leading-relaxed">${m.term_ar}</div>
-              <div class="mt-1 text-sm text-slate-600 dark:text-slate-300"><span class="font-semibold">${m.term_id}</span> • <span class="uppercase tracking-wide text-xs">${m.cat}</span></div>
+    heroSteps.forEach(s => s.classList.add('opacity-60'));
+    if (steps.t1.includes(tab)) heroSteps[0].classList.remove('opacity-60');
+    if (steps.t2.includes(tab)) heroSteps[1].classList.remove('opacity-60');
+    // Tambahkan logika t3 jika kategori materi sudah ada
+  }
+
+  // 5. RENDER ENGINE
+  function cardTemplate(m, idx) {
+  const id = `m-${m.cat}-${idx}`;
+  return `
+    <article class="group bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700/50 overflow-hidden transition-all duration-300 hover:shadow-md h-fit">
+      <div class="p-5 md:p-6">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col gap-1 min-w-0">
+            <span class="w-fit px-2 py-0.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-md text-[9px] font-black uppercase tracking-wider border border-blue-100/50 dark:border-blue-800">
+              ${m.cat}
+            </span>
+            <h3 class="text-base md:text-xl font-black text-slate-700 dark:text-slate-200 truncate italic uppercase tracking-tighter">
+              ${m.term_id}
+            </h3>
+          </div>
+
+          <div class="flex items-center gap-3 shrink-0">
+            <div class="font-arab text-xl md:text-2xl text-blue-600 dark:text-blue-400 leading-none drop-shadow-sm">
+              ${m.term_ar}
             </div>
-            <button class="px-3 py-1.5 rounded-lg bg-primary-50 dark:bg-slate-600 text-primary-800 dark:text-slate-300 text-sm font-semibold hover:bg-primary-100 transition" data-toggle="${id}">
-              Tampilkan detail
+            <button class="p-2 rounded-xl bg-slate-50 dark:bg-slate-900 text-slate-400 hover:text-blue-600 transition-all" data-toggle="${id}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
           </div>
+        </div>
 
-          <div id="${id}" class="mt-4 hidden transition-all duration-300 ease-in-out">
-            <p class="${sizeId(m.explain_id)} text-slate-800 dark:text-slate-300 leading-relaxed">${m.explain_id}</p>
+        <div id="${id}" class="hidden mt-4 pt-4 border-t border-slate-50 dark:border-slate-700/50 animate-fade-in">
+          <div class="space-y-4">
+            <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 leading-relaxed italic">
+              <span class="font-bold text-slate-400 not-italic mr-1 text-[10px] uppercase">Ket:</span>
+              ${m.explain_id}
+            </p>
 
-            <div class="mt-3 p-3 rounded-xl bg-primary-50/60 dark:bg-slate-600 border border-blue-100">
-              <div class="text-xs text-slate-600 mb-1">Contoh:</div>
-
-            <!-- Contoh Arab -->
-              <div class="arabic-text ${sizeAr(m.example_ar)} text-primary-900 dark:text-slate-300 leading-relaxed text-center">
-              ${m.example_ar}
+            <div class="p-4 rounded-2xl bg-slate-50/50 dark:bg-slate-900/30 border border-slate-100 dark:border-slate-700/50">
+              <div class="font-arab text-xl text-slate-700 dark:text-slate-200 text-center leading-[1.8]">
+                ${m.example_ar}
               </div>
-
-              <!-- Arti Indonesia (opsional) -->
               ${m.example_id ? `
-              <div class="mt-2 text-sm text-slate-600 dark:text-slate-300 text-center italic">
-              Artinya: ${m.example_id}
-              </div>
+                <div class="text-[10px] md:text-xs text-slate-400 text-center font-medium mt-1">
+                   "${m.example_id}"
+                </div>
               ` : ''}
-              </div>
-
-
+            </div>
+            
+            <div class="text-[8px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em] text-center">
+              Ref: Al-Ajurrumiyyah
+            </div>
           </div>
         </div>
-      </article>
-    `;
+      </div>
+    </article>`;
+}
+
+  function render() {
+    let list = MATERIALS.slice();
+    if (activeTab !== 'all') list = list.filter(m => m.cat === activeTab);
+    if (query.trim()) {
+      const q = normalizeText(query);
+      list = list.filter(m => normalizeText(m.term_id).includes(q) || normalizeText(m.term_ar).includes(q) || normalizeText(m.explain_id).includes(q));
+    }
+
+    grid.innerHTML = list.map((m, i) => cardTemplate(m, i)).join('') || `
+      <div class="col-span-full py-20 text-center animate-fade-in text-slate-400">
+        <div class="text-6xl mb-4">🔍</div>
+        <h3 class="text-xl font-bold uppercase tracking-widest">Materi tidak ditemukan</h3>
+      </div>`;
+
+    // Accordion Logic
+    grid.querySelectorAll('[data-toggle]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.dataset.toggle;
+        const target = document.getElementById(targetId);
+        const isHidden = target.classList.toggle('hidden');
+        btn.querySelector('svg').style.transform = isHidden ? 'rotate(0deg)' : 'rotate(180deg)';
+        
+        grid.querySelectorAll('[id^="m-"]').forEach(detail => {
+          if (detail.id !== targetId) {
+            detail.classList.add('hidden');
+            const otherBtn = grid.querySelector(`[data-toggle="${detail.id}"] svg`);
+            if(otherBtn) otherBtn.style.transform = 'rotate(0deg)';
+          }
+        });
+      });
+    });
   }
 
-  function render(){
-    const list = applyFilter();
-    grid.innerHTML = list.map((m,i) => cardTemplate(m,i)).join('') || `
-      <div class="col-span-full text-center text-slate-500">Tidak ada materi yang cocok dengan pencarian.</div>
-    `;
-
-    // attach toggle listeners (accordion: hanya satu terbuka)
-grid.querySelectorAll('[data-toggle]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const targetId = btn.dataset.toggle;
-    const target = document.getElementById(targetId);
-
-    // 1. Tutup semua detail lain
-    grid.querySelectorAll('[id^="m-"]').forEach(detail => {
-      if (detail.id !== targetId) {
-        detail.classList.add('hidden');
+  // 6. TAB SYSTEM (AUTOMATED)
+  function setTab(tabId) {
+    activeTab = tabId.replace('tab-', '');
+    
+    getAllTabs().forEach(tabBtn => {
+      const isSelected = tabBtn.id === tabId;
+      const isTahap2 = ['kaana', 'inna', 'nida', 'maushul', 'isyarah', 'jar', 'syarth', 'istifham', 'zharf'].includes(activeTab);
+      
+      if (isSelected) {
+        const bgClass = isTahap2 ? "bg-emerald-600 shadow-emerald-500/30" : "bg-blue-600 shadow-blue-500/30";
+        tabBtn.className = `px-5 py-2.5 rounded-full ${bgClass} text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-lg transition-all scale-105 z-10`;
+      } else {
+        tabBtn.className = "px-5 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-[10px] uppercase tracking-[0.1em] border border-slate-100 dark:border-slate-700 hover:border-blue-400 transition-all";
       }
     });
 
-    // 2. Reset semua tombol
-    grid.querySelectorAll('[data-toggle]').forEach(b => {
-      if (b !== btn) b.textContent = 'Tampilkan detail';
-    });
-
-    // 3. Toggle detail yang diklik
-    const isHidden = target.classList.toggle('hidden');
-    btn.textContent = isHidden ? 'Tampilkan detail' : 'Sembunyikan';
-  });
-});
-
-  }
-
-  // Tab switching
-  function setTab(tab){
-    activeTab = tab;
-    tabAll.className = 'px-4 py-2 ' + (tab==='all' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
-    tabNah.className = 'px-4 py-2 ' + (tab==='nahwu' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
-    tabSho.className = 'px-4 py-2 ' + (tab==='shorof' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
-    tabKaa.className = 'px-4 py-2 ' + (tab==='kaana' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
-    tabInn.className = 'px-4 py-2 ' + (tab==='inna' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
-     tabJar.className = 'px-4 py-2 ' + (tab==='jar' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
-     tabNid.className = 'px-4 py-2 ' + (tab==='nida' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
-     tabSya.className = 'px-4 py-2 ' + (tab==='syarth' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
-     tabIst.className = 'px-4 py-2 ' + (tab==='istifham' ? 'bg-primary-600 text-white font-semibold' : 'bg-white text-slate-700 border border-slate-200');
-     tabZha.className = 'px-4 py-2 ' + (tab==='zharf' ? 'bg-primary-600 text-white font-semibold'
-    : 'bg-white text-slate-700 border border-slate-200');
-
-    tabMau.className = 'px-4 py-2 ' + (tab==='maushul'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabIsy.className = 'px-4 py-2 ' + (tab==='isyarah'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabIsyB.className = 'px-4 py-2 ' + (tab==='isyarah-baidah'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabDhaR.className = 'px-4 py-2 ' + (tab==='dhamir-rafa'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabDhaRM.className = 'px-4 py-2 ' + (tab==='dhamir-rafa-muttashil'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabDhaNJ.className = 'px-4 py-2 ' + (tab==='dhamir-nj-muttashil'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabDhaN.className = 'px-4 py-2 ' + (tab==='dhamir-nashab'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabIstis.className = 'px-4 py-2 ' + (tab==='istitsna'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-    tabLaaN.className = 'px-4 py-2 ' + (tab==='laa-naafiy'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabAth.className = 'px-4 py-2 ' + (tab==='athaf'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabTaw.className = 'px-4 py-2 ' + (tab==='tawkid'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabHns.className = 'px-4 py-2 ' + (tab==='huruf-nashab'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabIstq.className = 'px-4 py-2 ' + (tab==='istiqbal'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabHjz.className = 'px-4 py-2 ' + (tab==='huruf-jazm'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabLaaH.className = 'px-4 py-2 ' + (tab==='laa-nahy'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabFiil.className = 'px-4 py-2 ' + (tab==='fiil'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabIsim.className = 'px-4 py-2 ' + (tab==='isim'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-  tabHarf.className = 'px-4 py-2 ' + (tab==='harf'
-  ? 'bg-primary-600 text-white font-semibold'
-  : 'bg-white text-slate-700 border border-slate-200');
-
-
+    updateHeroProgress(activeTab);
     render();
   }
 
-  tabAll.addEventListener('click', () => setTab('all'));
-  tabNah.addEventListener('click', () => setTab('nahwu'));
-  tabIsim.addEventListener('click', () => setTab('isim'));
-  tabFiil.addEventListener('click', () => setTab('fiil'));
-  tabHarf.addEventListener('click', () => setTab('harf'));
+  // 7. INITIALIZE listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    getAllTabs().forEach(tab => {
+      tab.addEventListener('click', () => setTab(tab.id));
+    });
 
+    input.addEventListener('input', (e) => {
+      query = e.target.value;
+      render();
+    });
 
-
-
-  tabKaa.addEventListener('click', () => setTab('kaana'));
-  tabInn.addEventListener('click', () => setTab('inna'));
-  tabJar.addEventListener('click', () => setTab('jar'));
-  tabNid.addEventListener('click', () => setTab('nida'));
-  tabSya.addEventListener('click', () => setTab('syarth'));
-  tabIst.addEventListener('click', () => setTab('istifham'));
-  tabZha.addEventListener('click', () => setTab('zharf'));
-  tabMau.addEventListener('click', () => setTab('maushul'));
-  tabIsy.addEventListener('click', () => setTab('isyarah'));
-  tabIsyB.addEventListener('click', () => setTab('isyarah-baidah'));
-  tabDhaR.addEventListener('click', () => setTab('dhamir-rafa'));
-  tabDhaRM.addEventListener('click', () => setTab('dhamir-rafa-muttashil'));
-  tabDhaNJ.addEventListener('click', () => setTab('dhamir-nj-muttashil'));
-  tabDhaN.addEventListener('click', () => setTab('dhamir-nashab'));
-  tabIstis.addEventListener('click', () => setTab('istitsna'));
-  tabLaaN.addEventListener('click', () => setTab('laa-naafiy'));
-  tabAth.addEventListener('click', () => setTab('athaf'));
-  tabTaw.addEventListener('click', () => setTab('tawkid'));
-  tabHns.addEventListener('click', () => setTab('huruf-nashab'));
-  tabIstq.addEventListener('click', () => setTab('istiqbal'));
-  tabHjz.addEventListener('click', () => setTab('huruf-jazm'));
-  tabLaaH.addEventListener('click', () => setTab('laa-nahy'));
-
-
-
-  tabSho.addEventListener('click', () => setTab('shorof'));
-  input.addEventListener('input', (e) => { query = e.target.value; render(); });
-
-  // init
-  setTab('all');
-  </script>
+  });
+</script>
 
   <!-- JS UNTUK DARKMODE -->
 <script>

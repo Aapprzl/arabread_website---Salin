@@ -411,6 +411,16 @@
   });
 </script>
 
+<script src="muyassar_vocab.js"></script>
+<script src="lessonRenderer.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const lesson1 = MUYASSAR.lessons.find(l => l.id === 1);
+    renderLesson(lesson1);
+  });
+</script>
+
+
 
 </body>
 </html>

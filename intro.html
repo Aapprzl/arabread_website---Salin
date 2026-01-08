@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
+
+
+<script src="assets/theme.js"></script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +14,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
+            secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
+          },
+          fontFamily: { arabic: ['Amiri','Scheherazade New','serif'] }
+        }
+      }
+    }
+  </script>
   <style>
     /* Cursor typing */
     .cursor::after {
@@ -65,61 +83,111 @@
 }
 
   </style>
+
+
+
+
 </head>
 
-<body class="min-h-screen animated-gradient flex items-center justify-center px-6">
+<body class="fixed inset-0 w-screen h-screen bg-white dark:bg-slate-950 flex items-center justify-center px-6 overflow-hidden transition-colors duration-500 selection:bg-blue-200">
 
-  <main class="text-center max-w-2xl w-full">
+  <div class="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] bg-blue-500/10 dark:bg-blue-600/5 rounded-full blur-[100px] pointer-events-none overflow-hidden"></div>
+  <div class="absolute bottom-[-5%] right-[-5%] w-[50%] h-[50%] bg-emerald-500/10 dark:bg-emerald-600/5 rounded-full blur-[100px] pointer-events-none overflow-hidden"></div>
 
-    <h1 class="font-bold text-blue-600 text-4xl sm:text-5xl md:text-6xl mb-3">
-  تربية اللغة
-</h1>
+ <button id="themeToggle" 
+    class="fixed z-[9999] 
+           bottom-6 right-6 
+           lg:top-8 lg:bottom-auto 
+           w-14 h-14 md:w-16 md:h-16 lg:w-12 lg:h-12 
+           flex items-center justify-center rounded-2xl 
+           bg-white dark:bg-slate-900 
+           text-slate-600 dark:text-yellow-400 
+           border-2 border-slate-200 dark:border-slate-800 
+           shadow-2xl transition-all active:scale-90 hover:scale-105">
+      <span id="themeIcon" class="text-2xl md:text-3xl lg:text-lg">🌙</span>
+  </button>
 
+  <main class="text-center max-w-4xl w-full relative z-10 flex flex-col items-center justify-center overflow-hidden">
 
-    <p class="font-semibold text-gray-800 text-lg sm:text-xl md:text-2xl mb-6">
-      Tarbiyyat al-Lughah
-    </p>
-
-    <div class="text-gray-700 h-12 flex items-center justify-center mb-10">
-      <span id="typingText" class="cursor text-base sm:text-lg md:text-xl"></span>
+    <div class="mb-4 animate-fade-in w-full overflow-visible">
+      <h1 class="font-arab text-6xl sm:text-7xl md:text-9xl lg:text-[10rem] font-bold 
+                 bg-gradient-to-b from-blue-600 to-blue-900 dark:from-blue-400 dark:to-blue-600 
+                 bg-clip-text text-transparent py-4 leading-[1.4] drop-shadow-xl w-full" 
+          style="font-family: 'Amiri', serif; word-wrap: break-word;">
+        تربية اللغة
+      </h1>
     </div>
 
-   <button id="startBtn"
-  class="mx-auto px-8 py-3 rounded-xl
-         bg-blue-600 hover:bg-blue-700
-         text-white font-semibold
-         text-base sm:text-lg
-         shadow-lg transition">
-  Mulai Belajar
-</button>
+    <div class="space-y-2 mb-10 animate-fade-in w-full" style="animation-delay: 0.2s;">
+      <p class="font-black text-slate-800 dark:text-white text-xl sm:text-3xl md:text-4xl uppercase tracking-[0.2em] sm:tracking-[0.4em] italic opacity-95">
+        Tarbiyyat <span class="text-blue-600">al-Lughah</span>
+      </p>
+      <p class="text-[9px] md:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em] sm:tracking-[0.6em]">
+        Media Pembelajaran Bahasa Arab Interaktif
+      </p>
+    </div>
 
+    <div class="flex items-center justify-center mb-12 animate-fade-in" style="animation-delay: 0.4s;">
+      <div class="px-8 py-4 rounded-full bg-slate-100/80 dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-inner flex items-center gap-3">
+        <span id="typingText" class="text-slate-600 dark:text-slate-300 text-sm sm:text-lg font-semibold tracking-wide min-h-[1.5rem]"></span>
+        <span class="w-1.5 h-6 bg-blue-500 rounded-full animate-pulse"></span>
+      </div>
+    </div>
+
+    <div class="animate-fade-in w-full" style="animation-delay: 0.6s;">
+      <button id="startBtn"
+        class="group relative inline-flex items-center justify-center px-10 py-4 md:px-12 md:py-5 overflow-hidden font-black uppercase tracking-widest text-white transition-all duration-300 bg-blue-600 rounded-[2rem] hover:bg-blue-700 hover:shadow-[0_15px_40px_-10px_rgba(37,99,235,0.6)] active:scale-95 text-sm md:text-lg">
+        <span class="relative z-10 flex items-center gap-3">
+          Mulai Belajar
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </span>
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+      </button>
+    </div>
 
   </main>
 
-  <!-- ✅ SCRIPT DIPINDAHKAN KE SINI (INI KUNCI) -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap');
+    
+    .font-arab { font-family: 'Amiri', serif; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    /* Memastikan titik huruf arab tidak terpotong */
+    h1 {
+      padding-bottom: 20px;
+      margin-bottom: -20px;
+    }
+  </style>
+
   <script>
+    // 1. TYPING ANIMATION
     const texts = [
       "Belajar membaca Bahasa Arab",
-      "Kosakata • Membaca • Kuis",
-      "Media interaktif untuk siswa MTs",
-      "Belajar jadi lebih menyenangkan"
+      "Kosa Kata • Qira'ah • Kuis",
+      "Media Belajar Interaktif MTs",
+      "Menghafal Jadi Lebih Mudah"
     ];
 
     const el = document.getElementById("typingText");
     const startBtn = document.getElementById("startBtn");
-
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
+    let textIndex = 0; let charIndex = 0; let isDeleting = false;
 
     function typeLoop() {
       const current = texts[textIndex];
-
       if (!isDeleting) {
         el.textContent = current.slice(0, charIndex++);
-        if (charIndex > current.length) {
-          setTimeout(() => isDeleting = true, 1200);
-        }
+        if (charIndex > current.length) { setTimeout(() => isDeleting = true, 2000); }
       } else {
         el.textContent = current.slice(0, charIndex--);
         if (charIndex < 0) {
@@ -127,25 +195,46 @@
           textIndex = (textIndex + 1) % texts.length;
         }
       }
-
       setTimeout(typeLoop, isDeleting ? 40 : 80);
     }
-
     typeLoop();
 
+    // 2. THEME TOGGLE LOGIC
+    const themeToggle = document.getElementById("themeToggle");
+    const themeIcon = document.getElementById("themeIcon");
+    const html = document.documentElement;
+
+    function updateTheme() {
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+        themeIcon.textContent = "☀️";
+      } else {
+        html.classList.remove('dark');
+        themeIcon.textContent = "🌙";
+      }
+    }
+    
+    themeToggle.addEventListener("click", () => {
+      if (html.classList.contains('dark')) {
+        localStorage.theme = 'light';
+      } else {
+        localStorage.theme = 'dark';
+      }
+      updateTheme();
+    });
+    updateTheme();
+
+    // 3. START BUTTON ACTION
     startBtn.addEventListener("click", () => {
-  localStorage.setItem("arabread_intro_time", Date.now());
-  localStorage.setItem("arabread_entered", "1"); // opsional, boleh tetap ada
-
-  document.body.classList.add("fade-out");
-
-  setTimeout(() => {
-    window.location.href = "index.html";
-  }, 600);
-});
-
-
+      localStorage.setItem("arabread_entered", "1");
+      document.body.style.opacity = "0";
+      document.body.style.transform = "scale(1.05)";
+      document.body.style.transition = "all 0.6s ease-in-out";
+      setTimeout(() => { window.location.href = "index.html"; }, 600);
+    });
   </script>
 
 </body>
+
+
 </html>
