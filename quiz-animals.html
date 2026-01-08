@@ -38,103 +38,154 @@
 
 <body class="bg-gray-50 min-h-screen dark:bg-slate-800 dark:text-slate-100 ">
   <!-- Header -->
-  <header class="bg-primary-600 text-white shadow-lg">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <i data-feather="book-open" class="w-8 h-8"></i>
-        <h1 class="text-2xl font-bold">Tarbiyyat al-Lughah</h1>
+ <header class="sticky top-0 z-50 w-full bg-amber-600/95 dark:bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+    
+    <div class="flex items-center gap-2 md:gap-4">
+      <a href="reading-animals.html" class="p-2 hover:bg-white/10 rounded-xl transition-all group" title="Kembali ke Bacaan">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+
+      <div class="flex flex-col">
+        <span class="text-lg md:text-xl font-black tracking-tight leading-none italic uppercase text-white">Tarbiyyat</span>
+        <span class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-orange-200 uppercase leading-none mt-1">al-Lughah</span>
       </div>
-      <nav class="hidden md:flex space-x-6">
-        <a href="index.html" class="hover:text-secondary-300">Beranda</a>
-        <a href="reading-animals.html" class="hover:text-secondary-300">Bacaan</a>
-        <a href="index.html#tentang" class="hover:text-secondary-300">Tentang</a>
-      </nav>
     </div>
 
-          <button id="themeToggle"
-          class="fixed top-3 left-4 z-50 flex items-center gap-2
-            bg-yellow-100/90 px-3 py-1.5 rounded-full
-            shadow-md font-semibold text-sm text-gray-900">
-          🌙
-        </button>
-  </header>
+    <div class="flex items-center gap-3 md:gap-8">
+      
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="index.html" class="text-sm font-bold text-white/80 hover:text-white transition-colors">Beranda</a>
+        <a href="reading-animals.html" class="text-sm font-bold text-white/80 hover:text-white transition-colors">Bacaan</a>
+        <div class="w-px h-4 bg-white/20"></div>
+        <span class="text-sm font-bold text-amber-100 flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg border border-white/10">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+          </svg>
+          Kuis Hewan
+        </span>
+      </nav>
+
+      <button id="themeToggle"
+        class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-xl 
+               bg-white/10 hover:bg-white/20 border border-white/20
+               transition-all active:scale-90 text-base md:text-lg shadow-sm"
+        title="Ganti Tema">
+        🌙
+      </button>
+    </div>
+
+  </div>
+</header>
 
   <!-- Main -->
-  <main class="container mx-auto px-4 py-8">
-    <!-- Title -->
-    <div class="text-center mb-8">
-      <h1 class="text-4xl font-bold text-primary-800 dark:text-slate-300 arabic-text mb-2">الحيوانات</h1>
-      <p class="text-2xl text-gray-700 dark:text-slate-300">Kuis Pemahaman Teks</p>
+ <main class="max-w-4xl mx-auto px-4 py-8 md:py-12">
+  
+  <div class="text-center mb-8">
+    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white arabic-text mb-2 tracking-wide">الْحَيَوَانَاتُ</h1>
+    <p class="text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium italic">Kuis Pemahaman Teks</p>
+  </div>
+
+  <section class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden max-w-3xl mx-auto">
+    
+    <div class="bg-slate-50 dark:bg-slate-900/50 px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+      <h2 class="text-xs md:text-sm font-black uppercase tracking-widest text-amber-600 dark:text-amber-500 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+        Tantangan Kuis
+      </h2>
+      <span class="text-[10px] font-bold bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 px-3 py-1 rounded-full uppercase tracking-tighter">Topik: Hewan</span>
     </div>
 
-    <!-- Quiz Card -->
-    <section class="bg-white dark:bg-slate-700 shadow-lg p-8 max-w-3xl mx-auto">
-     <section class="bg-white dark:bg-slate-700 shadow-lg p-8 max-w-3xl mx-auto rounded-2xl">
-
-  <div class="text-center mb-6">
-    <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-200 flex justify-center items-center gap-2">
-      🎯 Tantangan Kuis
-    </h2>
-    <p class="text-gray-600 dark:text-slate-300 text-center mb-4" id="questionText"></p>
-
-    <p class="arabic-text text-2xl text-center font-semibold mt-2"
-   dir="rtl"
-   id="arabicQuestion"></p>
-  </div>
-
-  <div id="options" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-    <!-- tombol jawaban di-generate JS -->
-  </div>
-
-  <p id="feedback" class="text-center font-semibold mb-4"></p>
-
-  <div class="text-center">
-    <button id="nextBtn"
-      class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-6 rounded-lg hidden">
-      Soal Berikutnya
-    </button>
-  </div>
-
-</section>
-
-
-      <!-- Results -->
-      <div id="results" class="mt-8 p-6 bg-gray-50 rounded-xl hidden">
-        <h3 class="text-xl font-semibold text-primary-800 mb-3">Hasil Kuis</h3>
-        <p id="score" class="text-2xl font-bold text-secondary-600 mb-2"></p>
-        <p id="feedback" class="text-lg text-gray-700"></p>
-
+    <div class="p-6 md:p-10">
+      <div class="text-center mb-8">
+        <p class="text-slate-600 dark:text-slate-400 text-sm md:text-base mb-4 leading-relaxed italic" id="questionText">
+          </p>
+        <p class="arabic-text text-2xl md:text-3xl text-slate-800 dark:text-white font-bold leading-loose" 
+           dir="rtl" 
+           id="arabicQuestion">
+           </p>
       </div>
 
-<!-- Navigasi bawah (dengan tambahan tombol ke Kosa Kata) -->
-<div class="flex flex-col sm:flex-row gap-3 justify-between mt-6">
-  <a href="index.html"
-     class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white w-full sm:w-auto">
-     🏠 Kembali ke Beranda
-  </a>
+      <div id="options" class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-8">
+        </div>
 
-  <div class="flex gap-3 justify-center sm:justify-end w-full sm:w-auto">
-    <a href="vocabulary-animals.html"
-       class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-100 text-primary-700 hover:bg-primary-200">
-       📚 Kosa Kata
+      <div class="flex flex-col items-center gap-4">
+        <p id="feedback" class="text-center font-bold text-sm md:text-base min-h-[1.5rem]"></p>
+        
+        <button id="nextBtn"
+          class="hidden w-full md:w-auto bg-amber-500 hover:bg-amber-600 text-white font-black uppercase tracking-widest py-3.5 px-10 rounded-2xl shadow-lg shadow-amber-500/30 transition-all active:scale-95 text-sm">
+          Soal Berikutnya →
+        </button>
+      </div>
+
+      <div id="results" class="hidden mt-6 p-8 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border-2 border-dashed border-slate-200 dark:border-slate-700 text-center">
+        <div class="text-4xl mb-3">🐾</div>
+        <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-2">Skor Akhir Anda</h3>
+        <p id="score" class="text-4xl font-black text-amber-600 dark:text-amber-500 mb-2"></p>
+        <p id="feedback-result" class="text-sm text-slate-500 dark:text-slate-400 italic font-medium"></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="flex flex-col md:flex-row gap-4 justify-between mt-12">
+    <a href="index.html"
+       class="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 transition-all active:scale-95 text-sm">
+       🏠 Beranda
     </a>
 
-    <a href="reading-animals.html"
-       class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-secondary-500 hover:bg-secondary-600 text-white">
-       📖 Baca Teks
-    </a>
+    <div class="flex flex-col sm:flex-row gap-3">
+      <a href="vocabulary-animals.html"
+         class="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 font-bold hover:bg-orange-200 transition-all active:scale-95 text-sm">
+         📚 Kosa Kata
+      </a>
+      <a href="reading-animals.html"
+         class="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 font-bold hover:bg-blue-200 transition-all active:scale-95 text-sm">
+         📖 Baca Teks
+      </a>
+    </div>
   </div>
-</div>
 
-
-
-    </section>
-  </main>
+</main>
 
   <!-- Footer -->
-  <footer class="bg-primary-800 text-white text-center py-6 mt-8">
-    <p>&copy; 2025 Tarbiyyat al-Lughah – Kuis Tema: الحيوانات</p>
-  </footer>
+  <footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors mt-12">
+  <div class="max-w-7xl mx-auto px-6 py-10">
+    <div class="flex flex-col items-center text-center space-y-4">
+      
+      <div class="flex flex-col items-center gap-1 group">
+        <span class="text-lg font-black tracking-tighter text-slate-800 dark:text-white uppercase italic">
+          Tarbiyyat <span class="text-amber-500 dark:text-amber-400">al-Lughah</span>
+        </span>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Sesi Kuis:</span>
+          <span class="arabic-text text-lg text-orange-600 dark:text-orange-400 font-bold">الْحَيَوَانَاتُ</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <div class="h-1 w-1 bg-orange-500/40 rounded-full"></div>
+        <div class="h-1 w-16 bg-gradient-to-r from-transparent via-orange-500 to-transparent rounded-full"></div>
+        <div class="h-1 w-1 bg-orange-500/40 rounded-full"></div>
+      </div>
+
+      <div class="pt-2">
+        <p class="text-[11px] md:text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+          &copy; 2026 <strong>Tarbiyyat al-Lughah</strong> — Evaluasi Pemahaman Materi Hewan
+        </p>
+        
+        <div class="mt-4 inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 dark:bg-orange-900/20 rounded-full border border-orange-100 dark:border-orange-800/50 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-[9px] font-bold text-orange-700 dark:text-orange-400 uppercase tracking-tighter italic text-center">Belajar menyenangkan bersama makhluk ciptaan-Nya!</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</footer>
 
   <!-- Script -->
   <script>
