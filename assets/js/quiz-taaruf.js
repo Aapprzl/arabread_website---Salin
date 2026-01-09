@@ -302,7 +302,22 @@ async function finishQuiz() {
     quizState.timer = null;
   }
 
-  // 2. Hitung Skor & Tentukan Status
+  // --- [BARU] BERSIHKAN AREA KUIS ---
+  // Ini akan menghapus soal, pilihan ganda, dan menyembunyikan tombol
+  if (qText) qText.textContent = "";       // Hapus teks soal
+  if (optsBox) optsBox.innerHTML = "";     // Hapus pilihan jawaban (tombol A,B,C,D)
+  if (feedback) feedback.textContent = ""; // Hapus feedback (jika ada)
+  if (timerEl) timerEl.textContent = "";   // Hapus teks timer
+  
+  if (btnNext) {
+    btnNext.classList.add("hidden");       // Sembunyikan tombol Next
+  }
+  
+  // Opsional: Jika Anda punya ID container pembungkus kuis, bisa disembunyikan total
+  // document.getElementById('quiz-card').classList.add('hidden');
+  // ----------------------------------
+
+  // 2. Hitung Skor & Status
   const total = quizState.data.length;
   const score = quizState.score;
   const percentage = Math.round((score / total) * 100);
@@ -332,12 +347,11 @@ async function finishQuiz() {
     borderClass = "border-slate-200 dark:border-slate-700";
   }
 
-  // 3. Buat Elemen Pop-up (Overlay)
-  // Kita inject langsung ke body agar posisinya fixed di tengah layar (di atas segalanya)
+  // 3. Tampilkan Pop-up Hasil
   const popupHTML = `
-    <div id="quiz-result-overlay" class="fixed inset-0 z-[999] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-fade-in">
+    <div id="quiz-result-overlay" class="fixed inset-0 z-[999] flex items-center justify-center bg-slate-900/80 backdrop-blur-sm p-4 animate-fade-in">
       
-      <div class="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl overflow-hidden transform transition-all scale-100 animate-bounce-in">
+      <div class="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl overflow-hidden transform transition-all scale-100 animate-bounce-in border border-slate-100 dark:border-slate-800">
         
         <button onclick="closeQuizPopup()" class="absolute top-4 left-4 p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all z-10">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -345,34 +359,32 @@ async function finishQuiz() {
           </svg>
         </button>
 
-        <div class="h-24 ${bgClass} flex items-center justify-center relative overflow-hidden">
-          <div class="absolute inset-0 opacity-10 pattern-dots"></div>
-          <div class="text-6xl transform translate-y-4 filter drop-shadow-sm">${icon}</div>
+        <div class="h-28 ${bgClass} flex items-center justify-center relative overflow-hidden">
+          <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 10px 10px;"></div>
+          <div class="text-7xl transform translate-y-2 filter drop-shadow-md animate-bounce">${icon}</div>
         </div>
 
-        <div class="px-6 pt-10 pb-8 text-center space-y-4">
-          
+        <div class="px-6 pt-8 pb-8 text-center space-y-5">
           <div>
-            <h3 class="font-black text-lg md:text-xl ${colorClass} uppercase tracking-widest mb-1">${title}</h3>
-            <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium px-4 leading-relaxed">
+            <h3 class="font-black text-xl md:text-2xl ${colorClass} uppercase tracking-widest mb-2 leading-tight">${title}</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium px-2 leading-relaxed">
               ${message}
             </p>
           </div>
 
-          <div class="py-4 my-2 border-y ${borderClass} border-dashed flex items-center justify-center gap-2">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Skor Akhir:</span>
+          <div class="py-4 border-y ${borderClass} border-dashed flex flex-col items-center justify-center gap-1 bg-slate-50/50 dark:bg-slate-800/50 rounded-xl">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Skor Akhir</span>
             <div class="flex items-baseline gap-1">
-              <span class="text-5xl font-black ${colorClass} font-sans tracking-tighter">${score}</span>
-              <span class="text-lg font-bold text-slate-300">/${total}</span>
+              <span class="text-6xl font-black ${colorClass} font-sans tracking-tighter">${score}</span>
+              <span class="text-xl font-bold text-slate-300">/${total}</span>
             </div>
           </div>
-
         </div>
+
       </div>
     </div>
   `;
 
-  // Masukkan ke body
   document.body.insertAdjacentHTML('beforeend', popupHTML);
 
   // 4. Simpan Hasil
