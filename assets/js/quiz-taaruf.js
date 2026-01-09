@@ -296,29 +296,111 @@ async function finishQuiz() {
   if (quizState.finished) return;
   quizState.finished = true;
 
+  // 1. Hentikan Timer
   if (quizState.timer) {
     clearInterval(quizState.timer);
     quizState.timer = null;
   }
 
-  qText.textContent = "🎉 Kuis Selesai";
-  optsBox.innerHTML = "";
-  btnNext.classList.add("hidden");
-  timerEl.textContent = "";
+  // 2. Hitung Skor & Tentukan Status
+  const total = quizState.data.length;
+  const score = quizState.score;
+  const percentage = Math.round((score / total) * 100);
 
-  feedback.textContent =
-  `Skor kamu: ${quizState.score} / ${quizState.data.length}`;
+  let title, message, icon, colorClass, bgClass, borderClass;
 
-  feedback.className = "font-bold text-blue-500";
+  if (percentage === 100) {
+    title = "Mumtaz! (Luar Biasa)";
+    message = "Sempurna! Penguasaan materi yang sangat baik.";
+    icon = "🏆";
+    colorClass = "text-emerald-600 dark:text-emerald-400";
+    bgClass = "bg-emerald-50 dark:bg-emerald-900/20";
+    borderClass = "border-emerald-200 dark:border-emerald-700";
+  } else if (percentage >= 70) {
+    title = "Jayyid Jiddan (Sangat Baik)";
+    message = "Hebat! Sedikit lagi menuju sempurna.";
+    icon = "🌟";
+    colorClass = "text-blue-600 dark:text-blue-400";
+    bgClass = "bg-blue-50 dark:bg-blue-900/20";
+    borderClass = "border-blue-200 dark:border-blue-700";
+  } else {
+    title = "Man Jadda Wajada";
+    message = "Jangan menyerah! Coba ulangi materi ini lagi.";
+    icon = "📚";
+    colorClass = "text-slate-600 dark:text-slate-400";
+    bgClass = "bg-slate-50 dark:bg-slate-800";
+    borderClass = "border-slate-200 dark:border-slate-700";
+  }
 
-  // btnStart.disabled = false;
-  // btnStart.classList.remove("opacity-50");
+  // 3. Buat Elemen Pop-up (Overlay)
+  // Kita inject langsung ke body agar posisinya fixed di tengah layar (di atas segalanya)
+  const popupHTML = `
+    <div id="quiz-result-overlay" class="fixed inset-0 z-[999] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-fade-in">
+      
+      <div class="relative w-full max-w-sm bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl overflow-hidden transform transition-all scale-100 animate-bounce-in">
+        
+        <button onclick="closeQuizPopup()" class="absolute top-4 left-4 p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all z-10">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
 
+        <div class="h-24 ${bgClass} flex items-center justify-center relative overflow-hidden">
+          <div class="absolute inset-0 opacity-10 pattern-dots"></div>
+          <div class="text-6xl transform translate-y-4 filter drop-shadow-sm">${icon}</div>
+        </div>
+
+        <div class="px-6 pt-10 pb-8 text-center space-y-4">
+          
+          <div>
+            <h3 class="font-black text-lg md:text-xl ${colorClass} uppercase tracking-widest mb-1">${title}</h3>
+            <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium px-4 leading-relaxed">
+              ${message}
+            </p>
+          </div>
+
+          <div class="py-4 my-2 border-y ${borderClass} border-dashed flex items-center justify-center gap-2">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Skor Akhir:</span>
+            <div class="flex items-baseline gap-1">
+              <span class="text-5xl font-black ${colorClass} font-sans tracking-tighter">${score}</span>
+              <span class="text-lg font-bold text-slate-300">/${total}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Masukkan ke body
+  document.body.insertAdjacentHTML('beforeend', popupHTML);
+
+  // 4. Simpan Hasil
   await saveResult();
-  
-
-
 }
+
+// Fungsi Helper untuk menutup Pop-up
+// Jadikan fungsi global agar bisa dipanggil oleh tombol onclick di HTML
+window.closeQuizPopup = function() {
+  const overlay = document.getElementById('quiz-result-overlay');
+  
+  if (overlay) {
+    // 1. Tambahkan class untuk memicu transisi pudar (Fade Out)
+    // Pastikan elemen overlay memiliki class 'transition-opacity' & 'duration-300' di HTML-nya
+    overlay.classList.remove('opacity-100'); 
+    overlay.classList.add('opacity-0');
+
+    // 2. Tunggu animasi selesai (300ms) baru hapus elemen dari HTML
+    setTimeout(() => {
+      overlay.remove();
+      
+      // Opsional: Jika ingin reset kuis otomatis saat ditutup
+      // window.location.reload(); 
+    }, 300);
+  } else {
+    console.warn("Overlay tidak ditemukan!");
+  }
+};
 
 // ===============================
 // SIMPAN KE FIRESTORE

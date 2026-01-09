@@ -30,6 +30,7 @@ tailwind.config = {
   }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </head>
@@ -1097,17 +1098,43 @@ btnKirimTugas.onclick = async () => {
     });
 
     // ✅ SUCCESS UI
-    uploadStatus.textContent = "✅ Tugas berhasil dikirim";
-    uploadStatus.className = "text-green-500 text-sm text-center";
+    Swal.fire({
+  icon: 'success',
+  title: 'Berhasil!',
+  text: 'Tugas Anda telah berhasil dikirim.',
+  background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+  color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+  confirmButtonColor: '#2563eb', // Warna biru sesuai tema
+  confirmButtonText: 'Mantap!',
+  customClass: {
+    popup: 'rounded-[2rem]', // Membuat sudut membulat premium
+    confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+  }
+});
 
-    fileInput.value = "";
-    catatanTugas.value = "";
+fileInput.value = "";
+catatanTugas.value = "";
+uploadStatus.innerHTML = ""; // Bersihkan status teks lama jika ada
+
 
   } catch (err) {
-    console.error("UPLOAD ERROR:", err);
-    uploadStatus.textContent = "❌ Gagal mengirim tugas";
-    uploadStatus.className = "text-red-500 text-sm text-center";
-  }
+  console.error("UPLOAD ERROR:", err);
+  
+  // ❌ ERROR UI (SweetAlert2)
+  Swal.fire({
+    icon: 'error',
+    title: 'Gagal!',
+    text: 'Terjadi kesalahan saat mengirim tugas.',
+    background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+    color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+    confirmButtonColor: '#ef4444',
+    customClass: {
+      popup: 'rounded-[2rem]',
+      confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+    }
+  });
+}
+
 };
 
 
