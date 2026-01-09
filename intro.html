@@ -170,24 +170,31 @@
     }
   </style>
 
-  <script>
-    // 1. TYPING ANIMATION
-    const texts = [
-      "Belajar membaca Bahasa Arab",
-      "Kosa Kata • Qira'ah • Kuis",
-      "Media Belajar Interaktif MTs",
-      "Menghafal Jadi Lebih Mudah"
-    ];
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
 
-    const el = document.getElementById("typingText");
-    const startBtn = document.getElementById("startBtn");
-    let textIndex = 0; let charIndex = 0; let isDeleting = false;
+  /* =========================
+     1. TYPING ANIMATION
+  ========================= */
+  const texts = [
+    "Belajar membaca Bahasa Arab",
+    "Kosa Kata • Qira'ah • Kuis",
+    "Media Belajar Interaktif MTs",
+    "Menghafal Jadi Lebih Mudah"
+  ];
 
+  const el = document.getElementById("typingText");
+  let textIndex = 0, charIndex = 0, isDeleting = false;
+
+  if (el) {
     function typeLoop() {
       const current = texts[textIndex];
+
       if (!isDeleting) {
         el.textContent = current.slice(0, charIndex++);
-        if (charIndex > current.length) { setTimeout(() => isDeleting = true, 2000); }
+        if (charIndex > current.length) {
+          setTimeout(() => isDeleting = true, 1500);
+        }
       } else {
         el.textContent = current.slice(0, charIndex--);
         if (charIndex < 0) {
@@ -198,41 +205,80 @@
       setTimeout(typeLoop, isDeleting ? 40 : 80);
     }
     typeLoop();
+  }
 
-    // 2. THEME TOGGLE LOGIC
-    const themeToggle = document.getElementById("themeToggle");
-    const themeIcon = document.getElementById("themeIcon");
-    const html = document.documentElement;
+  /* =========================
+     2. THEME TOGGLE
+  ========================= */
+  const themeToggle = document.getElementById("themeToggle");
+  const themeIcon = document.getElementById("themeIcon");
+  const html = document.documentElement;
 
-    function updateTheme() {
-      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        html.classList.add('dark');
-        themeIcon.textContent = "☀️";
-      } else {
-        html.classList.remove('dark');
-        themeIcon.textContent = "🌙";
-      }
+  function updateTheme() {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      html.classList.add("dark");
+      if (themeIcon) themeIcon.textContent = "☀️";
+    } else {
+      html.classList.remove("dark");
+      if (themeIcon) themeIcon.textContent = "🌙";
     }
-    
+  }
+
+  if (themeToggle) {
     themeToggle.addEventListener("click", () => {
-      if (html.classList.contains('dark')) {
-        localStorage.theme = 'light';
-      } else {
-        localStorage.theme = 'dark';
-      }
+      localStorage.theme = html.classList.contains("dark") ? "light" : "dark";
       updateTheme();
     });
-    updateTheme();
+  }
 
-    // 3. START BUTTON ACTION
+  updateTheme();
+
+  /* =========================
+     3. START BUTTON
+  ========================= */
+  const startBtn = document.getElementById("startBtn");
+
+  if (startBtn) {
     startBtn.addEventListener("click", () => {
       localStorage.setItem("arabread_entered", "1");
-      document.body.style.opacity = "0";
-      document.body.style.transform = "scale(1.05)";
-      document.body.style.transition = "all 0.6s ease-in-out";
-      setTimeout(() => { window.location.href = "index.html"; }, 600);
+
+      document.body.classList.add("fade-out");
+
+      setTimeout(() => {
+        window.location.assign("index.html");
+      }, 400);
     });
-  </script>
+  }
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const startBtn = document.getElementById("startBtn");
+
+  if (!startBtn) return;
+
+  startBtn.addEventListener("click", () => {
+    // simpan waktu terakhir intro
+    localStorage.setItem("arabread_intro_time", Date.now());
+
+    // animasi keluar
+    document.body.classList.add("fade-out");
+
+    // pindah ke index
+    setTimeout(() => {
+      window.location.replace("index.html");
+    }, 400);
+  });
+});
+</script>
+
+
 
 </body>
 

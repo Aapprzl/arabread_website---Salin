@@ -12,14 +12,19 @@
 <script src="assets/theme.js"></script>
 
 <script>
+(function () {
   const now = Date.now();
   const lastIntro = localStorage.getItem("arabread_intro_time");
-  const fiveHours = 5 * 60 * 60 * 1000;
+  const FIVE_HOURS = 5 * 60 * 60 * 1000;
 
-  if (!lastIntro || now - lastIntro > fiveHours) {
+  // Jika belum pernah intro atau sudah lewat 5 jam
+  if (!lastIntro || now - Number(lastIntro) > FIVE_HOURS) {
     window.location.replace("intro.html");
   }
+})();
 </script>
+
+
 
 
 
