@@ -862,24 +862,32 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
           <div class="p-2 bg-emerald-100 dark:bg-emerald-800 rounded-full text-emerald-600 dark:text-emerald-300">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           </div>
-          <div class="flex-1 space-y-1 text-sm text-slate-700 dark:text-slate-200">
-            <h4 class="font-bold text-emerald-700 dark:text-emerald-400 text-lg mb-2">Akun Berhasil Dibuat!</h4>
-            <div class="grid grid-cols-[80px_1fr] gap-1">
-              <span class="font-semibold text-slate-500 dark:text-slate-400">Nama:</span>
-              <span id="resNama" class="font-medium"></span>
-              
-              <span class="font-semibold text-slate-500 dark:text-slate-400">Email:</span>
-              <span id="resEmail" class="font-mono bg-white dark:bg-slate-800 px-1 rounded border border-slate-200 dark:border-slate-700 w-fit"></span>
-              
-              <span class="font-semibold text-slate-500 dark:text-slate-400">Password:</span>
-              <span id="resPassword" class="font-mono bg-white dark:bg-slate-800 px-1 rounded border border-slate-200 dark:border-slate-700 w-fit"></span>
-            </div>
 
-            <button id="btnCetakPdf" class="mt-4 px-4 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white text-xs font-bold uppercase tracking-wider rounded-lg flex items-center gap-2 transition-all">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
-              Cetak PDF Bukti Pendaftaran
-            </button>
-          </div>
+          <div class="flex-1 space-y-1 text-sm text-slate-700 dark:text-slate-200 min-w-0">
+  
+  <h4 class="font-bold text-emerald-700 dark:text-emerald-400 text-lg mb-2">
+    Akun Berhasil Dibuat!
+  </h4>
+
+  <div class="grid grid-cols-[70px_1fr] sm:grid-cols-[80px_1fr] gap-x-2 gap-y-1">
+    
+    <span class="font-semibold text-slate-500 dark:text-slate-400">Nama:</span>
+    <span id="resNama" class="font-medium truncate"></span>
+    
+    <span class="font-semibold text-slate-500 dark:text-slate-400">Email:</span>
+    <span id="resEmail" class="font-mono bg-white dark:bg-slate-800 px-1 rounded border border-slate-200 dark:border-slate-700 break-all"></span>
+    
+    <span class="font-semibold text-slate-500 dark:text-slate-400">Password:</span>
+    <span id="resPassword" class="font-mono bg-white dark:bg-slate-800 px-1 rounded border border-slate-200 dark:border-slate-700 break-all"></span>
+  </div>
+
+  <button id="btnCetakPdf" class="mt-4 w-full px-4 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 text-white text-xs font-bold uppercase tracking-wider rounded-lg flex items-center justify-center gap-2 transition-all shadow-sm">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+    <span class="text-center">Cetak PDF Bukti Pendaftaran</span>
+  </button>
+  
+</div>
+
         </div>
       </div>
 
@@ -1025,7 +1033,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
           <div class="relative mt-1">
             <select id="editLevel"
               class="w-full px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-yellow-500 outline-none appearance-none">
-              <option value="">Pilih Kategori</option>
+              
               <option value="mts7">MTs Kelas 7</option>
               <option value="mts8">MTs Kelas 8</option>
               <option value="mts9">MTs Kelas 9</option>
@@ -2082,6 +2090,18 @@ document.getElementById("btnUploadEbook").onclick = async () => {
   }
 };
 
+const LEVEL_LABEL = {
+  mts7: "MTs Kelas 7",
+  mts8: "MTs Kelas 8",
+  mts9: "MTs Kelas 9",
+  novel: "Novel Arab",
+  kisah: "Kisah Islami"
+};
+
+function renderLevel(level) {
+  return LEVEL_LABEL[level] || level || "-";
+}
+
 
 
 /* ===============================
@@ -2134,8 +2154,9 @@ async function loadEbookTable() {
           </td>
 
           <td class="border px-3 py-2 text-center">
-            ${e.level || "-"}
+              ${renderLevel(e.level)}
           </td>
+
 
           <td class="border px-3 py-2 text-center">
             <a href="${e.fileUrl}" target="_blank"
