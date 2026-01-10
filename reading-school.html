@@ -33,7 +33,6 @@
   </script>
   <style>
     .arabic-text { font-family: 'Amiri','Scheherazade New',serif; direction: rtl; }
-    #translation { display: none; }
   </style>
 </head>
 
@@ -80,76 +79,143 @@
 </header>
 
   <!-- Main Content -->
-  <main class="max-w-4xl mx-auto px-4 py-8 md:py-12">
-  
+<main
+  class="max-w-4xl mx-auto px-4 py-8 md:py-12"
+  data-reading="school"
+>
+
+  <!-- Judul -->
   <div class="text-center mb-10">
-    <div class="inline-block px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-3">
-      Latihan Membaca
-    </div>
-    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white arabic-text mb-2 leading-tight">
+
+    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white 
+               arabic-text mb-3 leading-tight"
+        style="font-family: 'Amiri', serif;">
       المَدْرَسَةُ
     </h1>
-    <p class="text-sm md:text-lg text-slate-500 dark:text-slate-400 italic font-medium">Fasilitas & Lingkungan Sekolah</p>
+
+    <p class="text-sm md:text-lg text-slate-500 dark:text-slate-400 italic font-medium">
+      Fasilitas & Lingkungan Sekolah
+    </p>
   </div>
 
-  <section class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-    
-    <div class="p-6 md:p-10 bg-slate-50/50 dark:bg-slate-900/40 border-b border-slate-100 dark:border-slate-700/50">
-      <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-inner border border-slate-100 dark:border-slate-700">
-        <p id="readingText" class="arabic-text text-xl md:text-2xl leading-[2.2] md:leading-[2.5] text-center text-slate-800 dark:text-slate-200" dir="rtl">
-          اَلسَّلَامُ عَلَيْكُمْ. &nbsp;اِسْمِي أَحْمَدُ، وَأَنَا طَالِبٌ فِي الْمَدْرَسَةِ الْمُتَوَسِّطَةِ.
-          أَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ يَوْمٍ فِي الصَّبَاحِ.
-          فِي الْمَدْرَسَةِ نَتَعَلَّمُ اللُّغَةَ الْعَرَبِيَّةَ وَالرِّيَاضِيَّاتِ وَالْعُلُومَ.
-          مُعَلِّمِي يُحِبُّنَا وَيُعَلِّمُنَا بِصَبْرٍ.
-          بَعْدَ الدِّرَاسَةِ نَلْعَبُ مَعَ أَصْدِقَائِنَا فِي سَاحَةِ الْمَدْرَسَةِ.
-          أُحِبُّ مَدْرَسَتِي لِأَنَّهَا مَكَانُ الْعِلْمِ وَالتَّعَلُّمِ.
-        </p>
-      </div>
+ <!-- Kartu Bacaan -->
+<section
+  class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl
+         border border-slate-100 dark:border-slate-700 overflow-hidden"
+  data-reading-card
+>
+  <!-- Area Teks Arab -->
+  <div class="p-6 md:p-10 bg-slate-50/50 dark:bg-slate-900/40">
+    <div
+      class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl
+             shadow-inner border border-slate-100 dark:border-slate-700"
+    >
+      <!-- DIISI OLEH JS -->
+      <p
+        id="readingText"
+        class="arabic-text text-xl md:text-2xl leading-[2.2] md:leading-[2.5]
+               text-center text-slate-800 dark:text-slate-200"
+        dir="rtl"
+        aria-live="polite"
+      ></p>
+    </div>
+  </div>
+
+  <!-- Kontrol -->
+  <div class="p-6 md:p-8 space-y-8">
+
+    <!-- Audio -->
+    <div class="flex flex-col items-center">
+      <label
+        for="readingAudio"
+        class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3"
+      >
+        Dengarkan Audio:
+      </label>
+
+      <audio
+        id="readingAudio"
+        controls
+        preload="none"
+        class="w-full max-w-md h-10 shadow-sm rounded-lg"
+      >
+        Browser Anda tidak mendukung audio.
+      </audio>
     </div>
 
-    <div class="p-6 md:p-8 space-y-8">
-      <div class="flex flex-col items-center">
-        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 italic">Dengarkan Audio Teks:</label>
-        <audio id="readingAudio" controls class="w-full max-w-md h-10 shadow-sm rounded-lg border border-slate-100 dark:border-slate-700">
-          Browser Anda tidak mendukung audio.
-        </audio>
-      </div>
+    <!-- Tombol -->
+    <div class="flex flex-wrap justify-center gap-4">
+      <button
+        id="toggleTranslation"
+        type="button"
+        class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700
+               text-white font-bold py-2.5 px-6 rounded-xl shadow-lg
+               shadow-indigo-500/20 transition-all active:scale-95 text-sm"
+        aria-expanded="false"
+      >
+        Terjemahan
+      </button>
 
-      <div class="flex flex-wrap justify-center gap-4">
-        <button id="toggleTranslation" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-indigo-500/20 transition-all active:scale-95 text-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" /></svg>
-          Terjemahan
-        </button>
-
-        <button id="shuffleReading" class="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-2.5 px-6 rounded-xl border border-slate-200 dark:border-slate-600 hover:bg-slate-200 transition-all active:scale-95 text-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-          Acak Bacaan
-        </button>
-      </div>
-
-      <div id="translation" class="bg-indigo-50/50 dark:bg-slate-900/50 p-6 rounded-2xl border border-indigo-100 dark:border-indigo-800/50">
-        <h3 class="text-xs font-bold text-indigo-700 dark:text-indigo-400 mb-2 uppercase tracking-widest flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" /></svg>
-          Terjemahan:
-        </h3>
-        <p id="translationText" class="text-slate-600 dark:text-slate-300 leading-relaxed text-sm md:text-base italic">
-          Assalamu’alaikum. Namaku Ahmad, dan aku adalah seorang siswa di sekolah menengah. 
-          Aku pergi ke sekolah setiap pagi...
-        </p>
-      </div>
+      <button
+        id="shuffleReading"
+        type="button"
+        class="flex items-center gap-2 bg-slate-100 dark:bg-slate-700
+               text-slate-700 dark:text-slate-200 font-bold py-2.5 px-6
+               rounded-xl border border-slate-200 dark:border-slate-600
+               hover:bg-slate-200 transition-all active:scale-95 text-sm"
+      >
+        Acak Bacaan
+      </button>
     </div>
-  </section>
 
+    <!-- Terjemahan -->
+    <div
+      id="translation"
+      class="bg-indigo-50/50 dark:bg-slate-900/50 p-6 rounded-2xl
+             border border-indigo-100 dark:border-emerald-800/50 hidden"
+      aria-hidden="true"
+    >
+      <h3
+        class="text-sm font-bold text-indigo-800 dark:text-indigo-400
+               mb-3 uppercase tracking-wider"
+      >
+        Terjemahan:
+      </h3>
+
+      <!-- DIISI OLEH JS -->
+      <p
+        id="translationText"
+        class="text-slate-600 dark:text-slate-300 leading-relaxed
+               text-sm md:text-base italic"
+      ></p>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- Navigasi Bawah -->
   <div class="flex flex-col sm:flex-row gap-3 justify-between mt-10">
-    <a href="index.html" class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700 text-sm shadow-sm transition-all active:scale-95">
+    <a href="index.html"
+       class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
+              bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 
+              font-bold border border-slate-200 dark:border-slate-700 
+              text-sm shadow-sm transition-all active:scale-95">
       🏠 Beranda
     </a>
 
     <div class="flex gap-3">
-      <a href="vocabulary-school.html" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-400 font-bold text-sm transition-all active:scale-95">
+      <a href="vocabulary-school.html"
+         class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
+                bg-indigo-100 text-indigo-700 dark:bg-emerald-900/40 
+                dark:text-emerald-400 font-bold text-sm transition-all active:scale-95">
         📚 Kosa Kata
       </a>
-      <a href="quiz-school.html" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-amber-500 text-white font-bold text-sm shadow-lg shadow-amber-500/20 transition-all active:scale-95">
+
+      <a href="quiz-school.html"
+         class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
+                bg-amber-500 text-white font-bold text-sm shadow-lg 
+                shadow-amber-500/20 transition-all active:scale-95">
         📝 Kuis
       </a>
     </div>
@@ -196,146 +262,14 @@
   </div>
 </footer>
 
-  <!-- Scripts -->
-  <script>
-    feather.replace();
 
-    // Toggle Terjemahan
-    document.getElementById('toggleTranslation').addEventListener('click', function() {
-      const translation = document.getElementById('translation');
-      const button = this;
-
-      if (translation.style.display === 'block') {
-        translation.style.display = 'none';
-        button.textContent = 'Tampilkan Terjemahan';
-      } else {
-        translation.style.display = 'block';
-        button.textContent = 'Sembunyikan Terjemahan';
-      }
-    });
-
-  </script>
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
 <script>
   window.PRESENCE_OPTIONS = { mode: "global" };
 </script>
 
-<!-- Panggil script presence -->
-<script type="module" src="./assets/presence.js"></script>
-
-<script>
-/* =========================
-   DATA BACAAN TA'ARUF
-========================= */
-const READINGS = [
-  {
-  ar: `أَنَا طَالِبٌ فِي الْمَدْرَسَةِ الْمُتَوَسِّطَةِ، وَأُحِبُّ الذَّهَابَ إِلَى الْمَدْرَسَةِ كُلَّ يَوْمٍ.
-أَدْخُلُ الْفَصْلَ فِي الصَّبَاحِ، وَأَدْرُسُ مَعَ أَصْدِقَائِي بِفَرَحٍ وَنَشَاطٍ.
-نَدْرُسُ اللُّغَةَ الْعَرَبِيَّةَ وَالرِّيَاضِيَّاتِ وَالْعُلُومَ فِي الْفَصْلِ.
-الْمُعَلِّمُونَ يُعَلِّمُونَنَا بِصَبْرٍ وَيُسَاعِدُونَنَا عَلَى الْفَهْمِ.
-بَعْدَ الدِّرَاسَةِ، نَلْعَبُ فِي سَاحَةِ الْمَدْرَسَةِ وَنَعُودُ إِلَى الْبَيْتِ بِسُرُورٍ.`,
-  
-  id: `Aku adalah seorang siswa di sekolah menengah, dan aku suka pergi ke sekolah setiap hari.
-Aku masuk ke kelas pada pagi hari dan belajar bersama teman-temanku dengan gembira dan semangat.
-Kami belajar bahasa Arab, matematika, dan ilmu pengetahuan di kelas.
-Para guru mengajar kami dengan sabar dan membantu kami agar memahami pelajaran.
-Setelah belajar, kami bermain di halaman sekolah dan pulang ke rumah dengan senang hati.`,
-  
-  audio: "media/audio/audio-sekolah/sekolah1.mp3"
-},
-{
-  ar: `نَبْدَأُ الدِّرَاسَةَ فِي الصَّبَاحِ بِقِرَاءَةِ الدُّعَاءِ مَعًا.
-ثُمَّ نَدْخُلُ الْفُصُولَ وَنَجْلِسُ بِانْتِظَامٍ.
-نَسْتَمِعُ إِلَى شَرْحِ الْمُعَلِّمِ بِاهْتِمَامٍ.
-وَنَكْتُبُ الدُّرُوسَ فِي الدَّفَاتِرِ.
-الدِّرَاسَةُ فِي الْمَدْرَسَةِ مُفِيدَةٌ جِدًّا.`,
-  
-  id: `Kami memulai pelajaran di pagi hari dengan membaca doa bersama.
-Kemudian kami masuk ke kelas dan duduk dengan tertib.
-Kami mendengarkan penjelasan guru dengan penuh perhatian.
-Dan kami menulis pelajaran di buku tulis.
-Belajar di sekolah sangat bermanfaat.`,
-  
-  audio: "media/audio/audio-sekolah/sekolah2.mp3"
-},
-{
-  ar: `فِي الْمَدْرَسَةِ فُصُولٌ كَثِيرَةٌ وَمَكْتَبَةٌ كَبِيرَةٌ.
-نَقْرَأُ الْكُتُبَ فِي الْمَكْتَبَةِ عِنْدَ وَقْتِ الْفِسْحَةِ.
-وَنَلْتَقِي بِأَصْدِقَائِنَا فِي سَاحَةِ الْمَدْرَسَةِ.
-نَلْعَبُ وَنَتَحَدَّثُ مَعًا.
-الْمَدْرَسَةُ مَكَانٌ لِلتَّعَلُّمِ وَالصَّدَاقَةِ.`,
-  
-  id: `Di sekolah ada banyak kelas dan sebuah perpustakaan besar.
-Kami membaca buku di perpustakaan saat waktu istirahat.
-Kami bertemu teman-teman di halaman sekolah.
-Kami bermain dan berbincang bersama.
-Sekolah adalah tempat belajar dan persahabatan.`,
-  
-  audio: "media/audio/audio-sekolah/sekolah3.mp3"
-},
-{
-  ar: `نَدْرُسُ فِي الْمَدْرَسَةِ الْقُرْآنَ وَاللُّغَةَ الْعَرَبِيَّةَ.
-كَمَا نَدْرُسُ الرِّيَاضِيَّاتِ وَالْعُلُومَ.
-أُحِبُّ دَرْسَ اللُّغَةِ الْعَرَبِيَّةِ جِدًّا.
-لِأَنَّهُ دَرْسٌ سَهْلٌ وَمُمْتِعٌ.
-وَيُسَاعِدُنِي الْمُعَلِّمُ فِي الْفَهْمِ.`,
-  
-  id: `Kami belajar Al-Qur’an dan bahasa Arab di sekolah.
-Kami juga belajar matematika dan ilmu pengetahuan.
-Aku sangat suka pelajaran bahasa Arab.
-Karena pelajaran itu mudah dan menyenangkan.
-Dan guru membantu aku dalam memahami pelajaran.`,
-  
-  audio: "media/audio/audio-sekolah/sekolah4.mp3"
-},
-{
-  ar: `بَعْدَ انْتِهَاءِ الدِّرَاسَةِ، نُرَتِّبُ الْفَصْلَ مَعًا.
-ثُمَّ نُسَلِّمُ عَلَى الْمُعَلِّمِينَ.
-نَعُودُ إِلَى الْبُيُوتِ بِفَرَحٍ.
-وَنَسْتَعِدُّ لِلدِّرَاسَةِ فِي الْيَوْمِ التَّالِي.
-أُحِبُّ مَدْرَسَتِي كَثِيرًا.`,
-  
-  id: `Setelah pelajaran selesai, kami merapikan kelas bersama-sama.
-Kemudian kami memberi salam kepada para guru.
-Kami pulang ke rumah dengan gembira.
-Dan kami bersiap untuk belajar pada hari berikutnya.
-Aku sangat mencintai sekolahku.`,
-  
-  audio: "media/audio/audio-sekolah/sekolah5.mp3"
-},
-
-];
-
-/* =========================
-   LOGIKA ACAK
-========================= */
-const readingEl = document.getElementById('readingText');
-const translationEl = document.getElementById('translationText');
-const shuffleBtn = document.getElementById('shuffleReading');
-
-const audioEl = document.getElementById('readingAudio');
-audioEl.src = "media/audio/audio_sekolah/sekolah0.mp3";
-audioEl.load(); // ⬅️ TAMBAHKAN INI
-
-
-shuffleBtn.addEventListener('click', () => {
-  const random = READINGS[Math.floor(Math.random() * READINGS.length)];
-
-  // ganti teks
-  readingEl.innerHTML = random.ar;
-  translationEl.innerHTML = random.id;
-
-  // ganti audio
-  audioEl.src = random.audio;
-  audioEl.load(); // WAJIB
-
-  // reset terjemahan
-  document.getElementById('translation').style.display = 'none';
-  document.getElementById('toggleTranslation').textContent = 'Tampilkan Terjemahan';
-});
-
-</script>
+<script type="module" src="assets/js/read-page.js"></script>
 
 <!-- JS UNTUK DARKMODE -->
 <script>

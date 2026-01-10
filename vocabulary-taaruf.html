@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
 
-<script src="assets/data/vocabs.js"></script>
-
 
 <script src="assets/theme.js"></script>
 
@@ -15,7 +13,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+
+
   <script src="https://cdn.tailwindcss.com"></script>
+
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -30,9 +31,23 @@
       }
     }
   </script>
+
   <style>
     .arabic-text { font-family:'Amiri','Scheherazade New',serif; direction:rtl; }
+
+    .category-active {
+  background-color: #d1fae5; /* emerald-100 */
+  font-weight: 700;
+}
+
+.dark .category-active {
+  background-color: rgba(16, 185, 129, 0.25);
+}
+
   </style>
+
+  
+
 </head>
 <body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
 
@@ -101,13 +116,45 @@
  <main class="max-w-6xl mx-auto px-4 pb-16">
   
   <div class="bg-white dark:bg-slate-800 rounded-2xl md:rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-    <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-emerald-600 text-white flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
-        <h2 class="text-lg font-bold tracking-wide uppercase">Daftar Kosakata</h2>
-      </div>
+
+    <!-- HEADER -->
+    <div class="relative px-6 py-5 border-b border-slate-100 dark:border-slate-700 
+            bg-emerald-600 text-white flex items-center gap-3">
+
+    <!-- Icon menu kategori -->
+      <div class="relative">
+        <button
+            id="categoryToggle"
+            type="button"
+            class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition"
+            title="Pilih Kategori">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                class="w-5 h-5" 
+                fill="none" viewBox="0 0 24 24" 
+                stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" 
+                  stroke-linejoin="round"d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <!-- Dropdown kategori -->
+          <div
+            id="categoryMenu"
+            class="absolute left-0 mt-2 w-44 rounded-xl shadow-lg
+                   bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                  overflow-hidden text-slate-700 dark:text-slate-200 z-50 hidden">
+           </div>
+         </div>
+
+          <!-- Judul -->
+          <h2 class="text-lg font-bold tracking-wide uppercase">
+            Daftar Kosakata
+          </h2>
+
     </div>
 
+
+    <!-- TABLE -->
     <div class="overflow-x-auto">
       <table id="vocab-table" class="hidden md:table min-w-full">
         <thead>
@@ -118,30 +165,22 @@
             <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-left">Arti Indonesia</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-50 dark:divide-slate-700/50">
-          <tr class="hover:bg-emerald-50/30 dark:hover:bg-emerald-900/10 transition-colors">
-            <td class="px-6 py-4 text-sm font-medium text-slate-400 italic">1</td>
-            <td class="px-6 py-4 text-2xl arabic-text text-right font-bold text-slate-800 dark:text-white" dir="rtl">السَّلَامُ عَلَيْكُمْ</td>
-            <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 italic">as-salāmu ʿalaikum</td>
-            <td class="px-6 py-4 text-sm font-semibold text-emerald-600 dark:text-emerald-400">Assalamu’alaikum</td>
-          </tr>
-          </tbody>
+        <tbody class="divide-y divide-slate-50 dark:divide-slate-700/50"></tbody>
       </table>
-
       <div id="mobile-list" class="md:hidden grid gap-4 p-4 bg-slate-50/50 dark:bg-slate-900/20">
-        </div>
+      </div>
     </div>
+
   </div>
 
+<!-- PAGENATION -->
   <div class="mt-8 flex flex-col items-center gap-3">
     <div id="pagination" 
          class="flex items-center gap-2 overflow-x-auto max-w-full px-4 py-2 no-scrollbar md:justify-center">
       </div>
-    <div class="w-32 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-      <div class="h-full bg-emerald-500 w-1/3 rounded-full animate-pulse"></div>
-    </div>
   </div>
-
+ 
+  <!-- TOMBOL BAWAH -->
   <div class="grid grid-cols-1 sm:flex sm:flex-row justify-between gap-4 mt-12">
     <a href="index.html" 
        class="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold border border-slate-200 dark:border-slate-700 hover:bg-slate-50 transition-all shadow-sm active:scale-95 order-3 sm:order-1">
@@ -236,152 +275,14 @@
   }
 </script>
 
+<script src="bank_data_vocabs/vocab-taaruf.js"></script>
 
-  <script>
-  const ITEMS_PER_PAGE = 5;
-
-  const vocabData = [
-
-    ["الاِسْمُ","al-ism","Nama"],
-["الصَّدِيقُ","aṣ-ṣadīq","Teman (laki-laki)"],
-["الصَّدِيقَةُ","aṣ-ṣadīqah","Teman (perempuan)"],
-["الْبَلَدُ","al-balad","Daerah / negeri"],
-["الْمَدِينَةُ","al-madīnah","Kota"],
-
-["الْعُمْرُ","al-ʿumr","Umur"],
-["الطَّالِبُ","aṭ-ṭālib","Siswa (laki-laki)"],
-["الطَّالِبَةُ","aṭ-ṭālibah","Siswi (perempuan)"],
-["الصَّفُّ","aṣ-ṣaff","Kelas"],
-["الْهَوَايَةُ","al-hiwāyah","Hobi"],
-
-["الْأَخُ","al-akh","Saudara laki-laki"],
-["الْأُخْتُ","al-ukht","Saudara perempuan"],
-["الْأُسْرَةُ","al-usrah","Keluarga"],
-["الْمَنْزِلُ","al-manzil","Rumah"],
-["السُّكْنَى","as-suknā","Tempat tinggal"],
-
-["الْجِنْسُ","al-jins","Jenis kelamin"],
-["الْعُنْوَانُ","al-ʿunwān","Alamat"],
-["الْوَطَنُ","al-waṭan","Tanah air"],
-["الْقَرْيَةُ","al-qaryah","Desa"],
-["الْمَحَلَّةُ","al-maḥallah","Lingkungan"],
-
-["الْأَبُ","al-ab","Ayah"],
-["الْأُمُّ","al-umm","Ibu"],
-["الِابْنُ","al-ibn","Anak laki-laki"],
-["الِابْنَةُ","al-ibnah","Anak perempuan"],
-["الْأَقَارِبُ","al-aqārib","Kerabat"],
-
-["الْمُوَاطِنُ","al-muwāṭin","Warga negara"],
-["الْمُسْلِمُ","al-muslim","Muslim (laki-laki)"],
-["الْمُسْلِمَةُ","al-muslimah","Muslimah (perempuan)"],
-["الْهُوِيَّةُ","al-huwiyyah","Identitas"],
-["الْمَعْرِفَةُ","al-maʿrifah","Pengenalan / pengetahuan"],
-
-
-    ["السَّلَامُ عَلَيْكُمْ","as-salāmu ʿalaikum","Assalamu’alaikum"],
-    ["وَعَلَيْكُمُ السَّلَامُ","waʿalaikumu as-salām","Waalaikumussalam"],
-    ["مَا اسْمُكَ؟","mā ismuka?","Siapa namamu? (laki-laki)"],
-    ["مَا اسْمُكِ؟","mā ismuki?","Siapa namamu? (perempuan)"],
-    ["اسْمِي ...","ismī ...","Namaku …"],
-
-    ["مِنْ أَيْنَ أَنْتَ؟","min ayna anta?","Dari mana kamu? (laki-laki)"],
-    ["مِنْ أَيْنَ أَنْتِ؟","min ayna anti?","Dari mana kamu? (perempuan)"],
-    ["أَنَا مِنْ بُونِي","anā min Būnī","Saya dari Bone"],
-    ["كَيْفَ حَالُكَ؟","kaifa ḥāluka?","Bagaimana kabarmu? (laki-laki)"],
-    ["أَنَا بِخَيْرٍ، وَالْحَمْدُ لِلّٰهِ","anā bikhairin","Saya baik, alhamdulillah"],
-
-    ["فِي أَيِّ صَفٍّ أَنْتَ؟","fī ayy ṣaffin anta?","Kamu di kelas berapa?"],
-    ["أَنَا فِي الصَّفِّ السَّابِعِ","anā fī aṣ-ṣaffi as-sābiʿi","Saya di kelas tujuh"],
-    ["مَا هِوَايَتُكَ؟","mā hiwāyatuka?","Apa hobimu?"],
-    ["هِوَايَتِي الْقِرَاءَةُ","hiwāyatī al-qirāʾatu","Hobiku membaca"],
-    ["إِلَى اللِّقَاءِ","ilā al-liqāʾi","Sampai jumpa"],
-
-    ["مَا لَوْنُ كِتَابِكَ؟","mā lawnu kitābika?","Apa warna bukumu?"],
-    ["كِتَابِي أَزْرَقُ","kitābī azraq","Bukuku berwarna biru"],
-    ["هٰذَا فَصْلِي","hādhā faṣlī","Ini kelasku"],
-    ["أُحِبُّ الْمَدْرَسَةَ","uḥibbu al-madrasah","Aku suka sekolah"],
-    ["أَذْهَبُ إِلَى الْمَدْرَسَةِ","adhhabu ilā al-madrasah","Aku pergi ke sekolah"],
-
-    ["مَنْ هٰذَا؟","man hādhā?","Siapa ini? (laki-laki)"],
-    ["مَنْ هٰذِهِ؟","man hādhihi?","Siapa ini? (perempuan)"],
-    ["هٰذَا صَدِيقِي","hādhā ṣadīqī","Ini temanku (laki-laki)"],
-    ["هٰذِهِ صَدِيقَتِي","hādhihi ṣadīqatī","Ini temanku (perempuan)"],
-    ["كَمْ عُمُرُكَ؟","kam ʿumruka?","Berapa umurmu?"],
-
-    ["عُمُرِي ثَلَاثَةَ عَشَرَ عَامًا","ʿumrī thalāthata ʿashara ʿāman","Umurku tiga belas tahun"],
-    ["أَيْنَ تَسْكُنُ؟","ayna taskunu?","Di mana kamu tinggal?"],
-    ["أَسْكُنُ فِي بُونِي","askunu fī Būnī","Aku tinggal di Bone"],
-    ["تَشَرَّفْتُ بِمَعْرِفَتِكَ","tasharraftu bimaʿrifatika","Senang berkenalan denganmu"],
-    ["إِلَى اللِّقَاءِ مَرَّةً أُخْرَى","ilā al-liqāʾi marratan ukhrā","Sampai jumpa lagi"],
-
-
-  ];
-
-  const tableBody = document.querySelector("#vocab-table tbody");
-  const pagination = document.getElementById("pagination");
-
-  function renderPage(page) {
-  tableBody.innerHTML = "";
-
-  const start = (page - 1) * ITEMS_PER_PAGE;
-  const end = start + ITEMS_PER_PAGE; // ✅ TANPA -1
-
-  const pageItems = vocabData.slice(start, end);
-
-  pageItems.forEach((item, i) => {
-    if (!item || item.length < 3) return;
-
-    tableBody.innerHTML += `
-  <tr class="group hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10 transition-colors border-b border-slate-50 dark:border-slate-700/50 last:border-0">
-    <td class="px-6 py-4 text-sm font-medium text-slate-400 italic">
-      ${start + i + 1}
-    </td>
-    <td class="px-6 py-4 text-2xl md:text-3xl arabic-text text-right font-bold text-slate-800 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" dir="rtl">
-      ${item[0]}
-    </td>
-    <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 italic">
-      ${item[1]}
-    </td>
-    <td class="px-6 py-4 text-sm font-bold text-slate-700 dark:text-slate-200">
-      ${item[2]}
-    </td>
-  </tr>
-`;
-  });
-
-  buildMobileList();
-  setActive(page);
-}
-
-
-
-
-  function buildPagination() {
-    const pages = Math.ceil(vocabData.length / ITEMS_PER_PAGE);
-    
-    pagination.innerHTML = "";
-    for (let i = 1; i <= pages; i++) {
-      
-      pagination.innerHTML += `
-        <button onclick="renderPage(${i})"
-          class="px-3 py-1 rounded-lg bg-primary-100 text-primary-700 hover:bg-primary-500 hover:text-white transition">
-          ${i}
-        </button>
-      `;
-    }
-  }
-
-  function setActive(page) {
-    [...pagination.children].forEach((btn, idx) => {
-      btn.classList.toggle("bg-primary-600", idx + 1 === page);
-      btn.classList.toggle("text-white", idx + 1 === page);
-    });
-  }
-
-  buildPagination();
-  renderPage(1);
+<script>
+  const VOCAB_SOURCE = VOCABS_TAARUF;
 </script>
+
+<script src="assets/js/vocab-page.js"></script>
+
 
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
@@ -411,14 +312,6 @@
   });
 </script>
 
-<script src="muyassar_vocab.js"></script>
-<script src="lessonRenderer.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const lesson1 = MUYASSAR.lessons.find(l => l.id === 1);
-    renderLesson(lesson1);
-  });
-</script>
 
 
 

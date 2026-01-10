@@ -53,6 +53,7 @@
     .arabic-text { font-family: 'Amiri','Scheherazade New',serif; direction: rtl; }
   </style>
 
+
   <style>
   /* Efek 3D flip untuk kartu */
   .card3d { perspective: 1000px; }
@@ -148,12 +149,6 @@
   transform: rotateY(180deg);
 }
 
-/* === Tema warna per kategori (dipasang di #grammar-cards) === */
-#grammar-cards { --accent1:#3b82f6; --accent2:#2563eb; }            /* default: Campur (biru) */
-#grammar-cards.theme-mix   { --accent1:#3b82f6; --accent2:#2563eb; } /* Campur = biru */
-#grammar-cards.theme-nahwu { --accent1:#3b82f6; --accent2:#2563eb; } /* Nahwu = biru (tetap) */
-#grammar-cards.theme-shorof{ --accent1:#22c55e; --accent2:#16a34a; } /* Shorof = hijau */
-
 /* Strip warna di atas tiap sisi kartu flip */
 .card-face{ position:relative; overflow:hidden; }
 .card-face::before{
@@ -170,8 +165,6 @@
 .card3d.flipped .card3d-inner{ transform:rotateY(180deg); }
 .card-face{ position:absolute; inset:0; backface-visibility:hidden; border-radius:1rem; }
 .card-back{ transform:rotateY(180deg); }
-
-
 </style>
 
 <style>
@@ -240,7 +233,6 @@
       background-image: radial-gradient(#1e293b 1px, transparent 1px);
   }
 </style>
-
 
 
 
@@ -615,44 +607,6 @@
 </section>
 
 
-<!-- Kartu Gramatikal (Campur) -->
-<!-- <section id="grammar-cards" class="max-w-6xl mx-auto px-4 mt-10 mb-12">
-  <div class="bg-slate-200 dark:bg-slate-700 rounded-2xl shadow-lg p-6">
-
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-      <h2 class="text-2xl font-bold text-primary-700 dark:text-slate-300">
-        📘 Kartu Gramatikal
-      </h2>
-    </div>
-
-    <p class="text-gray-600 dark:text-slate-300 mt-2 font-semibold">
-      Ketuk kartu untuk melihat penjelasan singkat dan contoh.  
-      Empat kartu akan ditampilkan secara acak dari seluruh materi.
-    </p>
-
-   
-    <div id="gcard-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5"></div>
-
-    
-    <div class="mt-6 flex flex-wrap gap-3 justify-center">
-      <button
-        id="gbtn-shuffle"
-        class="px-4 py-2 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-semibold">
-        🔀 Acak 4 kartu
-      </button>
-
-      <button
-        id="gbtn-reset"
-        class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">
-        ↺ Reset
-      </button>
-    </div>
-
-  </div>
-</section> -->
-
-
-
 
   <!-- Materi -->
   <main id="materi" class="scroll-mt-32 flex-grow w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12 flex flex-col gap-12 md:gap-20">
@@ -748,7 +702,7 @@
       <!-- Kartu: Sekolah -->
       <article class="group bg-white dark:bg-slate-800 rounded-3xl shadow-md hover:shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden transition-all duration-300 hover:-translate-y-2">
   
-  <div class="relative bg-gradient-to-br from-blue-700 to-indigo-800 dark:from-indigo-950 dark:to-slate-900 px-6 py-8 text-center overflow-hidden">
+  <div class="relative bg-gradient-to-br from-lime-500 to-emerald-600 dark:from-lime-900 dark:to-slate-950 px-6 py-8 text-center overflow-hidden">
     <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
     
     <h3 class="arabic-text text-4xl font-bold text-white mb-2 leading-relaxed drop-shadow-sm" style="font-family: 'Amiri', serif;">
@@ -766,7 +720,7 @@
 
     <div class="space-y-4 mt-auto">
       <a href="vocabulary-school.html"
-         class="flex items-center justify-center gap-3 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 px-6 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all transform active:scale-95 font-bold">
+         class="flex items-center justify-center gap-3 w-full bg-lime-600 hover:bg-lime-700 text-white py-3.5 px-6 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all transform active:scale-95 font-bold">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polygon points="5 3 19 12 5 21 5 3"></polygon>
         </svg>
@@ -867,6 +821,50 @@
     </div>
   </div>
       </article>
+
+      <!-- Kartu Transportasi -->
+      <article class="group bg-white dark:bg-slate-800 rounded-3xl shadow-md hover:shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden transition-all duration-300 hover:-translate-y-2">
+  
+  <div class="relative bg-gradient-to-br from-slate-600 to-slate-800 dark:from-slate-900 dark:to-black px-6 py-8 text-center overflow-hidden">
+    <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+    
+    <h3 class="arabic-text text-4xl font-bold text-white mb-2 leading-relaxed drop-shadow-sm" style="font-family: 'Amiri', serif;">
+      الْمُوَاصَلَاتُ
+    </h3>
+    <div class="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/10">
+      <p class="text-xs font-bold text-slate-50 tracking-wider uppercase">Transportasi</p>
+    </div>
+  </div>
+
+  <div class="p-6 md:p-8 space-y-6 flex flex-col h-full">
+    <p class="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed">
+      Pelajari berbagai jenis sarana transportasi darat, laut, dan udara dalam Bahasa Arab serta cara penggunaannya dalam percakapan sehari-hari.
+    </p>
+
+    <div class="space-y-4 mt-auto">
+      <a href="vocabulary-transportation.html"
+         class="flex items-center justify-center gap-3 w-full bg-slate-700 hover:bg-slate-800 text-white py-3.5 px-6 rounded-2xl shadow-lg shadow-slate-500/30 transition-all transform active:scale-95 font-bold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v5"></path>
+          <rect x="4" y="11" width="16" height="8" rx="2"></rect>
+          <circle cx="7" cy="19" r="2"></circle>
+          <circle cx="17" cy="19" r="2"></circle>
+        </svg>
+        Mulai Belajar
+      </a>
+
+      <div class="flex items-center justify-center gap-2 py-2 px-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700">
+        <span class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+          Kosakata 
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
+          Dialog 
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
+          Latihan
+        </span>
+      </div>
+    </div>
+  </div>
+</article>
 
     </div>
 

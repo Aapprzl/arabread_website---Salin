@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
-<script src="assets/data/vocabs.js"></script>
+
 
 <script src="assets/theme.js"></script>
 
@@ -34,6 +34,7 @@
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
+
   <!-- Header -->
   <header class="sticky top-0 z-50 w-full bg-rose-600/95 dark:bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
   <div class="max-w-7xl mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
@@ -105,14 +106,43 @@
   
   <div class="bg-white dark:bg-slate-800 rounded-2xl md:rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden">
     
-    <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-rose-600 text-white flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-        <h2 class="text-lg font-bold tracking-wide uppercase">Daftar Anggota Keluarga</h2>
-      </div>
-      <span class="text-[10px] bg-white/20 px-2 py-1 rounded-md font-bold uppercase tracking-tighter">Materi 03</span>
+    <!-- HEADER -->
+  <div class="relative px-6 py-5 border-b border-slate-100 dark:border-slate-700 
+            bg-rose-600 text-white flex items-center gap-3">
+
+    <!-- Icon menu kategori -->
+      <div class="relative">
+        <button
+            id="categoryToggle"
+            type="button"
+            class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition"
+            title="Pilih Kategori">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                class="w-5 h-5" 
+                fill="none" viewBox="0 0 24 24" 
+                stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" 
+                  stroke-linejoin="round"d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <!-- Dropdown kategori -->
+          <div
+            id="categoryMenu"
+            class="absolute left-0 mt-2 w-44 rounded-xl shadow-lg
+                   bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                  overflow-hidden text-slate-700 dark:text-slate-200 z-50 hidden">
+           </div>
+         </div>
+
+          <!-- Judul -->
+          <h2 class="text-lg font-bold tracking-wide uppercase">
+            Daftar Kosakata
+          </h2>
+
     </div>
 
+    <!-- TABLE -->
     <div class="overflow-x-auto">
       <table id="vocab-table" class="hidden md:table min-w-full">
         <thead>
@@ -123,36 +153,23 @@
             <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-left">Arti Indonesia</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-50 dark:divide-slate-700/50 italic-rows">
-          <tr class="hover:bg-rose-50/30 dark:hover:bg-rose-900/10 transition-colors">
-            <td class="px-6 py-4 text-sm text-slate-400 font-medium">1</td>
-            <td class="px-6 py-4 text-xl md:text-2xl arabic-text text-right font-bold text-slate-800 dark:text-white">الْأَبُ</td>
-            <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 italic">al-abu</td>
-            <td class="px-6 py-4 text-sm font-bold text-rose-600 dark:text-rose-400">Ayah</td>
-          </tr>
-          <tr class="hover:bg-rose-50/30 dark:hover:bg-rose-900/10 transition-colors">
-            <td class="px-6 py-4 text-sm text-slate-400 font-medium">2</td>
-            <td class="px-6 py-4 text-xl md:text-2xl arabic-text text-right font-bold text-slate-800 dark:text-white">الْأُمُّ</td>
-            <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 italic">al-ummu</td>
-            <td class="px-6 py-4 text-sm font-bold text-rose-600 dark:text-rose-400">Ibu</td>
-          </tr>
-          </tbody>
+        <tbody class="divide-y divide-slate-50 dark:divide-slate-700/50 italic-rows"></tbody>
       </table>
 
       <div id="mobile-list" class="md:hidden grid gap-4 p-4 bg-slate-50/50 dark:bg-slate-900/20">
         </div>
     </div>
+
   </div>
 
+  <!-- PAGENATION -->
   <div class="mt-8 flex flex-col items-center gap-3">
     <div id="pagination" 
          class="flex items-center gap-2 overflow-x-auto max-w-full px-4 py-2 no-scrollbar md:justify-center">
     </div>
-    <div class="w-32 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full">
-      <div class="h-full bg-rose-500 w-2/3 rounded-full"></div>
-    </div>
   </div>
 
+    <!-- TOMBOL BAWAH -->
   <div class="grid grid-cols-1 sm:flex sm:flex-row justify-between gap-4 mt-12">
     <a href="index.html" 
        class="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 transition-all active:scale-95 order-3 sm:order-1">
@@ -245,149 +262,13 @@
 </script>
 
 
-  <script>
-  const ITEMS_PER_PAGE = 5;
+<script src="bank_data_vocabs/vocab-family.js"></script>
 
-  const vocabData = [
-
-    ["الْأُسْرَةُ","al-usrah","Keluarga"],
-["الْأَبُ","al-ab","Ayah"],
-["الْأُمُّ","al-umm","Ibu"],
-["الْأَخُ","al-akh","Saudara laki-laki"],
-["الْأُخْتُ","al-ukht","Saudara perempuan"],
-
-["الِابْنُ","al-ibn","Anak laki-laki"],
-["الِابْنَةُ","al-ibnah","Anak perempuan"],
-["الْجَدُّ","al-jadd","Kakek"],
-["الْجَدَّةُ","al-jaddah","Nenek"],
-["الْعَائِلَةُ","al-ʿāilah","Keluarga besar"],
-
-["الْعَمُّ","al-ʿamm","Paman (dari ayah)"],
-["الْعَمَّةُ","al-ʿammah","Bibi (dari ayah)"],
-["الْخَالُ","al-khāl","Paman (dari ibu)"],
-["الْخَالَةُ","al-khālah","Bibi (dari ibu)"],
-["الْأَقَارِبُ","al-aqārib","Kerabat"],
-
-["أُحِبُّ أُسْرَتِي","uḥibbu usratī","Aku mencintai keluargaku"],
-["هٰذَا أَبِي","hādhā abī","Ini ayahku"],
-["هٰذِهِ أُمِّي","hādhihi ummī","Ini ibuku"],
-["هٰذَا أَخِي","hādhā akhī","Ini saudara laki-lakiku"],
-["هٰذِهِ أُخْتِي","hādhihi ukhtī","Ini saudara perempuanku"],
-
-["أُحِبُّ أَبِي","uḥibbu abī","Aku mencintai ayahku"],
-["أُحِبُّ أُمِّي","uḥibbu ummī","Aku mencintai ibuku"],
-["هٰذَا جَدِّي","hādhā jaddī","Ini kakekku"],
-["هٰذِهِ جَدَّتِي","hādhihi jaddatī","Ini nenekku"],
-["بَيْتُ الْأُسْرَةِ","baytu al-usrah","Rumah keluarga"],
-
-
-["الزَّوْجُ","az-zauj","Suami"],
-["الزَّوْجَةُ","az-zaujah","Istri"],
-["الْأَبْنَاءُ","al-abnā’","Anak-anak"],
-["الْإِخْوَةُ","al-ikhwah","Saudara-saudara"],
-["الْأَخَوَاتُ","al-akhawāt","Saudari-saudari"],
-
-["الْحَفِيدُ","al-ḥafīd","Cucu laki-laki"],
-["الْحَفِيدَةُ","al-ḥafīdah","Cucu perempuan"],
-["الْقَرَابَةُ","al-qarābah","Hubungan keluarga"],
-["الْوَالِدَانِ","al-wālidān","Orang tua"],
-["الْوَلَدُ","al-walad","Anak"],
-
-["الْأُسْرَةُ الصَّغِيرَةُ","al-usrah aṣ-ṣaghīrah","Keluarga kecil"],
-["الْأُسْرَةُ الْكَبِيرَةُ","al-usrah al-kabīrah","Keluarga besar"],
-["الْمَنْزِلُ","al-manzil","Rumah"],
-["الْمَحَبَّةُ","al-maḥabbah","Kasih sayang"],
-["الِاجْتِمَاعُ","al-ijtimāʿ","Berkumpul"],
-
-["أُسْرَتِي كَبِيرَةٌ","usratī kabīrah","Keluargaku besar"],
-["أُسْرَتِي صَغِيرَةٌ","usratī ṣaghīrah","Keluargaku kecil"],
-["عَائِلَتِي سَعِيدَةٌ","ʿāʾilatī saʿīdah","Keluargaku bahagia"],
-["أَبِي مُعَلِّمٌ","abī muʿallim","Ayahku seorang guru"],
-["أُمِّي رَبَّةُ بَيْتٍ","ummī rabbatu bayt","Ibuku ibu rumah tangga"],
-
-["أَخِي طَالِبٌ","akhī ṭālib","Saudaraku siswa"],
-["أُخْتِي طَالِبَةٌ","ukhtī ṭālibah","Saudariku siswi"],
-["جَدِّي كَبِيرٌ","jaddī kabīr","Kakekku sudah tua"],
-["جَدَّتِي طَيِّبَةٌ","jaddatī ṭayyibah","Nenekku baik"],
-["حُبُّ الْأُسْرَةِ","ḥubbu al-usrah","Kasih sayang keluarga"],
-
-
-["الْحَمَاةُ","al-ḥamāh","Ibu mertua"],
-["الْحَمُو","al-ḥamu","Ayah mertua"],
-["الصِّهْرُ","aṣ-ṣihr","Ipar laki-laki"],
-["الصِّهْرَةُ","aṣ-ṣihrāh","Ipar perempuan"],
-["الْقَرِيبُ","al-qarīb","Kerabat dekat"],
-
-["الْبَعِيدُ","al-baʿīd","Kerabat jauh"],
-["الْيَتِيمُ","al-yatīm","Anak yatim (laki-laki)"],
-["الْيَتِيمَةُ","al-yatīmah","Anak yatim (perempuan)"],
-["الْوَصِيُّ","al-waṣiyy","Wali"],
-["الْكَافِلُ","al-kāfil","Penanggung / pengasuh"],
-
-["الْعِشْرَةُ","al-ʿishrah","Kebersamaan"],
-["الْقُرْبَى","al-qurbā","Kekerabatan"],
-["الْأُلْفَةُ","al-ulfah","Keakraban"],
-["الطِّفْلُ","aṭ-ṭifl","Anak kecil"],
-["الطِّفْلَةُ","aṭ-ṭiflah","Anak kecil (perempuan)"],
-
-
-
-  ];
-
-  const tableBody = document.querySelector("#vocab-table tbody");
-  const pagination = document.getElementById("pagination");
-
-  function renderPage(page) {
-  tableBody.innerHTML = "";
-
-  const start = (page - 1) * ITEMS_PER_PAGE;
-  const end = start + ITEMS_PER_PAGE; // ✅ TANPA -1
-
-  const pageItems = vocabData.slice(start, end);
-
-  pageItems.forEach((item, i) => {
-    if (!item || item.length < 3) return;
-
-    tableBody.innerHTML += `
-      <tr>
-        <td class="px-4 py-3">${start + i + 1}</td>
-        <td class="px-4 py-3 text-xl arabic-text text-right font-semibold">${item[0]}</td>
-        <td class="px-4 py-3">${item[1]}</td>
-        <td class="px-4 py-3">${item[2]}</td>
-      </tr>
-    `;
-  });
-
-  buildMobileList();
-  setActive(page);
-}
-
-
-
-
-  function buildPagination() {
-    const pages = Math.ceil(vocabData.length / ITEMS_PER_PAGE);
-    pagination.innerHTML = "";
-    for (let i = 1; i <= pages; i++) {
-      pagination.innerHTML += `
-        <button onclick="renderPage(${i})"
-          class="px-3 py-1 rounded-lg bg-primary-100 text-primary-700 hover:bg-primary-500 hover:text-white transition">
-          ${i}
-        </button>
-      `;
-    }
-  }
-
-  function setActive(page) {
-    [...pagination.children].forEach((btn, idx) => {
-      btn.classList.toggle("bg-primary-600", idx + 1 === page);
-      btn.classList.toggle("text-white", idx + 1 === page);
-    });
-  }
-
-  buildPagination();
-  renderPage(1);
+<script>
+  const VOCAB_SOURCE = VOCABS_FAMILY;
 </script>
+
+<script src="assets/js/vocab-page.js"></script>
 
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+
+<script src="assets/theme.js"></script>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المواصلات | Membaca Teks Bahasa Arab - ArabRead</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            // Mengoptimalkan palette slate untuk primary
+            primary: { 
+              50:'#f8fafc', 100:'#f1f5f9', 200:'#e2e8f0', 300:'#cbd5e1', 
+              400:'#94a3b8', 500:'#64748b', 600:'#475569', 700:'#334155', 
+              800:'#1e293b', 900:'#0f172a' 
+            },
+          },
+          fontFamily: { arabic: ['Amiri', 'Scheherazade New', 'serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .arabic-text { font-family: 'Amiri','Scheherazade New',serif; direction: rtl; }
+    /* Custom scrollbar untuk elemen dark mode */
+    .dark ::-webkit-scrollbar { width: 8px; }
+    .dark ::-webkit-scrollbar-track { background: #1e293b; }
+    .dark ::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+  </style>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-900 dark:text-slate-300 min-h-screen transition-colors duration-300">
+  
+  <header class="sticky top-0 z-50 w-full bg-slate-800/95 dark:bg-slate-950/95 backdrop-blur-md text-white shadow-xl border-b border-slate-700/50 transition-all">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+      
+      <div class="flex items-center gap-2 md:gap-4">
+        <a href="vocabulary-transportation.html" class="p-2 hover:bg-slate-700 rounded-xl transition-all group" title="Kembali ke Kosakata">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </a>
+
+        <div class="flex flex-col">
+          <span class="text-lg md:text-xl font-black tracking-tight leading-none italic uppercase">Tarbiyyat</span>
+          <span class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase leading-none mt-1">al-Lughah</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 md:gap-8">
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="index.html" class="text-sm font-bold text-slate-300 hover:text-white transition-colors">Beranda</a>
+          <a href="quiz-transportation.html" class="text-sm font-bold text-slate-300 hover:text-white transition-colors">Kuis</a>
+          <div class="w-px h-4 bg-slate-700"></div>
+          <span class="text-sm font-bold text-white flex items-center gap-2 bg-slate-700/50 px-3 py-1.5 rounded-lg border border-slate-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            Membaca Teks
+          </span>
+        </nav>
+
+        <button id="themeToggle"
+          class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-xl 
+                 bg-slate-700 hover:bg-slate-600 border border-slate-600
+                 transition-all active:scale-90 text-base md:text-lg shadow-sm"
+          title="Ganti Tema">
+          🌙
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-8 md:py-12" data-reading="transportation">
+
+    <div class="text-center mb-10">
+      <div class="inline-block px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-6">
+        Latihan Membaca
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white arabic-text mb-2 leading-tight">
+        الْمُوَاصَلَاتُ
+      </h1>
+      <p class="text-sm md:text-lg text-slate-500 dark:text-slate-400 italic font-medium tracking-tight">
+        Membaca teks dengan tema Transportasi
+      </p>
+    </div>
+
+    <section class="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden" data-reading-card>
+      
+      <div class="p-6 md:p-10 bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-100 dark:border-slate-700/50">
+        <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-inner border border-slate-200 dark:border-slate-700">
+          <p id="readingText" class="arabic-text text-xl md:text-2xl leading-[2.2] md:leading-[2.5] text-center text-slate-800 dark:text-slate-200" dir="rtl" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="p-6 md:p-8 space-y-8">
+        <div class="flex flex-col items-center">
+          <label for="readingAudio" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 italic">Audio Pelafalan:</label>
+          <audio id="readingAudio" controls preload="none" class="w-full max-w-md h-10 shadow-sm rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-100 dark:bg-slate-700">
+            Browser Anda tidak mendukung audio.
+          </audio>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4">
+          <button id="toggleTranslation" type="button" class="flex items-center gap-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-slate-400/20 transition-all active:scale-95 text-sm" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" /></svg>
+            Terjemahan
+          </button>
+
+          <button id="shuffleReading" type="button" class="flex items-center gap-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold py-2.5 px-6 rounded-xl border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all active:scale-95 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+            Acak Teks
+          </button>
+        </div>
+
+        <div id="translation" class="bg-slate-100 dark:bg-slate-900/80 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 hidden" aria-hidden="true">
+          <h3 class="text-xs font-bold text-slate-700 dark:text-slate-400 mb-3 uppercase tracking-widest flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" /></svg>
+            Terjemahan Indonesia:
+          </h3>
+          <p id="translationText" class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm md:text-base italic"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-between mt-12">
+      <a href="index.html" class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all active:scale-95 text-sm">
+        🏠 Kembali Beranda
+      </a>
+
+      <div class="flex gap-3">
+        <a href="vocabulary-transportation.html" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200 font-bold text-sm transition-all active:scale-95 border border-slate-300 dark:border-slate-600">
+          📚 Kosa Kata
+        </a>
+        <a href="quiz-transportation.html" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-800 dark:bg-slate-600 text-white font-bold text-sm shadow-lg shadow-slate-900/20 transition-all active:scale-95">
+          📝 Ambil Kuis
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 transition-colors mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-12">
+      <div class="flex flex-col items-center text-center space-y-6">
+        <div class="flex flex-col items-center gap-1">
+          <span class="text-xl font-black tracking-tighter text-slate-800 dark:text-white uppercase italic">
+            Tarbiyyat <span class="text-slate-500 dark:text-slate-400">al-Lughah</span>
+          </span>
+          <div class="flex items-center gap-3 mt-2">
+            <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Tema Saat Ini:</span>
+            <span class="arabic-text text-xl text-slate-700 dark:text-slate-300 font-bold">الْمُوَاصَلَاتُ</span>
+          </div>
+        </div>
+        
+        <div class="h-px w-24 bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent"></div>
+
+        <p class="text-[11px] md:text-sm text-slate-500 dark:text-slate-500 font-medium max-w-md">
+          &copy; 2026 <strong>Tarbiyyat al-Lughah</strong> — Platform Pembelajaran Bahasa Arab Mandiri Terpadu.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/read-page.js"></script>
+
+  <script>
+    const toggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
+
+    if (localStorage.theme === 'dark') {
+      root.classList.add('dark');
+      toggle.textContent = '☀️';
+    } else {
+      toggle.textContent = '🌙';
+    }
+
+    toggle.addEventListener('click', () => {
+      root.classList.toggle('dark');
+      const isDark = root.classList.contains('dark');
+      toggle.textContent = isDark ? '☀️' : '🌙';
+      localStorage.theme = isDark ? 'dark' : 'light';
+    });
+  </script>
+
+</body>
+</html>

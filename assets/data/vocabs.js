@@ -1,32 +1,60 @@
 window.VOCABS = [
 
-  // ===== Ta'aruf =====
-  { ar:'الْمُوَاطِنُ', id:'Warga negara', tema:'taaruf' },
-  { ar:'الْمُسْلِمُ', id:'Muslim (laki-laki)', tema:'taaruf' },
-  { ar:'الْمُسْلِمَةُ', id:'Muslimah (perempuan)', tema:'taaruf' },
-  { ar:'الْهُوِيَّةُ', id:'Identitas', tema:'taaruf' },
-  { ar:'الْمَعْرِفَةُ', id:'Pengenalan / pengetahuan', tema:'taaruf' },
-  // ===== TA'ARUF =====
-{ ar:'مَا اسْمُكَ؟', id:'Siapa namamu? (laki-laki)', tema:'taaruf' },
-{ ar:'مَا اسْمُكِ؟', id:'Siapa namamu? (perempuan)', tema:'taaruf' },
-{ ar:'اسْمِي ...', id:'Namaku …', tema:'taaruf' },
+   // ===== Ta'aruf =====
+  { ar:'أَنَا', id:'Saya', tema:'taaruf' },
+  { ar:'أَنْتَ', id:'Kamu (laki-laki)', tema:'taaruf' },
+  { ar:'أَنْتِ', id:'Kamu (perempuan)', tema:'taaruf' },
+  { ar:'هُوَ', id:'Dia (laki-laki)', tema:'taaruf' },
+  { ar:'هِيَ', id:'Dia (perempuan)', tema:'taaruf' },
 
-{ ar:'مِنْ أَيْنَ أَنْتَ؟', id:'Dari mana kamu? (laki-laki)', tema:'taaruf' },
-{ ar:'مِنْ أَيْنَ أَنْتِ؟', id:'Dari mana kamu? (perempuan)', tema:'taaruf' },
-{ ar:'أَنَا مِنْ بُونِي', id:'Saya dari Bone', tema:'taaruf' },
+  { ar:'هٰذَا', id:'Ini (laki-laki)', tema:'taaruf' },
+  { ar:'هٰذِهِ', id:'Ini (perempuan)', tema:'taaruf' },
+  { ar:'ذٰلِكَ', id:'Itu (laki-laki)', tema:'taaruf' },
+  { ar:'تِلْكَ', id:'Itu (perempuan)', tema:'taaruf' },
 
-{ ar:'كَيْفَ حَالُكَ؟', id:'Bagaimana kabarmu? (laki-laki)', tema:'taaruf' },
-{ ar:'أَنَا بِخَيْرٍ، وَالْحَمْدُ لِلّٰهِ', id:'Saya baik, alhamdulillah', tema:'taaruf' },
+  { ar:'طَالِبٌ', id:'Siswa', tema:'taaruf' },
+  { ar:'طَالِبَةٌ', id:'Siswi', tema:'taaruf' },
+  { ar:'صَدِيقِي', id:'Temanku (laki-laki)', tema:'taaruf' },
+  { ar:'صَدِيقَتِي', id:'Temanku (perempuan)', tema:'taaruf' },
+  { ar:'اِسْمِي', id:'Namaku', tema:'taaruf' },
+  { ar:'اِسْمُكَ', id:'Namamu', tema:'taaruf' },
 
-{ ar:'كَمْ عُمْرُكَ؟', id:'Berapa usiamu?', tema:'taaruf' },
-{ ar:'فِي أَيِّ صَفٍّ أَنْتَ؟', id:'Kamu di kelas berapa?', tema:'taaruf' },
+  // ===== Kata Tanya =====
+  { ar:'مَنْ', id:'Siapa', tema:'taaruf' },
+  { ar:'مَا', id:'Apa', tema:'taaruf' },
+  { ar:'كَيْفَ', id:'Bagaimana', tema:'taaruf' },
+  { ar:'مِنْ أَيْنَ', id:'Dari mana', tema:'taaruf' },
+  { ar:'هَلْ', id:'Apakah', tema:'taaruf' },
 
-{ ar:'مَا هِوَايَتُكَ؟', id:'Apa hobimu?', tema:'taaruf' },
-{ ar:'هِوَايَتِي الْقِرَاءَةُ', id:'Hobiku membaca', tema:'taaruf' },
+  // ===== Kata Sapa =====
+  { ar:'السَّلَامُ عَلَيْكُمْ', id:'Assalamu’alaikum', tema:'taaruf' },
+  { ar:'وَعَلَيْكُمُ السَّلَامُ', id:'Wa’alaikum salam', tema:'taaruf' },
+  { ar:'صَبَاحُ الْخَيْرِ', id:'Selamat pagi', tema:'taaruf' },
+  { ar:'صَبَاحُ النُّورِ', id:'Selamat pagi juga', tema:'taaruf' },
+  { ar:'مَسَاءُ الْخَيْرِ', id:'Selamat sore/malam', tema:'taaruf' },
+  { ar:'مَسَاءُ النُّورِ', id:'Selamat sore/malam juga', tema:'taaruf' },
+  { ar:'أَهْلًا وَسَهْلًا', id:'Selamat datang', tema:'taaruf' },
+  { ar:'شُكْرًا', id:'Terima kasih', tema:'taaruf' },
+  { ar:'عَفْوًا', id:'Sama-sama', tema:'taaruf' },
+  { ar:'إِلَى اللِّقَاءِ', id:'Sampai jumpa', tema:'taaruf' },
+  { ar:'مَعَ السَّلَامَةِ', id:'Semoga selamat', tema:'taaruf' },
 
-{ ar:'السَّلَامُ عَلَيْكُمْ', id:'Assalamu’alaikum', tema:'taaruf' },
-{ ar:'وَعَلَيْكُمُ السَّلَامُ', id:'Wa’alaikumussalam', tema:'taaruf' },
-{ ar:'إِلَى اللِّقَاءِ', id:'Sampai jumpa', tema:'taaruf' },
+  // ===== Profesi =====
+  { ar:'تَاجِرٌ', id:'Pedagang (laki-laki)', tema:'profesi' },
+  { ar:'تَاجِرَةٌ', id:'Pedagang (perempuan)', tema:'profesi' },
+  { ar:'تِلْمِيذٌ', id:'Murid (laki-laki)', tema:'profesi' },
+  { ar:'تِلْمِيذَةٌ', id:'Murid (perempuan)', tema:'profesi' },
+  { ar:'مُدَرِّسٌ', id:'Guru (laki-laki)', tema:'profesi' },
+  { ar:'مُدَرِّسَةٌ', id:'Guru (perempuan)', tema:'profesi' },
+  { ar:'طَبِيبٌ', id:'Dokter (laki-laki)', tema:'profesi' },
+  { ar:'طَبِيبَةٌ', id:'Dokter (perempuan)', tema:'profesi' },
+
+  // ===== Arah =====
+  { ar:'الشِّمَالِيَّةُ', id:'Utara', tema:'arah' },
+  { ar:'الْجَنُوبِيَّةُ', id:'Selatan', tema:'arah' },
+  { ar:'الشَّرْقِيَّةُ', id:'Timur', tema:'arah' },
+  { ar:'الْغَرْبِيَّةُ', id:'Barat', tema:'arah' },
+  { ar:'الْوُسْطَى', id:'Tengah', tema:'arah' },
 
 // ===== SEKOLAH =====
 { ar:'مَدْرَسَةٌ', id:'Sekolah', tema:'sekolah' },
@@ -97,82 +125,6 @@ window.VOCABS = [
 { ar:'الطِّفْلُ يُحِبُّ الأَرَانِبَ', id:'Anak itu suka kelinci', tema:'hewan' },
 { ar:'يَطِيرُ الطَّائِرُ فِي السَّمَاءِ', id:'Burung terbang di langit', tema:'hewan' },
 
-// ===== TA'ARUF — KOSAKATA DASAR =====
-{ ar:'الاِسْمُ', id:'Nama', tema:'taaruf' },
-{ ar:'الصَّدِيقُ', id:'Teman (laki-laki)', tema:'taaruf' },
-{ ar:'الصَّدِيقَةُ', id:'Teman (perempuan)', tema:'taaruf' },
-{ ar:'الْبَلَدُ', id:'Daerah / negeri', tema:'taaruf' },
-{ ar:'الْمَدِينَةُ', id:'Kota', tema:'taaruf' },
-
-{ ar:'الْعُمْرُ', id:'Umur', tema:'taaruf' },
-{ ar:'الطَّالِبُ', id:'Siswa (laki-laki)', tema:'taaruf' },
-{ ar:'الطَّالِبَةُ', id:'Siswi (perempuan)', tema:'taaruf' },
-{ ar:'الصَّفُّ', id:'Kelas', tema:'taaruf' },
-{ ar:'الْهَوَايَةُ', id:'Hobi', tema:'taaruf' },
-
-{ ar:'الْأَخُ', id:'Saudara laki-laki', tema:'taaruf' },
-{ ar:'الْأُخْتُ', id:'Saudara perempuan', tema:'taaruf' },
-{ ar:'الْأُسْرَةُ', id:'Keluarga', tema:'taaruf' },
-{ ar:'الْمَنْزِلُ', id:'Rumah', tema:'taaruf' },
-{ ar:'السُّكْنَى', id:'Tempat tinggal', tema:'taaruf' },
-
-{ ar:'الْجِنْسُ', id:'Jenis kelamin', tema:'taaruf' },
-{ ar:'الْعُنْوَانُ', id:'Alamat', tema:'taaruf' },
-{ ar:'الْوَطَنُ', id:'Tanah air', tema:'taaruf' },
-{ ar:'الْقَرْيَةُ', id:'Desa', tema:'taaruf' },
-{ ar:'الْمَحَلَّةُ', id:'Lingkungan', tema:'taaruf' },
-
-{ ar:'الْأَبُ', id:'Ayah', tema:'taaruf' },
-{ ar:'الْأُمُّ', id:'Ibu', tema:'taaruf' },
-{ ar:'الِابْنُ', id:'Anak laki-laki', tema:'taaruf' },
-{ ar:'الِابْنَةُ', id:'Anak perempuan', tema:'taaruf' },
-{ ar:'الْأَقَارِبُ', id:'Kerabat', tema:'taaruf' },
-
-{ ar:'الْمُوَاطِنُ', id:'Warga negara', tema:'taaruf' },
-{ ar:'الْمُسْلِمُ', id:'Muslim (laki-laki)', tema:'taaruf' },
-{ ar:'الْمُسْلِمَةُ', id:'Muslimah (perempuan)', tema:'taaruf' },
-{ ar:'الْهُوِيَّةُ', id:'Identitas', tema:'taaruf' },
-{ ar:'الْمَعْرِفَةُ', id:'Pengenalan / pengetahuan', tema:'taaruf' },
-
-// ===== TA'ARUF — UNGKAPAN =====
-{ ar:'السَّلَامُ عَلَيْكُمْ', id:'Assalamu’alaikum', tema:'taaruf' },
-{ ar:'وَعَلَيْكُمُ السَّلَامُ', id:'Waalaikumussalam', tema:'taaruf' },
-
-{ ar:'مَا اسْمُكَ؟', id:'Siapa namamu? (laki-laki)', tema:'taaruf' },
-{ ar:'مَا اسْمُكِ؟', id:'Siapa namamu? (perempuan)', tema:'taaruf' },
-{ ar:'اسْمِي ...', id:'Namaku …', tema:'taaruf' },
-
-{ ar:'مِنْ أَيْنَ أَنْتَ؟', id:'Dari mana kamu? (laki-laki)', tema:'taaruf' },
-{ ar:'مِنْ أَيْنَ أَنْتِ؟', id:'Dari mana kamu? (perempuan)', tema:'taaruf' },
-{ ar:'أَنَا مِنْ بُونِي', id:'Saya dari Bone', tema:'taaruf' },
-
-{ ar:'كَيْفَ حَالُكَ؟', id:'Bagaimana kabarmu? (laki-laki)', tema:'taaruf' },
-{ ar:'أَنَا بِخَيْرٍ، وَالْحَمْدُ لِلّٰهِ', id:'Saya baik, alhamdulillah', tema:'taaruf' },
-
-{ ar:'فِي أَيِّ صَفٍّ أَنْتَ؟', id:'Kamu di kelas berapa?', tema:'taaruf' },
-{ ar:'أَنَا فِي الصَّفِّ السَّابِعِ', id:'Saya di kelas tujuh', tema:'taaruf' },
-
-{ ar:'مَا هِوَايَتُكَ؟', id:'Apa hobimu?', tema:'taaruf' },
-{ ar:'هِوَايَتِي الْقِرَاءَةُ', id:'Hobiku membaca', tema:'taaruf' },
-
-{ ar:'مَا لَوْنُ كِتَابِكَ؟', id:'Apa warna bukumu?', tema:'taaruf' },
-{ ar:'كِتَابِي أَزْرَقُ', id:'Bukuku berwarna biru', tema:'taaruf' },
-
-{ ar:'مَنْ هٰذَا؟', id:'Siapa ini? (laki-laki)', tema:'taaruf' },
-{ ar:'مَنْ هٰذِهِ؟', id:'Siapa ini? (perempuan)', tema:'taaruf' },
-
-{ ar:'هٰذَا صَدِيقِي', id:'Ini temanku (laki-laki)', tema:'taaruf' },
-{ ar:'هٰذِهِ صَدِيقَتِي', id:'Ini temanku (perempuan)', tema:'taaruf' },
-
-{ ar:'كَمْ عُمُرُكَ؟', id:'Berapa umurmu?', tema:'taaruf' },
-{ ar:'عُمُرِي ثَلَاثَةَ عَشَرَ عَامًا', id:'Umurku tiga belas tahun', tema:'taaruf' },
-
-{ ar:'أَيْنَ تَسْكُنُ؟', id:'Di mana kamu tinggal?', tema:'taaruf' },
-{ ar:'أَسْكُنُ فِي بُونِي', id:'Aku tinggal di Bone', tema:'taaruf' },
-
-{ ar:'تَشَرَّفْتُ بِمَعْرِفَتِكَ', id:'Senang berkenalan denganmu', tema:'taaruf' },
-{ ar:'إِلَى اللِّقَاءِ', id:'Sampai jumpa', tema:'taaruf' },
-{ ar:'إِلَى اللِّقَاءِ مَرَّةً أُخْرَى', id:'Sampai jumpa lagi', tema:'taaruf' },
 
 // ===== SEKOLAH — KOSAKATA DASAR =====
 { ar:'الْمَدْرَسَةُ', id:'Sekolah', tema:'sekolah' },
@@ -436,43 +388,6 @@ window.VOCABS = [
 { ar:'الطَّائِرُ الصَّغِيرُ', id:'Burung kecil', tema:'hewan' },
 { ar:'الطَّائِرُ الْكَبِيرُ', id:'Burung besar', tema:'hewan' },
 
-// ===== TA'ARUF — DARI TEKS BACAAN =====
-{ ar:'مَرْحَبًا', id:'Halo / Selamat datang', tema:'taaruf' },
-
-{ ar:'أَسْكُنُ', id:'Aku tinggal', tema:'taaruf' },
-{ ar:'نَسْكُنُ', id:'Kami tinggal', tema:'taaruf' },
-
-{ ar:'أَذْهَبُ', id:'Aku pergi', tema:'taaruf' },
-{ ar:'نَذْهَبُ', id:'Kami pergi', tema:'taaruf' },
-
-{ ar:'أُحِبُّ', id:'Aku suka / mencintai', tema:'taaruf' },
-{ ar:'نُحِبُّ', id:'Kami suka', tema:'taaruf' },
-
-{ ar:'نَتَعَلَّمُ', id:'Kami belajar', tema:'taaruf' },
-{ ar:'نَسْعَى', id:'Kami berusaha', tema:'taaruf' },
-{ ar:'نَتَمَنَّى', id:'Kami berharap', tema:'taaruf' },
-{ ar:'نَجْتَهِدُ', id:'Kami bersungguh-sungguh', tema:'taaruf' },
-
-{ ar:'نَتَعَاوَنُ', id:'Kami bekerja sama', tema:'taaruf' },
-
-// ===== TA'ARUF — KONSEP & BENDA =====
-{ ar:'الْمُسْتَقْبَلُ', id:'Masa depan', tema:'taaruf' },
-{ ar:'النَّجَاحُ', id:'Keberhasilan', tema:'taaruf' },
-
-{ ar:'الدِّرَاسَةُ', id:'Belajar / studi', tema:'taaruf' },
-{ ar:'التَّعَلُّمُ', id:'Pembelajaran', tema:'taaruf' },
-
-{ ar:'الْأَخْلَاقُ', id:'Akhlak / moral', tema:'taaruf' },
-{ ar:'الْأَخْلَاقُ الْحَسَنَةُ', id:'Akhlak yang baik', tema:'taaruf' },
-
-{ ar:'الْفَرَاغُ', id:'Waktu luang', tema:'taaruf' },
-{ ar:'الْقُرْآنُ', id:'Al-Qur’an', tema:'taaruf' },
-
-// ===== TA'ARUF — SIFAT =====
-{ ar:'مُجْتَهِدٌ', id:'Rajin / giat', tema:'taaruf' },
-{ ar:'نَشِيطٌ', id:'Aktif', tema:'taaruf' },
-{ ar:'مُؤَدَّبَةٌ', id:'Sopan (perempuan)', tema:'taaruf' },
-{ ar:'سَعِيدٌ', id:'Bahagia', tema:'taaruf' },
 
 // ===== BACAAN HEWAN — KATA KERJA & KONSEP BARU =====
 { ar:'يَعِيشُ', id:'Hidup / tinggal', tema:'hewan' },
@@ -547,20 +462,6 @@ window.VOCABS = [
 { ar:'التَّعَلُّمِ', id:'Pembelajaran / belajar', tema:'sekolah' },
 
 { ar:'كَثِيرًا', id:'Sangat / banyak', tema:'sekolah' },
-
-// ===== KUIS TA’ARUF — TAMBAHAN =====
-{ ar:'مَعَ', id:'Bersama', tema:'taaruf' },
-{ ar:'كُلَّ يَوْمٍ', id:'Setiap hari', tema:'taaruf' },
-
-{ ar:'أَتَعَلَّمُ', id:'Aku belajar', tema:'taaruf' },
-{ ar:'أُحِبُّ', id:'Aku suka / mencintai', tema:'taaruf' }, // penguatan bentuk tunggal
-
-{ ar:'نَعِيشُ', id:'Kami hidup / tinggal', tema:'taaruf' },
-
-{ ar:'إِلَى', id:'Ke / menuju', tema:'taaruf' },
-{ ar:'مَعًا', id:'Bersama-sama', tema:'taaruf' },
-
-{ ar:'سَعِيدٌ', id:'Bahagia', tema:'taaruf' },
 
 
 

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
 
-<script src="assets/data/vocabs.js"></script>
-
-
 <script src="assets/theme.js"></script>
 
 <head>
@@ -33,7 +30,6 @@
   </script>
   <style>
     .arabic-text { font-family: 'Amiri','Scheherazade New',serif; direction: rtl; }
-    #translation { display: none; }
   </style>
 </head>
 
@@ -80,74 +76,138 @@
 </header>
 
   <!-- Main Content -->
- <main class="max-w-4xl mx-auto px-4 py-8 md:py-12">
-  
+<main
+  class="max-w-4xl mx-auto px-4 py-8 md:py-12"
+  data-reading="animals"
+>
+
   <div class="text-center mb-10">
     <div class="inline-block px-3 py-1 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-6">
       Latihan Membaca
     </div>
-    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white arabic-text mb-2 leading-tight">
+    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white 
+               arabic-text mb-2 leading-tight"
+        style="font-family: 'Amiri', serif;">
       الْحَيَوَانَاتُ
     </h1>
-    <p class="text-sm md:text-lg text-slate-500 dark:text-slate-400 italic font-medium tracking-tight">Membaca teks dengan tema Hewan</p>
+
+    <p class="text-sm md:text-lg text-slate-500 dark:text-slate-400 italic font-medium tracking-tight">
+      Membaca teks dengan tema Hewan
+    </p>
   </div>
 
-  <section class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-    
+  <section
+    class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl
+           border border-slate-100 dark:border-slate-700 overflow-hidden"
+    data-reading-card
+  >
     <div class="p-6 md:p-10 bg-slate-50/50 dark:bg-slate-900/40 border-b border-slate-100 dark:border-slate-700/50">
-      <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-inner border border-slate-100 dark:border-slate-700">
-        <p id="readingText" class="arabic-text text-xl md:text-2xl leading-[2.2] md:leading-[2.5] text-center text-slate-800 dark:text-slate-200" dir="rtl">
-          أَنَا أُحِبُّ الْحَيَوَانَاتِ كَثِيرًا. فِي بَيْتِنَا قِطٌّ أَلِيفٌ وَكَلْبٌ صَغِيرٌ. 
-          أَنَا أَعْتَنِي بِالْحَيَوَانَاتِ كُلَّ يَوْمٍ وَأُعْطِيهَا الطَّعَامَ. 
-          فِي الْمَزْرَعَةِ بَقَرَةٌ وَغَنَمٌ وَدَجَاجٌ. 
-          أَمَّا فِي الْغَابَةِ فَيُوجَدُ أَسَدٌ قَوِيٌّ وَفِيلٌ كَبِيرٌ. 
-          الْحَيَوَانَاتُ مَخْلُوقَاتُ اللهِ، وَيَجِبُ عَلَيْنَا أَنْ نُحِبَّهَا وَنَحْمِيَهَا.
-        </p>
+      <div
+        class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl
+               shadow-inner border border-slate-100 dark:border-slate-700"
+      >
+        <p
+          id="readingText"
+          class="arabic-text text-xl md:text-2xl leading-[2.2] md:leading-[2.5]
+                 text-center text-slate-800 dark:text-slate-200"
+          dir="rtl"
+          aria-live="polite"
+        ></p>
       </div>
     </div>
 
     <div class="p-6 md:p-8 space-y-8">
+
       <div class="flex flex-col items-center">
-        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 italic">Dengarkan Audio Teks:</label>
-        <audio id="readingAudio" controls class="w-full max-w-md h-10 shadow-sm rounded-lg border border-slate-100 dark:border-slate-700">
+        <label
+          for="readingAudio"
+          class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 italic"
+        >
+          Dengarkan Audio Teks:
+        </label>
+
+        <audio
+          id="readingAudio"
+          controls
+          preload="none"
+          class="w-full max-w-md h-10 shadow-sm rounded-lg border border-slate-100 dark:border-slate-700"
+        >
           Browser Anda tidak mendukung audio.
         </audio>
       </div>
 
       <div class="flex flex-wrap justify-center gap-4">
-        <button id="toggleTranslation" class="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-orange-500/20 transition-all active:scale-95 text-sm">
+        <button
+          id="toggleTranslation"
+          type="button"
+          class="flex items-center gap-2 bg-orange-600 hover:bg-orange-700
+                 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg
+                 shadow-orange-500/20 transition-all active:scale-95 text-sm"
+          aria-expanded="false"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" /></svg>
           Terjemahan
         </button>
 
-        <button id="shuffleReading" class="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-2.5 px-6 rounded-xl border border-slate-200 dark:border-slate-600 hover:bg-slate-200 transition-all active:scale-95 text-sm">
+        <button
+          id="shuffleReading"
+          type="button"
+          class="flex items-center gap-2 bg-slate-100 dark:bg-slate-700
+                 text-slate-700 dark:text-slate-200 font-bold py-2.5 px-6
+                 rounded-xl border border-slate-200 dark:border-slate-600
+                 hover:bg-slate-200 transition-all active:scale-95 text-sm"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
           Acak Bacaan
         </button>
       </div>
 
-      <div id="translation" class="bg-orange-50/50 dark:bg-slate-900/50 p-6 rounded-2xl border border-orange-100 dark:border-orange-800/50">
-        <h3 class="text-xs font-bold text-orange-700 dark:text-orange-400 mb-2 uppercase tracking-widest flex items-center gap-2">
+      <div
+        id="translation"
+        class="bg-orange-50/50 dark:bg-slate-900/50 p-6 rounded-2xl
+               border border-orange-100 dark:border-orange-800/50 hidden"
+        aria-hidden="true"
+      >
+        <h3
+          class="text-xs font-bold text-orange-700 dark:text-orange-400
+                 mb-3 uppercase tracking-widest flex items-center gap-2"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" /></svg>
           Terjemahan:
         </h3>
-        <p id="translationText" class="text-slate-600 dark:text-slate-300 leading-relaxed text-sm md:text-base italic">
-          Aku sangat menyukai hewan. Di rumah kami ada seekor kucing peliharaan dan seekor anjing kecil. Aku merawat hewan-hewan setiap hari dan memberi mereka makanan. Di peternakan ada sapi, kambing, dan ayam...
-        </p>
+
+        <p
+          id="translationText"
+          class="text-slate-600 dark:text-slate-300 leading-relaxed
+                 text-sm md:text-base italic"
+        ></p>
       </div>
+
     </div>
   </section>
 
+
   <div class="flex flex-col sm:flex-row gap-3 justify-between mt-10">
-    <a href="index.html" class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700 text-sm shadow-sm transition-all active:scale-95">
+    <a href="index.html"
+       class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
+              bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 
+              font-bold border border-slate-200 dark:border-slate-700 
+              text-sm shadow-sm transition-all active:scale-95">
       🏠 Beranda
     </a>
 
     <div class="flex gap-3">
-      <a href="vocabulary-animals.html" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400 font-bold text-sm transition-all active:scale-95">
+      <a href="vocabulary-animals.html"
+         class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
+                bg-orange-100 text-orange-700 dark:bg-orange-900/40 
+                dark:text-orange-400 font-bold text-sm transition-all active:scale-95">
         📚 Kosa Kata
       </a>
-      <a href="quiz-animals.html" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-amber-500 text-white font-bold text-sm shadow-lg shadow-amber-500/20 transition-all active:scale-95">
+
+      <a href="quiz-animals.html"
+         class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
+                bg-amber-500 text-white font-bold text-sm shadow-lg 
+                shadow-amber-500/20 transition-all active:scale-95">
         📝 Kuis
       </a>
     </div>
@@ -194,164 +254,14 @@
   </div>
 </footer>
 
-  <!-- Scripts -->
-  <script>
-    feather.replace();
-
-    // Toggle Terjemahan
-    document.getElementById('toggleTranslation').addEventListener('click', function() {
-      const translation = document.getElementById('translation');
-      const button = this;
-
-      if (translation.style.display === 'block') {
-        translation.style.display = 'none';
-        button.textContent = 'Tampilkan Terjemahan';
-      } else {
-        translation.style.display = 'block';
-        button.textContent = 'Sembunyikan Terjemahan';
-      }
-    });
-
-  </script>
+<script type="module" src="assets/js/read-page.js"></script>
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
 <script>
   window.PRESENCE_OPTIONS = { mode: "global" };
 </script>
 
-<!-- Panggil script presence -->
-<script type="module" src="./assets/presence.js"></script>
 
-<script>
-/* =========================
-   DATA BACAAN TA'ARUF
-========================= */
-const READINGS = [
- 
-{
-  ar: `أَنَا أُحِبُّ الْحَيَوَانَاتِ كَثِيرًا.
-فِي بَيْتِنَا حَيَوَانَاتٌ أَلِيفَةٌ نُعْتَنِي بِهَا.
-عِنْدَنَا قِطٌّ جَمِيلٌ وَكَلْبٌ صَغِيرٌ.
-فِي الْمَزْرَعَةِ بَقَرَةٌ وَغَنَمٌ وَدَجَاجَةٌ.
-نَجِبُ أَنْ نَرْحَمَ الْحَيَوَانَاتِ وَنُحَافِظَ عَلَيْهَا.`,
-
-  id: `Aku sangat menyukai hewan.
-Di rumah kami ada hewan-hewan peliharaan yang kami rawat.
-Kami mempunyai seekor kucing yang indah dan seekor anjing kecil.
-Di peternakan ada sapi, kambing, dan ayam.
-Kita harus menyayangi hewan-hewan dan menjaganya.`,
-
-  audio: "media/audio/audio-hewan/hewan1.mp3"
-},
-{
-  ar: `فِي الْغَابَةِ حَيَوَانَاتٌ كَثِيرَةٌ.
-هُنَاكَ أَسَدٌ قَوِيٌّ وَنَمِرٌ سَرِيعٌ.
-نَرَى أَيْضًا فِيلًا كَبِيرًا وَزَرَافَةً طَوِيلَةً.
-تَعِيشُ هَذِهِ الْحَيَوَانَاتُ فِي الطَّبِيعَةِ.
-يَجِبُ عَلَيْنَا أَنْ نُحَافِظَ عَلَى الْغَابَةِ.`,
-
-  id: `Di hutan ada banyak hewan.
-Di sana ada singa yang kuat dan harimau yang cepat.
-Kami juga melihat gajah yang besar dan jerapah yang tinggi.
-Hewan-hewan ini hidup di alam.
-Kita harus menjaga hutan.`,
-
-  audio: "media/audio/audio-hewan/hewan2.mp3"
-},
-{
-  ar: `فِي الْبَحْرِ حَيَوَانَاتٌ مَائِيَّةٌ.
-نَرَى سَمَكًا صَغِيرًا وَسَمَكًا كَبِيرًا.
-هُنَاكَ دُلْفِينٌ ذَكِيٌّ وَقِرْشٌ خَطِيرٌ.
-تَسْبَحُ الْحَيَوَانَاتُ فِي الْمَاءِ بِسُهُولَةٍ.
-نُحِبُّ الْبَحْرَ وَنَحْمِي حَيَوَانَاتِهِ.`,
-
-  id: `Di laut ada hewan-hewan air.
-Kami melihat ikan kecil dan ikan besar.
-Di sana ada lumba-lumba yang cerdas dan hiu yang berbahaya.
-Hewan-hewan itu berenang di air dengan mudah.
-Kami mencintai laut dan melindungi hewan-hewannya.`,
-
-  audio: "media/audio/audio-hewan/hewan3.mp3"
-},
-{
-  ar: `فِي الْمَزْرَعَةِ حَيَوَانَاتٌ كَثِيرَةٌ.
-عِنْدَنَا بَقَرَةٌ وَغَنَمٌ وَدَجَاجَةٌ.
-يُعْطِينَا الْحَيَوَانُ طَعَامًا نَافِعًا.
-نَعْتَنِي بِحَيَوَانَاتِ الْمَزْرَعَةِ كُلَّ يَوْمٍ.
-الْحَيَوَانَاتُ نِعْمَةٌ مِنَ اللهِ.`,
-
-  id: `Di peternakan ada banyak hewan.
-Kami mempunyai sapi, kambing, dan ayam.
-Hewan-hewan memberi kita makanan yang bermanfaat.
-Kami merawat hewan-hewan peternakan setiap hari.
-Hewan adalah nikmat dari Allah.`,
-
-  audio: "media/audio/audio-hewan/hewan4.mp3"
-},
-{
-  ar: `فِي الْحَدِيقَةِ حَيَوَانَاتٌ جَمِيلَةٌ.
-نَرَى طُيُورًا مُلَوَّنَةً وَفَرَاشَاتٍ.
-يَلْعَبُ الْأَطْفَالُ وَيَنْظُرُونَ إِلَيْهَا.
-تَجْعَلُنَا الْحَيَوَانَاتُ سُعَدَاءَ.
-نُحَافِظُ عَلَى نَظَافَةِ الْحَدِيقَةِ.`,
-
-  id: `Di taman ada hewan-hewan yang indah.
-Kami melihat burung-burung berwarna dan kupu-kupu.
-Anak-anak bermain dan melihatnya.
-Hewan-hewan membuat kami bahagia.
-Kami menjaga kebersihan taman.`,
-
-  audio: "media/audio/audio-hewan/hewan5.mp3"
-},
-{
-  ar: `فِي بَيْتِنَا حَيَوَانٌ أَلِيفٌ.
-نَعْتَنِي بِالْقِطِّ وَنُلَاعِبُهُ.
-نُعْطِيهِ الطَّعَامَ وَالْمَاءَ.
-الْحَيَوَانُ يَحْتَاجُ إِلَى الرِّعَايَةِ.
-الرَّحْمَةُ بِالْحَيَوَانِ خُلُقٌ جَمِيلٌ.`,
-
-  id: `Di rumah kami ada hewan peliharaan.
-Kami merawat kucing dan bermain dengannya.
-Kami memberinya makanan dan air.
-Hewan membutuhkan perawatan.
-Menyayangi hewan adalah akhlak yang baik.`,
-
-  audio: "media/audio/audio-hewan/hewan6.mp3"
-},
-
-
-
-];
-
-/* =========================
-   LOGIKA ACAK
-========================= */
-const readingEl = document.getElementById('readingText');
-const translationEl = document.getElementById('translationText');
-const shuffleBtn = document.getElementById('shuffleReading');
-
-const audioEl = document.getElementById('readingAudio');
-audioEl.src = "media/audio/audio_keluarga/keluarga0.mp3";
-audioEl.load(); // ⬅️ TAMBAHKAN INI
-
-
-shuffleBtn.addEventListener('click', () => {
-  const random = READINGS[Math.floor(Math.random() * READINGS.length)];
-
-  // ganti teks
-  readingEl.innerHTML = random.ar;
-  translationEl.innerHTML = random.id;
-
-  // ganti audio
-  audioEl.src = random.audio;
-  audioEl.load(); // WAJIB
-
-  // reset terjemahan
-  document.getElementById('translation').style.display = 'none';
-  document.getElementById('toggleTranslation').textContent = 'Tampilkan Terjemahan';
-});
-
-</script>
 
 <!-- JS UNTUK DARKMODE -->
 <script>

@@ -32,7 +32,9 @@
   <style>
     .arabic-text { font-family:'Amiri','Scheherazade New',serif; direction:rtl; }
   </style>
+
 </head>
+
 <body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
   <!-- Header -->
   <header class="sticky top-0 z-50 w-full bg-indigo-600/95 dark:bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
@@ -106,48 +108,72 @@
   
   <div class="bg-white dark:bg-slate-800 rounded-2xl md:rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden">
     
-    <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-indigo-600 text-white flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-        <h2 class="text-lg font-bold tracking-wide uppercase">Daftar Kosakata</h2>
-      </div>
-      <span class="text-[10px] bg-white/20 px-2 py-1 rounded-md font-bold uppercase">Materi 02</span>
+    
+   <!-- HEADER -->
+  <div class="relative px-6 py-5 border-b border-slate-100 dark:border-slate-700 
+            bg-indigo-600 text-white flex items-center gap-3">
+
+    <!-- Icon menu kategori -->
+      <div class="relative">
+        <button
+            id="categoryToggle"
+            type="button"
+            class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition"
+            title="Pilih Kategori">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                class="w-5 h-5" 
+                fill="none" viewBox="0 0 24 24" 
+                stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" 
+                  stroke-linejoin="round"d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <!-- Dropdown kategori -->
+          <div
+            id="categoryMenu"
+            class="absolute left-0 mt-2 w-44 rounded-xl shadow-lg
+                   bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                  overflow-hidden text-slate-700 dark:text-slate-200 z-50 hidden">
+           </div>
+         </div>
+
+          <!-- Judul -->
+          <h2 class="text-lg font-bold tracking-wide uppercase">
+            Daftar Kosakata
+          </h2>
+
     </div>
 
+    <!-- TABLE -->
     <div class="overflow-x-auto">
       <table id="vocab-table" class="hidden md:table min-w-full">
         <thead>
-          <tr class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700 text-slate-500">
-            <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-left">No</th>
-            <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-right">Bahasa Arab</th>
-            <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-left">Transliterasi</th>
-            <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-left">Arti Indonesia</th>
+          <tr class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700">
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-left w-16">No</th>
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Bahasa Arab</th>
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-left">Transliterasi</th>
+            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-left">Arti Indonesia</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-50 dark:divide-slate-700/50">
-          <tr class="hover:bg-indigo-50/30 dark:hover:bg-indigo-900/10 transition-colors">
-            <td class="px-6 py-4 text-sm text-slate-400 italic">1</td>
-            <td class="px-6 py-4 text-xl md:text-2xl arabic-text text-right font-bold text-slate-800 dark:text-white">الْمَدْرَسَةُ</td>
-            <td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">al-madrasah</td>
-            <td class="px-6 py-4 text-sm font-bold text-indigo-600 dark:text-indigo-400">Sekolah</td>
-          </tr>
-          </tbody>
+        <tbody class="divide-y divide-slate-50 dark:divide-slate-700/50"></tbody>
       </table>
-
+      
       <div id="mobile-list" class="md:hidden grid gap-4 p-4 bg-slate-50/50 dark:bg-slate-900/20">
-        </div>
+      </div>
     </div>
+
   </div>
 
+  <!-- PAGENATION -->
   <div class="mt-8 flex flex-col items-center gap-3">
     <div id="pagination" 
          class="flex items-center gap-2 overflow-x-auto max-w-full px-4 py-2 no-scrollbar md:justify-center">
-    </div>
-    <div class="w-32 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full">
-      <div class="h-full bg-indigo-500 w-1/2 rounded-full"></div>
-    </div>
+      </div>
   </div>
 
+
+  <!-- TOMBOL BAWAH -->
   <div class="grid grid-cols-1 sm:flex sm:flex-row justify-between gap-4 mt-12">
     <a href="index.html" 
        class="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 transition-all active:scale-95 order-3 sm:order-1">
@@ -238,126 +264,14 @@
   }
 </script>
 
+<script src="bank_data_vocabs/vocab-school.js"></script>
 
-  <script>
-  const ITEMS_PER_PAGE = 5;
-
-  const vocabData = [
-
-  ["الْمَدْرَسَةُ","al-madrasah","Sekolah"],
-["الطَّالِبُ","aṭ-ṭālib","Siswa (laki-laki)"],
-["الطَّالِبَةُ","aṭ-ṭālibah","Siswi (perempuan)"],
-["الْفَصْلُ","al-faṣl","Kelas"],
-["الْمُعَلِّمُ","al-muʿallim","Guru (laki-laki)"],
-
-["الْمُعَلِّمَةُ","al-muʿallimah","Guru (perempuan)"],
-["الْكِتَابُ","al-kitāb","Buku"],
-["الدَّفْتَرُ","ad-daftar","Buku tulis"],
-["الْقَلَمُ","al-qalam","Pulpen"],
-["السَّبُّورَةُ","as-sabbūrah","Papan tulis"],
-
-["الْمَكْتَبَةُ","al-maktabah","Perpustakaan"],
-["السَّاحَةُ","as-sāḥah","Halaman sekolah"],
-["الدَّرْسُ","ad-darsu","Pelajaran"],
-["الصَّفُّ","aṣ-ṣaff","Kelas (tingkatan)"],
-["الْوَاجِبُ","al-wājib","Pekerjaan rumah (PR)"],
-
-["الْمَدِيرُ","al-mudīr","Kepala sekolah"],
-["الطَّابُورُ","aṭ-ṭābūr","Upacara / barisan"],
-["الْفِسْحَةُ","al-fisḥah","Waktu istirahat"],
-["الْحِصَّةُ","al-ḥiṣṣah","Jam pelajaran"],
-["الْمَقْصَفُ","al-maqṣaf","Kantin"],
-
-["الْمَعْمَلُ","al-maʿmal","Laboratorium"],
-["الْمَلْعَبُ","al-malʿab","Lapangan"],
-["الْكُرْسِيُّ","al-kursiyy","Kursi"],
-["الْمِكْتَبُ","al-miktab","Meja"],
-["الْحَقِيبَةُ","al-ḥaqībah","Tas"],
-
-["الْقَاعَةُ","al-qāʿah","Aula / ruang besar"],
-["الْمِقْلَمَةُ","al-miqalamah","Tempat pensil"],
-["الْجَرَسُ","al-jaras","Bel"],
-["الْحُضُورُ","al-ḥuḍūr","Kehadiran"],
-["الِانْصِرَافُ","al-inṣirāf","Pulang"],
-
-
-    ["الْمَدْرَسَةُ","al-madrasah","Sekolah"],
-["أَنَا طَالِبٌ فِي الْمَدْرَسَةِ","anā ṭālibun fī al-madrasah","Aku adalah seorang siswa di sekolah"],
-["نَبْدَأُ الدِّرَاسَةَ فِي الصَّبَاحِ","nabdaʾu ad-dirāsata fī aṣ-ṣabāḥ","Kami memulai pelajaran di pagi hari"],
-["نَدْخُلُ الْفَصْلَ","nadkhulu al-faṣla","Kami masuk kelas"],
-["نَجْلِسُ فِي الْفَصْلِ","najlisu fī al-faṣli","Kami duduk di kelas"],
-
-["نَدْرُسُ اللُّغَةَ الْعَرَبِيَّةَ","nadrusu al-lughata al-ʿarabiyyah","Kami belajar bahasa Arab"],
-["نَدْرُسُ الرِّيَاضِيَّاتِ","nadrusu ar-riyāḍiyyāt","Kami belajar matematika"],
-["نَدْرُسُ الْعُلُومَ","nadrusu al-ʿulūm","Kami belajar ilmu pengetahuan"],
-["الْمُعَلِّمُ يُعَلِّمُنَا","al-muʿallimu yuʿallimunā","Guru mengajar kami"],
-["نَسْتَمِعُ إِلَى شَرْحِ الْمُعَلِّمِ","nastamiʿu ilā sharḥi al-muʿallim","Kami mendengarkan penjelasan guru"],
-
-["نَكْتُبُ الدُّرُوسَ","naktubu ad-durūsa","Kami menulis pelajaran"],
-["نَقْرَأُ الْكُتُبَ","naqraʾu al-kutuba","Kami membaca buku"],
-["نَلْعَبُ فِي سَاحَةِ الْمَدْرَسَةِ","nalʿabu fī sāḥati al-madrasah","Kami bermain di halaman sekolah"],
-["نَعُودُ إِلَى الْبَيْتِ","naʿūdu ilā al-bayti","Kami pulang ke rumah"],
-["أُحِبُّ مَدْرَسَتِي","uḥibbu madrasatī","Aku mencintai sekolahku"],
-
-
-
-
-  ];
-
-  const tableBody = document.querySelector("#vocab-table tbody");
-  const pagination = document.getElementById("pagination");
-
-  function renderPage(page) {
-  tableBody.innerHTML = "";
-
-  const start = (page - 1) * ITEMS_PER_PAGE;
-  const end = start + ITEMS_PER_PAGE; // ✅ TANPA -1
-
-  const pageItems = vocabData.slice(start, end);
-
-  pageItems.forEach((item, i) => {
-    if (!item || item.length < 3) return;
-
-    tableBody.innerHTML += `
-      <tr>
-        <td class="px-4 py-3">${start + i + 1}</td>
-        <td class="px-4 py-3 text-xl arabic-text text-right font-semibold">${item[0]}</td>
-        <td class="px-4 py-3">${item[1]}</td>
-        <td class="px-4 py-3">${item[2]}</td>
-      </tr>
-    `;
-  });
-
-  buildMobileList();
-  setActive(page);
-}
-
-
-
-
-  function buildPagination() {
-    const pages = Math.ceil(vocabData.length / ITEMS_PER_PAGE);
-    pagination.innerHTML = "";
-    for (let i = 1; i <= pages; i++) {
-      pagination.innerHTML += `
-        <button onclick="renderPage(${i})"
-          class="px-3 py-1 rounded-lg bg-primary-100 text-primary-700 hover:bg-primary-500 hover:text-white transition">
-          ${i}
-        </button>
-      `;
-    }
-  }
-
-  function setActive(page) {
-    [...pagination.children].forEach((btn, idx) => {
-      btn.classList.toggle("bg-primary-600", idx + 1 === page);
-      btn.classList.toggle("text-white", idx + 1 === page);
-    });
-  }
-
-  buildPagination();
-  renderPage(1);
+<script>
+  const VOCAB_SOURCE = VOCABS_SCHOOL;
 </script>
+
+<script src="assets/js/vocab-page.js"></script>
+
 
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->

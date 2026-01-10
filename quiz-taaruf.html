@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
 
-<script src="assets/data/vocabs.js"></script>
-
-
 <script src="assets/theme.js"></script>
 
 <head>
@@ -37,6 +34,7 @@
 </head>
 
 <body class="bg-gray-50 min-h-screen dark:bg-slate-800 dark:text-slate-100 ">
+
   <!-- Header -->
   <header class="sticky top-0 z-50 w-full bg-amber-600/95 dark:bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
   <div class="max-w-7xl mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
@@ -78,74 +76,168 @@
   </div>
 </header>
 
-  <!-- Main -->
-  <main class="max-w-4xl mx-auto px-4 py-8 md:py-12">
-  
+<!-- Main -->
+<main
+  class="max-w-4xl mx-auto px-4 py-8 md:py-12"
+  data-quiz="taaruf"
+>
+
+  <!-- Judul -->
   <div class="text-center mb-8">
-    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white arabic-text mb-2 tracking-wide">التَّعارُف</h1>
-    <p class="text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium">Kuis Pemahaman Teks</p>
+    <h1
+      class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white arabic-text mb-2 tracking-wide">
+      التَّعَارُف
+    </h1>
+    <p
+      class="text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium">
+      Kuis Pemahaman Teks
+    </p>
   </div>
 
-  <section class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden max-w-3xl mx-auto">
-    
-    <div class="bg-slate-50 dark:bg-slate-900/50 px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
-      <h2 class="text-xs md:text-sm font-black uppercase tracking-widest text-amber-600 dark:text-amber-500 flex items-center gap-2">
-        <span>🎯 Tantangan Kuis</span>
+  <!-- Kartu Kuis -->
+  <section
+    class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl
+           border border-slate-100 dark:border-slate-700
+           overflow-hidden max-w-3xl mx-auto"
+    data-quiz-card
+  >
+
+    <!-- Header -->
+    <div
+      class="bg-slate-50 dark:bg-slate-900/50 px-6 py-4
+             border-b border-slate-100 dark:border-slate-700
+             flex justify-between items-center">
+      <h2
+        class="text-xs md:text-sm font-black uppercase tracking-widest
+               text-amber-600 dark:text-amber-500 flex items-center gap-2">
+        🎯 Tantangan Kuis
       </h2>
-      <div id="quiz-progress" class="text-[10px] font-bold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">
-        Sesi Aktif
+
+      <div
+        id="quiz-progress"
+        class="text-[10px] font-bold bg-amber-100 dark:bg-amber-900/30
+               text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">
+        Soal Aktif
       </div>
     </div>
 
+    <!-- Body -->
     <div class="p-6 md:p-10">
+
+      <!-- Pertanyaan -->
       <div class="text-center mb-8">
-        <p class="text-slate-600 dark:text-slate-400 text-sm md:text-base mb-4 leading-relaxed" id="questionText">
-          </p>
-        <p class="arabic-text text-2xl md:text-3xl text-slate-800 dark:text-white font-bold leading-loose" 
-           dir="rtl" 
-           id="arabicQuestion">
-           </p>
+        <p
+          id="questionText"
+          class="text-slate-600 dark:text-slate-400
+                 text-sm md:text-base mb-4 leading-relaxed">
+        </p>
+
+        <p
+          id="arabicQuestion"
+          class="arabic-text text-2xl md:text-3xl
+                 text-slate-800 dark:text-white
+                 font-bold leading-loose"
+          dir="rtl">
+        </p>
       </div>
 
-      <div id="options" class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-8">
-        </div>
+      <!-- Opsi Jawaban -->
+      <div
+        id="options"
+        class="grid grid-cols-1 sm:grid-cols-2
+               gap-3 md:gap-4 mb-8">
+      </div>
 
+      <!-- Feedback -->
       <div class="flex flex-col items-center gap-4">
-        <p id="feedback" class="text-center font-bold text-sm md:text-base min-h-[1.5rem]"></p>
-        
-        <button id="nextBtn"
-          class="hidden w-full md:w-auto bg-amber-500 hover:bg-amber-600 text-white font-black uppercase tracking-widest py-3 px-10 rounded-2xl shadow-lg shadow-amber-500/30 transition-all active:scale-95 text-sm">
+        <p
+          id="feedback"
+          class="text-center font-bold
+                 text-sm md:text-base min-h-[1.5rem]">
+        </p>
+
+        <button
+          id="nextBtn"
+          type="button"
+          class="hidden w-full md:w-auto
+                 bg-amber-500 hover:bg-amber-600
+                 text-white font-black uppercase tracking-widest
+                 py-3 px-10 rounded-2xl
+                 shadow-lg shadow-amber-500/30
+                 transition-all active:scale-95 text-sm">
           Soal Berikutnya →
         </button>
       </div>
 
-      <div id="results" class="hidden mt-6 p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-700 text-center">
-        <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-2">Hasil Akhir</h3>
-        <p id="score" class="text-3xl font-black text-amber-600 mb-2"></p>
-        <p id="feedback-result" class="text-sm text-slate-500 dark:text-slate-400 italic"></p>
-        </div>
+      <!-- Hasil -->
+      <div
+        id="results"
+        class="hidden mt-6 p-6 rounded-2xl
+               bg-slate-50 dark:bg-slate-900
+               border-2 border-dashed
+               border-slate-200 dark:border-slate-700
+               text-center">
+        <h3
+          class="text-lg font-bold
+                 text-slate-800 dark:text-white mb-2">
+          Hasil Akhir
+        </h3>
+
+        <p
+          id="score"
+          class="text-3xl font-black text-amber-600 mb-2">
+        </p>
+
+        <p
+          id="feedback-result"
+          class="text-sm text-slate-500
+                 dark:text-slate-400 italic">
+        </p>
+      </div>
+
     </div>
   </section>
 
+  <!-- Navigasi -->
   <div class="flex flex-col md:flex-row gap-4 justify-between mt-12">
+
     <a href="index.html"
-       class="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 transition-all active:scale-95">
-       🏠 Beranda
+       class="flex items-center justify-center gap-2
+              px-6 py-4 rounded-2xl
+              bg-white dark:bg-slate-800
+              text-slate-600 dark:text-slate-300
+              font-bold border border-slate-200
+              dark:border-slate-700 shadow-sm
+              hover:bg-slate-50 transition-all active:scale-95">
+      🏠 Beranda
     </a>
 
     <div class="flex flex-col sm:flex-row gap-3">
       <a href="vocabulary-taaruf.html"
-         class="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 font-bold hover:bg-emerald-200 transition-all active:scale-95">
-         📚 Kosa Kata
+         class="flex items-center justify-center gap-2
+                px-6 py-4 rounded-2xl
+                bg-emerald-100 text-emerald-700
+                dark:bg-emerald-900/30 dark:text-emerald-400
+                font-bold hover:bg-emerald-200
+                transition-all active:scale-95">
+        📚 Kosa Kata
       </a>
+
       <a href="reading-taaruf.html"
-         class="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 font-bold hover:bg-blue-200 transition-all active:scale-95">
-         📖 Baca Teks
+         class="flex items-center justify-center gap-2
+                px-6 py-4 rounded-2xl
+                bg-blue-100 text-blue-700
+                dark:bg-blue-900/30 dark:text-blue-400
+                font-bold hover:bg-blue-200
+                transition-all active:scale-95">
+        📖 Baca Teks
       </a>
     </div>
+
   </div>
 
 </main>
+
 
   <!-- Footer -->
   <footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors mt-12">
@@ -185,358 +277,7 @@
   </div>
 </footer>
 
-  <!-- Script -->
-  <script>
-const QUESTIONS = [
-  {
-  ar: "الاِسْمُ",
-  question: "Apa arti kosakata berikut?",
-  correct: "Nama",
-  options: [
-    "Nama",
-    "Umur",
-    "Teman",
-    "Kota"
-  ]
-},
-{
-  ar: "الصَّدِيقُ",
-  question: "Apa arti kosakata berikut?",
-  correct: "Teman (laki-laki)",
-  options: [
-    "Teman (laki-laki)",
-    "Guru",
-    "Saudara",
-    "Tetangga"
-  ]
-},
-{
-  ar: "الصَّدِيقَةُ",
-  question: "Apa arti kosakata berikut?",
-  correct: "Teman (perempuan)",
-  options: [
-    "Teman (perempuan)",
-    "Ibu",
-    "Siswi",
-    "Saudara perempuan"
-  ]
-},
-{
-  ar: "الْمَدِينَةُ",
-  question: "Apa arti kosakata berikut?",
-  correct: "Kota",
-  options: [
-    "Kota",
-    "Sekolah",
-    "Rumah",
-    "Kelas"
-  ]
-},
-{
-  ar: "الْهَوَايَةُ",
-  question: "Apa arti kosakata berikut?",
-  correct: "Hobi",
-  options: [
-    "Hobi",
-    "Pekerjaan",
-    "Pelajaran",
-    "Tempat tinggal"
-  ]
-},
 
-  {
-  ar: "هِوَايَتِي الْقِرَاءَةُ",
-  question: "Apa arti frasa berikut?",
-  correct: "Hobiku membaca",
-  options: [
-    "Hobiku membaca",
-    "Aku suka sekolah",
-    "Aku dari Bone",
-    "Aku kelas tujuh"
-  ]
-},
-{
-  ar: "اِسْمِي أَحْمَدُ",
-  question: "Apa arti frasa berikut?",
-  correct: "Namaku Ahmad",
-  options: [
-    "Namaku Ahmad",
-    "Aku seorang siswa",
-    "Aku dari Bone",
-    "Aku kelas tujuh"
-  ]
-},
-{
-  ar: "أَنَا فِي الصَّفِّ السَّابِعِ",
-  question: "Apa arti frasa berikut?",
-  correct: "Aku di kelas tujuh",
-  options: [
-    "Aku di kelas tujuh",
-    "Aku pergi ke sekolah",
-    "Aku suka belajar",
-    "Aku tinggal di rumah"
-  ]
-},
-{
-  ar: "أَنَا مِنْ بُونِي",
-  question: "Apa arti frasa berikut?",
-  correct: "Aku dari Bone",
-  options: [
-    "Aku dari Bone",
-    "Aku tinggal di sekolah",
-    "Aku kelas tujuh",
-    "Aku siswa baru"
-  ]
-},
-{
-  ar: "كَيْفَ حَالُكَ",
-  question: "Apa arti frasa berikut?",
-  correct: "Bagaimana kabarmu",
-  options: [
-    "Bagaimana kabarmu",
-    "Siapa namamu",
-    "Dari mana kamu",
-    "Apa hobimu"
-  ]
-},
-{
-  ar: "أَنَا بِخَيْرٍ وَالْحَمْدُ لِلَّهِ",
-  question: "Apa arti frasa berikut?",
-  correct: "Aku baik, alhamdulillah",
-  options: [
-    "Aku baik, alhamdulillah",
-    "Aku senang belajar",
-    "Aku pergi ke sekolah",
-    "Aku tinggal di rumah"
-  ]
-},
-{
-  ar: "مَا هِوَايَتُكَ",
-  question: "Apa arti frasa berikut?",
-  correct: "Apa hobimu",
-  options: [
-    "Apa hobimu",
-    "Bagaimana kabarmu",
-    "Siapa namamu",
-    "Di mana rumahmu"
-  ]
-},
-{
-  ar: "هَذَا صَدِيقِي",
-  question: "Apa arti frasa berikut?",
-  correct: "Ini temanku",
-  options: [
-    "Ini temanku",
-    "Ini guruku",
-    "Ini rumahku",
-    "Ini sekolahku"
-  ]
-},
-{
-  ar: "أُحِبُّ اللُّغَةَ الْعَرَبِيَّةَ",
-  question: "Apa arti frasa berikut?",
-  correct: "Aku suka bahasa Arab",
-  options: [
-    "Aku suka bahasa Arab",
-    "Aku belajar bahasa Arab",
-    "Aku dari Arab",
-    "Aku guru bahasa Arab"
-  ]
-},
-{
-  ar: "أَذْهَبُ إِلَى الْمَدْرَسَةِ",
-  question: "Apa arti frasa berikut?",
-  correct: "Aku pergi ke sekolah",
-  options: [
-    "Aku pergi ke sekolah",
-    "Aku pulang ke rumah",
-    "Aku belajar di rumah",
-    "Aku suka sekolah"
-  ]
-},
-{
-  ar: "مِنْ أَيْنَ أَنْتَ",
-  question: "Apa arti frasa berikut?",
-  correct: "Dari mana kamu",
-  options: [
-    "Dari mana kamu",
-    "Siapa namamu",
-    "Apa hobimu",
-    "Ke mana kamu pergi"
-  ]
-},
-{
-  ar: "أَنَا طَالِبٌ فِي الْمَدْرَسَةِ",
-  question: "Apa arti frasa berikut?",
-  correct: "Aku seorang siswa di sekolah",
-  options: [
-    "Aku seorang siswa di sekolah",
-    "Aku seorang guru di sekolah",
-    "Aku belajar di rumah",
-    "Aku pergi ke pasar"
-  ]
-},
-{
-  ar: "أَسْكُنُ مَعَ أُسْرَتِي",
-  question: "Apa arti frasa berikut?",
-  correct: "Aku tinggal bersama keluargaku",
-  options: [
-    "Aku tinggal bersama keluargaku",
-    "Aku pergi bersama temanku",
-    "Aku belajar bersama guru",
-    "Aku bermain dengan teman"
-  ]
-},
-{
-  ar: "هَذِهِ صَدِيقَتِي",
-  question: "Apa arti frasa berikut?",
-  correct: "Ini temanku (perempuan)",
-  options: [
-    "Ini temanku (perempuan)",
-    "Ini guruku",
-    "Ini ibuku",
-    "Ini saudariku"
-  ]
-},
-{
-  ar: "أُحِبُّ الْقِرَاءَةَ وَالدِّرَاسَةَ",
-  question: "Apa arti frasa berikut?",
-  correct: "Aku suka membaca dan belajar",
-  options: [
-    "Aku suka membaca dan belajar",
-    "Aku suka bermain dan tidur",
-    "Aku suka sekolah dan pasar",
-    "Aku suka makan dan minum"
-  ]
-},
-{
-  ar: "كَيْفَ حَالُكِ",
-  question: "Apa arti frasa berikut?",
-  correct: "Bagaimana kabarmu (perempuan)",
-  options: [
-    "Bagaimana kabarmu (perempuan)",
-    "Bagaimana kabarmu (laki-laki)",
-    "Apa namamu",
-    "Di mana rumahmu"
-  ]
-},
-{
-  ar: "أَذْهَبُ إِلَى الْمَدْرَسَةِ كُلَّ يَوْمٍ",
-  question: "Apa arti frasa berikut?",
-  correct: "Aku pergi ke sekolah setiap hari",
-  options: [
-    "Aku pergi ke sekolah setiap hari",
-    "Aku belajar di rumah setiap hari",
-    "Aku bermain setiap hari",
-    "Aku pergi ke pasar setiap hari"
-  ]
-},
-{
-  ar: "هَذَا صَدِيقِي عُمَرُ",
-  question: "Apa arti frasa berikut?",
-  correct: "Ini temanku Umar",
-  options: [
-    "Ini temanku Umar",
-    "Ini guruku Umar",
-    "Ini saudaraku Umar",
-    "Ini ayahku Umar"
-  ]
-},
-{
-  ar: "أَتَعَلَّمُ اللُّغَةَ الْعَرَبِيَّةَ",
-  question: "Apa arti frasa berikut?",
-  correct: "Aku belajar bahasa Arab",
-  options: [
-    "Aku belajar bahasa Arab",
-    "Aku mengajar bahasa Arab",
-    "Aku suka bahasa Arab",
-    "Aku dari Arab"
-  ]
-},
-{
-  ar: "إِلَى اللِّقَاءِ",
-  question: "Apa arti frasa berikut?",
-  correct: "Sampai jumpa",
-  options: [
-    "Sampai jumpa",
-    "Selamat datang",
-    "Terima kasih",
-    "Permisi"
-  ]
-}
-
-];
-
-// acak soal
-let shuffled = QUESTIONS.sort(() => Math.random() - 0.5);
-let index = 0;
-
-const questionEl = document.getElementById("questionText");
-const optionsEl = document.getElementById("options");
-const feedbackEl = document.getElementById("feedback");
-const nextBtn = document.getElementById("nextBtn");
-
-function loadQuestion() {
-  feedbackEl.textContent = "";
-  nextBtn.classList.add("hidden");
-  optionsEl.innerHTML = "";
-
-  const q = shuffled[index];
-
-  // tampilkan pertanyaan
-  document.getElementById("questionText").textContent = q.question;
-  document.getElementById("arabicQuestion").textContent = q.ar;
-
-  // acak opsi
-  const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
-
-  shuffledOptions.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.textContent = opt;
-    btn.className =
-      "px-4 py-3 rounded-lg bg-primary-100 hover:bg-primary-200 text-primary-700 font-semibold";
-    btn.onclick = () => checkAnswer(btn, q.correct);
-    optionsEl.appendChild(btn);
-  });
-}
-
-
-function checkAnswer(button, correct) {
-  const buttons = optionsEl.querySelectorAll("button");
-  buttons.forEach(b => b.disabled = true);
-
-  if (button.textContent === correct) {
-    button.classList.remove("bg-primary-100");
-    button.classList.add("bg-green-200","text-green-800");
-    feedbackEl.textContent = "Benar! 🎉";
-    feedbackEl.className = "text-center text-green-600 font-semibold";
-  } else {
-    button.classList.remove("bg-primary-100");
-    button.classList.add("bg-red-200","text-red-800");
-    feedbackEl.textContent = `Kurang tepat. Jawaban benar: ${correct}`;
-    feedbackEl.className = "text-center text-red-600 font-semibold";
-
-    buttons.forEach(b => {
-      if (b.textContent === correct) {
-        b.classList.add("bg-green-200","text-green-800");
-      }
-    });
-  }
-
-  nextBtn.classList.remove("hidden");
-}
-
-nextBtn.onclick = () => {
-  index++;
-  if (index >= 3) {
-    index = 0;
-    shuffled = QUESTIONS.sort(() => Math.random() - 0.5);
-  }
-  loadQuestion();
-};
-
-loadQuestion();
-</script>
 
 
   <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
@@ -544,9 +285,7 @@ loadQuestion();
   window.PRESENCE_OPTIONS = { mode: "global" };
 </script>
 
-<!-- Panggil script presence -->
-<script type="module" src="./assets/presence.js"></script>
-
+<script type="module" src="assets/js/quiz-page.js"></script>
 
 <!-- JS UNTUK DARKMODE -->
 <script>

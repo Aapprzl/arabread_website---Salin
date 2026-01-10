@@ -2476,6 +2476,30 @@ document.addEventListener("click", async (e) => {
   }
 });
 
+// HAPUS SESI
+// TOMBOL HAPUS SESI BELAJAR
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".deleteSession");
+  if (!btn) return;
+
+  const id = btn.dataset.id;
+
+  const confirmDelete = confirm(
+    "Yakin ingin menghapus sesi belajar ini?"
+  );
+  if (!confirmDelete) return;
+
+  try {
+    await deleteDoc(doc(db, "learningSessions", id));
+    // TIDAK perlu update UI manual
+    // onSnapshot() akan refresh otomatis
+  } catch (err) {
+    console.error(err);
+    alert("Gagal menghapus sesi belajar");
+  }
+});
+
+
 
 
 </script>
