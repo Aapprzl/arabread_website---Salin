@@ -11,15 +11,24 @@
   <!-- Fonts & Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
+        fontFamily: {
+          sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
         extend: {
             colors: {
+            // Family Theme: Rose (Blue -> Rose)
+            blue: { 
+              50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af', 
+              400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c', 
+              800: '#9f1239', 900: '#881337', 950: '#4c0519' 
+            },emerald: { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a', 950: '#042f2e' },
             primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
             secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
           },
@@ -35,7 +44,7 @@
 
 <body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-300">
   <!-- Header -->
-  <header class="sticky top-0 z-50 w-full bg-rose-600/95 dark:bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
+  <header class="sticky top-0 z-50 w-full bg-gradient-to-r from-rose-500 to-orange-600 dark:from-slate-900/95 dark:to-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
   <div class="max-w-7xl mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
     
     <div class="flex items-center gap-2 md:gap-4">
@@ -206,8 +215,8 @@
 
       <a href="quiz-family.html"
          class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
-                bg-amber-500 text-white font-bold text-sm shadow-lg 
-                shadow-amber-500/20 transition-all active:scale-95">
+                bg-orange-500 text-white font-bold text-sm shadow-lg 
+                shadow-orange-500/20 transition-all active:scale-95">
         📝 Kuis
       </a>
     </div>
@@ -232,7 +241,7 @@
 
       <div class="flex items-center gap-1.5">
         <div class="h-1 w-1 bg-rose-500/40 rounded-full"></div>
-        <div class="h-1 w-16 bg-gradient-to-r from-transparent via-rose-500 to-transparent rounded-full"></div>
+        <div class="h-1 w-16 bg-gradient-to-r from-transparent via-orange-500 to-transparent rounded-full"></div>
         <div class="h-1 w-1 bg-rose-500/40 rounded-full"></div>
       </div>
 
@@ -244,7 +253,7 @@
         <div class="mt-4 inline-flex items-center gap-2 px-3 py-1 bg-white dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm">
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
           </span>
           <span class="text-[9px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-tighter">Sesi Membaca Aktif</span>
         </div>

@@ -91,18 +91,18 @@ const quizState = {
 // ===============================
 // ELEMENT
 // ===============================
-const btnThemeTaaruf  = document.getElementById("btnThemeTaaruf");
+const btnThemeTaaruf = document.getElementById("btnThemeTaaruf");
 const btnThemeSekolah = document.getElementById("btnThemeSekolah");
 const btnThemeKeluarga = document.getElementById("btnThemeKeluarga");
 const btnThemeHewan = document.getElementById("btnThemeHewan");
 
 
 // const btnStart = document.getElementById("btnStartQuiz");
-const quizBox  = document.getElementById("quizBox");
-const qText    = document.getElementById("quizQuestion");
-const optsBox  = document.getElementById("quizOptions");
+const quizBox = document.getElementById("quizBox");
+const qText = document.getElementById("quizQuestion");
+const optsBox = document.getElementById("quizOptions");
 const feedback = document.getElementById("quizFeedback");
-const btnNext  = document.getElementById("nextQuestion");
+const btnNext = document.getElementById("nextQuestion");
 
 const timerEl = document.createElement("p");
 timerEl.className = "mb-3 font-semibold text-red-500";
@@ -115,9 +115,9 @@ quizBox.prepend(timerEl);
 function startQuiz(theme, quizId, quizTitle) {
 
   if (!window.VOCABS || !Array.isArray(window.VOCABS)) {
-  alert("Data soal belum siap");
-  return;
-}
+    alert("Data soal belum siap");
+    return;
+  }
 
 
   ACTIVE_THEME = theme;
@@ -140,7 +140,7 @@ function startQuiz(theme, quizId, quizTitle) {
 }
 
 // ---
- if (btnThemeTaaruf) {
+if (btnThemeTaaruf) {
   btnThemeTaaruf.onclick = () => {
     startQuiz("taaruf", "taaruf-1", "Kuis Ta'aruf");
   };
@@ -206,21 +206,22 @@ function loadQuestion() {
 
   qText.innerHTML = "";
   // MENGURANGI MARGIN: dari mb-8 menjadi mb-4
-  qText.className = "text-center mb-4 py-2"; 
+  // FIX: Added relative and pt-8 to position label absolutely without overlap
+  qText.className = "text-center mb-4 py-2 relative pt-8";
 
   const label = document.createElement("div");
   label.textContent = "Apa arti dari:";
-  // MENGURANGI SPASI BAWAH LABEL: dari mb-4 menjadi mb-1
-  label.className = "text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-400 mb-1";
+  // FIX: Absolute positioning top-left
+  label.className = "absolute top-0 left-0 text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-400";
 
   const arab = document.createElement("div");
   arab.textContent = arabText;
-  
+
   // OPTIMASI JARAK ARAB:
   // leading-[1.6] : jarak antar baris yang lebih rapat namun tetap aman untuk harakat
   // text-3xl : ukuran sedikit lebih kecil agar tidak memakan terlalu banyak ruang vertikal
   arab.className = "text-3xl md:text-5xl font-bold leading-[1.6] text-slate-800 dark:text-white transition-all";
-  
+
   arab.style.direction = "rtl";
   arab.style.fontFamily = "'Amiri', 'Scheherazade New', serif";
 
@@ -232,12 +233,12 @@ function loadQuestion() {
     const btn = document.createElement("button");
     btn.textContent = text;
     // MENGURANGI PADDING TOMBOL: dari py-4 menjadi py-3
-    btn.className = 
+    btn.className =
       "w-full text-center md:text-left border-2 border-slate-100 dark:border-slate-700 rounded-xl px-6 py-3 " +
       "text-slate-700 dark:text-slate-200 font-semibold shadow-sm " +
       "hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-slate-700/50 " +
       "transition-all duration-200 active:scale-[0.98]";
-      
+
     btn.onclick = () => checkAnswer(i);
     optsBox.appendChild(btn);
   });
@@ -308,11 +309,11 @@ async function finishQuiz() {
   if (optsBox) optsBox.innerHTML = "";     // Hapus pilihan jawaban (tombol A,B,C,D)
   if (feedback) feedback.textContent = ""; // Hapus feedback (jika ada)
   if (timerEl) timerEl.textContent = "";   // Hapus teks timer
-  
+
   if (btnNext) {
     btnNext.classList.add("hidden");       // Sembunyikan tombol Next
   }
-  
+
   // Opsional: Jika Anda punya ID container pembungkus kuis, bisa disembunyikan total
   // document.getElementById('quiz-card').classList.add('hidden');
   // ----------------------------------
@@ -393,19 +394,19 @@ async function finishQuiz() {
 
 // Fungsi Helper untuk menutup Pop-up
 // Jadikan fungsi global agar bisa dipanggil oleh tombol onclick di HTML
-window.closeQuizPopup = function() {
+window.closeQuizPopup = function () {
   const overlay = document.getElementById('quiz-result-overlay');
-  
+
   if (overlay) {
     // 1. Tambahkan class untuk memicu transisi pudar (Fade Out)
     // Pastikan elemen overlay memiliki class 'transition-opacity' & 'duration-300' di HTML-nya
-    overlay.classList.remove('opacity-100'); 
+    overlay.classList.remove('opacity-100');
     overlay.classList.add('opacity-0');
 
     // 2. Tunggu animasi selesai (300ms) baru hapus elemen dari HTML
     setTimeout(() => {
       overlay.remove();
-      
+
       // Opsional: Jika ingin reset kuis otomatis saat ditutup
       // window.location.reload(); 
     }, 300);
@@ -450,37 +451,37 @@ async function saveResult() {
   });
 
   // ===============================
-// 2️⃣ HITUNG TOTAL BARU (AMAN)
-// ===============================
-const prevTotal = typeof user.poinTotal === "number"
-  ? user.poinTotal
-  : 0;
+  // 2️⃣ HITUNG TOTAL BARU (AMAN)
+  // ===============================
+  const prevTotal = typeof user.poinTotal === "number"
+    ? user.poinTotal
+    : 0;
 
-const newTotal = prevTotal + score;
+  const newTotal = prevTotal + score;
 
-const updateData = {
-  jumlahMain: increment(1),
-  skorTerbaik: score > skorLama ? score : skorLama,
-  poinTotal: newTotal
-};
+  const updateData = {
+    jumlahMain: increment(1),
+    skorTerbaik: score > skorLama ? score : skorLama,
+    poinTotal: newTotal
+  };
 
-await updateDoc(userRef, updateData);
+  await updateDoc(userRef, updateData);
 
 
   // ===============================
-// 3️⃣ UPDATE LEADERBOARD (SUMBER DARI USERS)
-// ===============================
-await setDoc(
-  doc(db, "leaderboard", uid),
-  {
-    uid,
-    nama: user.nama,
-    kelas: user.kelas,
-    poinTotal: newTotal,
-    updatedAt: serverTimestamp()
-  },
-  { merge: true }
-);
+  // 3️⃣ UPDATE LEADERBOARD (SUMBER DARI USERS)
+  // ===============================
+  await setDoc(
+    doc(db, "leaderboard", uid),
+    {
+      uid,
+      nama: user.nama,
+      kelas: user.kelas,
+      poinTotal: newTotal,
+      updatedAt: serverTimestamp()
+    },
+    { merge: true }
+  );
 
 }
 
@@ -502,7 +503,7 @@ window.__ACTIVE_QUIZ__ = {
 
 
 export function initQuiz() {
-  const btnTaaruf  = document.getElementById("btnThemeTaaruf");
+  const btnTaaruf = document.getElementById("btnThemeTaaruf");
   const btnSekolah = document.getElementById("btnThemeSekolah");
 
   if (!btnTaaruf || !btnSekolah) {

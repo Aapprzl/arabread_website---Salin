@@ -32,7 +32,8 @@ const BANK_MATERI = {
       judul_id: "Memahami Makna dalam Kalimat",
       judul_ar: "المعنى في الجملة",
       deskripsi: "Memahami fungsi kata yang memberi makna khusus dalam kalimat"
-    }
+    },
+    
   ],
 
   pelajaran: [

@@ -14,15 +14,24 @@
   <!-- Fonts & Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
+        fontFamily: {
+          sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
         extend: {
             colors: {
+            // School Theme: Lime (Blue -> Lime)
+            blue: { 
+              50: '#f7fee7', 100: '#ecfccb', 200: '#d9f99d', 300: '#bef264', 
+              400: '#a3e635', 500: '#84cc16', 600: '#65a30d', 700: '#4d7c0f', 
+              800: '#3f6212', 900: '#365314', 950: '#1a2e05' 
+            },emerald: { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a', 950: '#042f2e' },
             primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
             secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
           },
@@ -38,7 +47,7 @@
 
 <body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-300">
   <!-- Header -->
-  <header class="sticky top-0 z-50 w-full bg-indigo-600/95 dark:bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
+  <header class="sticky top-0 z-50 w-full bg-lime-600/95 dark:bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
   <div class="max-w-7xl mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
     
     <div class="flex items-center gap-2 md:gap-4">
@@ -50,7 +59,7 @@
 
       <div class="flex flex-col">
         <span class="text-lg md:text-xl font-black tracking-tight leading-none italic uppercase">Tarbiyyat</span>
-        <span class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-indigo-200 uppercase leading-none mt-1">al-Lughah</span>
+        <span class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-lime-200 uppercase leading-none mt-1">al-Lughah</span>
       </div>
     </div>
 
@@ -60,7 +69,7 @@
         <a href="index.html" class="text-sm font-bold text-white/80 hover:text-white transition-colors">Beranda</a>
         <a href="quiz-school.html" class="text-sm font-bold text-white/80 hover:text-white transition-colors">Kuis</a>
         <div class="w-px h-4 bg-white/20"></div>
-        <span class="text-sm font-bold text-indigo-100 flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">
+        <span class="text-sm font-bold text-lime-100 flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
           Membaca Teks
         </span>
@@ -148,9 +157,9 @@
       <button
         id="toggleTranslation"
         type="button"
-        class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700
+        class="flex items-center gap-2 bg-lime-600 hover:bg-lime-700
                text-white font-bold py-2.5 px-6 rounded-xl shadow-lg
-               shadow-indigo-500/20 transition-all active:scale-95 text-sm"
+               shadow-lime-500/20 transition-all active:scale-95 text-sm"
         aria-expanded="false"
       >
         Terjemahan
@@ -171,12 +180,12 @@
     <!-- Terjemahan -->
     <div
       id="translation"
-      class="bg-indigo-50/50 dark:bg-slate-900/50 p-6 rounded-2xl
-             border border-indigo-100 dark:border-emerald-800/50 hidden"
+      class="bg-lime-50/50 dark:bg-slate-900/50 p-6 rounded-2xl
+             border border-lime-100 dark:border-emerald-800/50 hidden"
       aria-hidden="true"
     >
       <h3
-        class="text-sm font-bold text-indigo-800 dark:text-indigo-400
+        class="text-sm font-bold text-lime-800 dark:text-lime-400
                mb-3 uppercase tracking-wider"
       >
         Terjemahan:
@@ -207,15 +216,15 @@
     <div class="flex gap-3">
       <a href="vocabulary-school.html"
          class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
-                bg-indigo-100 text-indigo-700 dark:bg-emerald-900/40 
+                bg-lime-100 text-lime-700 dark:bg-emerald-900/40 
                 dark:text-emerald-400 font-bold text-sm transition-all active:scale-95">
         📚 Kosa Kata
       </a>
 
       <a href="quiz-school.html"
          class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
-                bg-amber-500 text-white font-bold text-sm shadow-lg 
-                shadow-amber-500/20 transition-all active:scale-95">
+                bg-emerald-500 text-white font-bold text-sm shadow-lg 
+                shadow-emerald-500/20 transition-all active:scale-95">
         📝 Kuis
       </a>
     </div>
@@ -230,18 +239,18 @@
       
       <div class="flex flex-col items-center gap-1 group">
         <span class="text-lg font-black tracking-tighter text-slate-800 dark:text-white uppercase italic">
-          Tarbiyyat <span class="text-indigo-600 dark:text-indigo-400">al-Lughah</span>
+          Tarbiyyat <span class="text-lime-600 dark:text-lime-400">al-Lughah</span>
         </span>
         <div class="flex items-center gap-2 mt-1">
           <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Latihan Membaca:</span>
-          <span class="arabic-text text-lg text-indigo-600 dark:text-indigo-400 font-bold">المَدْرَسَةُ</span>
+          <span class="arabic-text text-lg text-emerald-600 dark:text-emerald-400 font-bold">المَدْرَسَةُ</span>
         </div>
       </div>
 
       <div class="flex items-center gap-1.5">
-        <div class="h-1 w-1 bg-indigo-500/40 rounded-full"></div>
-        <div class="h-1 w-16 bg-gradient-to-r from-transparent via-indigo-500 to-transparent rounded-full"></div>
-        <div class="h-1 w-1 bg-indigo-500/40 rounded-full"></div>
+        <div class="h-1 w-1 bg-lime-500/40 rounded-full"></div>
+        <div class="h-1 w-16 bg-gradient-to-r from-transparent via-lime-500 to-transparent rounded-full"></div>
+        <div class="h-1 w-1 bg-lime-500/40 rounded-full"></div>
       </div>
 
       <div class="pt-2">
@@ -251,8 +260,8 @@
         
         <div class="mt-4 inline-flex items-center gap-2 px-3 py-1 bg-white dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm">
           <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-lime-500"></span>
           </span>
           <span class="text-[9px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-tighter">Sesi Membaca Aktif</span>
         </div>
