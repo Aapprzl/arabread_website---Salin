@@ -58,6 +58,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans antialiased selection:bg-teal-500 selection:text-white">
@@ -315,7 +316,7 @@
         </div>
 
         <!-- DASHBOARD TUGAS -->
-        <div class="mt-8 mb-20 px-1">
+        <div class="mt-8 mb-20 px-1 max-w-5xl mx-auto">
 
           <div
             class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
@@ -342,19 +343,21 @@
               </div>
 
               <div class="flex items-center gap-2">
+                <span id="submissionCount"
+                  class="text-xs bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400 px-2 py-0.5 rounded-full font-bold">0</span>
                 <span
                   class="text-xs text-slate-400 hidden md:inline bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-full">
                   Klik untuk buka/tutup
                 </span>
                 <svg id="submissionChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke-width="2.5" stroke="currentColor"
-                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform">
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
               </div>
             </div>
 
-            <div id="submissionContent">
+            <div id="submissionContent" class="hidden">
 
               <div class="overflow-x-auto w-full">
                 <table class="w-full text-sm text-left">
@@ -373,7 +376,7 @@
                   </thead>
 
                   <tbody id="tabelSubmissions"
-                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 [&>tr:nth-child(even)]:bg-slate-50/50 dark:[&>tr:nth-child(even)]:bg-slate-900/20">
 
                     <tr>
                       <td colspan="7" class="px-6 py-10 text-center text-slate-400 dark:text-slate-500 italic">
@@ -425,7 +428,7 @@
           <!-- ===============================
      MANAJEMEN SISWA
 =============================== -->
-          <div class="mt-8 mb-20 px-1">
+          <div class="mt-8 mb-20 px-1 max-w-5xl mx-auto">
 
             <div
               class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
@@ -454,20 +457,22 @@
                 </div>
 
                 <div class="flex items-center gap-2">
+                  <span id="studentCount"
+                    class="text-xs bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 px-2 py-0.5 rounded-full font-bold">0</span>
                   <span
                     class="text-xs text-slate-400 hidden md:inline bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-full">
                     Klik untuk buka/tutup
                   </span>
                   <svg id="studentChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="2.5" stroke="currentColor"
-                    class="w-5 h-5 text-slate-400 transition-transform duration-300 transform">
+                    class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                   </svg>
                 </div>
 
               </div>
 
-              <div id="studentContent">
+              <div id="studentContent" class="hidden">
 
                 <div class="overflow-x-auto w-full">
                   <table class="w-full text-sm text-left">
@@ -486,7 +491,7 @@
                     </thead>
 
                     <tbody id="tabelSiswa"
-                      class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                      class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 [&>tr:nth-child(even)]:bg-slate-50/50 dark:[&>tr:nth-child(even)]:bg-slate-900/20">
 
                       <tr>
                         <td colspan="7" class="px-6 py-10 text-center text-slate-400 dark:text-slate-500 italic">
@@ -540,7 +545,7 @@
         <!-- TEMPAT DISKUSI -->
 
         <div
-          class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 mb-6 overflow-hidden ml-4 mr-4">
+          class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 mb-6 overflow-hidden max-w-5xl mx-auto">
 
           <div onclick="toggleDiscussion()"
             class="cursor-pointer px-5 py-4 bg-slate-50 dark:bg-slate-900/50 border-b border-transparent hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex justify-between items-center">
@@ -561,13 +566,13 @@
               <button id="btnClearDiscussion" onclick="event.stopPropagation();" class="hidden group flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full
                bg-red-50 text-red-600 hover:bg-red-100 border border-red-100
                dark:bg-red-900/20 dark:text-red-400 dark:border-red-900/30 transition-all z-10 shadow-sm">
-                <span class="group-hover:rotate-12 transition-transform">🧹</span>
+                <i data-feather="trash-2" class="w-3.5 h-3.5 group-hover:rotate-12 transition-transform"></i>
                 <span class="hidden sm:inline">Bersihkan</span>
               </button>
 
               <svg id="chevronIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke-width="2.5" stroke="currentColor"
-                class="w-5 h-5 text-slate-400 transition-transform duration-300 transform">
+                class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
             </div>
@@ -616,152 +621,191 @@
         </div>
 
 
-        <!-- TABEL SESI BELAJAR -->
-        <div class="mt-8">
+        <!-- ===============================
+             📬 KOTAK SURAT GURU (PENGUMUMAN)
+        =============================== -->
+        <div class="mt-8 mb-6 px-1 max-w-5xl mx-auto">
+          <div class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
 
-          <div
-            class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <!-- Header -->
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-slate-900/50 dark:to-slate-800/50 flex items-center gap-3">
+              <div class="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600 dark:text-amber-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-slate-800 dark:text-white">Kotak Surat Guru</h3>
+                <p class="text-xs text-slate-400 dark:text-slate-500">Kirim pengumuman ke semua siswa.</p>
+              </div>
+            </div>
 
-            <div onclick="toggleSessionList()"
-              class="cursor-pointer px-6 py-4 border-b border-transparent hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex justify-between items-center bg-white dark:bg-slate-800">
+            <!-- Form Input -->
+            <div class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700">
+              <div class="space-y-5">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
+                    Judul Pengumuman
+                  </label>
+                  <input id="announcementTitle" type="text" placeholder="Contoh: Pengingat Tugas Minggu Ini"
+                    class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
+                     bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100
+                     focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all">
+                </div>
 
-              <h3 class="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2 select-none">
-                <span>📋</span> Daftar Sesi Harian
-              </h3>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
+                    Isi Pesan
+                  </label>
+                  <textarea id="announcementBody" rows="4" placeholder="Tulis isi pengumuman di sini..."
+                    class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
+                     bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100
+                     focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all resize-none"></textarea>
+                </div>
 
+                <div class="flex justify-end">
+                  <button id="btnSendAnnouncement"
+                    class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-amber-500/30 transform active:scale-[0.98] transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="22" y1="2" x2="11" y2="13"/>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                    Kirim Pengumuman
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Riwayat Pengumuman -->
+            <div onclick="toggleAnnouncementHistory()"
+              class="cursor-pointer px-6 py-4 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors">
+              <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2 select-none">
+                <i data-feather="clipboard" class="w-4 h-4 text-amber-600"></i> Riwayat Pengumuman Terkirim
+              </h4>
               <div class="flex items-center gap-2">
-                <span
-                  class="text-xs text-slate-400 hidden md:inline bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-full">
-                  Klik untuk buka/tutup
-                </span>
-                <svg id="sessionChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                <span id="announcementCount" class="text-xs bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full font-bold">0</span>
+                <svg id="announcementChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke-width="2.5" stroke="currentColor"
                   class="w-5 h-5 text-slate-400 transition-transform duration-300 transform">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
               </div>
-
             </div>
 
-            <div id="sessionListContent">
-              <div class="overflow-x-auto w-full">
+            <div id="announcementHistoryContent" class="hidden">
+              <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left">
-
-                  <thead
-                    class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400">
+                  <thead class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400">
                     <tr>
-                      <th class="px-6 py-4 whitespace-nowrap w-[10px]">#</th>
-                      <th class="px-6 py-4 whitespace-nowrap">Judul Materi</th>
-                      <th class="px-6 py-4 whitespace-nowrap">Tema/Topik</th>
-                      <th class="px-6 py-4 text-center whitespace-nowrap">Status</th>
-                      <th class="px-6 py-4 text-center whitespace-nowrap">Aksi</th>
+                      <th class="px-6 py-4 w-[50px]">#</th>
+                      <th class="px-6 py-4">Judul</th>
+                      <th class="px-6 py-4 w-[150px]">Tanggal</th>
+                      <th class="px-6 py-4 text-center w-[100px]">Aksi</th>
                     </tr>
                   </thead>
-
-                  <tbody id="sessionTableBody"
-                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 odd:bg-slate-50 dark:odd:bg-slate-900/50">
+                  <tbody id="announcementTableBody" class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 [&>tr:nth-child(even)]:bg-slate-50/50 dark:[&>tr:nth-child(even)]:bg-slate-900/20">
                     <tr>
-                      <td colspan="5" class="px-6 py-8 text-center text-slate-400 dark:text-slate-500 italic">
-                        <div class="flex flex-col items-center justify-center gap-2">
-                          <svg class="w-8 h-8 animate-spin text-blue-500 opacity-50" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                            </path>
-                          </svg>
-                          <span>Sedang memuat data sesi...</span>
-                        </div>
+                      <td colspan="4" class="px-6 py-8 text-center text-slate-400 dark:text-slate-500 italic">
+                        Belum ada pengumuman yang dikirim.
                       </td>
                     </tr>
                   </tbody>
-
                 </table>
               </div>
             </div>
+
           </div>
         </div>
 
+        <script>
+          function toggleAnnouncementHistory() {
+            const content = document.getElementById('announcementHistoryContent');
+            const chevron = document.getElementById('announcementChevron');
+            content.classList.toggle('hidden');
+            if (content.classList.contains("hidden")) {
+              chevron.classList.add("-rotate-90");
+            } else {
+              chevron.classList.remove("-rotate-90");
+            }
+          }
+        </script>
+
 
         <!-- ===============================
-     SESI BELAJAR (VERSI SEDERHANA)
-=============================== -->
-        <div class="mt-12 mb-10 px-1">
+             📚 SESI BELAJAR (HARIAN)
+        =============================== -->
+        <div class="mt-8 mb-10 px-1 max-w-5xl mx-auto">
+          <div class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
 
-          <div
-            class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
-
-            <div
-              class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center gap-3">
-              <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
+            <!-- Header -->
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-slate-900/50 dark:to-slate-800/50 flex items-center gap-3">
+              <div class="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg text-emerald-600 dark:text-emerald-400">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                 </svg>
               </div>
-              <h3 class="text-xl font-bold text-slate-800 dark:text-white">
-                Sesi Belajar (Harian)
-              </h3>
+              <div>
+                <h3 class="text-xl font-bold text-slate-800 dark:text-white">Sesi Belajar (Harian)</h3>
+                <p class="text-xs text-slate-400 dark:text-slate-500">Kelola materi harian dan tugas siswa.</p>
+              </div>
             </div>
 
-            <div class="p-6 md:p-8">
-
+            <!-- Form Input Section -->
+            <div class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700">
               <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8">
 
                 <div class="md:col-span-2">
-                  <label
-                    class="block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
+                  <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
                     Ke-
                   </label>
                   <input id="sessionOrder" type="number" placeholder="1" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
                    bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100
-                   focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all">
+                   focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all">
                 </div>
 
                 <div class="md:col-span-7">
-                  <label
-                    class="block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
+                  <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
                     Judul Pertemuan
                   </label>
                   <input id="sessionTitle" type="text" placeholder="Contoh: Pertemuan 2 – Ta’aruf" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
                    bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100
-                   focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all">
+                   focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all">
                 </div>
 
                 <div class="md:col-span-3">
-                  <label
-                    class="block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
+                  <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
                     Status
                   </label>
                   <div class="relative">
                     <select id="sessionActive"
                       class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
-                     bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100
-                     focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all appearance-none cursor-pointer">
+                      bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100
+                      focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all appearance-none cursor-pointer">
                       <option value="true">🟢 Aktif</option>
                       <option value="false">🔴 Nonaktif</option>
                     </select>
                     <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-slate-500">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
-                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                       </svg>
                     </div>
                   </div>
                 </div>
 
                 <div class="md:col-span-12">
-                  <label
-                    class="block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
+                  <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
                     Tema Kosakata
                   </label>
                   <div class="relative">
                     <select id="sessionTheme"
                       class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
-                     bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100
-                     focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all appearance-none cursor-pointer">
+                      bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100
+                      focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all appearance-none cursor-pointer">
                       <option value="">-- Pilih Tema --</option>
                       <option value="taaruf">Ta’aruf (Perkenalan)</option>
                       <option value="keluarga">Keluarga</option>
@@ -770,12 +814,11 @@
                     </select>
                     <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-slate-500">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
-                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                       </svg>
                     </div>
                   </div>
-                  <p class="text-xs text-slate-400 mt-2 flex items-center gap-1">
+                  <p class="text-[10px] text-slate-400 mt-1.5 flex items-center gap-1 opacity-80">
                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -786,21 +829,20 @@
 
               </div>
 
-              <div
-                class="mb-8 p-5 bg-blue-50 dark:bg-slate-700/30 rounded-xl border border-blue-100 dark:border-slate-600/50">
+              <div class="mb-8 p-5 bg-emerald-50/50 dark:bg-emerald-900/10 rounded-xl border border-emerald-100 dark:border-emerald-800/30">
                 <label class="flex items-center gap-2 text-sm font-bold text-slate-700 dark:text-slate-200 mb-3">
-                  <span>📝</span> Instruksi Tugas Harian
+                  <i data-feather="edit-2" class="w-4 h-4 text-emerald-600"></i> Instruksi Tugas Harian
                 </label>
                 <textarea id="dailyTaskText" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
                  bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100
-                 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                 focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all resize-none"
                   placeholder="Contoh: Hafalkan 5 kosakata di atas dan buat 3 kalimat perkenalan diri..."></textarea>
-                <p class="text-xs text-slate-400 mt-2 text-right italic">
+                <p class="text-[10px] text-slate-400 mt-1.5 text-right italic opacity-80">
                   * Siswa akan melihat instruksi ini di dashboard mereka.
                 </p>
               </div>
 
-              <div class="pt-6 border-t border-slate-100 dark:border-slate-700 flex flex-col gap-4">
+              <div class="flex flex-col gap-4">
                 <button id="btnSaveSession" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99]
                  text-white py-3.5 rounded-xl font-bold text-lg shadow-lg shadow-emerald-500/30 
                  transition-all flex items-center justify-center gap-2">
@@ -818,8 +860,56 @@
                   ✅ Sesi harian berhasil disimpan!
                 </div>
               </div>
-
             </div>
+
+            <!-- Riwayat Sesi Harian (Collapse) -->
+            <div onclick="toggleSessionList()"
+              class="cursor-pointer px-6 py-4 bg-slate-50 dark:bg-slate-900/50 flex justify-between items-center hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors">
+              <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2 select-none">
+                <span>📋</span> Riwayat Sesi Harian Terdaftar
+              </h4>
+              <div class="flex items-center gap-2">
+                <span id="sessionCount" class="text-xs bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-full font-bold">0</span>
+                <svg id="sessionChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="2.5" stroke="currentColor"
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </div>
+            </div>
+
+            <div id="sessionListContent" class="hidden">
+              <div class="overflow-x-auto w-full">
+                <table class="w-full text-sm text-left">
+                  <thead class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400">
+                    <tr>
+                      <th class="px-6 py-4 whitespace-nowrap w-[10px]">#</th>
+                      <th class="px-6 py-4 whitespace-nowrap">Judul Materi</th>
+                      <th class="px-6 py-4 whitespace-nowrap">Tema/Topik</th>
+                      <th class="px-6 py-4 text-center whitespace-nowrap">Status</th>
+                      <th class="px-6 py-4 text-center whitespace-nowrap">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sessionTableBody"
+                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 [&>tr:nth-child(even)]:bg-slate-50/50 dark:[&>tr:nth-child(even)]:bg-slate-900/20">
+                    <tr>
+                      <td colspan="5" class="px-6 py-8 text-center text-slate-400 dark:text-slate-500 italic">
+                        <div class="flex flex-col items-center justify-center gap-2">
+                          <svg class="w-8 h-8 animate-spin text-emerald-500 opacity-50" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          <span>Sedang memuat data sesi...</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -854,20 +944,22 @@
               </div>
 
               <div class="flex items-center gap-2">
+                <span id="quizCount"
+                  class="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 px-2 py-0.5 rounded-full font-bold">0</span>
                 <span
                   class="text-xs text-slate-400 hidden md:inline bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-full">
                   Klik untuk buka/tutup
                 </span>
                 <svg id="quizChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke-width="2.5" stroke="currentColor"
-                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform">
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
               </div>
 
             </div>
 
-            <div id="quizContent">
+            <div id="quizContent" class="hidden">
 
               <div class="overflow-x-auto w-full">
                 <table class="w-full text-sm text-left">
@@ -886,7 +978,7 @@
                   </thead>
 
                   <tbody id="nilaiTableBody"
-                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 [&>tr:nth-child(even)]:bg-slate-50/50 dark:[&>tr:nth-child(even)]:bg-slate-900/20">
 
                     <tr>
                       <td colspan="7" class="px-6 py-10 text-center text-slate-400 dark:text-slate-500 italic">
@@ -997,9 +1089,11 @@
                 </div>
 
                 <div class="flex items-center gap-2 ml-2">
+                  <span id="pointsCount"
+                    class="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-2 py-0.5 rounded-full font-bold">0</span>
                   <svg id="totalPointsChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="2.5" stroke="currentColor"
-                    class="w-5 h-5 text-slate-400 transition-transform duration-300 transform">
+                    class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                   </svg>
                 </div>
@@ -1007,7 +1101,7 @@
 
             </div>
 
-            <div id="totalPointsContent">
+            <div id="totalPointsContent" class="hidden">
 
               <div class="overflow-x-auto w-full">
                 <table class="w-full text-sm text-left">
@@ -1034,7 +1128,7 @@
                   </thead>
 
                   <tbody id="poinTableBody"
-                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 [&>tr:nth-child(even)]:bg-slate-50/50 dark:[&>tr:nth-child(even)]:bg-slate-900/20">
 
                     <tr>
                       <td colspan="5" class="px-6 py-10 text-center text-slate-400 dark:text-slate-500 italic">
@@ -1054,6 +1148,12 @@
 
                   </tbody>
                 </table>
+              </div>
+
+              <div class="px-6 py-4 bg-slate-50 dark:bg-slate-900/30 border-t border-slate-100 dark:border-slate-700">
+                <p class="text-xs text-slate-400 text-center">
+                  * Data poin diupdate secara realtime.
+                </p>
               </div>
 
             </div>
@@ -1106,20 +1206,22 @@
               </div>
 
               <div class="flex items-center gap-2">
+                <span id="rankingCount"
+                  class="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 px-2 py-0.5 rounded-full font-bold">0</span>
                 <span
                   class="text-xs text-slate-400 hidden md:inline bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-full">
                   Klik untuk buka/tutup
                 </span>
                 <svg id="rankingChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke-width="2.5" stroke="currentColor"
-                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform">
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
               </div>
 
             </div>
 
-            <div id="rankingContent">
+            <div id="rankingContent" class="hidden">
 
               <div class="overflow-x-auto w-full">
                 <table class="w-full text-sm text-left">
@@ -1139,7 +1241,7 @@
                   </thead>
 
                   <tbody id="rankingTableBody"
-                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 [&>tr:nth-child(even)]:bg-slate-50/50 dark:[&>tr:nth-child(even)]:bg-slate-900/20">
 
                     <tr>
                       <td colspan="4" class="px-6 py-10 text-center text-slate-400 dark:text-slate-500 italic">
@@ -1191,7 +1293,7 @@
         <!-- ============================= -->
         <!-- CARD: DAFTAR SISWA BARU -->
         <!-- ============================= -->
-        <div class="space-y-10 mb-20 px-1">
+        <div class="space-y-10 mb-20 px-1 max-w-5xl mx-auto">
 
           <!-- DAFTAR AKUN SISWA -->
           <div
@@ -1317,7 +1419,7 @@
 
           <!-- MANAGEMENT EBOOK -->
           <div
-            class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
 
             <div onclick="toggleEbooks()"
               class="cursor-pointer px-6 py-5 border-b border-transparent hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex items-center justify-between bg-white dark:bg-slate-800">
@@ -1338,20 +1440,22 @@
               </div>
 
               <div class="flex items-center gap-2">
+                <span id="ebookCount"
+                  class="text-xs bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 px-2 py-0.5 rounded-full font-bold">0</span>
                 <span
                   class="text-xs text-slate-400 hidden md:inline bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-full">
                   Klik untuk buka/tutup
                 </span>
                 <svg id="ebookChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke-width="2.5" stroke="currentColor"
-                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform">
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
               </div>
 
             </div>
 
-            <div id="ebookContent">
+            <div id="ebookContent" class="hidden">
 
               <div class="overflow-x-auto w-full">
                 <table class="w-full text-sm text-left">
@@ -1368,7 +1472,7 @@
                   </thead>
 
                   <tbody id="ebookTableBody"
-                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 [&>tr:nth-child(even)]:bg-slate-50/50 dark:[&>tr:nth-child(even)]:bg-slate-900/20">
                     <tr>
                       <td colspan="6" class="px-6 py-10 text-center text-slate-400 dark:text-slate-500 italic">
                         <div class="flex flex-col items-center justify-center gap-2">
@@ -1386,6 +1490,12 @@
                     </tr>
                   </tbody>
                 </table>
+              </div>
+
+              <div class="px-6 py-4 bg-slate-50 dark:bg-slate-900/30 border-t border-slate-100 dark:border-slate-700">
+                <p class="text-xs text-slate-400 text-center">
+                  * Daftar e-book diupdate secara realtime.
+                </p>
               </div>
 
             </div>
@@ -1407,7 +1517,7 @@
 
           <!-- UPLOAD E_BOOK -->
           <div
-            class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
 
             <div
               class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center gap-3">
@@ -1740,6 +1850,13 @@
       );
 
       unsubUsers = onSnapshot(q, (snap) => {
+        // Update count badges
+        const count = snap.size || 0;
+        ["studentCount", "pointsCount", "rankingCount"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = count;
+        });
+
         dataSiswa = snap.docs.map(d => ({
           uid: d.id,
           ...d.data()
@@ -1755,8 +1872,6 @@
         (error) => {
           console.warn("Firestore listener error:", error);
         }
-
-
       });
     }
 
@@ -1843,6 +1958,14 @@
       }
 
       if (snap.data().role !== "guru") {
+        Swal.fire({
+          icon: 'error',
+          title: 'Akses Ditolak',
+          text: 'Anda bukan admin/guru!',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444'
+        });
         showLogin();
         dashboardLoaded = false;
         return;
@@ -1900,6 +2023,10 @@
       onSnapshot(
         q,
         (snap) => {
+          // Update count badge
+          const submissionCountEl = document.getElementById("submissionCount");
+          if (submissionCountEl) submissionCountEl.textContent = snap.size || 0;
+
           if (snap.empty) {
             tabelSubmissions.innerHTML = `
           <tr><td colspan="7" class="p-4 text-center">Belum ada tugas</td></tr>
@@ -1921,31 +2048,32 @@
             }
 
             tabelSubmissions.innerHTML += `
-          <tr class="dark:bg-slate-700 bg-slate-300">
-            <td class="p-3 border">${no++}</td>
-            <td class="p-3 border font-semibold">${data.nama}</td>
-            <td class="p-3 border font-bold">${data.kelas}</td>
-            <td class="p-3 border">${data.catatan || "-"}</td>
-            <td class="p-3 border text-center">
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+            <td class="px-6 py-4 font-semibold text-slate-500">${no++}</td>
+            <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${data.nama}</td>
+            <td class="px-6 py-4 font-bold text-pink-600 dark:text-pink-400">${data.kelas}</td>
+            <td class="px-6 py-4 text-slate-600 dark:text-slate-400 text-xs">${data.catatan || "-"}</td>
+            <td class="px-6 py-4 text-center">
               ${data.fileUrl
                 ? `<a href="${data.fileUrl}" target="_blank"
-                       class="bg-blue-500 text-white px-3 py-1 rounded text-xs">
-                       📎 Buka
+                       class="inline-flex items-center gap-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-blue-100 dark:border-blue-800/50 hover:bg-blue-100 transition-all">
+                       <i data-feather="paperclip" class="w-3.5 h-3.5"></i> Buka
                      </a>`
                 : "-"
               }
             </td>
-            <td class="p-3 border">${waktu}</td>
-            <td class="p-3 border text-center">
+            <td class="px-6 py-4 text-slate-500 text-xs">${waktu}</td>
+            <td class="px-6 py-4 text-center">
               <button
                 onclick="hapusTugas('${d.id}', '${data.filePath || ""}')"
-                class="bg-red-500 text-white px-3 py-1 rounded">
-                Hapus
+                class="inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-100 dark:border-red-800/50 hover:bg-red-100 transition-all">
+                <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
               </button>
             </td>
           </tr>
         `;
           });
+          if(window.feather) feather.replace();
         },
         (error) => {
           console.warn("Firestore listener error:", error);
@@ -1957,7 +2085,25 @@
 
     // 🌍 WAJIB GLOBAL KARENA DIPANGGIL DARI HTML
     window.hapusTugas = async function (docId, filePath) {
-      if (!confirm("Yakin ingin menghapus tugas ini?")) return;
+      const result = await Swal.fire({
+        title: "Hapus Tugas?",
+        text: "Yakin ingin menghapus tugas ini? Data tidak bisa dikembalikan.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#10b981",
+        cancelButtonColor: "#64748b",
+        confirmButtonText: "Ya, Hapus",
+        cancelButtonText: "Batal",
+        background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+        color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+        customClass: {
+          popup: 'rounded-[2rem]',
+          confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest',
+          cancelButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+        }
+      });
+
+      if (!result.isConfirmed) return;
 
       try {
         // 1️⃣ HAPUS FILE DI STORAGE
@@ -1969,11 +2115,33 @@
         // 2️⃣ HAPUS DOKUMEN FIRESTORE
         await deleteDoc(doc(db, "submissions", docId));
 
-        alert("✅ Tugas berhasil dihapus");
+        Swal.fire({
+          icon: 'success',
+          title: 'Dihapus!',
+          text: 'Tugas berhasil dihapus.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#10b981',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
 
       } catch (err) {
         console.error("HAPUS ERROR:", err);
-        alert("❌ Gagal menghapus tugas");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal menghapus tugas.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
       }
     };
 
@@ -2014,21 +2182,21 @@
         const statusId = `status-${uid}`;
 
         tabelSiswa.innerHTML += `
-      <tr class="dark:bg-slate-700 bg-slate-300">
-        <td class="p-3 border font-semibold">${no++}</td>
-        <td class="p-3 border font-semibold">${nama}</td>
-        <td class="p-3 border font-semibold">${nisn}</td>
-        <td class="p-3 border font-bold">${kelas}</td>
-        <td class="p-3 border font-semibold">${gender}</td>
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+        <td class="px-6 py-4 font-semibold text-slate-500">${no++}</td>
+        <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${nama}</td>
+        <td class="px-6 py-4 text-slate-600 dark:text-slate-400">${nisn}</td>
+        <td class="px-6 py-4 font-bold text-cyan-600 dark:text-cyan-400">${kelas}</td>
+        <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-400">${gender}</td>
 
-        <td class="p-3 border font-semibold" id="${statusId}">
+        <td class="px-6 py-4 text-center" id="${statusId}">
           <span class="text-slate-400 text-xs">● Offline</span>
         </td>
 
-        <td class="p-3 border text-center font-semibold">
+        <td class="px-6 py-4 text-center">
           <button onclick="hapusSiswa('${uid}')"
-            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs font-semibold">
-            🗑 Hapus
+            class="inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-100 dark:border-red-800/50 hover:bg-red-100 transition-all">
+            <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
           </button>
         </td>
       </tr>
@@ -2040,11 +2208,30 @@
           listenStudentStatus(uid, statusEl);
         }
       });
+      if(window.feather) feather.replace();
     }
 
 
     window.hapusSiswa = async (uid) => {
-      if (!confirm("Hapus siswa ini?")) return;
+      const result = await Swal.fire({
+        title: "Hapus Siswa?",
+        text: "Menghapus siswa akan menghapus seluruh data kuis dan poin mereka. Lanjutkan?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#64748b",
+        confirmButtonText: "Ya, Hapus",
+        cancelButtonText: "Batal",
+        background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+        color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+        customClass: {
+          popup: 'rounded-[2rem]',
+          confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest',
+          cancelButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+        }
+      });
+
+      if (!result.isConfirmed) return;
 
       try {
         // 1️⃣ HAPUS DATA SISWA
@@ -2056,12 +2243,35 @@
         // (opsional tapi bagus)
         console.log("Siswa & leaderboard terhapus:", uid);
 
-        // 3️⃣ RELOAD DATA
-        loadSiswa();
+        // 3️⃣ RELOAD DATA (TIDAK PERLU KARENA ADA ONSNAPSHOT TAPI BIAR AMAN)
+        // loadSiswa(); 
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Terhapus!',
+          text: 'Data siswa berhasil dihapus.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#10b981',
+          timer: 1500,
+          showConfirmButton: false,
+          customClass: { popup: 'rounded-[2rem]' }
+        });
 
       } catch (err) {
         console.error("Gagal menghapus siswa:", err);
-        alert("Terjadi kesalahan saat menghapus siswa");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Terjadi kesalahan saat menghapus siswa.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
       }
     };
 
@@ -2079,7 +2289,18 @@
       const gender = inputGender.value;
 
       if (!nama || !nisn || !kelas || !gender) {
-        alert("Data belum lengkap");
+        Swal.fire({
+          icon: 'warning',
+          title: 'Data Belum Lengkap',
+          text: 'Harap isi seluruh field pendaftaran siswa.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#f59e0b',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
         return;
       }
 
@@ -2132,7 +2353,18 @@
 
       } catch (err) {
         console.error(err);
-        alert("❌ " + err.message);
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal Membuat Siswa',
+          text: err.message,
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
       }
     });
 
@@ -2147,6 +2379,10 @@
       );
 
       onSnapshot(q, (snapshot) => {
+        // Update count badge
+        const quizCountEl = document.getElementById("quizCount");
+        if (quizCountEl) quizCountEl.textContent = snapshot.size || 0;
+
         tbody.innerHTML = "";
 
         if (snapshot.empty) {
@@ -2175,25 +2411,26 @@
             : "-";
 
           tbody.innerHTML += `
-        <tr class="border-t border-slate-200 dark:border-slate-500 dark:bg-slate-700 bg-slate-300"">
-          <td class="px-3 py-2 font-semibold">${no++}</td>
-          <td class="px-3 py-2 font-semibold">${d.nama}</td>
-          <td class="px-3 py-2 font-semibold">${d.kelas}</td>
-          <td class="px-3 py-2 font-semibold">${d.quizTitle}</td>
-          <td class="px-3 py-2 text-center font-bold">
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+          <td class="px-6 py-4 font-semibold text-slate-500">${no++}</td>
+          <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${d.nama}</td>
+          <td class="px-6 py-4 font-bold text-emerald-600 dark:text-emerald-400">${d.kelas}</td>
+          <td class="px-6 py-4 text-slate-600 dark:text-slate-400">${d.quizTitle}</td>
+          <td class="px-6 py-4 text-center font-bold text-slate-800 dark:text-white">
             ${d.score} / ${d.totalSoal}
           </td>
-          <td class="px-3 py-2 font-semibold">${waktu}</td>
-          <td class="text-center">
+          <td class="px-6 py-4 text-slate-500 text-xs">${waktu}</td>
+          <td class="px-6 py-4 text-center">
             <button
             onclick="hapusNilai('${doc.id}')"
-            class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs">
-            🗑 Hapus
+            class="inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-100 dark:border-red-800/50 hover:bg-red-100 transition-all">
+            <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
             </button>
           </td>
         </tr>
       `;
         });
+        if(window.feather) feather.replace();
       });
     }
 
@@ -2245,11 +2482,11 @@
 
       sorted.forEach((u, i) => {
         tbody.innerHTML += `
-      <tr class="dark:bg-slate-700 bg-slate-300">
-        <td class="p-3 border text-center font-bold">${i + 1}</td>
-        <td class="p-3 border font-semibold">${u.nama ?? "-"}</td>
-        <td class="p-3 border font-bold">${u.kelas ?? "-"}</td>
-        <td class="p-3 border text-center font-bold">
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+        <td class="px-6 py-4 text-center font-bold text-slate-500">${i + 1}</td>
+        <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${u.nama ?? "-"}</td>
+        <td class="px-6 py-4 font-black text-rose-600 dark:text-rose-400">${u.kelas ?? "-"}</td>
+        <td class="px-6 py-4 text-center font-black text-xl text-slate-800 dark:text-white">
           ${u.poinTotal ?? 0}
         </td>
       </tr>
@@ -2266,13 +2503,25 @@
     const resetBtn = document.getElementById("resetPoinBtn");
 
     resetBtn.addEventListener("click", async () => {
-      const yakin = confirm(
-        "Yakin reset poin hari ini?\n\n" +
-        "✔ Poin aktif akan di-reset\n" +
-        "✖ Total sepanjang waktu tetap"
-      );
+      const result = await Swal.fire({
+        title: "Reset Poin Harian?",
+        html: "Yakin reset poin hari ini?<br><br><small class='text-slate-500'>✔ Poin aktif akan di-reset<br>✖ Total sepanjang waktu tetap</small>",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#f59e0b",
+        cancelButtonColor: "#64748b",
+        confirmButtonText: "Ya, Reset",
+        cancelButtonText: "Batal",
+        background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+        color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+        customClass: {
+          popup: 'rounded-[2rem]',
+          confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest',
+          cancelButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+        }
+      });
 
-      if (!yakin) return;
+      if (!result.isConfirmed) return;
 
       try {
         const snapshot = await getDocs(collection(db, "users"));
@@ -2288,10 +2537,32 @@
           }
         }
 
-        alert("✅ Poin hari ini berhasil di-reset!");
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil!',
+          text: 'Poin harian berhasil di-reset.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#10b981',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
       } catch (err) {
         console.error(err);
-        alert("❌ Gagal reset poin");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal reset poin.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
       }
     });
 
@@ -2299,7 +2570,25 @@
     const resetTotalBtn = document.getElementById("resetPoinTotalBtn");
 
     resetTotalBtn.addEventListener("click", async () => {
-      if (!confirm("Reset SEMUA poin siswa?")) return;
+      const result = await Swal.fire({
+        title: "Reset TOTAL Poin?",
+        text: "Yakin ingin mereset SEMUA poin (termasuk total poin sepanjang waktu) seluruh siswa?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#64748b",
+        confirmButtonText: "Ya, Reset Total",
+        cancelButtonText: "Batal",
+        background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+        color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+        customClass: {
+          popup: 'rounded-[2rem]',
+          confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest',
+          cancelButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+        }
+      });
+
+      if (!result.isConfirmed) return;
 
       try {
         const snapshot = await getDocs(
@@ -2313,10 +2602,32 @@
           });
         }
 
-        alert("✅ Semua poin siswa berhasil di-reset total!");
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil!',
+          text: 'Semua poin siswa berhasil di-reset total.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#10b981',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
       } catch (err) {
         console.error(err);
-        alert("❌ Gagal reset total poin");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal reset total poin.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
       }
     });
 
@@ -2325,19 +2636,54 @@
 
     // FITUR HAPUS HASIL 
     window.hapusNilai = async function (docId) {
-      const yakin = confirm(
-        "Yakin hapus data nilai ini?\n\n" +
-        "❗ Data yang dihapus tidak bisa dikembalikan."
-      );
+      const result = await Swal.fire({
+        title: "Hapus Nilai?",
+        text: "Yakin ingin menghapus data nilai ini? Data yang dihapus tidak bisa dikembalikan.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#64748b",
+        confirmButtonText: "Ya, Hapus",
+        cancelButtonText: "Batal",
+        background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+        color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+        customClass: {
+          popup: 'rounded-[2rem]',
+          confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest',
+          cancelButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+        }
+      });
 
-      if (!yakin) return;
+      if (!result.isConfirmed) return;
 
       try {
         await deleteDoc(doc(db, "quizResults", docId));
-        alert("✅ Data nilai berhasil dihapus");
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil!',
+          text: 'Data nilai berhasil dihapus.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#10b981',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
       } catch (err) {
         console.error(err);
-        alert("❌ Gagal menghapus data");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal menghapus data.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
       }
     };
 
@@ -2497,12 +2843,30 @@
       const statusEl = ebookUploadStatus;
 
       if (!titleAr || !titleId || !file) {
-        alert("Lengkapi semua data");
+        Swal.fire({
+          icon: 'warning',
+          title: 'Data Belum Lengkap',
+          text: 'Lengkapi seluruh data e-book sebelum mengunggah.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#f59e0b',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
         return;
       }
 
       if (!currentUser) {
-        alert("User belum login");
+        Swal.fire({
+          icon: 'error',
+          title: 'Sesi Berakhir',
+          text: 'Silakan login kembali sebagai guru.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444'
+        });
         return;
       }
 
@@ -2575,10 +2939,22 @@
           createdAt: serverTimestamp()
         });
 
-        statusEl.textContent = "✅ E-Book berhasil diupload";
-        statusEl.className = "text-green-600";
+        Swal.fire({
+          icon: 'success',
+          title: 'Diunggah!',
+          text: 'E-Book berhasil ditambahkan.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#10b981',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
 
-        // reset form
+        // reset form & status
+        statusEl.classList.add("hidden");
+        statusEl.textContent = "";
         ebookTitleAr.value = "";
         ebookTitleId.value = "";
         ebookFile.value = "";
@@ -2587,6 +2963,14 @@
         console.error(err);
         statusEl.textContent = "❌ Gagal upload e-book";
         statusEl.className = "text-red-500";
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal mengunggah e-book.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444'
+        });
       }
     };
 
@@ -2607,9 +2991,12 @@
     /* ===============================
        LOAD EBOOK ADMIN
     ================================ */
-    async function loadEbookTable() {
+    let unsubEbooks = null;
+    function loadEbookTable() {
       const tbody = document.getElementById("ebookTableBody");
       if (!tbody) return;
+
+      if (unsubEbooks) unsubEbooks();
 
       tbody.innerHTML = `
     <tr>
@@ -2619,13 +3006,16 @@
     </tr>
   `;
 
-      try {
-        const q = query(
-          collection(db, "ebooks"),
-          orderBy("createdAt", "desc")
-        );
+      const q = query(
+        collection(db, "ebooks"),
+        orderBy("createdAt", "desc")
+      );
 
-        const snap = await getDocs(q);
+      unsubEbooks = onSnapshot(q, (snap) => {
+        // Update count badge
+        const ebookCountEl = document.getElementById("ebookCount");
+        if (ebookCountEl) ebookCountEl.textContent = snap.size || 0;
+
         tbody.innerHTML = "";
 
         if (snap.empty) {
@@ -2645,51 +3035,49 @@
           const id = docSnap.id;
 
           tbody.innerHTML += `
-        <tr class="hover:dark:bg-slate-700 hover:bg-slate-400">
-          <td class="border px-3 py-2 text-center">${no++}</td>
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+          <td class="px-6 py-4 text-center font-semibold text-slate-500">${no++}</td>
 
-          <td class="border px-3 py-2">
-            <div class="font-semibold">${e.title_ar}</div>
-            <div class="text-xs dark:text-slate-400 text-slate-500">${e.title_id}</div>
+          <td class="px-6 py-4">
+            <div class="font-bold text-slate-800 dark:text-slate-200">${e.title_ar}</div>
+            <div class="text-xs text-slate-400">${e.title_id}</div>
           </td>
 
-          <td class="border px-3 py-2 text-center">
+          <td class="px-6 py-4 text-center font-semibold text-slate-600 dark:text-slate-400">
               ${renderLevel(e.level)}
           </td>
 
-
-          <td class="border px-3 py-2 text-center">
+          <td class="px-6 py-4 text-center">
             <a href="${e.fileUrl}" target="_blank"
-               class="dark:text-blue-400 hover:underline">
-              📄 PDF
+               class="inline-flex items-center gap-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2.5 py-1 rounded-lg text-xs font-bold border border-blue-100 dark:border-blue-800/50 hover:bg-blue-100 transition-all">
+              <i data-feather="file-text" class="w-3.5 h-3.5"></i> PDF
             </a>
           </td>
 
-          <td class="border px-3 py-2 text-xs text-center">
+          <td class="px-6 py-4 text-xs text-center text-slate-500">
             ${e.createdAt?.toDate
               ? e.createdAt.toDate().toLocaleString("id-ID")
               : "-"}
           </td>
 
-          <td class="border px-3 py-2 text-center space-x-1">
+          <td class="px-6 py-4 text-center flex items-center justify-center gap-2">
             <button
               onclick="openEditEbook('${id}')"
-              class="bg-yellow-500 hover:bg-yellow-600 text-black px-2 py-1 rounded text-xs">
-              ✏️ Edit
+              class="p-2 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-lg border border-amber-100 dark:border-amber-800/50 hover:bg-amber-100 transition-all" title="Edit E-book">
+              <i data-feather="edit-3" class="w-4 h-4"></i>
             </button>
-
 
             <button
               onclick="deleteEbook('${id}')"
-              class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs">
-              🗑 Hapus
+              class="p-2 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg border border-red-100 dark:border-red-800/50 hover:bg-red-100 transition-all" title="Hapus E-book">
+              <i data-feather="trash-2" class="w-4 h-4"></i>
             </button>
           </td>
         </tr>
       `;
         });
-
-      } catch (err) {
+        if(window.feather) feather.replace();
+      }, (err) => {
         console.error(err);
         tbody.innerHTML = `
       <tr>
@@ -2698,7 +3086,7 @@
         </td>
       </tr>
     `;
-      }
+      });
     }
 
     loadEbookTable();
@@ -2707,8 +3095,24 @@
        HAPUS E-BOOK (FIRESTORE + STORAGE)
     ================================= */
     window.deleteEbook = async function (ebookId) {
-      const ok = confirm("Yakin ingin menghapus e-book ini?");
-      if (!ok) return;
+      const result = await Swal.fire({
+        title: "Hapus E-book?",
+        text: "Yakin ingin menghapus e-book ini? File dalam server juga akan terhapus.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#64748b",
+        confirmButtonText: "Ya, Hapus",
+        cancelButtonText: "Batal",
+        background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+        color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+        customClass: {
+          popup: 'rounded-[2rem]',
+          confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest',
+          cancelButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+        }
+      });
+      if (!result.isConfirmed) return;
 
       try {
         // 1️⃣ Ambil data ebook dulu
@@ -2716,7 +3120,14 @@
         const snap = await getDoc(ebookRef);
 
         if (!snap.exists()) {
-          alert("Data e-book tidak ditemukan");
+          Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Data e-book tidak ditemukan.',
+            background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+            color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+            confirmButtonColor: '#ef4444'
+          });
           return;
         }
 
@@ -2737,14 +3148,28 @@
         // 4️⃣ Hapus dokumen Firestore
         await deleteDoc(ebookRef);
 
-        alert("✅ E-book berhasil dihapus");
-
-        // 5️⃣ Reload tabel
-        loadEbookTable();
-
+        Swal.fire({
+          icon: 'success',
+          title: 'Terhapus!',
+          text: 'E-book berhasil dihapus.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#10b981',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
       } catch (err) {
         console.error(err);
-        alert("❌ Gagal menghapus e-book");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal menghapus e-book.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444'
+        });
       }
     };
 
@@ -2763,7 +3188,14 @@
       try {
         const snap = await getDoc(doc(db, "ebooks", id));
         if (!snap.exists()) {
-          alert("E-book tidak ditemukan");
+          Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'E-book tidak ditemukan.',
+            background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+            color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+            confirmButtonColor: '#ef4444'
+          });
           return;
         }
 
@@ -2778,7 +3210,14 @@
 
       } catch (err) {
         console.error(err);
-        alert("Gagal membuka edit e-book");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal membuka edit e-book.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444'
+        });
       }
     };
 
@@ -2789,7 +3228,14 @@
       if (!EDIT_ID) return;
 
       if (!editTitleAr.value || !editTitleId.value || !editLevel.value) {
-        alert("Lengkapi semua field");
+        Swal.fire({
+          icon: 'warning',
+          title: 'Data Belum Lengkap',
+          text: 'Harap isi seluruh field edit e-book.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#f59e0b'
+        });
         return;
       }
 
@@ -2801,11 +3247,27 @@
         });
 
         closeEditEbook();
-        loadEbookTable(); // ⬅️ refresh tabel e-book
 
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil!',
+          text: 'Perubahan e-book berhasil disimpan.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#10b981',
+          timer: 1500,
+          showConfirmButton: false
+        });
       } catch (err) {
         console.error(err);
-        alert("Gagal menyimpan perubahan");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal menyimpan perubahan.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444'
+        });
       }
     };
 
@@ -2834,7 +3296,14 @@
 
       // VALIDASI MINIMAL (WAJIB)
       if (!order || !title || !theme) {
-        alert("Pertemuan, judul, dan tema wajib diisi");
+        Swal.fire({
+          icon: 'warning',
+          title: 'Data Belum Lengkap',
+          text: 'Pertemuan, judul, dan tema wajib diisi.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#f59e0b'
+        });
         return;
       }
 
@@ -2848,9 +3317,18 @@
           createdAt: serverTimestamp()
         });
 
-        // pesan sukses
-        msg.classList.remove("hidden");
-        msg.textContent = "Sesi harian berhasil disimpan";
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil!',
+          text: 'Sesi belajar berhasil disimpan.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#10b981',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
 
         // reset form
         document.querySelectorAll(
@@ -2861,7 +3339,14 @@
 
       } catch (err) {
         console.error(err);
-        alert("Gagal menyimpan sesi");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal menyimpan sesi.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444'
+        });
       }
     });
 
@@ -2888,6 +3373,10 @@
         );
 
         onSnapshot(q, (snap) => {
+          // Update count badge
+          const sessionCountEl = document.getElementById("sessionCount");
+          if (sessionCountEl) sessionCountEl.textContent = snap.size || 0;
+
           if (snap.empty) {
             sessionTableBody.innerHTML = `
           <tr>
@@ -2904,33 +3393,34 @@
           snap.forEach(docSnap => {
             const s = docSnap.data();
             const tr = document.createElement("tr");
-
+            tr.className = "hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors";
             tr.innerHTML = `
-          <td class="px-3 py-2">${s.order}</td>
-          <td class="px-3 py-2 font-medium">${s.title}</td>
-          <td class="px-3 py-2 capitalize">${s.theme}</td>
+          <td class="px-6 py-4 font-semibold text-slate-500">${s.order}</td>
+          <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${s.title}</td>
+          <td class="px-6 py-4 capitalize text-emerald-600 dark:text-emerald-400 font-bold text-xs">${s.theme}</td>
 
-          <td class="px-3 py-2 text-center">
+          <td class="px-6 py-4 text-center">
             <button
-              class="toggleStatus px-3 py-1 rounded-full text-xs font-semibold
-                ${s.isActive ? "bg-green-600" : "bg-slate-600"}"
+              class="toggleStatus px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter
+                ${s.isActive ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 ring-1 ring-green-200 dark:ring-green-900/50" : "bg-slate-100 text-slate-600 dark:bg-slate-900/30 dark:text-slate-400 ring-1 ring-slate-200 dark:ring-slate-800"}"
               data-id="${docSnap.id}"
               data-active="${s.isActive}">
               ${s.isActive ? "Aktif" : "Nonaktif"}
             </button>
           </td>
 
-          <td class="px-3 py-2 text-center">
+          <td class="px-6 py-4 text-center">
             <button
-              class="deleteSession text-red-400 hover:text-red-600"
+              class="deleteSession inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-100 dark:border-red-800/50 hover:bg-red-100 transition-all"
               data-id="${docSnap.id}">
-              🗑 Hapus
+              <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
             </button>
           </td>
         `;
 
             sessionTableBody.appendChild(tr);
           });
+          if(window.feather) feather.replace();
         });
 
       } catch (err) {
@@ -2967,7 +3457,14 @@
 
       } catch (err) {
         console.error(err);
-        alert("Gagal mengubah status sesi");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal mengubah status sesi.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444'
+        });
       } finally {
         btn.disabled = false;
       }
@@ -2981,23 +3478,207 @@
 
       const id = btn.dataset.id;
 
-      const confirmDelete = confirm(
-        "Yakin ingin menghapus sesi belajar ini?"
-      );
-      if (!confirmDelete) return;
+      const result = await Swal.fire({
+        title: "Hapus Sesi Belajar?",
+        text: "Seluruh data sesi ini akan dihapus permanen. Lanjutkan?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#64748b",
+        confirmButtonText: "Ya, Hapus",
+        cancelButtonText: "Batal",
+        background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+        color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+        customClass: {
+          popup: 'rounded-[2rem]',
+          confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest',
+          cancelButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+        }
+      });
+
+      if (!result.isConfirmed) return;
 
       try {
         await deleteDoc(doc(db, "learningSessions", id));
-        // TIDAK perlu update UI manual
-        // onSnapshot() akan refresh otomatis
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Terhapus!',
+          text: 'Sesi belajar berhasil dihapus.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#10b981',
+          timer: 1500,
+          showConfirmButton: false
+        });
       } catch (err) {
         console.error(err);
-        alert("Gagal menghapus sesi belajar");
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Gagal menghapus sesi belajar.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#ef4444'
+        });
       }
     });
 
 
+    // ===============================
+    // 📬 KOTAK SURAT GURU - LOGIC
+    // ===============================
 
+    const announcementTableBody = document.getElementById("announcementTableBody");
+    const announcementCountEl = document.getElementById("announcementCount");
+
+    // SEND ANNOUNCEMENT
+    document.getElementById("btnSendAnnouncement")?.addEventListener("click", async () => {
+      const title = document.getElementById("announcementTitle").value.trim();
+      const body = document.getElementById("announcementBody").value.trim();
+
+      if (!title || !body) {
+        Swal.fire({
+          icon: "warning",
+          title: "Form belum lengkap",
+          text: "Judul dan isi pengumuman wajib diisi.",
+          confirmButtonColor: "#f59e0b"
+        });
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "announcements"), {
+          title,
+          body,
+          createdAt: serverTimestamp(),
+          createdBy: "Guru"
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Pengumuman Terkirim!",
+          text: "Semua siswa dapat melihat pengumuman ini.",
+          confirmButtonColor: "#f59e0b"
+        });
+
+        // Reset form
+        document.getElementById("announcementTitle").value = "";
+        document.getElementById("announcementBody").value = "";
+
+      } catch (err) {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Mengirim",
+          text: "Terjadi kesalahan saat mengirim pengumuman."
+        });
+      }
+    });
+
+    // LOAD ANNOUNCEMENTS REALTIME
+    function loadAnnouncementsForGuru() {
+      const q = query(
+        collection(db, "announcements"),
+        orderBy("createdAt", "desc")
+      );
+
+      onSnapshot(q, (snap) => {
+        announcementCountEl.textContent = snap.size;
+
+        if (snap.empty) {
+          announcementTableBody.innerHTML = `
+            <tr>
+              <td colspan="4" class="px-6 py-8 text-center text-slate-400 dark:text-slate-500 italic">
+                Belum ada pengumuman yang dikirim.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        announcementTableBody.innerHTML = "";
+        let idx = 1;
+
+        snap.forEach(docSnap => {
+          const a = docSnap.data();
+          const date = a.createdAt?.toDate?.() 
+            ? a.createdAt.toDate().toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })
+            : "-";
+
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors";
+          tr.innerHTML = `
+            <td class="px-6 py-4 text-slate-500 font-semibold">${idx++}</td>
+            <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${a.title}</td>
+            <td class="px-6 py-4 text-slate-500 text-xs">${date}</td>
+            <td class="px-6 py-4 text-center">
+              <button class="deleteAnnouncement inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-100 dark:border-red-800/50 hover:bg-red-100 transition-all"
+                data-id="${docSnap.id}">
+                <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
+              </button>
+            </td>
+          `;
+          announcementTableBody.appendChild(tr);
+        });
+        if(window.feather) feather.replace();
+      });
+    }
+
+    // DELETE ANNOUNCEMENT
+    document.getElementById("announcementTableBody")?.addEventListener("click", async (e) => {
+      if (!e.target.classList.contains("deleteAnnouncement")) return;
+
+      const docId = e.target.dataset.id;
+
+      const result = await Swal.fire({
+        title: "Hapus Pengumuman?",
+        text: "Pengumuman ini akan dihapus permanen.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#64748b",
+        confirmButtonText: "Ya, Hapus",
+        cancelButtonText: "Batal"
+      });
+
+      if (!result.isConfirmed) return;
+
+      try {
+        await deleteDoc(doc(db, "announcements", docId));
+        Swal.fire({
+          icon: "success",
+          title: "Dihapus!",
+          text: "Pengumuman berhasil dihapus.",
+          timer: 1500,
+          showConfirmButton: false
+        });
+      } catch (err) {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Menghapus",
+          text: "Terjadi kesalahan."
+        });
+      }
+    });
+
+    // Initialize announcements on load
+    loadAnnouncementsForGuru();
+
+    // TOGGLE RIWAYAT SESI
+    window.toggleSessionList = function() {
+      const content = document.getElementById("sessionListContent");
+      const chevron = document.getElementById("sessionChevron");
+      if (!content || !chevron) return;
+
+      content.classList.toggle("hidden");
+      if (content.classList.contains("hidden")) {
+        chevron.classList.add("-rotate-90");
+      } else {
+        chevron.classList.remove("-rotate-90");
+      }
+    };
 
   </script>
 

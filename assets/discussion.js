@@ -313,7 +313,7 @@ window.toggleDiscussion = function () {
   // Animasi Panah & Container Height
   if (content.classList.contains("hidden")) {
     // COLLAPSED
-    chevron.classList.remove("rotate-180");
+    chevron.classList.add("-rotate-90");
     if (container) {
       // Hapus fixed height agar container menyusut
       container.classList.remove("h-[75vh]", "md:h-[600px]");
@@ -321,7 +321,7 @@ window.toggleDiscussion = function () {
     }
   } else {
     // EXPANDED
-    chevron.classList.add("rotate-180");
+    chevron.classList.remove("-rotate-90");
     if (container) {
       // Kembalikan fixed height
       container.classList.remove("h-auto");

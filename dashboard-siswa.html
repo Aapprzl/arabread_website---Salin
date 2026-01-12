@@ -584,6 +584,64 @@
 
       </div>
 
+      <!-- ===============================
+           📬 KOTAK SURAT DARI GURU
+      =============================== -->
+      <section class="mt-8 mb-6">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+
+          <!-- Header dengan Badge -->
+          <div onclick="toggleStudentAnnouncements()"
+            class="cursor-pointer px-5 py-4 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-slate-900/50 dark:to-slate-800/50 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center hover:from-amber-100 hover:to-orange-100 dark:hover:from-slate-900 dark:hover:to-slate-800 transition-colors">
+            <div class="flex items-center gap-3">
+              <div class="relative p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600 dark:text-amber-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <!-- Unread Badge -->
+                <span id="unreadBadge" class="hidden absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse shadow-lg">
+                  0
+                </span>
+              </div>
+              <div>
+                <h3 class="font-bold text-slate-700 dark:text-slate-200 text-lg">Kotak Surat dari Guru</h3>
+                <p class="text-xs text-slate-400">Pengumuman resmi dari guru pengampu.</p>
+              </div>
+            </div>
+
+            <svg id="studentAnnouncementChevron" class="w-5 h-5 text-slate-400 transition-transform duration-300" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+
+          <!-- Daftar Pengumuman -->
+          <div id="studentAnnouncementContent" class="hidden">
+            <div id="studentAnnouncementList" class="divide-y divide-slate-100 dark:divide-slate-700">
+              <!-- Placeholder -->
+              <div class="p-6 text-center text-slate-400 dark:text-slate-500 italic">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mx-auto mb-2 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Belum ada pengumuman dari guru.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <script>
+        function toggleStudentAnnouncements() {
+          const content = document.getElementById('studentAnnouncementContent');
+          const chevron = document.getElementById('studentAnnouncementChevron');
+          content.classList.toggle('hidden');
+          chevron.classList.toggle('rotate-180');
+        }
+      </script>
+
       <!-- ================= KIRIM TUGAS ================= -->
       <section class="mt-8 mb-20">
 
@@ -713,6 +771,11 @@
 
   <!-- DATA SOAL -->
   <script src="assets/data/vocabs.js"></script>
+  <script src="bank_data_vocabs/vocab-taaruf.js"></script>
+  <script src="bank_data_vocabs/vocab-family.js"></script>
+  <script src="bank_data_vocabs/vocab-school.js"></script>
+  <script src="bank_data_vocabs/vocab-animals.js"></script>
+  <script src="bank_data_vocabs/vocab-transportation.js"></script>
 
   <!-- MAIN LOGIC -->
   <script type="module">
@@ -731,7 +794,16 @@
     import {
       getFirestore,
       doc,
-      getDoc
+      getDoc,
+      addDoc,
+      collection,
+      setDoc,
+      onSnapshot,
+      orderBy,
+      getDocs,
+      query,
+      where,
+      serverTimestamp as firestoreServerTimestamp
     } from
       "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
@@ -744,17 +816,6 @@
       serverTimestamp
     } from
       "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
-
-    import {
-      addDoc,
-      collection,
-    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-    import {
-      getDocs,
-      query,
-      where
-    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
     import {
       getStorage,
@@ -1039,12 +1100,52 @@
 
     // FUNGSI ACAK KOSAKATA untuk sesi belajar siswa 
     function getRandomVocabsByTema(tema, limit = 5) {
-      if (!window.VOCABS || !Array.isArray(window.VOCABS)) return [];
+      if (!tema) return [];
+      
+      let source = [];
+      const t = tema.toLowerCase().trim();
 
-      const filtered = window.VOCABS.filter(v => v.tema === tema);
-      if (filtered.length === 0) return [];
+      // Mapping tema ke variabel global dari bank_data_vocabs
+      // Menggunakan direct reference karena const di script luar tidak otomatis di window
+      let globalData = null;
+      try {
+        if (t === 'taaruf' && typeof VOCABS_TAARUF !== 'undefined') globalData = VOCABS_TAARUF;
+        else if (t === 'keluarga' && typeof VOCABS_FAMILY !== 'undefined') globalData = VOCABS_FAMILY;
+        else if (t === 'sekolah' && typeof VOCABS_SCHOOL !== 'undefined') globalData = VOCABS_SCHOOL;
+        else if (t === 'hewan' && typeof VOCABS_ANIMALS !== 'undefined') globalData = VOCABS_ANIMALS;
+        else if (t === 'kendaraan' && typeof VOCABS_TRANSPORTATION !== 'undefined') globalData = VOCABS_TRANSPORTATION;
+      } catch (e) {
+        console.warn("Vocab source not found for:", t);
+      }
 
-      const shuffled = [...filtered];
+      if (globalData) {
+        // Data di bank_data_vocabs berbentuk objek kategori { kat1: [], kat2: [] }
+        Object.values(globalData).forEach(categoryArray => {
+          if (Array.isArray(categoryArray)) {
+            categoryArray.forEach(v => {
+              if (v.arabic && v.meaning) {
+                source.push({
+                  ar: v.arabic,
+                  id: v.meaning
+                });
+              }
+            });
+          }
+        });
+      }
+
+      // Fallback ke window.VOCABS (format lama: array of objects)
+      if (source.length === 0 && window.VOCABS) {
+        source = window.VOCABS.filter(v => (v.tema || "").toLowerCase() === t).map(v => ({
+          ar: v.ar,
+          id: v.id
+        }));
+      }
+
+      if (source.length === 0) return [];
+
+      // Acak (Shuffle)
+      const shuffled = [...source];
       for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -1205,7 +1306,18 @@
       const catatan = catatanTugas.value.trim();
 
       if (!fileInput.files.length) {
-        alert("Silakan pilih file tugas");
+        Swal.fire({
+          icon: 'warning',
+          title: 'File Belum Dipilih',
+          text: 'Silakan pilih file tugas terlebih dahulu.',
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          confirmButtonColor: '#f59e0b',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+        });
         return;
       }
 
@@ -1297,10 +1409,7 @@
 
 
     // ================= RANKING SISWA (TOP 3 + POSISI PRIBADI) =================
-    import {
-      orderBy,
-      onSnapshot
-    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    // Note: orderBy and onSnapshot already imported at top of file
 
     async function loadRankingForStudent() {
       const top3Box = document.getElementById("top3Ranking");
@@ -1363,6 +1472,148 @@
       window.__ACTIVE_QUIZ__ = null;
     };
 
+
+    // ===============================
+    // 📬 KOTAK SURAT DARI GURU - LOGIC
+    // ===============================
+
+    const studentAnnouncementList = document.getElementById("studentAnnouncementList");
+    const unreadBadge = document.getElementById("unreadBadge");
+
+    // Load announcements for student
+    async function loadStudentAnnouncements() {
+      if (!currentUser) return;
+
+      const q = query(
+        collection(db, "announcements"),
+        orderBy("createdAt", "desc")
+      );
+
+      // Get read announcements for this student
+      const readSnap = await getDocs(collection(db, `users/${currentUser.uid}/readAnnouncements`));
+      const readIds = new Set(readSnap.docs.map(d => d.id));
+
+      onSnapshot(q, async (snap) => {
+        if (snap.empty) {
+          studentAnnouncementList.innerHTML = `
+            <div class="p-6 text-center text-slate-400 dark:text-slate-500 italic">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mx-auto mb-2 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Belum ada pengumuman dari guru.
+            </div>
+          `;
+          unreadBadge.classList.add("hidden");
+          return;
+        }
+
+        // Re-fetch read IDs in case they changed
+        const freshReadSnap = await getDocs(collection(db, `users/${currentUser.uid}/readAnnouncements`));
+        const freshReadIds = new Set(freshReadSnap.docs.map(d => d.id));
+
+        let unreadCount = 0;
+        studentAnnouncementList.innerHTML = "";
+
+        snap.forEach(docSnap => {
+          const a = docSnap.data();
+          const isRead = freshReadIds.has(docSnap.id);
+          if (!isRead) unreadCount++;
+
+          const date = a.createdAt?.toDate?.()
+            ? a.createdAt.toDate().toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })
+            : "-";
+
+          const card = document.createElement("div");
+          card.className = `announcement-item p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors ${!isRead ? 'bg-amber-50/50 dark:bg-amber-900/10' : ''}`;
+          card.dataset.id = docSnap.id;
+          card.innerHTML = `
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  ${!isRead ? '<span class="w-2 h-2 bg-amber-500 rounded-full flex-shrink-0"></span>' : ''}
+                  <h4 class="font-bold text-slate-800 dark:text-white text-sm ${!isRead ? '' : 'text-slate-600 dark:text-slate-300'}">${a.title}</h4>
+                </div>
+                <p class="text-xs text-slate-400">${date} • Dari ${a.createdBy || 'Guru'}</p>
+              </div>
+              <svg class="chevron-icon w-4 h-4 text-slate-400 transition-transform flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="announcement-body hidden mt-3 pt-3 border-t border-slate-100 dark:border-slate-700">
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">${a.body}</p>
+            </div>
+          `;
+
+          // Toggle expand and mark as read
+          card.addEventListener("click", async () => {
+            const body = card.querySelector(".announcement-body");
+            const chevron = card.querySelector(".chevron-icon");
+            body.classList.toggle("hidden");
+            chevron.classList.toggle("rotate-180");
+
+            // Mark as read if not already
+            if (!freshReadIds.has(docSnap.id)) {
+              freshReadIds.add(docSnap.id);
+              try {
+                await setDoc(doc(db, `users/${currentUser.uid}/readAnnouncements`, docSnap.id), {
+                  readAt: firestoreServerTimestamp()
+                });
+                // Update UI
+                card.classList.remove("bg-amber-50/50", "dark:bg-amber-900/10");
+                card.querySelector(".w-2.h-2")?.remove();
+                updateUnreadBadge();
+              } catch (err) {
+                console.error("Failed to mark as read:", err);
+              }
+            }
+          });
+
+          studentAnnouncementList.appendChild(card);
+        });
+
+        // Update badge
+        if (unreadCount > 0) {
+          unreadBadge.textContent = unreadCount;
+          unreadBadge.classList.remove("hidden");
+        } else {
+          unreadBadge.classList.add("hidden");
+        }
+      });
+    }
+
+    async function updateUnreadBadge() {
+      if (!currentUser) return;
+      const announcementsSnap = await getDocs(collection(db, "announcements"));
+      const readSnap = await getDocs(collection(db, `users/${currentUser.uid}/readAnnouncements`));
+      const unread = announcementsSnap.size - readSnap.size;
+      if (unread > 0) {
+        unreadBadge.textContent = unread;
+        unreadBadge.classList.remove("hidden");
+      } else {
+        unreadBadge.classList.add("hidden");
+      }
+    }
+
+    // Load announcements when user logs in (hooked into onAuthStateChanged)
+    // This will be called automatically when currentUser is set
+
+    // Watch for dashboard visibility changes to load announcements
+    const dashboardObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const targetDash = document.getElementById('dashboard-section');
+          if (targetDash && !targetDash.classList.contains('hidden') && currentUser) {
+            loadStudentAnnouncements();
+            dashboardObserver.disconnect(); // Only run once
+          }
+        }
+      });
+    });
+
+    const announcementDashSection = document.getElementById('dashboard-section');
+    if (announcementDashSection) {
+      dashboardObserver.observe(announcementDashSection, { attributes: true });
+    }
 
 
   </script>
