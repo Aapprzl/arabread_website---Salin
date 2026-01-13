@@ -354,10 +354,10 @@
           <div
             class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden relative">
 
-            <div
-              class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              
+              <div class="flex items-center gap-4 w-full md:w-auto">
+                <div class="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl text-indigo-600 dark:text-indigo-400 shrink-0">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="6" y1="12" x2="10" y2="12" />
@@ -368,101 +368,186 @@
                   </svg>
                 </div>
                 <div>
-                  <h2 class="text-xl font-bold text-slate-800 dark:text-white">Area Kuis & Game</h2>
-                  <p class="text-xs text-slate-400 dark:text-slate-500">Pilih topik untuk mulai bermain!</p>
+                  <h2 class="text-xl font-black text-slate-800 dark:text-white tracking-tight">Area Kuis & Game</h2>
+                  <p class="text-xs font-medium text-slate-400 dark:text-slate-500">Pilih topik untuk mulai bermain!</p>
                 </div>
               </div>
 
-              <div class="text-right">
-                <p id="quizBestScore" class="text-[10px] md:text-sm font-bold text-emerald-500 leading-tight">Skor
-                  Terbaik: -</p>
-                <p id="quizAttempts" class="text-[9px] md:text-xs text-slate-400">Total Main: -</p>
+              <!-- STATS BUTTON/CARD -->
+              <div class="w-full md:w-auto flex items-center gap-6 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-3 rounded-xl shadow-sm md:border-0 md:bg-transparent md:shadow-none md:p-0 md:justify-end">
+                 
+                 <div class="flex-1 md:flex-none">
+                    <p class="text-[9px] uppercase font-bold text-slate-400 tracking-wider mb-0.5">Total Poin</p>
+                    <p id="quizBestScore" class="text-lg font-black text-emerald-500 leading-none">-</p>
+                 </div>
+
+                 <div class="w-px h-8 bg-slate-100 dark:bg-slate-700"></div>
+
+                 <div class="flex-1 md:flex-none text-right md:text-left">
+                    <p class="text-[9px] uppercase font-bold text-slate-400 tracking-wider mb-0.5">Total Bermain</p>
+                    <p id="quizAttempts" class="text-sm font-bold text-slate-600 dark:text-slate-300 leading-none">-</p>
+                 </div>
+
               </div>
+
             </div>
 
             <div class="p-6">
+              
+
 
               <div class="mb-2">
                 <p class="text-xs font-bold uppercase text-slate-400 tracking-wider mb-3 ml-1">Pilih Tema Tantangan:</p>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-
-                  <button id="btnThemeTaaruf"
-                    class="group relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all text-left">
-                    <div
-                      class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2 group-hover:scale-110 transition-transform">
-                      <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
-                      </svg>
-                    </div>
-                    <span class="text-2xl block mb-1">🤝</span>
-                    <span class="font-bold text-sm md:text-base">Ta’aruf</span>
-                    <span class="text-[10px] block opacity-80">Perkenalan</span>
-                  </button>
-
-                  <button id="btnThemeSekolah"
-                    class="group relative overflow-hidden bg-gradient-to-br from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white p-4 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all text-left">
-                    <div
-                      class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2 group-hover:scale-110 transition-transform">
-                      <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
-                      </svg>
-                    </div>
-                    <span class="text-2xl block mb-1">🏫</span>
-                    <span class="font-bold text-sm md:text-base">Sekolah</span>
-                    <span class="text-[10px] block opacity-80">Lingkungan</span>
-                  </button>
-
-                  <button id="btnThemeKeluarga"
-                    class="group relative overflow-hidden bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-4 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all text-left">
-                    <div
-                      class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2 group-hover:scale-110 transition-transform">
-                      <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                          d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-                      </svg>
-                    </div>
-                    <span class="text-2xl block mb-1">👨‍👩‍👧‍👦</span>
-                    <span class="font-bold text-sm md:text-base">Keluarga</span>
-                    <span class="text-[10px] block opacity-80">Anggota</span>
-                  </button>
-
-                  <button id="btnThemeHewan"
-                    class="group relative overflow-hidden bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white p-4 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all text-left">
-                    <div
-                      class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2 group-hover:scale-110 transition-transform">
-                      <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                          d="M19.98 12.83c.01-.1.02-.2.02-.31 0-1.76-1.44-3.2-3.22-3.2-.21 0-.42.02-.62.06C15.65 6.54 13.06 4.5 10 4.5c-3.08 0-5.68 2.06-6.17 4.91-.18-.03-.37-.05-.56-.05-1.92 0-3.48 1.56-3.48 3.48 0 1.25.68 2.36 1.69 2.98-.38.74-.61 1.58-.61 2.47 0 2.87 2.33 5.21 5.21 5.21 1.92 0 3.61-1.05 4.53-2.61.92 1.55 2.61 2.61 4.53 2.61 2.87 0 5.21-2.33 5.21-5.21 0-.91-.23-1.77-.63-2.52 1.05-.63 1.76-1.78 1.76-3.08 0-.31-.03-.61-.09-.9z" />
-                      </svg>
-                    </div>
-                    <span class="text-2xl block mb-1">🐈</span>
-                    <span class="font-bold text-sm md:text-base">Binatang</span>
-                    <span class="text-[10px] block opacity-80">Kosakata</span>
-                  </button>
-
+                <div id="quizThemeList" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[500px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-indigo-200 dark:scrollbar-thumb-slate-600 scrollbar-track-transparent">
+                  <!-- Dynamic content loaded by JS -->
+                  <div class="col-span-full py-8 text-center text-slate-400 italic">
+                      Memuat daftar kuis...
+                  </div>
                 </div>
               </div>
 
+
               <div id="quizBox"
-                class="mt-6 hidden bg-slate-50 dark:bg-slate-700/50 p-6 rounded-2xl border border-dashed border-slate-300 dark:border-slate-600 text-center">
-
+                class="mt-6 mb-8 hidden bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 text-center relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-indigo-500 to-cyan-400"></div>
+                
                 <p id="quizQuestion"
-                  class="text-2xl font-bold mb-6 text-slate-800 dark:text-slate-100 arabic-question leading-loose"></p>
+                  class="text-3xl md:text-4xl font-bold mb-8 text-slate-800 dark:text-slate-100 arabic-question leading-loose py-4"></p>
 
-                <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
+                <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
                 </div>
 
-                <div class="mt-6">
-                  <p id="quizFeedback" class="text-lg font-bold min-h-[28px]"></p>
+                <div class="mt-8">
+                  <p id="quizFeedback" class="text-xl font-bold min-h-[32px] animate-fade-in"></p>
                   <button id="nextQuestion"
-                    class="hidden mt-3 bg-slate-800 hover:bg-slate-900 text-white px-6 py-2 rounded-full font-semibold transition-all shadow-lg animate-bounce">
+                    class="hidden mt-4 bg-slate-800 hover:bg-slate-900 text-white px-8 py-3 rounded-2xl font-bold uppercase tracking-widest transition-all shadow-lg active:scale-95">
                     Soal Berikutnya ➔
                   </button>
                 </div>
-
               </div>
+
+              <!-- COLLAPSIBLE GAMES SECTION -->
+              <div class="mt-8 border-t border-slate-100 dark:border-slate-700 pt-6">
+                <button onclick="const el = document.getElementById('embedded-games'); el.classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180');" 
+                        class="w-full relative overflow-hidden flex items-center justify-between p-6 rounded-3xl transition-all group shadow-xl shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:-translate-y-1">
+                   
+                   <!-- Gradient Background -->
+                   <div class="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600 dark:from-violet-700 dark:to-indigo-800 transition-all group-hover:scale-105"></div>
+                   
+                   <!-- Content -->
+                   <div class="relative z-10 flex items-center gap-5">
+                     <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-3xl shadow-inner">
+                        🎮
+                     </div>
+                     <div class="text-left">
+                       <h3 class="font-black text-white text-xl tracking-tight">Mini Games Seru</h3>
+                       <p class="text-xs text-indigo-100 font-medium opacity-90 uppercase tracking-widest mt-1">Main & Kumpulkan Poin +</p>
+                     </div>
+                   </div>
+
+                   <!-- Icon -->
+                   <div class="relative z-10 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-all">
+                       <svg class="w-6 h-6 text-white transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                       </svg>
+                   </div>
+                </button>
+
+                <div id="embedded-games" class="hidden mt-8 space-y-8">
+                    
+                    <!-- 1. GRAMMAR QUIZ -->
+                    <div class="bg-gradient-to-br from-purple-50 via-white to-purple-50 dark:from-slate-800 dark:to-purple-900/10 rounded-3xl p-1 border border-purple-100 dark:border-purple-900/50 shadow-lg hover:shadow-purple-200/50 dark:hover:shadow-purple-900/30 transition-all duration-300 transform hover:-translate-y-1">
+                      <div class="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-[1.3rem] p-6">
+                      <div class="text-center mb-6">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-purple-600 bg-purple-100 dark:bg-purple-900/50 px-3 py-1 rounded-full ring-1 ring-purple-200 dark:ring-purple-800">Grammar</span>
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-white mt-3">Tebak Jenis Kata</h3>
+                      </div>
+
+                      <div class="flex flex-col gap-6">
+                        <div class="h-40 bg-white dark:bg-slate-950 rounded-2xl border-2 border-dashed border-purple-200 dark:border-purple-800/50 flex items-center justify-center relative shadow-inner">
+                            <div id="sg-grammar-word" class="font-arab text-5xl font-bold text-slate-800 dark:text-white transition-all drop-shadow-sm">...</div>
+                            <div id="sg-grammar-feedback" class="absolute inset-0 flex items-center justify-center text-6xl opacity-0 transition-all scale-50 filter drop-shadow-md">✅</div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3">
+                            <button data-type="isim" class="sg-grammar-btn px-2 py-4 rounded-xl bg-blue-100 hover:bg-blue-200 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-black text-sm transition shadow-sm border-b-4 border-blue-200 dark:border-blue-800 active:border-b-0 active:translate-y-1">ISIM</button>
+                            <button data-type="fiil" class="sg-grammar-btn px-2 py-4 rounded-xl bg-rose-100 hover:bg-rose-200 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 font-black text-sm transition shadow-sm border-b-4 border-rose-200 dark:border-rose-800 active:border-b-0 active:translate-y-1">FI'IL</button>
+                            <button data-type="harf" class="sg-grammar-btn px-2 py-4 rounded-xl bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-black text-sm transition shadow-sm border-b-4 border-emerald-200 dark:border-emerald-800 active:border-b-0 active:translate-y-1">HARF</button>
+                        </div>
+                        
+                        <button onclick="window.startGrammarGame()" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 text-white font-bold text-xs uppercase tracking-widest transition shadow-lg">
+                          Mulai Game Baru
+                        </button>
+                      </div>
+                      </div>
+                    </div>
+
+                    <!-- 2. SENTENCE GAME -->
+                    <div class="bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:from-slate-800 dark:to-blue-900/10 rounded-3xl p-1 border border-blue-100 dark:border-blue-900/50 shadow-lg hover:shadow-blue-200/50 dark:hover:shadow-blue-900/30 transition-all duration-300 transform hover:-translate-y-1">
+                      <div class="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-[1.3rem] p-6">
+                      <div class="text-center mb-6">
+                          <span class="text-[10px] font-black uppercase tracking-widest text-blue-600 bg-blue-100 dark:bg-blue-900/50 px-3 py-1 rounded-full ring-1 ring-blue-200 dark:ring-blue-800">Susun Kalimat</span>
+                          <p id="sg-sentence-title" class="font-bold text-lg mt-3 text-slate-800 dark:text-white">-</p>
+                          <p id="sg-sentence-desc" class="text-xs text-slate-400 italic mt-1">-</p>
+                      </div>
+
+                      <div class="space-y-4">
+                          <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border-dashed border-2 border-slate-300 dark:border-slate-600 min-h-[100px] flex flex-col justify-center">
+                            <p class="text-[10px] font-bold text-slate-400 mb-3 text-center uppercase tracking-widest">Bank Kata</p>
+                            <div id="sg-sentence-bank" class="flex flex-wrap gap-2 justify-center"></div>
+                          </div>
+                          <div class="bg-blue-50/50 dark:bg-blue-900/20 p-4 rounded-xl border-2 border-blue-100 dark:border-blue-800/50 min-h-[100px] flex flex-col justify-center shadow-inner">
+                            <p class="text-[10px] font-bold text-blue-400 mb-3 text-center uppercase tracking-widest">Area Jawaban (Klik Kata)</p>
+                            <div id="sg-sentence-drop" class="flex flex-wrap gap-2 justify-center" dir="rtl"></div>
+                          </div>
+                      </div>
+
+                      <div class="mt-6 flex gap-3">
+                          <button onclick="window.loadSentenceGame()" class="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 font-bold text-slate-600 dark:text-slate-300 text-xs uppercase tracking-wide transition">Ganti Soal</button>
+                          <button id="sg-sentence-check" class="flex-[2] py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wide shadow-lg shadow-blue-500/30 transition active:scale-95">periksa Jawaban</button>
+                      </div>
+                      </div>
+                    </div>
+
+                    <!-- 3. HARAKAT GAME -->
+                    <div class="w-[88vw] md:w-full mx-auto max-w-full overflow-hidden bg-gradient-to-br from-amber-50 via-white to-orange-50 dark:from-slate-800 dark:to-amber-900/10 rounded-3xl p-0 md:p-1 border border-amber-100 dark:border-amber-900/50 shadow-lg hover:shadow-amber-200/50 dark:hover:shadow-amber-900/30 transition-all duration-300 transform hover:-translate-y-1">
+                      <div class="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-[1.3rem] p-3 md:p-6 flex flex-col gap-3 md:gap-4 w-full">
+                      
+                      <!-- Header -->
+                      <div class="text-center">
+                          <span class="text-[10px] font-black uppercase tracking-widest text-amber-600 bg-amber-100 dark:bg-amber-900/50 px-3 py-1 rounded-full ring-1 ring-amber-200 dark:ring-amber-800">Harakat</span>
+                          <p class="text-slate-400 text-[10px] md:text-xs mt-2 font-medium">Lengkapi harakat yang hilang</p>
+                      </div>
+
+                      <div class="space-y-3 md:space-y-5 w-full">
+                          <!-- Question Box -->
+                          <div class="w-full bg-slate-50 dark:bg-slate-900/50 p-2 md:p-6 rounded-2xl border border-slate-200 dark:border-slate-700 text-center shadow-sm min-h-[70px] md:min-h-[80px] flex items-center justify-center overflow-hidden">
+                            <div id="sg-harakat-question" class="font-arab text-2xl md:text-5xl font-bold text-slate-800 dark:text-white leading-relaxed tracking-wide transition-all break-words w-full px-2">...</div>
+                          </div>
+                          
+                          <!-- Answer Input -->
+                          <div class="relative group w-full"> 
+                            <input id="sg-harakat-input" type="text" dir="rtl" class="w-full min-w-0 py-2 md:py-4 px-3 md:px-6 text-center font-arab text-2xl md:text-3xl rounded-2xl border-2 border-slate-200 focus:border-amber-500 outline-none bg-white dark:bg-slate-950 dark:text-white dark:border-slate-700 transition shadow-sm focus:shadow-md placeholder-slate-300" placeholder="..." inputmode="none" autocomplete="off">
+                            <div class="absolute inset-y-0 right-3 md:right-4 flex items-center pointer-events-none">
+                               <span class="text-[9px] md:text-xs font-bold text-slate-300 uppercase">Input</span>
+                            </div>
+                          </div>
+                      </div>
+
+                      <!-- Control Buttons -->
+                      <div class="flex gap-2 w-full">
+                          <button id="sg-harakat-shuffle" class="flex-1 py-2 md:py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 font-bold text-slate-600 dark:text-slate-300 text-[9px] md:text-xs uppercase tracking-wide transition">Acak</button>
+                          <button id="sg-harakat-keyboard-toggle" class="px-3 md:px-4 py-2 md:py-3 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-700 font-bold border border-amber-200 text-sm md:text-lg transition shadow-sm">⌨️</button>
+                          <button id="sg-harakat-check" class="flex-[2] py-2 md:py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-[9px] md:text-xs uppercase tracking-wide shadow-lg shadow-amber-500/30 transition active:scale-95">Periksa</button>
+                      </div>
+                      </div>
+                    </div>
+
+                </div>
+              </div>
+
+
 
             </div>
           </div>
@@ -644,31 +729,42 @@
 
       <!-- ================= KIRIM TUGAS ================= -->
       <section class="mt-8 mb-20">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
 
-        <div
-          class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+          <!-- Header Clickable -->
+          <div onclick="toggleAssignment()" 
+               class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+            
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-violet-100 dark:bg-violet-900/30 rounded-lg text-violet-600 dark:text-violet-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-xl font-bold text-slate-800 dark:text-white select-none">
+                  Kirim Tugas
+                </h2>
+                <p class="text-xs text-slate-400 dark:text-slate-500 select-none">
+                  Upload hasil pengerjaan tugasmu di sini.
+                </p>
+              </div>
+            </div>
 
-          <div
-            class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center gap-3">
-            <div class="p-2 bg-violet-100 dark:bg-violet-900/30 rounded-lg text-violet-600 dark:text-violet-400">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="17 8 12 3 7 8" />
-                <line x1="12" y1="3" x2="12" y2="15" />
-              </svg>
-            </div>
-            <div>
-              <h2 class="text-xl font-bold text-slate-800 dark:text-white">
-                Kirim Tugas
-              </h2>
-              <p class="text-xs text-slate-400 dark:text-slate-500">
-                Upload hasil pengerjaan tugasmu di sini.
-              </p>
-            </div>
+            <!-- Chevron Icon -->
+            <svg id="assignmentChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="2.5" stroke="currentColor"
+              class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+
           </div>
 
-          <div class="p-6 space-y-5">
+          <!-- Content Hidden by Default -->
+          <div id="assignmentContent" class="hidden p-6 space-y-5">
 
             <div>
               <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2 ml-1">
@@ -715,6 +811,20 @@
           </div>
         </div>
       </section>
+
+      <script>
+        function toggleAssignment() {
+          const content = document.getElementById('assignmentContent');
+          const chevron = document.getElementById('assignmentChevron');
+          content.classList.toggle('hidden');
+          
+          if (content.classList.contains('hidden')) {
+            chevron.classList.add('-rotate-90');
+          } else {
+            chevron.classList.remove('-rotate-90');
+          }
+        }
+      </script>
 
 
     </section>
@@ -771,11 +881,6 @@
 
   <!-- DATA SOAL -->
   <script src="assets/data/vocabs.js"></script>
-  <script src="bank_data_vocabs/vocab-taaruf.js"></script>
-  <script src="bank_data_vocabs/vocab-family.js"></script>
-  <script src="bank_data_vocabs/vocab-school.js"></script>
-  <script src="bank_data_vocabs/vocab-animals.js"></script>
-  <script src="bank_data_vocabs/vocab-transportation.js"></script>
 
   <!-- MAIN LOGIC -->
   <script type="module">
@@ -823,6 +928,8 @@
       uploadBytes,
       getDownloadURL
     } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+
+    import { startStudentQuiz } from "./assets/js/student-quiz-engine.js";
 
 
 
@@ -1008,12 +1115,57 @@
         getCurrentUser: () => auth.currentUser
       };
 
-      // ================= LOAD KUIS SETELAH AUTH SIAP =================
-      const quizModule = await import("./assets/js/quiz-taaruf.js");
+      // ================= LOAD DYNAMIC QUIZ THEMES =================
 
-      if (quizModule?.initQuiz) {
-        quizModule.initQuiz();
+      function loadQuizThemes() {
+        const listContainer = document.getElementById("quizThemeList");
+        if(!listContainer) return;
+
+        // Listen to themes collection
+        const q = query(collection(db, "themes"), where("isVisible", "==", true));
+
+        onSnapshot(q, (snapshot) => {
+          if (snapshot.empty) {
+            listContainer.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 italic">Belum ada tema kuis tersedia.</div>';
+            return;
+          }
+
+          listContainer.innerHTML = "";
+          
+          snapshot.forEach(docSnap => {
+            const theme = { id: docSnap.id, ...docSnap.data() };
+
+            const btn = document.createElement("button");
+            
+            // Map colors to gradients
+            let gradientClass = "from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700";
+            if (theme.color === "emerald") gradientClass = "from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700";
+            else if (theme.color === "indigo") gradientClass = "from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700";
+            else if (theme.color === "orange") gradientClass = "from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700";
+            else if (theme.color === "rose") gradientClass = "from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700";
+            else if (theme.color === "amber") gradientClass = "from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700";
+
+            btn.className = `group relative overflow-hidden bg-gradient-to-br ${gradientClass} text-white p-4 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all text-left`;
+
+            btn.innerHTML = `
+              <div class="absolute right-0 top-0 opacity-10 transform translate-x-2 -translate-y-2 group-hover:scale-110 transition-transform">
+                 <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+              </div>
+              <span class="text-2xl block mb-1">🎯</span>
+              <span class="font-bold text-sm md:text-base">${theme.title}</span>
+              <span class="text-[10px] block opacity-80">${theme.arabicTitle || 'Kuis'}</span>
+            `;
+
+            btn.onclick = () => {
+               startStudentQuiz(theme);
+            };
+
+            listContainer.appendChild(btn);
+          });
+        });
       }
+
+      loadQuizThemes();
     });
 
     // ===============================
@@ -1105,37 +1257,8 @@
       let source = [];
       const t = tema.toLowerCase().trim();
 
-      // Mapping tema ke variabel global dari bank_data_vocabs
-      // Menggunakan direct reference karena const di script luar tidak otomatis di window
-      let globalData = null;
-      try {
-        if (t === 'taaruf' && typeof VOCABS_TAARUF !== 'undefined') globalData = VOCABS_TAARUF;
-        else if (t === 'keluarga' && typeof VOCABS_FAMILY !== 'undefined') globalData = VOCABS_FAMILY;
-        else if (t === 'sekolah' && typeof VOCABS_SCHOOL !== 'undefined') globalData = VOCABS_SCHOOL;
-        else if (t === 'hewan' && typeof VOCABS_ANIMALS !== 'undefined') globalData = VOCABS_ANIMALS;
-        else if (t === 'kendaraan' && typeof VOCABS_TRANSPORTATION !== 'undefined') globalData = VOCABS_TRANSPORTATION;
-      } catch (e) {
-        console.warn("Vocab source not found for:", t);
-      }
-
-      if (globalData) {
-        // Data di bank_data_vocabs berbentuk objek kategori { kat1: [], kat2: [] }
-        Object.values(globalData).forEach(categoryArray => {
-          if (Array.isArray(categoryArray)) {
-            categoryArray.forEach(v => {
-              if (v.arabic && v.meaning) {
-                source.push({
-                  ar: v.arabic,
-                  id: v.meaning
-                });
-              }
-            });
-          }
-        });
-      }
-
-      // Fallback ke window.VOCABS (format lama: array of objects)
-      if (source.length === 0 && window.VOCABS) {
+      // Fallback ke window.VOCABS (format: array of objects {ar, id, tema})
+      if (window.VOCABS && Array.isArray(window.VOCABS)) {
         source = window.VOCABS.filter(v => (v.tema || "").toLowerCase() === t).map(v => ({
           ar: v.ar,
           id: v.id
@@ -1217,8 +1340,17 @@
           const detail = document.createElement("div");
           detail.className = "hidden px-6 py-6 text-sm bg-slate-50/50 dark:bg-slate-900/20 session-detail animate-fade-in";
 
-          // 🔹 Kosakata wajib (UI Kartu List)
-          const vocabs = getRandomVocabsByTema(s.theme, 5);
+          // 🔹 Kosakata wajib (Prioritas: yang disimpan guru, Fallback: Acak dari tema)
+          let rawVocabs = s.mandatoryVocabs;
+          
+          if (!rawVocabs || !Array.isArray(rawVocabs) || rawVocabs.length === 0) {
+             rawVocabs = getRandomVocabsByTema(s.theme, 5);
+          }
+
+          const vocabs = rawVocabs.map(v => ({
+              ar: v.ar || v.arabic || "",
+              id: v.id || v.meaning || v.arti || v.mean || v.idn || ""
+          })).filter(v => v.ar && v.id);
 
           const vocabHTML = vocabs.map(v => `
   <div class="flex justify-between items-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-3 shadow-sm group hover:border-blue-500/50 transition-colors">
@@ -1239,7 +1371,9 @@
         </span>
         <h5 class="font-black uppercase tracking-widest text-[11px] text-slate-500 dark:text-slate-400">Target Kosakata Hari Ini</h5>
       </div>
-      <div class="grid grid-cols-1 gap-3">${vocabHTML}</div>
+      <div class="grid grid-cols-1 gap-3">
+          ${vocabHTML || `<div class="p-4 text-center border border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-slate-400 text-xs italic">Belum ada kosakata yang ditargetkan untuk sesi ini.</div>`}
+      </div>
     </div>
 
     ${s.dailyTaskText ? `
@@ -1436,29 +1570,41 @@
           });
         });
 
-        // ===== TOP 3 =====
+        // ===== TOP 3 (MATCHING NEW UI) =====
         top3Box.innerHTML = "";
         list.slice(0, 3).forEach((s, i) => {
-          const medal = ["🥇", "🥈", "🥉"][i];
-          top3Box.innerHTML += `
-        <div class="flex justify-between">
-          <span>${medal} ${s.nama} (${s.kelas})</span>
-          <b>${s.poinTotal}</b>
-        </div>
-      `;
+          const isMe = s.uid === currentUser.uid;
+           top3Box.innerHTML += `
+              <div class="flex items-center justify-between p-2 rounded-lg ${isMe ? 'bg-blue-100 dark:bg-blue-900/40' : 'bg-slate-50 dark:bg-slate-700/30'}">
+                 <div class="flex items-center gap-2">
+                    <span class="font-bold text-slate-400 w-4">${i+1}</span>
+                    <span class="font-bold text-slate-700 dark:text-slate-200 text-xs truncate max-w-[100px]">${s.nama || 'Siswa'}</span>
+                 </div>
+                 <span class="font-bold text-blue-600 dark:text-blue-400 text-xs">${s.poinTotal || 0} Poin</span>
+              </div>
+          `;
         });
 
-        // ===== POSISI PRIBADI =====
+        // ===== POSISI PRIBADI (MATCHING NEW UI) =====
         const myIndex = list.findIndex(s => s.uid === currentUser.uid);
 
         if (myIndex !== -1) {
           myBox.innerHTML = `
-        📍 <b>Peringkat kamu:</b><br>
-        #${myIndex + 1} dari ${list.length} siswa<br>
-        Total poin: <b>${list[myIndex].poinTotal}</b>
-      `;
+            <div class="flex justify-between items-center font-bold">
+                <span>Peringkat Kamu:</span>
+                <span class="text-blue-600 dark:text-blue-400 text-lg">#${myIndex + 1}</span>
+            </div>
+            <div class="flex justify-between items-center text-xs mt-1 text-slate-500">
+                <span>Total Poin:</span>
+                <span>${list[myIndex].poinTotal} Poin</span>
+            </div>
+          `;
         } else {
-          myBox.innerHTML = "Kamu belum masuk ranking";
+           myBox.innerHTML = `
+            <div class="text-center text-xs text-slate-400 p-2">
+              Kamu belum masuk ranking. Ayo main game!
+            </div>
+           `;
         }
       });
     }
@@ -1484,10 +1630,7 @@
     async function loadStudentAnnouncements() {
       if (!currentUser) return;
 
-      const q = query(
-        collection(db, "announcements"),
-        orderBy("createdAt", "desc")
-      );
+      const q = query(collection(db, "announcements"));
 
       // Get read announcements for this student
       const readSnap = await getDocs(collection(db, `users/${currentUser.uid}/readAnnouncements`));
@@ -1514,7 +1657,16 @@
         let unreadCount = 0;
         studentAnnouncementList.innerHTML = "";
 
-        snap.forEach(docSnap => {
+        // Client-side sort to avoid Missing Index error
+        const docs = [];
+        snap.forEach(d => docs.push(d));
+        docs.sort((a, b) => {
+             const tA = a.data().createdAt?.seconds || 0;
+             const tB = b.data().createdAt?.seconds || 0;
+             return tB - tA;
+        });
+
+        docs.forEach(docSnap => {
           const a = docSnap.data();
           const isRead = freshReadIds.has(docSnap.id);
           if (!isRead) unreadCount++;
@@ -1618,7 +1770,440 @@
 
   </script>
 
+
+
   <script type="module" src="assets/discussion.js"></script>
+  <script type="module" src="assets/presence.js"></script>
+
+  <!-- GAME ASSETS & ENGINE for STUDENT -->
+  <script src="assets/data/game-data.js"></script>
+  <script src="assets/data/sentence-game-data.js"></script>
+  <script src="assets/data/harakat-game-data.js"></script>
+  <script src="assets/js/arabic-keyboard.js"></script>
+  <script type="module">
+      import { db, auth } from "./assets/js/firebase-config.js";
+      import { doc, updateDoc, increment, query, collection, orderBy, limit, getDocs, setDoc, getDoc, serverTimestamp, arrayUnion, addDoc, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+      import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+      // --- INLINE GAME ENGINE (Emergency Fix) ---
+      
+      let currentUserUid = null;
+      let currentUserData = {}; // Store name/class for history
+
+      // Global Scoring & History
+      async function saveGameRecord(gameTitle, isCorrect) {
+        if (!currentUserUid) return;
+        
+        try {
+            // FIX: Use 'submissions' collection for History Logs
+            // This bypasses permission issues on 'leaderboard' or 'users'
+            // Teacher can DELETE submissions, Student can ADD submissions. Perfect match.
+
+            // 1. Update Score in Leaderboard (Score Only)
+            const lbRef = doc(db, "leaderboard", currentUserUid);
+            const scorePayload = { 
+                nama: currentUserData.nama || 'Siswa',
+                kelas: currentUserData.kelas || '-',
+                updatedAt: serverTimestamp()
+            };
+            if (isCorrect) scorePayload.poinTotal = increment(1);
+            
+            // 2. Add History Log to Submissions
+            const historyPayload = {
+                type: 'game_history', // Marker to filter later
+                uid: currentUserUid,
+                nama: currentUserData.nama || 'Siswa',
+                kelas: currentUserData.kelas || '-',
+                quizTitle: gameTitle,
+                isCorrect: isCorrect,
+                score: isCorrect ? 1 : 0,
+                timestamp: Date.now(),
+                createdAt: serverTimestamp() // needed for sorting
+            };
+
+            const promises = [
+                setDoc(lbRef, scorePayload, { merge: true }),
+                addDoc(collection(db, "submissions"), historyPayload)
+            ];
+            
+            await Promise.all(promises);
+            
+            // Refresh Rank UI Locally
+            if(window.loadLeaderboard) window.loadLeaderboard();
+            
+            console.log(`History saved to Submissions: ${gameTitle}`);
+
+        } catch (e) { console.error("Score/History save error", e); }
+      }
+
+      // --- LEADERBOARD & RANK REFRESH ---
+      window.loadLeaderboard = async function() {
+          const top3Container = document.getElementById("top3Ranking");
+          const myRankContainer = document.getElementById("myRanking");
+          if(!top3Container) return;
+
+          try {
+              // CHANGE: Query 'leaderboard' instead of 'users' to avoid permission issues and stale data
+              const q = query(collection(db, "leaderboard"), orderBy("poinTotal", "desc"), limit(10));
+              const snap = await getDocs(q);
+              
+              let html = "";
+              let myRank = "-";
+              let myScore = 0;
+              let position = 0;
+
+              snap.docs.forEach((d, i) => {
+                 const data = d.data();
+                 const isMe = d.id === currentUserUid;
+                 if(isMe) {
+                    myRank = i + 1;
+                    myScore = data.poinTotal || 0;
+                 }
+                 
+                 if(i < 3) { // Top 3
+                     html += `
+                        <div class="flex items-center justify-between p-2 rounded-lg ${isMe ? 'bg-blue-100 dark:bg-blue-900/40' : 'bg-slate-50 dark:bg-slate-700/30'}">
+                           <div class="flex items-center gap-2">
+                              <span class="font-bold text-slate-400 w-4">${i+1}</span>
+                              <span class="font-bold text-slate-700 dark:text-slate-200 text-xs truncate max-w-[100px]">${data.nama || 'Siswa'}</span>
+                           </div>
+                           <span class="font-bold text-blue-600 dark:text-blue-400 text-xs">${data.poinTotal || 0} Poin</span>
+                        </div>
+                     `;
+                 }
+              });
+              
+              top3Container.innerHTML = html;
+              
+              if(myRankContainer) {
+                 myRankContainer.innerHTML = `
+                    <div class="flex justify-between items-center font-bold">
+                        <span>Peringkat Kamu:</span>
+                        <span class="text-blue-600 dark:text-blue-400 text-lg">#${myRank}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs mt-1 text-slate-500">
+                        <span>Total Poin:</span>
+                        <span>${myScore}</span>
+                    </div>
+                 `;
+              }
+          } catch(e) {
+              console.error("Leaderboard error", e);
+          }
+      }
+
+      // --- DASHBOARD STATS (Unify Mini Games & Quiz) ---
+      async function updateDashboardStats() {
+          if (!currentUserUid) return;
+          try {
+             const attemptsEl = document.getElementById("quizAttempts");
+             const bestEl = document.getElementById("quizBestScore");
+             
+             // Query ALL submissions for this user
+             const q = query(collection(db, "submissions"), where("uid", "==", currentUserUid));
+             const snap = await getDocs(q);
+             
+             let totalPlays = snap.size;
+             let totalPoints = 0;
+             
+             snap.forEach(d => {
+                 totalPoints += (parseInt(d.data().score) || 0);
+             });
+             
+             if(attemptsEl) attemptsEl.innerText = `Total Bermain: ${totalPlays} kali`;
+             if(bestEl) bestEl.innerText = `Total Poin: ${totalPoints}`;
+             
+          } catch(e) { console.error("Stats update error", e); }
+      }
+
+      // --- KEYBOARD LOGIC (Auto-Insert) ---
+      document.addEventListener('click', (e) => {
+        // Handle Key Press
+        if(e.target.classList.contains('key-arab') || e.target.classList.contains('key-harakat')) {
+            const char = e.target.dataset.char;
+            if(window.activeArabicInput) {
+                const input = window.activeArabicInput;
+                const start = input.selectionStart;
+                const end = input.selectionEnd;
+                const text = input.value;
+                input.value = text.substring(0, start) + char + text.substring(end);
+                input.selectionStart = input.selectionEnd = start + char.length;
+                input.focus();
+            }
+        }
+        // Handle Backspace
+        if(e.target.closest('#key-backspace') || e.target.classList.contains('backspace')) {
+             if(window.activeArabicInput) {
+                const input = window.activeArabicInput;
+                const start = input.selectionStart;
+                const end = input.selectionEnd;
+                const text = input.value;
+                
+                if(start === end && start > 0) {
+                    input.value = text.substring(0, start - 1) + text.substring(end);
+                    input.selectionStart = input.selectionEnd = start - 1;
+                } else {
+                    input.value = text.substring(0, start) + text.substring(end);
+                    input.selectionStart = input.selectionEnd = start;
+                }
+                input.focus();
+             }
+        }
+        // Handle Space
+        if(e.target.closest('#key-space')) {
+            if(window.activeArabicInput) {
+                const input = window.activeArabicInput;
+                input.value += " ";
+                input.focus();
+            }
+        }
+        // Handle Enter (Virtual) - Trigger Check Button
+        if(e.target.closest('#key-enter')) {
+             if(window.activeArabicInput) {
+                 // Try to find the check button associated with this inputs game.
+                 // For now, specific for Harakat Game
+                 const harakatCheck = document.getElementById("sg-harakat-check");
+                 if(harakatCheck) harakatCheck.click();
+             }
+        }
+      });
+
+      // --- GAME 1: GRAMMAR ---
+      window.initGrammarGame = function() {
+        const wordEl = document.getElementById('sg-grammar-word');
+        const feedbackEl = document.getElementById('sg-grammar-feedback');
+        
+        // Data Fallback (Hardcoded)
+        const LOCAL_DATA = [
+          { word: "كِتَابٌ", type: "isim" }, { word: "مُحَمَّدٌ", type: "isim" },
+          { word: "يَكْتُبُ", type: "fiil" }, { word: "ذَهَبَ", type: "fiil" },
+          { word: "مِنْ", type: "harf" }, { word: "فِي", type: "harf" }
+        ];
+
+        let currentQ = null;
+
+        window.loadGrammarQuestion = function() {
+           const allData = (window.GAME_DATA && window.GAME_DATA.length) ? window.GAME_DATA : LOCAL_DATA;
+           currentQ = allData[Math.floor(Math.random() * allData.length)];
+           if(wordEl) wordEl.textContent = currentQ.word;
+           if(feedbackEl) feedbackEl.style.opacity = 0;
+           
+           // Ensure buttons work
+           document.querySelectorAll('.sg-grammar-btn').forEach(btn => {
+              btn.onclick = () => {
+                 if(btn.dataset.type === currentQ.type) {
+                    if(feedbackEl) feedbackEl.textContent = '✅';
+                    if(feedbackEl) feedbackEl.style.opacity = 1;
+                    
+                    // SAVE HISTORY: Correct
+                    saveGameRecord("Game Grammar", true);
+                    
+                    setTimeout(window.loadGrammarQuestion, 800);
+                 } else {
+                    // Logic Baru: Salah -> Lanjut (jangan suruh ulang)
+                    if(feedbackEl) feedbackEl.textContent = '❌';
+                    if(feedbackEl) feedbackEl.style.opacity = 1;
+                    
+                    // SAVE HISTORY: Wrong
+                    saveGameRecord("Game Grammar", false);
+
+                    setTimeout(() => { 
+                        if(feedbackEl) feedbackEl.style.opacity = 0; 
+                        window.loadGrammarQuestion(); // <-- Langsung Ganti Soal
+                    }, 500);
+                 }
+              }
+           });
+        };
+        
+        // Remove Start Button if exists
+        const startBtn = document.querySelector('button[onclick="window.startGrammarGame()"]');
+        if(startBtn) startBtn.remove();
+
+        // Init Directly
+        window.loadGrammarQuestion();
+      }
+
+      // --- GAME 2: SENTENCE ---
+      window.initSentenceGame = function() {
+         const LOCAL_SENTENCE = [
+           { title:"Kalimat 1", description:"Susun kalimat", correct:["أَنَا", "طَالِبٌ"] },
+           { title:"Kalimat 2", description:"Susun kalimat", correct:["هُوَ", "أُسْتَاذٌ"] }
+         ];
+         const wordBank = document.getElementById("sg-sentence-bank");
+         const dropZone = document.getElementById("sg-sentence-drop");
+         const titleEl = document.getElementById("sg-sentence-title");
+         const descEl = document.getElementById("sg-sentence-desc");
+         let currentQ = null;
+
+         window.loadSentenceGame = function() {
+            const allData = (window.SENTENCE_GAME_DATA && window.SENTENCE_GAME_DATA.length) ? window.SENTENCE_GAME_DATA : LOCAL_SENTENCE;
+            currentQ = allData[Math.floor(Math.random() * allData.length)];
+            
+            if(wordBank) wordBank.innerHTML = "";
+            if(dropZone) dropZone.innerHTML = "";
+            if((titleEl) && currentQ) titleEl.textContent = currentQ.title;
+            if(descEl && currentQ) descEl.textContent = currentQ.description;
+
+            const words = [...currentQ.correct].sort(() => Math.random() - 0.5);
+            words.forEach(w => {
+               const div = document.createElement("div");
+               div.className = "px-3 py-2 bg-blue-100 dark:bg-blue-900 rounded cursor-pointer border hover:border-blue-500";
+               div.textContent = w;
+               div.onclick = function() {
+                  if(this.parentNode === wordBank) dropZone.appendChild(this);
+                  else wordBank.appendChild(this);
+               };
+               if(wordBank) wordBank.appendChild(div);
+            });
+         };
+         
+         const checkBtn = document.getElementById("sg-sentence-check");
+         if(checkBtn) {
+            checkBtn.onclick = function() {
+               const ans = [...dropZone.children].map(c => c.textContent);
+               const correct = currentQ.correct;
+               const isRight = ans.length === correct.length && ans.every((v, k) => v === correct[k]);
+               if(isRight) {
+                  Swal.fire({ title:'Benar!', icon:'success', timer:1000, showConfirmButton:false });
+                  
+                  // SAVE HISTORY
+                  saveGameRecord("Game Kalimat", true);
+                  
+                  setTimeout(window.loadSentenceGame, 1000);
+               } else {
+                  Swal.fire({ title:'Salah', icon:'error', timer:1000, showConfirmButton:false });
+                  // SAVE HISTORY - Wrong
+                  saveGameRecord("Game Kalimat", false);
+               }
+            };
+         }
+         // Init
+         window.loadSentenceGame();
+      }
+
+      // --- GAME 3: HARAKAT ---
+      window.initHarakatGame = function() {
+         const LOCAL_HARAKAT = [
+            { plain: "كتب", answer: "كَتَبَ" },
+            { plain: "علم", answer: "عَلِمَ" }
+         ];
+         const qEl = document.getElementById("sg-harakat-question");
+         const iEl = document.getElementById("sg-harakat-input");
+         if(qEl) {
+             qEl.classList.remove('text-3xl'); 
+             qEl.classList.add('text-6xl', 'font-black', 'leading-loose', 'tracking-wider'); 
+         }
+         if(iEl) {
+             iEl.classList.remove('text-2xl');
+             iEl.classList.add('text-5xl', 'font-bold', 'py-4');
+             // Force Custom Keyboard Only
+             iEl.setAttribute("inputmode", "none");
+             iEl.setAttribute("autocomplete", "off");
+             
+             // Auto-Show Keyboard Logic
+             const showKeyboard = () => {
+                 const kb = document.getElementById('arabic-keyboard');
+                 if(kb) {
+                     kb.classList.remove('hidden');
+                     window.activeArabicInput = iEl;
+                 }
+             };
+             
+             iEl.removeEventListener('focus', showKeyboard); // prevent dupe
+             iEl.removeEventListener('click', showKeyboard); 
+             
+             iEl.addEventListener('focus', showKeyboard);
+             iEl.addEventListener('click', showKeyboard);
+         }
+
+         let currentQ = null;
+
+         window.loadHarakatGame = function() {
+            const allData = (window.HARAKAT_GAME_DATA && window.HARAKAT_GAME_DATA.length) ? window.HARAKAT_GAME_DATA : LOCAL_HARAKAT;
+            currentQ = allData[Math.floor(Math.random() * allData.length)];
+            if(qEl) qEl.textContent = currentQ.plain;
+            if(iEl) {
+                iEl.value = "";
+                iEl.focus();
+                // Set active input for keyboard
+                window.activeArabicInput = iEl;
+            }
+         };
+         
+         // Bind Shuffle
+         const shuffleBtn = document.getElementById("sg-harakat-shuffle");
+         if(shuffleBtn) shuffleBtn.onclick = window.loadHarakatGame;
+         
+         // Bind Keyboard Toggle
+         const kbdBtn = document.getElementById("sg-harakat-keyboard-toggle");
+         if(kbdBtn) {
+             kbdBtn.onclick = () => {
+                 const kbd = document.getElementById("arabic-keyboard");
+                 if(kbd) kbd.classList.toggle("hidden");
+                 if(iEl) window.activeArabicInput = iEl;
+             }
+         }
+
+         // Bind Physical Enter
+         if(iEl) {
+             iEl.addEventListener("keydown", (e) => {
+                 if(e.key === "Enter") {
+                     e.preventDefault();
+                     document.getElementById("sg-harakat-check").click();
+                 }
+             });
+             // Focus handling
+             iEl.onfocus = () => window.activeArabicInput = iEl;
+         }
+
+         const btn = document.getElementById("sg-harakat-check");
+         if(btn) {
+            btn.onclick = function() {
+               if(!iEl.value) return;
+               // Simple normalize
+               const user = iEl.value.trim(); 
+               const ans = currentQ.answer.trim();
+               if(user === ans) {
+                  Swal.fire({ title:'Benar! (+1 Poin)', icon:'success', timer:1000, showConfirmButton:false });
+                  
+                  // SAVE HISTORY
+                  saveGameRecord("Game Harakat", true);
+                  
+                  setTimeout(window.loadHarakatGame, 1000);
+               } else {
+                  Swal.fire({ title:'Salah', icon:'error' });
+                  // SAVE HISTORY
+                  saveGameRecord("Game Harakat", false);
+               }
+            };
+         }
+         
+         // Init
+         window.loadHarakatGame();
+      }
+
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          currentUserUid = user.uid;
+          
+          // Get User Data for History
+          try {
+             const snap = await getDoc(doc(db, "users", user.uid));
+             if(snap.exists()) {
+                 currentUserData = snap.data();
+             }
+          } catch(e) { console.error("Err load user", e); }
+
+          // Init All
+          window.initGrammarGame();
+          window.initSentenceGame();
+          window.initHarakatGame();
+          
+          updateDashboardStats(); // Init Stats
+        }
+      });
+  </script>
 
 
   <!-- JS DARK MODE -->

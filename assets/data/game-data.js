@@ -1,4 +1,4 @@
-const GAME_DATA = [
+window.GAME_DATA = [
   // ISIM (Kata Benda/Nama/Sifat)
   { word: "كِتَابٌ", type: "isim" },   // Buku
   { word: "مُحَمَّدٌ", type: "isim" }, // Muhammad

@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
 
-<script src="assets/data/vocabs.js"></script>
-
-
-<script src="assets/theme.js"></script>
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kuis Pemahaman Teks – Tema Ta'aruf (التَّعارُف) | ArabRead</title>
+  <title>Kuis Pemahaman Teks - ArabRead</title>
 
   <!-- Fonts & Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,11 +21,11 @@
         },
         extend: {
           colors: {
-               // School Theme: Lime (Blue -> Lime)
+            // Default Theme: Amber (Quiz Style)
             blue: { 
-              50: '#f7fee7', 100: '#ecfccb', 200: '#d9f99d', 300: '#bef264', 
-              400: '#a3e635', 500: '#84cc16', 600: '#65a30d', 700: '#4d7c0f', 
-              800: '#3f6212', 900: '#365314', 950: '#1a2e05' 
+              50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 
+              400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 
+              800: '#065f46', 900: '#064e3b', 950: '#022c22' 
             },amber: { 50: '#ecfeff', 100: '#cffafe', 200: '#a5f3fc', 300: '#67e8f9', 400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2', 700: '#0e7490', 800: '#155e75', 900: '#164e63' },
             primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
             secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
@@ -46,12 +41,13 @@
 </head>
 
 <body class="bg-gray-50 min-h-screen dark:bg-slate-800 dark:text-slate-100 ">
+
   <!-- Header -->
-  <header class="sticky top-0 z-50 w-full bg-lime-600/95 dark:bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
+  <header class="sticky top-0 z-50 w-full bg-amber-600/95 dark:bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
   <div class="max-w-7xl mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
     
     <div class="flex items-center gap-2 md:gap-4">
-      <a href="reading-school.html" class="p-2 hover:bg-white/10 rounded-xl transition-all group" title="Kembali ke Bacaan">
+      <a id="nav-back-read" href="#" class="p-2 hover:bg-white/10 rounded-xl transition-all group" title="Kembali ke Bacaan">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
@@ -59,7 +55,7 @@
 
       <div class="flex flex-col">
         <span class="text-lg md:text-xl font-black tracking-tight leading-none italic uppercase">Tarbiyyat</span>
-        <span class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-lime-200 uppercase leading-none mt-1">al-Lughah</span>
+        <span class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-amber-200 uppercase leading-none mt-1">al-Lughah</span>
       </div>
     </div>
 
@@ -67,13 +63,11 @@
       
       <nav class="hidden md:flex items-center gap-8">
         <a href="index.html" class="text-sm font-bold text-white/80 hover:text-white transition-colors">Beranda</a>
-        <a href="reading-school.html" class="text-sm font-bold text-white/80 hover:text-white transition-colors">Bacaan</a>
+        <a id="nav-read-top" href="#" class="text-sm font-bold text-white/80 hover:text-white transition-colors">Bacaan</a>
         <div class="w-px h-4 bg-white/20"></div>
-        <span class="text-sm font-bold text-lime-100 flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg border border-white/10">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-          </svg>
-          Kuis Sekolah
+        <span class="text-sm font-bold text-amber-200 flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg border border-white/10">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+          Sesi Kuis
         </span>
       </nav>
 
@@ -88,17 +82,17 @@
 
   </div>
 </header>
-
-<!-- kontent -->
+  
+  <!-- Main -->
 <main
   class="max-w-4xl mx-auto px-4 py-8 md:py-12"
-  data-quiz="school"
 >
 
+  <!-- Judul -->
   <div class="text-center mb-8">
-    <h1
+    <h1 id="hero-ar-title"
       class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white arabic-text mb-2 tracking-wide">
-      المَدْرَسَةُ
+      ...
     </h1>
     <p
       class="text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium">
@@ -106,6 +100,7 @@
     </p>
   </div>
 
+  <!-- Kartu Kuis -->
   <section
     class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl
            border border-slate-100 dark:border-slate-700
@@ -113,68 +108,76 @@
     data-quiz-card
   >
 
+    <!-- Header -->
     <div
       class="bg-slate-50 dark:bg-slate-900/50 px-6 py-4
              border-b border-slate-100 dark:border-slate-700
              flex justify-between items-center">
       <h2
         class="text-xs md:text-sm font-black uppercase tracking-widest
-               text-lime-600 dark:text-lime-500 flex items-center gap-2">
+               text-amber-600 dark:text-amber-500 flex items-center gap-2">
         🎯 Tantangan Kuis
       </h2>
 
       <div
         id="quiz-progress"
-        class="text-[10px] font-bold bg-emerald-100 dark:bg-emerald-900/30
-               text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded-full">
-        Soal Aktif
+        class="text-[10px] font-bold bg-amber-100 dark:bg-amber-900/30
+               text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">
+        Soal ... / ...
       </div>
     </div>
 
+    <!-- Body -->
     <div class="p-6 md:p-10">
 
-      <div class="text-center mb-8">
-        <p
-          id="questionText"
-          class="text-slate-600 dark:text-slate-400
-                 text-sm md:text-base mb-4 leading-relaxed">
-        </p>
-
-        <p
-          id="arabicQuestion"
-          class="arabic-text text-2xl md:text-3xl
-                 text-slate-800 dark:text-white
-                 font-bold leading-loose"
-          dir="rtl">
-        </p>
+      <!-- Pertanyaan -->
+      <div id="quiz-content"> <!-- Wrapper to clear/replace if needed -->
+          <div class="text-center mb-8">
+            <p
+              id="questionText"
+              class="text-slate-600 dark:text-slate-400
+                     text-sm md:text-base mb-4 leading-relaxed">
+            </p>
+    
+            <p
+              id="arabicQuestion"
+              class="arabic-text text-2xl md:text-3xl
+                     text-slate-800 dark:text-white
+                     font-bold leading-loose"
+              dir="rtl">
+            </p>
+          </div>
+    
+          <!-- Opsi Jawaban -->
+          <div
+            id="options"
+            class="grid grid-cols-1 sm:grid-cols-2
+                   gap-3 md:gap-4 mb-8">
+          </div>
+    
+          <!-- Feedback -->
+          <div class="flex flex-col items-center gap-4">
+            <p
+              id="feedback"
+              class="text-center font-bold
+                     text-sm md:text-base min-h-[1.5rem]">
+            </p>
+    
+            <button
+              id="nextBtn"
+              type="button"
+              class="hidden w-full md:w-auto
+                     bg-amber-500 hover:bg-amber-600
+                     text-white font-black uppercase tracking-widest
+                     py-3 px-10 rounded-2xl
+                     shadow-lg shadow-amber-500/30
+                     transition-all active:scale-95 text-sm">
+              Soal Berikutnya →
+            </button>
+          </div>
       </div>
 
-      <div
-        id="options"
-        class="grid grid-cols-1 sm:grid-cols-2
-               gap-3 md:gap-4 mb-8">
-      </div>
-
-      <div class="flex flex-col items-center gap-4">
-        <p
-          id="feedback"
-          class="text-center font-bold
-                 text-sm md:text-base min-h-[1.5rem]">
-        </p>
-
-        <button
-          id="nextBtn"
-          type="button"
-          class="hidden w-full md:w-auto
-                 bg-lime-500 hover:bg-lime-600
-                 text-white font-black uppercase tracking-widest
-                 py-3 px-10 rounded-2xl
-                 shadow-lg shadow-lime-500/30
-                 transition-all active:scale-95 text-sm">
-          Soal Berikutnya →
-        </button>
-      </div>
-
+      <!-- Hasil -->
       <div
         id="results"
         class="hidden mt-6 p-6 rounded-2xl
@@ -190,7 +193,7 @@
 
         <p
           id="score"
-          class="text-3xl font-black text-emerald-600 mb-2">
+          class="text-3xl font-black text-amber-600 mb-2">
         </p>
 
         <p
@@ -198,11 +201,17 @@
           class="text-sm text-slate-500
                  dark:text-slate-400 italic">
         </p>
+
+        <div class="flex justify-center gap-4 mt-6">
+             <button onclick="location.reload()" class="px-6 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:text-white text-sm font-bold transition">Ulangi</button>
+             <a href="index.html" class="px-6 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold shadow-lg transition">Selesai</a>
+        </div>
       </div>
 
     </div>
   </section>
 
+  <!-- Navigasi -->
   <div class="flex flex-col md:flex-row gap-4 justify-between mt-12">
 
     <a href="index.html"
@@ -217,22 +226,22 @@
     </a>
 
     <div class="flex flex-col sm:flex-row gap-3">
-      <a href="vocabulary-school.html"
-         class="flex items-center justify-center gap-2
-                px-6 py-4 rounded-2xl
-                bg-lime-100 text-lime-700
-                dark:bg-emerald-900/30 dark:text-emerald-400
-                font-bold hover:bg-lime-200
-                transition-all active:scale-95">
-        📚 Kosa Kata
-      </a>
-
-      <a href="reading-school.html"
+      <a id="btn-next-vocab" href="#"
          class="flex items-center justify-center gap-2
                 px-6 py-4 rounded-2xl
                 bg-emerald-100 text-emerald-700
                 dark:bg-emerald-900/30 dark:text-emerald-400
                 font-bold hover:bg-emerald-200
+                transition-all active:scale-95">
+        📚 Kosa Kata
+      </a>
+
+      <a id="btn-next-read" href="#"
+         class="flex items-center justify-center gap-2
+                px-6 py-4 rounded-2xl
+                bg-blue-100 text-blue-700
+                dark:bg-blue-900/30 dark:text-blue-400
+                font-bold hover:bg-blue-200
                 transition-all active:scale-95">
         📖 Baca Teks
       </a>
@@ -242,6 +251,7 @@
 
 </main>
 
+
   <!-- Footer -->
   <footer class="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 transition-colors mt-12">
   <div class="max-w-7xl mx-auto px-6 py-10">
@@ -249,30 +259,30 @@
       
       <div class="flex flex-col items-center gap-1 group">
         <span class="text-lg font-black tracking-tighter text-slate-800 dark:text-white uppercase italic">
-          Tarbiyyat <span class="text-lime-500 dark:text-lime-400">al-Lughah</span>
+          Tarbiyyat <span class="text-amber-500 dark:text-amber-400">al-Lughah</span>
         </span>
         <div class="flex items-center gap-2 mt-1">
           <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Sesi Kuis:</span>
-          <span class="arabic-text text-lg text-emerald-600 dark:text-emerald-400 font-bold">المَدْرَسَةُ</span>
+          <span id="footer-theme-name" class="arabic-text text-lg text-amber-600 dark:text-amber-500 font-bold">...</span>
         </div>
       </div>
 
       <div class="flex items-center gap-1.5">
-        <div class="h-1 w-1 bg-lime-500/40 rounded-full"></div>
-        <div class="h-1 w-16 bg-gradient-to-r from-transparent via-lime-500 to-transparent rounded-full"></div>
-        <div class="h-1 w-1 bg-lime-500/40 rounded-full"></div>
+        <div class="h-1 w-1 bg-amber-500/40 rounded-full"></div>
+        <div class="h-1 w-16 bg-gradient-to-r from-transparent via-amber-500 to-transparent rounded-full"></div>
+        <div class="h-1 w-1 bg-amber-500/40 rounded-full"></div>
       </div>
 
       <div class="pt-2">
         <p class="text-[11px] md:text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-          &copy; 2026 <strong>Tarbiyyat al-Lughah</strong> — Evaluasi Fasilitas & Lingkungan Sekolah
+          &copy; 2026 <strong>Tarbiyyat al-Lughah</strong> — Evaluasi Kemampuan Membaca
         </p>
         
-        <div class="mt-4 inline-flex items-center gap-2 px-4 py-1.5 bg-lime-50 dark:bg-lime-900/20 rounded-full border border-lime-100 dark:border-lime-800/50 shadow-sm">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-lime-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+        <div class="mt-4 inline-flex items-center gap-2 px-4 py-1.5 bg-amber-50 dark:bg-amber-900/20 rounded-full border border-amber-100 dark:border-amber-800/50 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
           </svg>
-          <span class="text-[9px] font-bold text-lime-700 dark:text-lime-400 uppercase tracking-tighter">Terus Berlatih, Raih Nilai Sempurna!</span>
+          <span class="text-[9px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-tighter italic">Tetap Semangat Belajar!</span>
         </div>
       </div>
 
@@ -280,15 +290,7 @@
   </div>
 </footer>
 
-
-
-
-  <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
-<script>
-  window.PRESENCE_OPTIONS = { mode: "global" };
-</script>
-
-<script type="module" src="assets/js/quiz-page.js"></script>
+<script type="module" src="assets/js/universal-manager.js"></script>
 
 <!-- JS UNTUK DARKMODE -->
 <script>

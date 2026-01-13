@@ -270,7 +270,7 @@
     <!-- ===============================
          DASHBOARD TUGAS (HIDDEN DEFAULT)
     ================================ -->
-    <section id="dashboard-section" class="w-full max-w-7xl mx-auto px-0 sm:px-6 py-4 sm:py-10 hidden">
+    <section id="dashboard-section" class="w-full max-w-7xl mx-auto px-0 sm:px-6 py-4 sm:py-10 pb-32 hidden">
 
       <article
         class="bg-white dark:bg-slate-800 border-x-0 sm:border border-slate-200 dark:border-slate-700 rounded-none sm:rounded-[2.5rem] shadow-2xl overflow-hidden transition-all">
@@ -316,7 +316,7 @@
         </div>
 
         <!-- DASHBOARD TUGAS -->
-        <div class="mt-8 mb-20 px-1 max-w-5xl mx-auto">
+        <div class="mt-12 mb-12 px-1 max-w-5xl mx-auto">
 
           <div
             class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
@@ -405,6 +405,7 @@
 
             </div>
           </div>
+        </div>
 
           <script>
             function toggleSubmissions() {
@@ -428,7 +429,7 @@
           <!-- ===============================
      MANAJEMEN SISWA
 =============================== -->
-          <div class="mt-8 mb-20 px-1 max-w-5xl mx-auto">
+          <div class="mb-12 px-1 max-w-5xl mx-auto">
 
             <div
               class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
@@ -545,7 +546,7 @@
         <!-- TEMPAT DISKUSI -->
 
         <div
-          class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 mb-6 overflow-hidden max-w-5xl mx-auto">
+          class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 mb-12 overflow-hidden max-w-5xl mx-auto">
 
           <div onclick="toggleDiscussion()"
             class="cursor-pointer px-5 py-4 bg-slate-50 dark:bg-slate-900/50 border-b border-transparent hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex justify-between items-center">
@@ -624,23 +625,32 @@
         <!-- ===============================
              📬 KOTAK SURAT GURU (PENGUMUMAN)
         =============================== -->
-        <div class="mt-8 mb-6 px-1 max-w-5xl mx-auto">
+        <div class="mb-8 px-1 max-w-5xl mx-auto">
           <div class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
 
             <!-- Header -->
-            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-slate-900/50 dark:to-slate-800/50 flex items-center gap-3">
-              <div class="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600 dark:text-amber-400">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
+            <div onclick="toggleKotakSurat()" class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-slate-900/50 dark:to-slate-800/50 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600 dark:text-amber-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white">Kotak Surat Guru</h3>
+                    <p class="text-xs text-slate-400 dark:text-slate-500">Kirim pengumuman ke semua siswa.</p>
+                </div>
               </div>
-              <div>
-                <h3 class="text-xl font-bold text-slate-800 dark:text-white">Kotak Surat Guru</h3>
-                <p class="text-xs text-slate-400 dark:text-slate-500">Kirim pengumuman ke semua siswa.</p>
-              </div>
+              <svg id="announcementChevronMain" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="2.5" stroke="currentColor"
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+               </svg>
             </div>
+
+            <div id="announcementMainContent" class="hidden">
 
             <!-- Form Input -->
             <div class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700">
@@ -720,6 +730,10 @@
           </div>
         </div>
 
+            </div> <!-- Close MainContent -->
+          </div>
+        </div>
+
         <script>
           function toggleAnnouncementHistory() {
             const content = document.getElementById('announcementHistoryContent');
@@ -734,26 +748,153 @@
         </script>
 
 
+
         <!-- ===============================
-             📚 SESI BELAJAR (HARIAN)
+             📚 MANAJEMEN TEMA MATERI (DYNAMIC)
         =============================== -->
-        <div class="mt-8 mb-10 px-1 max-w-5xl mx-auto">
+        <div class="mb-8 px-1 max-w-5xl mx-auto">
           <div class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
 
             <!-- Header -->
-            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-slate-900/50 dark:to-slate-800/50 flex items-center gap-3">
-              <div class="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg text-emerald-600 dark:text-emerald-400">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                </svg>
+            <div onclick="toggleMateri()" class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-900/50 dark:to-slate-800/50 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white">Manajemen Materi (Tema)</h3>
+                    <p class="text-xs text-slate-400 dark:text-slate-500">Tambah tema pembelajaran baru ke website.</p>
+                </div>
               </div>
-              <div>
-                <h3 class="text-xl font-bold text-slate-800 dark:text-white">Sesi Belajar (Harian)</h3>
-                <p class="text-xs text-slate-400 dark:text-slate-500">Kelola materi harian dan tugas siswa.</p>
-              </div>
+              <svg id="themeChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="2.5" stroke="currentColor"
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+               </svg>
             </div>
+
+            <div id="themeContent" class="hidden">
+
+            <!-- Form Input -->
+            <div class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700 space-y-6">
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">ID Tema (unik)</label>
+                    <input id="themeId" type="text" placeholder="misal: profesi" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-blue-500">
+                 </div>
+                 <div>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Warna Kartu</label>
+                    <select id="themeColor" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-blue-500">
+                       <option value="blue">Biru (Default)</option>
+                       <option value="emerald">Hijau (Emerald)</option>
+                       <option value="lime">Lime</option>
+                       <option value="rose">Merah (Rose)</option>
+                       <option value="amber">Kuning (Amber)</option>
+                       <option value="slate">Abu-abu</option>
+                    </select>
+                 </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Judul (Indonesia)</label>
+                    <input id="themeTitle" type="text" placeholder="misal: Profesi" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-blue-500">
+                 </div>
+                 <div>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Judul (Arab)</label>
+                    <input id="themeArTitle" type="text" placeholder="misal: الْمِهْنَةُ" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-blue-500 font-arab text-right" dir="rtl">
+                 </div>
+              </div>
+
+              <div>
+                  <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Deskripsi Singkat</label>
+                  <input id="themeDesc" type="text" placeholder="Deskripsi singkat untuk kartu di beranda." class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+
+              <!-- JSON DATA INPUTS -->
+              <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                  <h4 class="font-bold text-slate-700 dark:text-white">Data Konten (Format JSON)</h4>
+                  
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Data Kosakata (JSON Array)</label>
+                    <textarea id="themeVocabJson" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 font-mono text-xs outline-none focus:ring-2 focus:ring-blue-500" placeholder='[{"ar":"...","jamak":"...","arti":"..."}]'></textarea>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Data Bacaan (JSON Array)</label>
+                    <textarea id="themeReadJson" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 font-mono text-xs outline-none focus:ring-2 focus:ring-blue-500" placeholder='[{"title":"...","ar":"...","idn":"..."}]'></textarea>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Data Kuis (JSON Array)</label>
+                    <textarea id="themeQuizJson" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 font-mono text-xs outline-none focus:ring-2 focus:ring-blue-500" placeholder='[{"question":"...","correct":"...","options":[...]}]'></textarea>
+                  </div>
+              </div>
+
+
+              <div class="flex justify-between pt-4">
+                  <button id="btnResetForm" class="text-slate-500 hover:text-slate-700 font-bold text-sm px-4">
+                    Reset Form
+                  </button>
+                  <button id="btnSaveTheme" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all active:scale-95 flex items-center gap-2">
+                    <span>💾 Simpan Tema & Materi</span>
+                  </button>
+              </div>
+
+            </div>
+            
+            <!-- LIST MATERI -->
+            <div class="px-6 py-8 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-700">
+               <h4 class="font-bold text-slate-700 dark:text-white mb-6 flex items-center gap-2">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                 Daftar Materi Tersedia
+               </h4>
+               
+               <div id="themeListContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <!-- Cards will be injected here -->
+                  <div class="col-span-full text-center py-10 opacity-50">⏳ Memuat daftar materi...</div>
+               </div>
+            </div>
+
+          </div>
+        </div>
+        
+            </div> <!-- Close themeContent -->
+          </div>
+        </div>
+        
+        </script>
+
+        <!-- ===============================
+             📚 SESI BELAJAR (HARIAN)
+        =============================== -->
+        <div class="mb-8 px-1 max-w-5xl mx-auto">
+          <div class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+
+            <!-- Header -->
+            <div onclick="toggleSesi()" class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-slate-900/50 dark:to-slate-800/50 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg text-emerald-600 dark:text-emerald-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white">Sesi Belajar (Harian)</h3>
+                    <p class="text-xs text-slate-400 dark:text-slate-500">Kelola materi harian dan tugas siswa.</p>
+                </div>
+              </div>
+              <svg id="sessionChevronMain" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="2.5" stroke="currentColor"
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+               </svg>
+            </div>
+
+            <div id="dailySessionContent" class="hidden">
 
             <!-- Form Input Section -->
             <div class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700">
@@ -806,11 +947,7 @@
                       class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
                       bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100
                       focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition-all appearance-none cursor-pointer">
-                      <option value="">-- Pilih Tema --</option>
-                      <option value="taaruf">Ta’aruf (Perkenalan)</option>
-                      <option value="keluarga">Keluarga</option>
-                      <option value="sekolah">Sekolah</option>
-                      <option value="hewan">Binatang</option>
+                      <option value="">⏳ Memuat tema...</option>
                     </select>
                     <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-slate-500">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -915,8 +1052,13 @@
 
 
 
-        <!-- ================= NILAI KUIS SISWA ================= -->
-        <div class="mt-12 px-1">
+            </div> <!-- Close dailySessionContent -->
+          </div>
+        </div>
+
+
+        <!-- ================= UPLOAD E-BOOK ================= -->
+        <div class="mb-8 px-1 max-w-5xl mx-auto">
 
           <div
             class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
@@ -935,7 +1077,7 @@
                 </div>
                 <div>
                   <h2 class="text-xl font-bold text-slate-800 dark:text-white select-none">
-                    Nilai Kuis Siswa
+                    Riwayat Game Siswa
                   </h2>
                   <p class="text-xs text-slate-400 dark:text-slate-500 select-none">
                     Daftar seluruh siswa yang terdaftar dalam sistem.
@@ -964,16 +1106,15 @@
               <div class="overflow-x-auto w-full">
                 <table class="w-full text-sm text-left">
 
-                  <thead
-                    class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                  <thead class="bg-slate-50 dark:bg-slate-900/50 text-xs uppercase font-bold text-slate-500">
                     <tr>
-                      <th class="px-6 py-4 whitespace-nowrap w-[20px]">No</th>
-                      <th class="px-6 py-4 whitespace-nowrap min-w-[150px]">Nama Siswa</th>
-                      <th class="px-6 py-4 whitespace-nowrap">Kelas</th>
-                      <th class="px-6 py-4 whitespace-nowrap">Judul Kuis</th>
-                      <th class="px-6 py-4 text-center whitespace-nowrap">Skor</th>
-                      <th class="px-6 py-4 whitespace-nowrap">Waktu</th>
-                      <th class="px-6 py-4 text-center whitespace-nowrap">Aksi</th>
+                      <th class="px-6 py-4 text-center">No</th>
+                      <th class="px-6 py-4 text-left">Nama Siswa</th>
+                      <th class="px-6 py-4 text-left">Kelas</th>
+                      <th class="px-6 py-4 text-left">Total Game</th>
+                      <th class="px-6 py-4 text-left">Total Skor</th>
+                      <th class="px-6 py-4 text-left">Waktu Terakhir</th>
+                      <th class="px-6 py-4 text-left">Aksi</th>
                     </tr>
                   </thead>
 
@@ -1027,10 +1168,10 @@
 
 
         <!-- ================= TOTAL POIN SISWA ================= -->
-        <div class="mt-12 mb-20 px-1">
+        <div class="mb-12 px-1 max-w-5xl mx-auto">
 
           <div
-            class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
 
             <div onclick="toggleTotalPoints()"
               class="cursor-pointer px-6 py-5 border-b border-transparent hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-800">
@@ -1173,119 +1314,37 @@
           }
         </script>
 
-
-        <!-- ================= RANKING SISWA ================= -->
-        <div class="mt-12 mb-24 px-1">
-
-          <div
-            class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
-
-            <div onclick="toggleRanking()"
-              class="cursor-pointer px-6 py-5 border-b border-transparent hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex items-center justify-between bg-white dark:bg-slate-800">
-
-              <div class="flex items-center gap-3">
-                <div class="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg text-orange-600 dark:text-orange-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-                    <path d="M4 22h16" />
-                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
-                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="text-xl font-bold text-slate-800 dark:text-white select-none">
-                    Ranking Siswa
-                  </h3>
-                  <p class="text-xs text-slate-400 dark:text-slate-500 select-none">Peringkat berdasarkan akumulasi
-                    total poin.
-                  </p>
-                </div>
-              </div>
-
-              <div class="flex items-center gap-2">
-                <span id="rankingCount"
-                  class="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 px-2 py-0.5 rounded-full font-bold">0</span>
-                <span
-                  class="text-xs text-slate-400 hidden md:inline bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-full">
-                  Klik untuk buka/tutup
-                </span>
-                <svg id="rankingChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                  stroke-width="2.5" stroke="currentColor"
-                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                </svg>
-              </div>
-
-            </div>
-
-            <div id="rankingContent" class="hidden">
-
-              <div class="overflow-x-auto w-full">
-                <table class="w-full text-sm text-left">
-
-                  <thead
-                    class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
-                    <tr>
-                      <th class="px-6 py-4 text-center whitespace-nowrap w-[80px]">
-                        Rank
-                      </th>
-                      <th class="px-6 py-4 whitespace-nowrap min-w-[200px]">Nama Siswa</th>
-                      <th class="px-6 py-4 whitespace-nowrap">Kelas</th>
-                      <th class="px-6 py-4 text-center whitespace-nowrap bg-orange-50/50 dark:bg-orange-900/10">
-                        <span class="text-orange-600 dark:text-orange-400 font-bold">Total Poin</span>
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody id="rankingTableBody"
-                    class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 [&>tr:nth-child(even)]:bg-slate-50/50 dark:[&>tr:nth-child(even)]:bg-slate-900/20">
-
-                    <tr>
-                      <td colspan="4" class="px-6 py-10 text-center text-slate-400 dark:text-slate-500 italic">
-                        <div class="flex flex-col items-center justify-center gap-2">
-                          <svg class="w-6 h-6 animate-spin text-orange-500 opacity-50"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                            </path>
-                          </svg>
-                          <span>Menghitung peringkat...</span>
-                        </div>
-                      </td>
-                    </tr>
-
-                  </tbody>
-                </table>
-              </div>
-
-              <div class="px-6 py-4 bg-slate-50 dark:bg-slate-900/30 border-t border-slate-100 dark:border-slate-700">
-                <p class="text-xs text-slate-400 text-center">
-                  * Peringkat diupdate secara realtime berdasarkan total poin.
-                </p>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
         <script>
-          function toggleRanking() {
-            const content = document.getElementById("rankingContent");
-            const chevron = document.getElementById("rankingChevron");
-            if (!content || !chevron) return;
-            content.classList.toggle("hidden");
-            if (content.classList.contains("hidden")) {
-              chevron.classList.add("-rotate-90");
-            } else {
-              chevron.classList.remove("-rotate-90");
-            }
-          }
+             // TOGGLE MATERI
+             function toggleMateri() {
+               const c = document.getElementById("themeContent");
+               const v = document.getElementById("themeChevron");
+               if(!c) return;
+               c.classList.toggle("hidden");
+               if(v) v.classList.toggle("-rotate-90");
+             }
+             
+             // TOGGLE SESI
+             function toggleSesi() {
+               const c = document.getElementById("dailySessionContent");
+               const v = document.getElementById("sessionChevronMain");
+               if(!c) return;
+               c.classList.toggle("hidden");
+               if(v) v.classList.toggle("-rotate-90");
+             }
+             
+             // TOGGLE KOTAK SURAT
+             function toggleKotakSurat() {
+                const c = document.getElementById("announcementMainContent");
+                const v = document.getElementById("announcementChevronMain");
+                if(!c) return;
+                c.classList.toggle("hidden");
+                if(v) v.classList.toggle("-rotate-90");
+             }
         </script>
+
+
+        <!-- Ranking Siswa Removed as per request (Redundant with Total Poin) -->
 
 
 
@@ -1293,29 +1352,35 @@
         <!-- ============================= -->
         <!-- CARD: DAFTAR SISWA BARU -->
         <!-- ============================= -->
-        <div class="space-y-10 mb-20 px-1 max-w-5xl mx-auto">
+        <div class="space-y-10 mb-12 px-1 max-w-5xl mx-auto">
 
           <!-- DAFTAR AKUN SISWA -->
           <div
             class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
 
-            <div
-              class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center gap-3">
-              <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            <div onclick="toggleRegisterStudent()" class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/50">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                   <circle cx="8.5" cy="7" r="4" />
                   <line x1="20" y1="8" x2="20" y2="14" />
                   <line x1="23" y1="11" x2="17" y2="11" />
                 </svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 dark:text-white select-none">
+                  Daftarkan Siswa Baru
+                </h3>
               </div>
-              <h3 class="text-xl font-bold text-slate-800 dark:text-white">
-                Daftarkan Siswa Baru
-              </h3>
+              <svg id="registerStudentChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="2.5" stroke="currentColor"
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
             </div>
 
-            <div class="p-6">
+            <div id="registerStudentContent" class="hidden p-6">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
                 <div>
@@ -1417,9 +1482,26 @@
           </div>
 
 
+          </div>
+          <!-- Script Toggle Register -->
+          <script>
+            function toggleRegisterStudent() {
+              const content = document.getElementById("registerStudentContent");
+              const chevron = document.getElementById("registerStudentChevron");
+              if (!content || !chevron) return;
+              content.classList.toggle("hidden");
+              if (content.classList.contains("hidden")) {
+                chevron.classList.add("-rotate-90");
+              } else {
+                chevron.classList.remove("-rotate-90");
+              }
+            }
+          </script>
+
+
           <!-- MANAGEMENT EBOOK -->
           <div
-            class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            class="w-full max-w-5xl mx-auto mb-12 bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
 
             <div onclick="toggleEbooks()"
               class="cursor-pointer px-6 py-5 border-b border-transparent hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex items-center justify-between bg-white dark:bg-slate-800">
@@ -1517,24 +1599,30 @@
 
           <!-- UPLOAD E_BOOK -->
           <div
-            class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            class="w-full max-w-5xl mx-auto mb-12 bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
 
-            <div
-              class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center gap-3">
-              <div class="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg text-emerald-600 dark:text-emerald-400">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="17 8 12 3 7 8" />
-                  <line x1="12" y1="3" x2="12" y2="15" />
-                </svg>
+            <div onclick="toggleUploadEbook()" class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/50">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg text-emerald-600 dark:text-emerald-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 dark:text-white select-none">
+                  Upload E-Book Baru
+                </h3>
               </div>
-              <h3 class="text-xl font-bold text-slate-800 dark:text-white">
-                Upload E-Book Baru
-              </h3>
+               <svg id="uploadEbookChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="2.5" stroke="currentColor"
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
             </div>
 
-            <div class="p-6">
+            <div id="uploadEbookContent" class="hidden p-6">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
                 <div>
@@ -1579,7 +1667,7 @@
 
               </div>
 
-              <div class="mt-6">
+              <div class="mt-6 mb-8">
                 <button id="btnUploadEbook"
                   class="w-full md:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
                   <span>⬆️</span> Upload E-Book
@@ -1588,7 +1676,22 @@
               </div>
 
             </div>
+            </div>
           </div>
+          <div class="h-24 md:h-32 w-full"></div> 
+          <script>
+            function toggleUploadEbook() {
+              const content = document.getElementById("uploadEbookContent");
+              const chevron = document.getElementById("uploadEbookChevron");
+              if (!content || !chevron) return;
+              content.classList.toggle("hidden");
+              if (content.classList.contains("hidden")) {
+                chevron.classList.add("-rotate-90");
+              } else {
+                chevron.classList.remove("-rotate-90");
+              }
+            }
+          </script>
 
         </div>
 
@@ -1762,6 +1865,9 @@
       orderBy,
       serverTimestamp,
       onSnapshot,
+      collectionGroup,
+      limit,
+      writeBatch
     } from
       "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
@@ -1866,7 +1972,9 @@
 
         renderTabelSiswa(dataSiswa);
         renderPoinTable(dataSiswa);
-        renderRankingFromUsers(dataSiswa); // ⬅️ INI KUNCI
+        renderTabelSiswa(dataSiswa);
+        renderPoinTable(dataSiswa);
+        // renderRankingFromUsers(dataSiswa); // DELETED: Replaced by listenToLeaderboard()
 
         // ERROR HANDLER
         (error) => {
@@ -1990,6 +2098,9 @@
       loadEbookTable();
       // AKTIFKAN REALTIME
       loadSessionsForGuruRealtime();
+      loadSessionsForGuruRealtime();
+      renderThemesRealtime(); // Load Themes (Auth-secured)
+      populateSessionThemeDropdown(); // 🔥 Populate dropdown for session
 
 
 
@@ -2023,11 +2134,14 @@
       onSnapshot(
         q,
         (snap) => {
-          // Update count badge
-          const submissionCountEl = document.getElementById("submissionCount");
-          if (submissionCountEl) submissionCountEl.textContent = snap.size || 0;
+          // Filter docs first (Client Filter)
+          const validDocs = snap.docs.filter(d => d.data().type !== 'game_history');
 
-          if (snap.empty) {
+          // Update count badge (Correct Count)
+          const submissionCountEl = document.getElementById("submissionCount");
+          if (submissionCountEl) submissionCountEl.textContent = validDocs.length || 0;
+
+          if (validDocs.length === 0) {
             tabelSubmissions.innerHTML = `
           <tr><td colspan="7" class="p-4 text-center">Belum ada tugas</td></tr>
         `;
@@ -2037,8 +2151,9 @@
           tabelSubmissions.innerHTML = "";
           let no = 1;
 
-          snap.forEach((d) => {
+          validDocs.forEach((d) => {
             const data = d.data();
+
             let waktu = "-";
 
             if (data.createdAt?.toDate) {
@@ -2172,41 +2287,43 @@
 
       if (!Array.isArray(dataSiswa)) return;
 
-      dataSiswa.forEach((d) => {
+      const rows = dataSiswa.map((d, index) => {
         const uid = d.uid;
         const nama = d.nama || "-";
         const nisn = d.nisn || "-";
         const kelas = d.kelas || "-";
         const gender = d.gender || "-";
-
         const statusId = `status-${uid}`;
 
-        tabelSiswa.innerHTML += `
-      <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
-        <td class="px-6 py-4 font-semibold text-slate-500">${no++}</td>
-        <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${nama}</td>
-        <td class="px-6 py-4 text-slate-600 dark:text-slate-400">${nisn}</td>
-        <td class="px-6 py-4 font-bold text-cyan-600 dark:text-cyan-400">${kelas}</td>
-        <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-400">${gender}</td>
+        return `
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+            <td class="px-6 py-4 font-semibold text-slate-500">${no++}</td>
+            <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${nama}</td>
+            <td class="px-6 py-4 text-slate-600 dark:text-slate-400">${nisn}</td>
+            <td class="px-6 py-4 font-bold text-cyan-600 dark:text-cyan-400">${kelas}</td>
+            <td class="px-6 py-4 text-center text-slate-600 dark:text-slate-400">${gender}</td>
+            <td class="px-6 py-4 text-center" id="${statusId}">
+              <span class="text-slate-400 text-xs">● Offline</span>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <button onclick="hapusSiswa('${uid}')"
+                class="inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-100 dark:border-red-800/50 hover:bg-red-100 transition-all">
+                <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
 
-        <td class="px-6 py-4 text-center" id="${statusId}">
-          <span class="text-slate-400 text-xs">● Offline</span>
-        </td>
+      tabelSiswa.innerHTML = rows;
 
-        <td class="px-6 py-4 text-center">
-          <button onclick="hapusSiswa('${uid}')"
-            class="inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-100 dark:border-red-800/50 hover:bg-red-100 transition-all">
-            <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
-          </button>
-        </td>
-      </tr>
-    `;
-
-        // ✅ PASANG LISTENER STATUS DI SINI
-        const statusEl = document.getElementById(statusId);
-        if (statusEl && uid) {
-          listenStudentStatus(uid, statusEl);
-        }
+      // Attach Listeners AFTER rendering all rows
+      dataSiswa.forEach(d => {
+         const statusId = `status-${d.uid}`;
+         const statusEl = document.getElementById(statusId);
+         if (statusEl) {
+            listenStudentStatus(d.uid, statusEl);
+         }
       });
       if(window.feather) feather.replace();
     }
@@ -2369,70 +2486,255 @@
     });
 
 
-    // ================= NILAI SISWA REALTIME =================
+    // ================= NILAI SISWA REALTIME (FROM SUBMISSIONS) =================
     function loadNilaiSiswa() {
       const tbody = document.getElementById("nilaiTableBody");
-
+      
+      // Query Submissions (History Items)
+      // Query tanpa orderBy untuk menghindari error index
+      // Kita akan sort manual di client-side (JavaScript)
       const q = query(
-        collection(db, "quizResults"),
-        orderBy("createdAt", "desc")
+          collection(db, "submissions"), 
+          where("type", "==", "game_history"),
+          limit(500)
       );
 
-      onSnapshot(q, (snapshot) => {
-        // Update count badge
-        const quizCountEl = document.getElementById("quizCount");
-        if (quizCountEl) quizCountEl.textContent = snapshot.size || 0;
-
-        tbody.innerHTML = "";
-
-        if (snapshot.empty) {
-          tbody.innerHTML = `
-        <tr>
-          <td colspan="7" class="px-4 py-6 text-center text-slate-500">
-            Belum ada data nilai
-          </td>
-        </tr>
-      `;
-          return;
-        }
-
-        // ERROR HANDLER
-        (error) => {
-          console.warn("Firestore listener error:", error);
-        }
-
-
-
-        let no = 1;
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        let allHistory = [];
+        
         snapshot.forEach((doc) => {
-          const d = doc.data();
-          const waktu = d.createdAt?.toDate
-            ? d.createdAt.toDate().toLocaleString("id-ID")
-            : "-";
-
-          tbody.innerHTML += `
-        <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
-          <td class="px-6 py-4 font-semibold text-slate-500">${no++}</td>
-          <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${d.nama}</td>
-          <td class="px-6 py-4 font-bold text-emerald-600 dark:text-emerald-400">${d.kelas}</td>
-          <td class="px-6 py-4 text-slate-600 dark:text-slate-400">${d.quizTitle}</td>
-          <td class="px-6 py-4 text-center font-bold text-slate-800 dark:text-white">
-            ${d.score} / ${d.totalSoal}
-          </td>
-          <td class="px-6 py-4 text-slate-500 text-xs">${waktu}</td>
-          <td class="px-6 py-4 text-center">
-            <button
-            onclick="hapusNilai('${doc.id}')"
-            class="inline-flex items-center gap-1.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-100 dark:border-red-800/50 hover:bg-red-100 transition-all">
-            <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
-            </button>
-          </td>
-        </tr>
-      `;
+          allHistory.push({ id: doc.id, ...doc.data() });
         });
-        if(window.feather) feather.replace();
+
+        // SORT CLIENT-SIDE: Terbaru ke Terlama
+        allHistory.sort((a, b) => {
+           // Handle timestamp/createdAt format differences if any
+           const timeA = a.createdAt?.toMillis?.() || a.timestamp || 0;
+           const timeB = b.createdAt?.toMillis?.() || b.timestamp || 0;
+           return timeB - timeA;
+        });
+
+        const historyMap = {};
+        
+        allHistory.forEach(data => {
+            const uid = data.uid;
+            if(!historyMap[uid]) historyMap[uid] = [];
+            historyMap[uid].push(data);
+        });
+
+         // Render using Global dataSiswa (from renderTabelSiswa listener)
+         // We filter dataSiswa to only those who have history OR we show all?
+         // Showing all allows teacher to see who hasn't played.
+         
+         const students = [...dataSiswa].map(s => {
+             const hist = historyMap[s.uid] || [];
+             const lastTime = hist.length > 0 ? hist[0].timestamp : 0;
+             return { ...s, history: hist, lastTime };
+         });
+         
+         // Sort by Last Active
+         students.sort((a,b) => b.lastTime - a.lastTime);
+
+         // Update Badge
+         const quizCountEl = document.getElementById("quizCount");
+         const totalGames = students.reduce((sum, s) => sum + s.history.length, 0);
+         if (quizCountEl) quizCountEl.textContent = totalGames;
+
+         tbody.innerHTML = "";
+         
+         // Filter: Show only students with at least 1 game? Or show all?
+         // Let's show only students with History > 0 to keep table clean, 
+         // or show top 50 recently active.
+         // Let's show all for now.
+         
+         if (students.length === 0) {
+             tbody.innerHTML = `<tr><td colspan="6" class="px-4 py-6 text-center text-slate-500">Belum ada riwayat game</td></tr>`;
+             return;
+         }
+
+          let no = 1;
+          students.forEach((s) => {
+              if (s.history.length === 0) return;
+
+              const lastDate = s.lastTime ? new Date(s.lastTime).toLocaleString("id-ID") : "-";
+              const totalSumScore = s.history.reduce((sum, h) => sum + (parseInt(h.score) || 0), 0);
+
+              // PARENT ROW
+              tbody.innerHTML += `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors border-b border-slate-100 dark:border-slate-800">
+                  <td class="px-6 py-4 font-semibold text-slate-500">${no++}</td>
+                  <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${s.nama || '-'}</td>
+                  <td class="px-6 py-4 font-bold text-emerald-600 dark:text-emerald-400">${s.kelas || '-'}</td>
+                  <td class="px-6 py-4 text-center">
+                     <span class="bg-indigo-100/50 text-indigo-600 px-2 py-1 rounded text-xs font-bold ring-1 ring-indigo-100">
+                        ${s.history.length} Game
+                     </span>
+                  </td>
+                  <td class="px-6 py-4 text-center font-bold text-slate-700 dark:text-slate-300">
+                     ${totalSumScore}
+                  </td>
+                  <td class="px-6 py-4 text-center text-slate-500 text-xs">${lastDate}</td>
+                  <td class="px-6 py-4 text-center flex items-center justify-center gap-2">
+                     <button onclick="window.toggleHistoryDetail('${s.uid}')" 
+                        id="btn-toggle-${s.uid}"
+                        class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform duration-300 transform" 
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                     </button>
+                     <button onclick="window.hapusSemuaRiwayat('${s.uid}', '${s.nama}')" 
+                        class="p-2 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/50 transition" title="Hapus Semua Riwayat">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                     </button>
+                  </td>
+                </tr>
+              `;
+
+              // CHILD ROW (DROPDOWN)
+              let detailRows = "";
+              s.history.forEach((h, idx) => {
+                   const date = h.createdAt?.toDate ? h.createdAt.toDate().toLocaleString("id-ID") : new Date(h.timestamp).toLocaleString("id-ID");
+                   const status = h.isCorrect 
+                      ? '<span class="text-green-600 font-bold">Benar (+1)</span>' 
+                      : '<span class="text-red-500 font-bold">Salah (0)</span>';
+                   
+                   const scoreVal = parseInt(h.score) || 0;
+                   const scoreDisplay = scoreVal > 0 ? `+${scoreVal}` : `${scoreVal}`;
+                   
+                   detailRows += `
+                      <tr class="border-b border-slate-50 dark:border-slate-800 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-900/20">
+                         <td class="px-4 py-2 text-center text-xs text-slate-400">${idx+1}</td>
+                         <td class="px-4 py-2 font-semibold text-slate-700 dark:text-slate-300 text-sm">${h.quizTitle}</td>
+                         <td class="px-4 py-2 text-center text-xs font-bold ${h.isCorrect ? 'text-green-600' : 'text-red-500'}">
+                            ${scoreDisplay}
+                         </td>
+                         <td class="px-4 py-2 text-center text-xs text-slate-500">${date}</td>
+                         <td class="px-4 py-2 text-center">
+                            <button onclick="hapusHistoryItem('${h.id}')" class="text-red-400 hover:text-red-600">
+                               <i data-feather="trash-2" class="w-3 h-3"></i>
+                            </button>
+                         </td>
+                      </tr>
+                   `;
+              });
+
+              tbody.innerHTML += `
+                <tr id="detail-${s.uid}" class="hidden bg-slate-50/50 dark:bg-slate-900/20">
+                  <td colspan="6" class="p-0">
+                     <div class="px-6 py-4">
+                        <div class="overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm bg-white dark:bg-slate-800">
+                          <table class="w-full">
+                             <thead class="bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase">
+                                <tr>
+                                   <th class="px-4 py-2 w-[40px]">No</th>
+                                   <th class="px-4 py-2 text-left">Judul Game</th>
+                                   <th class="px-4 py-2 text-center">Skor</th>
+                                   <th class="px-4 py-2 text-center">Waktu</th>
+                                   <th class="px-4 py-2 text-center">Aksi</th>
+                                </tr>
+                             </thead>
+                             <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                                ${detailRows}
+                             </tbody>
+                          </table>
+                        </div>
+                     </div>
+                  </td>
+                </tr>
+              `;
+          });
+          
+          if(window.feather) feather.replace();
       });
     }
+
+    // TOGGLE helper
+    window.toggleHistoryDetail = (uid) => {
+        const row = document.getElementById(`detail-${uid}`);
+        const btn = document.getElementById(`btn-toggle-${uid}`);
+        if(row) row.classList.toggle('hidden');
+        if(btn) {
+            const icon = btn.querySelector('svg');
+            if(row.classList.contains('hidden')) {
+               icon.classList.remove('rotate-180');
+               btn.classList.remove('bg-indigo-100', 'text-indigo-600');
+            } else {
+               icon.classList.add('rotate-180');
+               btn.classList.add('bg-indigo-100', 'text-indigo-600');
+            }
+        }
+    };
+
+    // DELETE SINGLE ITEM
+    window.hapusHistoryItem = async (docId) => {
+        const result = await Swal.fire({
+            title: 'Hapus Item?',
+            text: "Riwayat ini akan dihapus.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444'
+        });
+        if(result.isConfirmed) {
+            try {
+                await deleteDoc(doc(db, "submissions", docId));
+                Swal.fire('Terhapus', '', 'success');
+            } catch(e) { console.error(e); }
+        }
+    }
+
+    // DELETE ALL (BATCH from Submissions)
+    window.hapusSemuaRiwayat = async (uid, nama) => {
+        const result = await Swal.fire({
+            title: `Hapus Riwayat ${nama}?`,
+            text: "Seluruh catatan game siswa ini akan dihapus permanen dari submissions!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#ef4444",
+            confirmButtonText: "Ya, Hapus Semua",
+            cancelButtonText: "Batal"
+        });
+
+        if (!result.isConfirmed) return;
+
+        try {
+            // QUERY ALL HISTORY BY UID
+            const q = query(
+                collection(db, "submissions"), 
+                where("type", "==", "game_history"),
+                where("uid", "==", uid),
+                limit(500)
+            );
+            
+            const snapshot = await getDocs(q);
+            if(snapshot.empty) {
+                Swal.fire("Info", "Tidak ada data riwayat untuk dihapus.", "info");
+                return;
+            }
+            
+            // BATCH DELETE
+            const batch = writeBatch(db);
+            snapshot.forEach(d => {
+                batch.delete(d.ref);
+            });
+            
+            await batch.commit();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Terhapus!',
+                text: `${snapshot.size} riwayat game berhasil dihapus.`,
+                timer: 1500,
+                showConfirmButton: false
+            });
+        } catch (e) {
+            console.error(e);
+            Swal.fire('Gagal', 'Terjadi kesalahan saat menghapus.', 'error');
+        }
+    };
 
     // RENDER TOTAL POIN
     function renderPoinTable() {
@@ -2460,39 +2762,101 @@
     // ===============================
     // RENDER RANKING SISWA
     // ===============================
-    function renderRankingFromUsers(users) {
+    // ===============================
+    // RENDER RANKING SISWA (FROM LEADERBOARD COL)
+    // ===============================
+    function listenToLeaderboard() {
       const tbody = document.getElementById("rankingTableBody");
-      if (!tbody) return;
+      const startOfDay = new Date();
+      startOfDay.setHours(0,0,0,0);
+      const startTimestamp = startOfDay.getTime();
 
-      tbody.innerHTML = "";
-
-      if (!Array.isArray(users) || users.length === 0) {
-        tbody.innerHTML = `
-      <tr>
-        <td colspan="4" class="text-center py-4 text-slate-500">
-          Belum ada data ranking
-        </td>
-      </tr>`;
-        return;
-      }
-
-      const sorted = [...users].sort(
-        (a, b) => (Number(b.poinTotal) || 0) - (Number(a.poinTotal) || 0)
+      // 1. Listen to Global Leaderboard (Total Points)
+      const qLeaderboard = query(
+        collection(db, "leaderboard"),
+        orderBy("poinTotal", "desc"),
+        limit(50)
       );
 
-      sorted.forEach((u, i) => {
-        tbody.innerHTML += `
-      <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
-        <td class="px-6 py-4 text-center font-bold text-slate-500">${i + 1}</td>
-        <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${u.nama ?? "-"}</td>
-        <td class="px-6 py-4 font-black text-rose-600 dark:text-rose-400">${u.kelas ?? "-"}</td>
-        <td class="px-6 py-4 text-center font-black text-xl text-slate-800 dark:text-white">
-          ${u.poinTotal ?? 0}
-        </td>
-      </tr>
-    `;
+      // 2. Listen to Today's Activity (Active Points)
+      // Note: In production, consider a separate 'daily_points' collection reset by Cloud Functions
+      // For now, we query submissions from today (Client-side aggregation if needed or simple query)
+      // We'll just fetch ALL recent submissions and filter client-side to avoid complex indexes for this specific legacy request
+      const qDaily = query(
+         collection(db, "submissions"),
+         where("timestamp", ">=", startTimestamp)
+      );
+
+      let globalData = [];
+      let dailyData = {};
+
+      // Helper to Render
+      const render = () => {
+         // Merge
+         const merged = globalData.map(student => {
+            return {
+               ...student,
+               poinHariIni: dailyData[student.uid] || 0
+            };
+         });
+
+         if (merged.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center italic text-slate-400">Belum ada data siswa.</td></tr>`;
+            return;
+         }
+
+         tbody.innerHTML = merged.map((s, index) => `
+            <tr class="border-b border-slate-50 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+               <td class="px-6 py-4 font-bold text-slate-500 text-center">${index + 1}</td>
+               <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                     <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">
+                        ${s.nama ? s.nama.substring(0,2).toUpperCase() : 'SI'}
+                     </div>
+                     <div>
+                       <p class="font-bold text-slate-700 dark:text-slate-200">${s.nama || "Siswa"}</p>
+                     </div>
+                  </div>
+               </td>
+               <td class="px-6 py-4 text-slate-600 dark:text-slate-400">${s.kelas || "-"}</td>
+               <td class="px-6 py-4 text-center">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400">
+                    ⚡ +${s.poinHariIni}
+                  </span>
+               </td>
+               <td class="px-6 py-4 text-center font-black text-slate-800 dark:text-white">
+                  ${s.poinTotal}
+               </td>
+            </tr>
+         `).join("");
+      };
+
+      // Listener 1
+      onSnapshot(qLeaderboard, (snapshot) => {
+         globalData = [];
+         snapshot.forEach(doc => {
+            const d = doc.data();
+            // Fallback for nama if missing in leaderboard (should be there)
+            globalData.push({ id: doc.id, ...d });
+         });
+         render();
+      });
+
+      // Listener 2 (Daily)
+      onSnapshot(qDaily, (snapshot) => {
+         dailyData = {};
+         snapshot.forEach(doc => {
+             const d = doc.data();
+             if (d.uid && d.score) {
+                 dailyData[d.uid] = (dailyData[d.uid] || 0) + (parseInt(d.score) || 0);
+             }
+         });
+         render();
       });
     }
+
+    // Call this immediately to start listening
+    // listenToLeaderboard() removed
 
 
     console.log("DATA SISWA:", dataSiswa);
@@ -2657,7 +3021,8 @@
       if (!result.isConfirmed) return;
 
       try {
-        await deleteDoc(doc(db, "quizResults", docId));
+        // Change collection to 'quizArchive' (matching loadNilaiSiswa)
+        await deleteDoc(doc(db, "quizArchive", docId));
         Swal.fire({
           icon: 'success',
           title: 'Berhasil!',
@@ -3287,15 +3652,15 @@
     btnSaveSession.addEventListener("click", async () => {
       const order = Number(document.getElementById("sessionOrder").value);
       const title = document.getElementById("sessionTitle").value.trim();
-      const theme = document.getElementById("sessionTheme").value;
-      const dailyTaskText =
-        document.getElementById("dailyTaskText").value.trim();
+      const themeSelector = document.getElementById("sessionTheme");
+      const themeId = themeSelector.value;
+      const themeLabel = themeSelector.options[themeSelector.selectedIndex]?.text || themeId;
 
-      const isActive =
-        document.getElementById("sessionActive").value === "true";
+      const dailyTaskText = document.getElementById("dailyTaskText").value.trim();
+      const isActive = document.getElementById("sessionActive").value === "true";
 
-      // VALIDASI MINIMAL (WAJIB)
-      if (!order || !title || !theme) {
+      // VALIDASI MINIMAL
+      if (!order || !title || !themeId) {
         Swal.fire({
           icon: 'warning',
           title: 'Data Belum Lengkap',
@@ -3307,20 +3672,52 @@
         return;
       }
 
+      // ⏳ LOADING STATE
+      const originalBtnText = btnSaveSession.innerHTML;
+      btnSaveSession.disabled = true;
+      btnSaveSession.innerHTML = `<span>⏳ Menyimpan...</span>`;
+
       try {
+        // 1️⃣ FETCH 5 RANDOM VOCABS FROM THEME
+        let randomVocabs = [];
+        
+        const themeRef = doc(db, "themes", themeId);
+        const themeSnap = await getDoc(themeRef);
+
+        if (themeSnap.exists()) {
+          const tData = themeSnap.data();
+          let allVocabs = [];
+
+          // Handle stringified JSON or Array
+          if (Array.isArray(tData.vocabData)) {
+            allVocabs = tData.vocabData;
+          } else if (typeof tData.vocabData === 'string') {
+            try { allVocabs = JSON.parse(tData.vocabData); } catch(e) {}
+          }
+
+          if (allVocabs.length > 0) {
+            // Shuffle & Pick 5
+            const shuffled = allVocabs.sort(() => 0.5 - Math.random());
+            randomVocabs = shuffled.slice(0, 5);
+          }
+        }
+
+        // 2️⃣ SAVE SESSION
         await addDoc(collection(db, "learningSessions"), {
           order,
           title,
-          theme,
+          theme: themeId, // ID for machine
+          themeLabel: themeLabel, // Checkpoint label if needed
           dailyTaskText,
           isActive,
+          mandatoryVocabs: randomVocabs, // 🔥 DATA KOSAKATA DINAMIS
           createdAt: serverTimestamp()
         });
 
         Swal.fire({
           icon: 'success',
           title: 'Berhasil!',
-          text: 'Sesi belajar berhasil disimpan.',
+          text: `Sesi berhasil disimpan dengan ${randomVocabs.length} kosakata acak.`,
           background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
           color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
           confirmButtonColor: '#10b981',
@@ -3330,11 +3727,10 @@
           }
         });
 
-        // reset form
+        // Reset form
         document.querySelectorAll(
           "#sessionOrder, #sessionTitle, #sessionTheme, #dailyTaskText"
         ).forEach(el => el.value = "");
-
         document.getElementById("sessionActive").value = "true";
 
       } catch (err) {
@@ -3342,13 +3738,37 @@
         Swal.fire({
           icon: 'error',
           title: 'Gagal',
-          text: 'Gagal menyimpan sesi.',
+          text: 'Gagal menyimpan sesi: ' + err.message,
           background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
           color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
           confirmButtonColor: '#ef4444'
         });
+      } finally {
+        btnSaveSession.disabled = false;
+        btnSaveSession.innerHTML = originalBtnText;
       }
     });
+
+    // POPULATE DROPDOWN FUNCTION
+    function populateSessionThemeDropdown() {
+       const select = document.getElementById("sessionTheme");
+       if(!select) return;
+
+       onSnapshot(collection(db, "themes"), (snap) => {
+          if(snap.empty) {
+             select.innerHTML = `<option value="">-- Belum ada tema --</option>`;
+             return;
+          }
+
+          let html = `<option value="">-- Pilih Tema --</option>`;
+          snap.forEach(docSnap => {
+             const data = docSnap.data();
+             // Show Title + (ID) for clarity
+             html += `<option value="${docSnap.id}">${data.title}</option>`;
+          });
+          select.innerHTML = html;
+       });
+    }
 
 
 
@@ -3679,6 +4099,298 @@
         chevron.classList.remove("-rotate-90");
       }
     };
+
+
+    /* ======================================================
+       8. MANAJEMEN MATERI (THEMES) - MERGED LOGIC
+       Uses authenticated 'db' and 'auth' instance
+    ====================================================== */
+    
+    // RENDER LIST (Realtime)
+    function renderThemesRealtime() {
+      const container = document.getElementById("themeListContainer");
+      if(!container) return;
+
+      container.innerHTML = `<div class="col-span-full text-center py-10 opacity-50">⏳ Memuat daftar materi...</div>`;
+
+      // Use onSnapshot for realtime updates
+      onSnapshot(collection(db, "themes"), (snap) => {
+         if(snap.empty) {
+            container.innerHTML = `<div class="col-span-full text-center py-10 italic text-slate-400">Belum ada materi tersimpan.</div>`;
+            return;
+         }
+
+         container.innerHTML = "";
+         const themes = [];
+         snap.forEach(d => themes.push(d.data()));
+         
+         // Sort by ID (numeric if possible)
+         themes.sort((a,b) => (parseInt(a.id)||0) - (parseInt(b.id)||0));
+
+         // Helper for Toggle
+         window.toggleCard = (id) => {
+             const body = document.getElementById(`card-body-${id}`);
+             const chev = document.getElementById(`chevron-${id}`);
+             if(body) body.classList.toggle('hidden');
+             if(chev) chev.classList.toggle('rotate-180');
+         };
+
+         themes.forEach(data => {
+            const isHidden = data.isVisible === false;
+            // Parse Counts
+            let vCount = 0, rCount = 0, qCount = 0;
+            try { vCount = data.vocabData ? (typeof data.vocabData === 'string' ? JSON.parse(data.vocabData).length : data.vocabData.length) : 0; } catch(e){}
+            try { rCount = data.readData ? (typeof data.readData === 'string' ? JSON.parse(data.readData).length : data.readData.length) : 0; } catch(e){}
+            try { qCount = data.quizData ? (typeof data.quizData === 'string' ? JSON.parse(data.quizData).length : data.quizData.length) : 0; } catch(e){}
+
+            const colorMap = {
+              emerald: "text-emerald-600 bg-emerald-100",
+              lime: "text-lime-600 bg-lime-100",
+              rose: "text-rose-600 bg-rose-100",
+              amber: "text-amber-600 bg-amber-100",
+              slate: "text-slate-600 bg-slate-100",
+              blue: "text-blue-600 bg-blue-100"
+            };
+            const themeColorClass = colorMap[data.color || 'blue'];
+            
+            container.innerHTML += `
+              <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden mb-3 hover:shadow-md transition-all">
+                 
+                 <!-- HEADER (Clickable) -->
+                 <div onclick="window.toggleCard('${data.id}')" class="p-4 cursor-pointer flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+                    <div class="flex items-center gap-4">
+                       <!-- Color Icon -->
+                       <div class="w-10 h-10 rounded-full flex items-center justify-center ${themeColorClass} font-bold text-lg shadow-sm">
+                          ${data.arTitle ? data.arTitle.charAt(0) : '#'}
+                       </div>
+                       
+                       <div>
+                          <div class="flex items-center gap-2">
+                              <h4 class="font-bold text-slate-800 dark:text-slate-200 text-lg leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                 ${data.title}
+                              </h4>
+                              ${isHidden ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-200 text-slate-500 uppercase">Hidden</span>' : ''}
+                           </div>
+                          <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-2">
+                              <span class="arabic-text font-bold text-slate-400 dark:text-slate-500">${data.arTitle}</span>
+                              <span>•</span>
+                              <span class="font-mono bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded text-[10px] font-bold">
+                                 ${vCount} Kosakata
+                              </span>
+                              <span class="font-mono bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded text-[10px] font-bold">
+                                 ${qCount} Kuis
+                              </span>
+                          </div>
+                       </div>
+                    </div>
+
+                    <!-- Chevron -->
+                    <div id="chevron-${data.id}" class="text-slate-400 transition-transform duration-300">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                       </svg>
+                    </div>
+                 </div>
+
+                 <!-- BODY (Hidden Default) -->
+                 <div id="card-body-${data.id}" class="hidden border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/30 p-4">
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 italic">"${data.desc}"</p>
+                    
+                    <div class="grid grid-cols-3 gap-3">
+                       <button onclick="window.toggleVisibility('${data.id}', ${!isHidden})" class="py-2 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-bold transition">
+                          ${isHidden ? '👁️ Tampilkan' : '🙈 Sembunyikan'}
+                       </button>
+                       <button onclick="window.editTheme('${data.id}')" class="py-2 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-600 hover:bg-indigo-100 text-xs font-bold transition">
+                          ✏️ Edit
+                       </button>
+                       <button onclick="window.deleteTheme('${data.id}')" class="py-2 rounded-lg bg-red-50 border border-red-100 text-red-600 hover:bg-red-100 text-xs font-bold transition">
+                          🗑️ Hapus
+                       </button>
+                    </div>
+                    
+                    <div class="mt-3 text-[10px] text-end text-slate-400 font-mono">ID: ${data.id}</div>
+                 </div>
+
+              </div>
+            `;
+         });
+      }, (err) => {
+         console.error("Theme render error:", err);
+         container.innerHTML = `<div class="col-span-full text-red-500 text-center">Gagal memuat: ${err.message}</div>`;
+      });
+    }
+
+    // AUTO-CLEAR ID ON TITLE CHANGE (Unless Editing)
+    document.getElementById('themeTitle')?.addEventListener('input', () => {
+        const idField = document.getElementById('themeId');
+        // If ID field is NOT disabled (meaning not in explicit Edit Mode), clear it to ensure new ID gen
+        if(!idField.disabled) {
+            idField.value = ""; 
+        }
+    });
+
+    // SAVE LOGIC
+    document.getElementById('btnSaveTheme')?.addEventListener('click', async () => {
+       let idVal = document.getElementById('themeId').value.trim();
+       
+       // AUTO-GENERATE ID (Prevent Accidental Overwrite)
+       if(!idVal) {
+           const title = document.getElementById('themeTitle').value.trim();
+           if(!title) return Swal.fire('Gagal', 'Judul materi wajib diisi!', 'warning');
+           
+           // Create slug: 'Materi Baru' -> 'materi-baru-1715...'
+           const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+           const timestamp = Date.now().toString().slice(-4); 
+           idVal = `${slug}-${timestamp}`;
+       }
+       
+       // Only check existence if we are NOT in edit mode (edit mode locks ID field usually, but let's be safe)
+       // Actually, since we auto-gen with timestamp, collision is impossible for new ones.
+       // User complaint: "input lagi ... malahan tidak tertambah tapi materi sebelumnya yang di ubah"
+       // This happens because they probably kept the old ID in the input box.
+       // I'll ensure the form is cleared after save.
+
+
+       let vocabObj = [], readObj = [], quizObj = [];
+       try {
+          const v = document.getElementById('themeVocabJson').value;
+          const r = document.getElementById('themeReadJson').value;
+          const q = document.getElementById('themeQuizJson').value;
+          
+          if(v) vocabObj = JSON.parse(v);
+          if(r) readObj = JSON.parse(r);
+          if(q) quizObj = JSON.parse(q);
+       } catch(e) {
+          return Swal.fire('Format JSON Salah', 'Mohon cek kembali format JSON pada Kosakata/Bacaan/Kuis. Pastikan tidak ada koma berlebih atau kutip kurang.', 'error');
+       }
+
+       const payload = {
+          id: idVal,
+          title: document.getElementById('themeTitle').value.trim(),
+          arTitle: document.getElementById('themeArTitle').value.trim(),
+          desc: document.getElementById('themeDesc').value.trim(),
+          color: document.getElementById('themeColor').value,
+          vocabData: vocabObj,
+          readData: readObj,
+          quizData: quizObj,
+          updatedAt: new Date().toISOString(),
+          isVisible: true 
+       };
+
+       const btn = document.getElementById('btnSaveTheme');
+       const label = btn.querySelector('span');
+       const originalText = label.textContent;
+       
+       btn.disabled = true;
+       label.textContent = "⏳ Menyimpan...";
+
+       try {
+          await setDoc(doc(db, "themes", idVal), payload, { merge: true });
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Tersimpan!',
+            text: 'Materi berhasil disimpan ke database.',
+            timer: 1500,
+            showConfirmButton: false
+          });
+          
+          // Clear form
+          document.getElementById('btnResetForm').click();
+          
+       } catch(e) {
+          console.error(e);
+          Swal.fire('Gagal', e.message, 'error');
+       } finally {
+          btn.disabled = false;
+          label.textContent = "💾 Simpan Tema & Materi";
+       }
+    });
+
+    // EDIT LOGIC
+    window.editTheme = async (id) => {
+       try {
+          // Fetch one-time to get data
+          const snap = await getDoc(doc(db, "themes", id));
+          if(snap.exists()) {
+             const data = snap.data();
+             
+             document.getElementById('themeId').value = data.id;
+             document.getElementById('themeId').disabled = true;
+             document.getElementById('themeId').classList.add('bg-slate-200', 'cursor-not-allowed'); // Visual cue
+             
+             document.getElementById('themeTitle').value = data.title;
+             document.getElementById('themeArTitle').value = data.arTitle;
+             document.getElementById('themeDesc').value = data.desc;
+             document.getElementById('themeColor').value = data.color || 'blue';
+             
+             // Ensure string format for JSON fields
+             const safeStr = (val) => typeof val === 'object' ? JSON.stringify(val, null, 2) : (val || '');
+             document.getElementById('themeVocabJson').value = safeStr(data.vocabData);
+             document.getElementById('themeReadJson').value = safeStr(data.readData);
+             document.getElementById('themeQuizJson').value = safeStr(data.quizData);
+             
+             document.getElementById('themeId').scrollIntoView({behavior: 'smooth'});
+             Swal.fire({
+               toast: true,
+               position: 'top-end',
+               icon: 'info',
+               title: 'Mode Edit: ' + data.title,
+               showConfirmButton: false,
+               timer: 3000
+             });
+          }
+       } catch(e) {
+          console.error(e);
+          Swal.fire('Error', 'Gagal memuat data edit', 'error');
+       }
+    };
+
+    // DELETE LOGIC
+    window.deleteTheme = async (id) => {
+       const confirm = await Swal.fire({
+          title: 'Hapus Materi?',
+          text: "Data tidak bisa dikembalikan!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Ya, Hapus!'
+       });
+
+       if (confirm.isConfirmed) {
+          try {
+             await deleteDoc(doc(db, "themes", id));
+             Swal.fire('Terhapus!', 'Materi telah dihapus.', 'success');
+          } catch(e) {
+             Swal.fire('Gagal', e.message, 'error');
+          }
+       }
+    };
+
+    // VISIBILITY LOGIC
+    window.toggleVisibility = async (id, status) => {
+       try {
+          await updateDoc(doc(db, "themes", id), { isVisible: status });
+       } catch(e) {
+          console.error(e);
+          Swal.fire('Gagal', 'Gagal mengubah status visibilitas', 'error');
+       }
+    };
+
+    // RESET FORM
+    document.getElementById('btnResetForm')?.addEventListener('click', () => {
+       document.getElementById('themeId').value = '';
+       document.getElementById('themeId').disabled = false;
+       document.getElementById('themeId').classList.remove('bg-slate-200', 'cursor-not-allowed');
+       document.getElementById('themeTitle').value = '';
+       document.getElementById('themeArTitle').value = '';
+       document.getElementById('themeDesc').value = '';
+       document.getElementById('themeColor').value = 'blue';
+       document.getElementById('themeVocabJson').value = '';
+       document.getElementById('themeReadJson').value = '';
+       document.getElementById('themeQuizJson').value = '';
+    });
 
   </script>
 

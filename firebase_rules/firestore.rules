@@ -1,0 +1,140 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // =========================================================
+    // 🔐 HELPER FUNCTIONS (FUNGSI BANTUAN)
+    // =========================================================
+    
+    // Cek apakah user sudah login
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Cek apakah user adalah GURU
+    function isGuru() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "guru";
+    }
+    
+    // Cek apakah user adalah SISWA
+    function isStudent() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "student";
+    }
+    
+    // Cek apakah user mengakses data miliknya sendiri
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // =========================================================
+    // 📚 MATERI PEMBELAJARAN (PUBLIC READ)
+    // =========================================================
+
+    // 1. E-BOOKS
+    // Publik boleh baca, Hanya Guru yang boleh tulis/hapus
+    match /ebooks/{ebookId} {
+      allow read: if true;
+      allow write: if isGuru();
+    }
+
+    // 2. THEMES (Manajemen Materi & Tema) -- [BARU]
+    // Publik boleh baca (untuk halaman belajar), Hanya Guru yang boleh edit
+    match /themes/{themeId} {
+      allow read: if true;
+      allow write: if isGuru();
+    }
+
+    // =========================================================
+    // 👤 USER DATA & PROFILES
+    // =========================================================
+    
+    match /users/{userId} {
+      // READ: 
+      // - Guru boleh baca semua
+      // - User boleh baca data sendiri
+      // - Data siswa boleh dibaca publik/siswa lain (untuk keperluan Ranking/Leaderboard)
+      //   (Atau batasi hanya jika login)
+      allow read: if isGuru() || isOwner(userId) || (isAuthenticated() && resource.data.role == "student");
+      allow list: if isAuthenticated(); // Diperlukan untuk query leaderboard
+
+      // CREATE: Siapapun boleh daftar (registrasi awal)
+      allow create: if isAuthenticated();
+
+      // UPDATE:
+      // - Guru boleh edit apapun (reset password/poin)
+      // - Siswa hanya boleh update field tertentu (skor, poin game, dll)
+      allow update: if isGuru() || (isOwner(userId) && request.resource.data.diff(resource.data).changedKeys().hasOnly([
+        "poin", "poinTotal", "jumlahMain", "skorTerbaik", "mustChangePassword", "lastChanged", "state"
+      ]));
+
+      // DELETE: Hanya guru
+      allow delete: if isGuru();
+      
+      // Sub-collection untuk notifikasi/pengumuman yg sudah dibaca
+      match /readAnnouncements/{docId} {
+         allow read, write: if isOwner(userId);
+      }
+    }
+
+    // =========================================================
+    // 🏫 KEGIATAN & TUGAS SEKOLAH
+    // =========================================================
+
+    // 1. SUBMISSIONS (Tugas Siswa)
+    match /submissions/{docId} {
+      allow create: if isAuthenticated(); // Siswa kirim tugas
+      allow read, delete: if isGuru();    // Guru periksa & hapus
+      allow update: if false;             // Tidak boleh edit setelah kirim
+    }
+
+    // 2. LEARNING SESSIONS (Sesi Harian)
+    match /learningSessions/{sessionId} {
+      allow read: if isAuthenticated(); // Semua user login bisa lihat jadwal
+      allow write: if isGuru();         // Hanya guru yg atur sesi
+    }
+
+    // 3. ANNOUNCEMENTS (Pengumuman)
+    match /announcements/{docId} {
+      allow read: if isAuthenticated();
+      allow write: if isGuru();
+    }
+
+    // =========================================================
+    // 🏆 GAMIFICATION & SOCIAL
+    // =========================================================
+
+    // 1. QUIZ RESULTS (Nilai Akhir)
+    match /quizResults/{docId} {
+      // Siswa simpan nilai
+      allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
+      // Siswa lihat nilai sendiri, Guru lihat semua
+      allow read: if isGuru() || (isAuthenticated() && resource.data.uid == request.auth.uid);
+      allow list: if isAuthenticated();
+      // Guru boleh hapus (reset nilai)
+      allow delete: if isGuru();
+    }
+
+    // 2. LEADERBOARD
+    match /leaderboard/{userId} {
+      allow read, list: if isAuthenticated();
+      allow create, update: if isOwner(userId);
+      allow delete: if isGuru();
+    }
+
+    // 3. DISCUSSIONS (Chat Forum)
+    match /discussions/{discussionId} {
+      allow read, list: if isAuthenticated();
+      allow create: if isAuthenticated() && request.resource.data.authorUid == request.auth.uid;
+      allow delete: if isGuru();
+    }
+    
+    // 4. COMMENTS (Balasan Chat)
+    match /discussions/{discussionId}/comments/{commentId} {
+      allow read, list: if isAuthenticated();
+      allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
+      allow delete: if isGuru();
+    }
+  }
+}

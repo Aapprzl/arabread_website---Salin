@@ -1,0 +1,244 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+  
+  
+  
+     // 📚 E-BOOK PUBLIK (READ ONLY)
+    match /ebooks/{ebookId} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "guru";
+    }
+  
+ 
+
+    /* =========================
+       USERS
+    ========================== */
+    match /users/{userId} {
+
+  // =========================
+  // READ
+  // =========================
+
+  // 👨‍🏫 Guru boleh baca semua
+  allow read: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "guru";
+
+  // 👨‍🎓 Siswa boleh:
+  // - baca data sendiri
+  // - baca data siswa lain (UNTUK RANKING SAJA)
+  allow read: if request.auth != null
+    && (
+      request.auth.uid == userId
+      || resource.data.role == "student"
+    );
+
+  // =========================
+  // WRITE
+  // =========================
+
+  // CREATE (login pertama)
+  allow create: if request.auth != null;
+
+  // 👨‍🏫 Guru update bebas (reset poin)
+  allow update: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "guru";
+
+ // 👨‍🎓 Siswa update TERBATAS
+	allow update: if request.auth != null
+  	&& request.auth.uid == userId
+  	&& request.resource.data.diff(resource.data).changedKeys()
+     .hasOnly([
+  		"poin",
+  		"poinTotal",
+  		"jumlahMain",
+  		"skorTerbaik",
+  		"mustChangePassword"
+			]);
+
+
+  // ❌ Delete hanya guru
+  allow delete: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "guru";
+
+}
+
+// ⬇️ IZINKAN QUERY USERS UNTUK RANKING
+match /users {
+  allow list, read: if request.auth != null;
+}
+
+
+
+    /* =========================
+       SUBMISSIONS (TUGAS)
+    ========================== */
+    match /submissions/{docId} {
+
+      // 🧑 Siswa kirim tugas
+      allow create: if request.auth != null;
+
+      // 👨‍🏫 Guru baca & hapus
+      allow read, delete: if request.auth != null
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "guru";
+
+      // ❌ Tidak boleh edit
+      allow update: if false;
+    }
+    
+ /* ===============================
+   QUIZ RESULTS (FINAL)
+================================ */
+match /quizResults/{docId} {
+
+  // 🧑‍🎓 Siswa: simpan hasil kuis sendiri
+  allow create: if request.auth != null
+    && request.resource.data.uid == request.auth.uid;
+
+  // 🧑‍🎓 Siswa: baca hasil miliknya (DOC READ)
+  allow read: if request.auth != null
+    && resource.data.uid == request.auth.uid;
+
+  // 🧑‍🎓 Siswa: IZINKAN QUERY hasil miliknya
+  allow list: if request.auth != null;
+
+  // 👨‍🏫 Guru: baca SEMUA hasil
+  allow read: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "guru";
+
+  // 👨‍🏫 Guru: hapus
+  allow delete: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "guru";
+
+  allow update: if false;
+}
+
+// ================================
+// LEADERBOARD (FINAL & AMAN)
+// ================================
+match /leaderboard/{userId} {
+
+  // semua user login boleh baca ranking
+  allow read, list: if request.auth != null;
+
+  // siswa update leaderboard miliknya
+  allow create, update: if request.auth != null
+    && request.auth.uid == userId;
+
+  // guru boleh update & delete leaderboard
+  allow update, delete: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "guru";
+}
+
+
+match /ebooks/{ebookId} {
+
+  // semua user login boleh membaca ebook
+  allow read: if request.auth != null;
+
+  // hanya guru boleh upload / edit / hapus ebook
+  allow write: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid))
+         .data.role == "guru";
+}
+
+
+// ===============================
+// LEARNING SESSIONS (MODUL AJAR)
+// ===============================
+match /learningSessions/{sessionId} {
+
+  // 👨‍🏫 Guru: full akses
+  allow read, create, update, delete: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid))
+       .data.role == "guru";
+
+  // 👨‍🎓 Siswa: READ ONLY
+  allow read: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid))
+       .data.role == "student";
+}
+
+
+// =========================
+// DISCUSSIONS (CHAT GLOBAL)
+// =========================
+match /discussions/{discussionId} {
+
+  // 🔥 WAJIB untuk onSnapshot(query)
+  allow get, list: if request.auth != null;
+
+  // Kirim pesan
+  allow create: if request.auth != null
+    && request.resource.data.authorUid == request.auth.uid
+    && request.resource.data.keys().hasAll([
+      "authorUid",
+      "authorName",
+      "authorRole",
+      "content",
+      "createdAt"
+    ]);
+
+  // Tidak boleh edit
+  allow update: if false;
+
+  // Hanya guru boleh hapus
+  allow delete: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid))
+         .data.role == "guru";
+}
+
+
+
+
+// COMMENTS (BALASAN / THREAD)
+
+match /discussions/{discussionId}/comments/{commentId} {
+
+  allow get, list: if request.auth != null;
+
+  allow create: if request.auth != null
+    && request.resource.data.uid == request.auth.uid
+    && request.resource.data.keys().hasAll([
+      "uid",
+      "name",
+      "role",
+      "text",
+      "createdAt"
+    ]);
+
+  allow update: if false;
+
+  allow delete: if request.auth != null
+    && get(/databases/$(database)/documents/users/$(request.auth.uid))
+         .data.role == "guru";
+}
+
+
+    // =====================
+    // USERS
+    // =====================
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+
+		// =========================
+  // UNTUK KOTAL SURAT
+  // =========================
+  match /announcements/{announcementId} {
+  allow read: if request.auth != null;
+  allow write: if request.auth != null; // Idealnya hanya guru
+}
+
+match /users/{userId}/readAnnouncements/{announcementId} {
+  allow read, write: if request.auth != null && request.auth.uid == userId;
+}
+
+    
+  }
+}

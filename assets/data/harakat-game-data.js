@@ -3,7 +3,7 @@
    Tarbiyyat Al-Lughah
 ===================================== */
 
-const HARAKAT_GAME_DATA = [
+window.HARAKAT_GAME_DATA = [
   // --- KOSAKATA 1 & 2 (YANG TADI) ---
   {
     id: 1,

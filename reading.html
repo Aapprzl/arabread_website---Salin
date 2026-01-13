@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
 
-<script src="assets/theme.js"></script>
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>التَّعارُف | Membaca Teks Bahasa Arab - ArabRead</title>
+  <title>Membaca Teks Bahasa Arab - ArabRead</title>
 
   <!-- Fonts & Tailwind -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +21,7 @@
         },
         extend: {
             colors: {
-            // Ta'aruf Theme: Emerald (Blue -> Emerald)
+            // Default Theme: Emerald
             blue: { 
               50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 
               400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 
@@ -49,7 +47,7 @@
   <div class="max-w-7xl mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
     
     <div class="flex items-center gap-2 md:gap-4">
-      <a href="vocabulary-taaruf.html" class="p-2 hover:bg-white/10 rounded-xl transition-all group" title="Kembali ke Kosakata">
+      <a id="nav-back-vocab" href="#" class="p-2 hover:bg-white/10 rounded-xl transition-all group" title="Kembali ke Kosakata">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
@@ -65,7 +63,7 @@
       
       <nav class="hidden md:flex items-center gap-8">
         <a href="index.html" class="text-sm font-bold text-white/80 hover:text-white transition-colors">Beranda</a>
-        <a href="quiz-taaruf.html" class="text-sm font-bold text-white/80 hover:text-white transition-colors">Kuis</a>
+        <a id="nav-quiz-top" href="#" class="text-sm font-bold text-white/80 hover:text-white transition-colors">Kuis</a>
         <div class="w-px h-4 bg-white/20"></div>
         <span class="text-sm font-bold text-emerald-200 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
@@ -86,10 +84,7 @@
 </header>
 
  <!-- Main Content -->
-<main
-  class="max-w-4xl mx-auto px-4 py-8 md:py-12"
-  data-reading="taaruf"
->
+<main class="max-w-4xl mx-auto px-4 py-8 md:py-12">
 
 
   <!-- Judul -->
@@ -100,22 +95,21 @@
       Latihan Membaca
     </div>
 
-    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white 
+    <h1 id="hero-ar-title" class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white 
                arabic-text mb-3 leading-tight"
         style="font-family: 'Amiri', serif;">
-      التَّعَارُفُ
+      ...
     </h1>
 
     <p class="text-sm md:text-lg text-slate-500 dark:text-slate-400 italic font-medium">
-      Ta'aruf / Pengenalan Diri
+      <span id="hero-id-title">...</span> / Bacaan Bahasa Arab
     </p>
   </div>
 
  <!-- Kartu Bacaan -->
-<section
+<section id="reading-card"
   class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl
          border border-slate-100 dark:border-slate-700 overflow-hidden"
-  data-reading-card
 >
   <!-- Area Teks Arab -->
   <div class="p-6 md:p-10 bg-slate-50/50 dark:bg-slate-900/40">
@@ -130,7 +124,9 @@
                text-center text-slate-800 dark:text-slate-200"
         dir="rtl"
         aria-live="polite"
-      ></p>
+      >
+        <span class="animate-pulse">⏳ Memuat bacaan...</span>
+      </p>
     </div>
   </div>
 
@@ -218,14 +214,14 @@
     </a>
 
     <div class="flex gap-3">
-      <a href="vocabulary-taaruf.html"
+      <a id="btn-next-vocab" href="#"
          class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
                 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 
                 dark:text-emerald-400 font-bold text-sm transition-all active:scale-95">
         📚 Kosa Kata
       </a>
 
-      <a href="quiz-taaruf.html"
+      <a id="btn-next-quiz" href="#"
          class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl 
                 bg-amber-500 text-white font-bold text-sm shadow-lg 
                 shadow-amber-500/20 transition-all active:scale-95">
@@ -247,8 +243,8 @@
           Tarbiyyat <span class="text-emerald-600 dark:text-emerald-500">al-Lughah</span>
         </span>
         <div class="flex items-center gap-2 mt-1">
-          <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Latihan Membaca:</span>
-          <span class="arabic-text text-lg text-emerald-600 dark:text-emerald-400 font-bold">التَّعَارُف</span>
+          <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Tema:</span>
+          <span id="footer-theme-name" class="arabic-text text-lg text-emerald-600 dark:text-emerald-400 font-bold">...</span>
         </div>
       </div>
 
@@ -276,16 +272,7 @@
   </div>
 </footer>
 
-
-
-  <!-- Aktifkan mode global (1 angka untuk seluruh situs) -->
-<script>
-  window.PRESENCE_OPTIONS = { mode: "global" };
-</script>
-
-
-<script type="module" src="assets/js/read-page.js"></script>
-
+<script type="module" src="assets/js/universal-manager.js"></script>
 
 <!-- JS UNTUK DARKMODE -->
 <script>

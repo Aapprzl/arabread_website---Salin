@@ -1,4 +1,4 @@
-const SENTENCE_GAME_DATA = [
+window.SENTENCE_GAME_DATA = [
   {
     id: 1,
     level: 1,
