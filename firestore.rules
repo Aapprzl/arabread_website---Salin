@@ -1,0 +1,132 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // =========================================================
+    // 🛡️ HELPER FUNCTIONS
+    // =========================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isGuru() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "guru";
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Helper Validasi Data (DARI VERSI AI - UNTUK KEAMANAN)
+    function isValidScore(score) {
+      return score is number && score >= 0 && score <= 100; // Batasi max 100 jika memungkinkan
+    }
+
+    function isValidPointUpdate() {
+      // Pastikan poin yang diupdate adalah Integer (bukan teks/object aneh)
+      return request.resource.data.poinTotal is int && 
+             request.resource.data.poinTotal >= resource.data.poinTotal; // Poin hanya boleh NAIK, tidak boleh turun (opsional)
+    }
+
+    // =========================================================
+    // 📚 MATERI (PUBLIC READ)
+    // =========================================================
+
+    match /ebooks/{ebookId} {
+      allow read: if true;
+      allow write: if isGuru();
+    }
+
+    match /themes/{themeId} {
+      allow read: if true;
+      allow write: if isGuru();
+    }
+
+    // =========================================================
+    // 👤 USER DATA & PROFILES (DIPERBAIKI)
+    // =========================================================
+    
+    match /users/{userId} {
+      allow read: if isGuru() || isOwner(userId) || (isAuthenticated() && resource.data.role == "student");
+      allow list: if isAuthenticated(); // Untuk Leaderboard
+
+      allow create: if isAuthenticated();
+      
+      // UPDATE: Diperketat!
+      allow update: if isGuru() || 
+        (isOwner(userId) && 
+         // Hanya boleh update field tertentu
+         request.resource.data.diff(resource.data).changedKeys().hasOnly([
+           "poin", "poinTotal", "jumlahMain", "skorTerbaik", "mustChangePassword", "lastChanged", "state"
+         ]) &&
+         // VALIDASI TAMBAHAN: Poin harus Integer
+         (request.resource.data.poinTotal is int || request.resource.data.poinTotal == resource.data.poinTotal)
+        );
+
+      allow delete: if isGuru();
+
+      match /readAnnouncements/{docId} {
+         allow read, write: if isOwner(userId);
+      }
+    }
+
+    // =========================================================
+    // 🏫 KEGIATAN SEKOLAH
+    // =========================================================
+
+    match /submissions/{docId} {
+      allow create: if isAuthenticated();
+      allow read, delete: if isGuru();
+      allow update: if false;
+    }
+
+    match /learningSessions/{sessionId} {
+      allow read: if isAuthenticated();
+      allow write: if isGuru();
+    }
+
+    match /announcements/{docId} {
+      allow read: if isAuthenticated();
+      allow write: if isGuru();
+    }
+
+    // =========================================================
+    // 🎮 GAMIFICATION (DIPERBAIKI)
+    // =========================================================
+
+    // 1. QUIZ RESULTS - Patch Keamanan di sini
+    match /quizResults/{docId} {
+      // Create: Wajib Authenticated & UID cocok & SKOR VALID
+      allow create: if isAuthenticated() 
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.score is number // Validasi tipe data
+                    && request.resource.data.score >= 0;     // Validasi nilai
+
+      allow read: if isGuru() || (isAuthenticated() && resource.data.uid == request.auth.uid);
+      allow list: if isAuthenticated();
+      allow delete: if isGuru();
+    }
+
+    // 2. LEADERBOARD
+    match /leaderboard/{userId} {
+      allow read, list: if isAuthenticated();
+      allow create, update: if isOwner(userId);
+      allow delete: if isGuru();
+    }
+
+    // 3. DISCUSSIONS
+    match /discussions/{discussionId} {
+      allow read, list: if isAuthenticated();
+      allow create: if isAuthenticated() && request.resource.data.authorUid == request.auth.uid;
+      allow delete: if isGuru();
+    }
+    
+    match /discussions/{discussionId}/comments/{commentId} {
+      allow read, list: if isAuthenticated();
+      allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
+      allow delete: if isGuru();
+    }
+  }
+}

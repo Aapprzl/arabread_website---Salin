@@ -7,41 +7,8 @@
   <title>Dashboard Siswa</title>
 
   <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="assets/css/styles.css" rel="stylesheet">
 
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        fontFamily: {
-          sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-        },
-        extend: {
-          colors: {
-            // Override Blue -> Teal for global theme
-            blue: { 
-              50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 
-              400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 
-              800: '#115e59', 900: '#134e4a', 950: '#042f2e' 
-            },
-           // Map Indigo to Teal (Digital Library Harmony)
-            indigo: { 
-              50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 
-              400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 
-              800: '#115e59', 900: '#134e4a', 950: '#042f2e' 
-            },
-            // Cyan accents
-            cyan: {
-             50: '#ecfeff', 100: '#cffafe', 500: '#06b6d4', 600: '#0891b2'
-           },
-            amber: {
-              50: '#ecfeff', 100: '#cffafe', 500: '#06b6d4', 600: '#0891b2'
-            },
-          }
-        }
-      }
-    }
-  </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
@@ -1823,7 +1790,13 @@
 
             const promises = [
                 setDoc(lbRef, scorePayload, { merge: true }),
-                addDoc(collection(db, "submissions"), historyPayload)
+                addDoc(collection(db, "submissions"), historyPayload),
+                // 3. Update User Profile (Sync for Teacher Dashboard)
+                updateDoc(doc(db, "users", currentUserUid), {
+                    poin: increment(isCorrect ? 1 : 0), // Daily Point
+                    poinTotal: increment(isCorrect ? 1 : 0), // All Time
+                    jumlahMain: increment(1)
+                })
             ];
             
             await Promise.all(promises);

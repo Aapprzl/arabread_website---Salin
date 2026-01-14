@@ -82,6 +82,7 @@ function updateVocabUI(theme, id) {
     if(theme.color && theme.color !== 'emerald') {
         applyThemeColor(theme.color);
     }
+    revealPage();
 }
 
 function applyThemeColor(color) {
@@ -98,6 +99,11 @@ function applyThemeColor(color) {
             }
         });
     });
+}
+
+function revealPage() {
+    // Remove opacity-0 to fade in the page
+    document.body.classList.remove('opacity-0');
 }
 
 function setText(id, text) {
@@ -262,6 +268,7 @@ export async function initReadingPage() {
   if(CURRENT_THEME.color && CURRENT_THEME.color !== 'emerald') {
       applyThemeColor(CURRENT_THEME.color);
   }
+  revealPage();
 
   // 2. LOAD DATA
   const readingTextEl = document.getElementById('readingText');
@@ -383,6 +390,7 @@ export async function initQuizPage() {
   if(CURRENT_THEME.color && CURRENT_THEME.color !== 'emerald') {
       applyThemeColor(CURRENT_THEME.color);
   }
+  revealPage();
 
   // 2. LOAD DATA
   const questionTextEl = document.getElementById('questionText');

@@ -36,45 +36,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        fontFamily: {
-          sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-          arabic: ['Amiri', 'Scheherazade New', 'serif']
-        },
-        extend: {
-          colors: {
-            // Overriding primary blue with teal
-            blue: { 
-              50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 
-              400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 
-              800: '#115e59', 900: '#134e4a', 950: '#042f2e' 
-            },
-            // Map Indigo to Teal (Digital Library Harmony)
-            indigo: { 
-              50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 
-              400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 
-              800: '#115e59', 900: '#134e4a', 950: '#042f2e' 
-            },
-            // Cyan accents (Map Amber to Cyan for Game/Quiz Harmony)
-             cyan: {
-              50: '#ecfeff', 100: '#cffafe', 500: '#06b6d4', 600: '#0891b2'
-            },
-            amber: {
-              50: '#ecfeff', 100: '#cffafe', 500: '#06b6d4', 600: '#0891b2'
-            },
-            primary: { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a' },
-            secondary: { 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a' }
-          },
-          fontFamily: { arabic: ['Amiri', 'Scheherazade New', 'serif'] }
-        }
-      }
-    }
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="assets/css/styles.css" rel="stylesheet">
+
   <style>
     .arabic-text {
       font-family: 'Amiri', 'Scheherazade New', serif;
@@ -327,7 +290,7 @@
     }
   </style>
 
-  <style type="text/tailwindcss">
+  <style>
     body {
       /* Background terang dengan pola bintik halus */
       background-color: #f8fafc;

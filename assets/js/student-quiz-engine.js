@@ -375,47 +375,79 @@ window.closeQuizPopup = function () {
   }
 };
 
+// ... (imports remain)
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"; // ADD THIS 
+
+// ...
+
+// ===============================
+// HELPER: WAIT FOR AUTH
+// ===============================
+function waitForAuth() {
+    const auth = getAuth();
+    return new Promise((resolve) => {
+        if (auth.currentUser) {
+            resolve(auth.currentUser);
+        } else {
+            const unsubscribe = onAuthStateChanged(auth, (user) => {
+                unsubscribe();
+                resolve(user);
+            });
+        }
+    });
+}
+
 async function saveResultToFirestore(score, total) {
-    if(!window.db || !window.currentUser) return;
+    // FIX: Wait for auth before proceeding to avoid race condition
+    const user = await waitForAuth();
     
-    const db = window.db;
-    const uid = window.currentUser.uid;
+    if (!user) {
+        console.error("User not authenticated, cannot save score.");
+        Swal.fire('Error', 'Gagal menyimpan nilai. Anda belum login.', 'error');
+        return;
+    }
+    
+    const db = window.db; // Assumed initialized globally or imported
+    // Use user.uid from auth directly for security source of truth
+    const uid = user.uid; 
     const userRef = doc(db, "users", uid);
 
     // 1. History (Unified to Submissions)
     await addDoc(collection(db, "submissions"), {
         type: 'game_history',
         uid,
-        nama: window.currentUser.nama,
-        kelas: window.currentUser.kelas,
-        quizId: ACTIVE_THEME_ID,
-        quizTitle: `Kuis ${ACTIVE_THEME_TITLE}`,
+        nama: window.currentUser ? window.currentUser.nama : (user.displayName || "Siswa"), // Fallback safely
+        kelas: window.currentUser ? window.currentUser.kelas : "-",
+        quizId: ACTIVE_THEME_ID || "unknown",
+        // SECURITY: Sanitize title just in case, though this goes to DB.
+        quizTitle: `Kuis ${ACTIVE_THEME_TITLE || "Tanpa Judul"}`, 
         score,
         totalSoal: total,
         createdAt: serverTimestamp(),
         timestamp: Date.now()
     });
 
+    // ... (rest of logic same)
     // 2. Update stats
-    // We assume user doc exists since they are logged in.
-    // Fetch current to check best score
     const snap = await getDoc(userRef);
-    const data = snap.data();
-    const oldBest = data.skorTerbaik || 0;
-    const oldTotal = data.poinTotal || 0;
-
-    await updateDoc(userRef, {
-        jumlahMain: increment(1),
-        skorTerbaik: Math.max(oldBest, score),
-        poinTotal: oldTotal + score
-    });
-
-    // 3. Leaderboard
-    await setDoc(doc(db, "leaderboard", uid), {
-        uid,
-        nama: window.currentUser.nama,
-        kelas: window.currentUser.kelas,
-        poinTotal: oldTotal + score,
-        updatedAt: serverTimestamp()
-    }, { merge: true });
+    if(snap.exists()) {
+        const data = snap.data();
+        const oldBest = data.skorTerbaik || 0;
+        const oldTotal = data.poinTotal || 0;
+    
+        await updateDoc(userRef, {
+            jumlahMain: increment(1),
+            skorTerbaik: Math.max(oldBest, score),
+            poinTotal: oldTotal + score
+        });
+    
+        // 3. Leaderboard
+        await setDoc(doc(db, "leaderboard", uid), {
+            uid,
+            nama: data.nama || user.displayName || "Siswa",
+            kelas: data.kelas || "-",
+            poinTotal: oldTotal + score,
+            updatedAt: serverTimestamp()
+        }, { merge: true });
+    }
 }

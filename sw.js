@@ -1,116 +1,112 @@
-// /arabread_website---Salin/sw.js
-const CACHE_VERSION = 'v1.1.0';
+const CACHE_VERSION = 'v2.0.0-robust'; // Update versi ini jika ada perubahan file core (HTML structure/assets names)
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
-const ROOT = '/arabread_website---Salin/';
+const ROOT = '/arabread_website---Salin/'; // Sesuaikan dengan path deployment (misal '/' jika di root domain)
 
-// Halaman yang kita precache (jalan offline)
+// Assets inti yang WAJIB ada agar aplikasi jalan offline (App Shell)
 const PRECACHE_ASSETS = [
   `${ROOT}`,
   `${ROOT}index.html`,
-  `${ROOT}cadangan.html`,
-  `${ROOT}grammar-basics.html`,
-
-  // QUIZ
-  `${ROOT}quiz-animals.html`,
-  `${ROOT}quiz-family.html`,
-  `${ROOT}quiz-school.html`,
-  `${ROOT}quiz-taaruf.html`,
-
-  // READING
-  `${ROOT}reading-animals.html`,
-  `${ROOT}reading-family.html`,
-  `${ROOT}reading-school.html`,
-  `${ROOT}reading-taaruf.html`,
-
-  // VOCABULARY
-  `${ROOT}vocabulary-animals.html`,
-  `${ROOT}vocabulary-family.html`,
-  `${ROOT}vocabulary-school.html`,
-  `${ROOT}vocabulary-taaruf.html`,
-
-  // JS lokal (ubah/ tambah jika ada file lain)
-  `${ROOT}presence.js`,
-
-  // Offline fallback + ikon
   `${ROOT}offline.html`,
+  `${ROOT}manifest.webmanifest`,
+  // `${ROOT}assets/css/styles.css`, // Enable jika sudah migrasi ke CSS fisil
   `${ROOT}icons/icon-192.png`,
-  `${ROOT}icons/icon-512.png`,
+  `${ROOT}icons/icon-512.png`
 ];
 
-// Install: simpan file penting
+// URLs yang TIDAK BOLEH di-cache (API, Database, Auth)
+const IGNORED_DOMAINS = [
+  'firestore.googleapis.com',
+  'identitytoolkit.googleapis.com',
+  'securetoken.googleapis.com',
+  'www.googleapis.com' // Analytics dll
+];
+
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(STATIC_CACHE).then((c) => c.addAll(PRECACHE_ASSETS)));
-  self.skipWaiting();
+  // Pre-cache aset kritis
+  event.waitUntil(
+    caches.open(STATIC_CACHE)
+      .then((cache) => cache.addAll(PRECACHE_ASSETS))
+      .then(() => self.skipWaiting())
+  );
 });
 
-// Activate: hapus cache lama
 self.addEventListener('activate', (event) => {
+  // Hapus cache lawas yang tidak cocok dengan versi sekarang
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys
-          .filter((k) => ![STATIC_CACHE, RUNTIME_CACHE].includes(k))
-          .map((k) => caches.delete(k))
-      )
-    )
+    caches.keys().then((keyList) => {
+      return Promise.all(
+        keyList.map((key) => {
+          if (key !== STATIC_CACHE && key !== RUNTIME_CACHE) {
+            console.log('[ServiceWorker] Removing old cache', key);
+            return caches.delete(key);
+          }
+        })
+      );
+    })
   );
   self.clients.claim();
 });
 
-// Fetch handler
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // Hanya kelola request origin sendiri (GitHub Pages domain kamu)
-  if (url.origin !== location.origin) return;
+  // 1. SKIP request ke API Firebase/Google (biar realtime)
+  if (IGNORED_DOMAINS.some(domain => url.hostname.includes(domain))) {
+    return;
+  }
+  // 1.b SKIP request non-GET (POST/PUT/DELETE jangan di-cache)
+  if (req.method !== 'GET') {
+    return;
+  }
 
-  // HTML: network-first (agar update cepat), fallback cache/offline
+  // 2. STRATEGI: NETWORK FIRST (Untuk HTML)
+  // Cocok untuk file yang sering berubah isinya (content).
+  // Jika online -> ambil terbaru. Jika offline -> ambil cache.
   if (req.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
       fetch(req)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(RUNTIME_CACHE).then((c) => c.put(req, copy));
-          return res;
+        .then((networkRes) => {
+          return caches.open(RUNTIME_CACHE).then((cache) => {
+            cache.put(req, networkRes.clone());
+            return networkRes;
+          });
         })
-        .catch(async () => (await caches.match(req)) || caches.match(`${ROOT}offline.html`))
+        .catch(() => {
+          return caches.match(req).then((cachedRes) => {
+            return cachedRes || caches.match(`${ROOT}offline.html`);
+          });
+        })
     );
     return;
   }
 
-  // Audio besar → cache-first (hemat data saat diputar ulang)
-  if (url.pathname.startsWith(`${ROOT}media/audio/`)) {
+  // 3. STRATEGI: STALE-WHILE-REVALIDATE (Untuk CSS, JS, Images)
+  // Sangat cepat. Tampilkan cache dulu, lalu download update di background untuk kunjungan berikutnya.
+  // Ini solusi agar Anda TIDAK PERLU ganti versi cache manual tiap update kecil di aset.
+  if (/\.(css|js|png|jpg|jpeg|gif|svg|webp|ico|woff2?|json)$/i.test(url.pathname)) {
     event.respondWith(
-      caches.match(req).then((cached) =>
-        cached ||
-        fetch(req).then((res) => {
-          const copy = res.clone();
-          caches.open(RUNTIME_CACHE).then((c) => c.put(req, copy));
-          return res;
-        })
-      )
+      caches.match(req).then((cachedRes) => {
+        const fetchPromise = fetch(req).then((networkRes) => {
+           return caches.open(RUNTIME_CACHE).then((cache) => {
+             cache.put(req, networkRes.clone());
+             return networkRes;
+           });
+        });
+        
+        // Kembalikan cache jika ada, jika tidak tunggu network
+        return cachedRes || fetchPromise;
+      })
     );
     return;
   }
 
-  // Aset statis umum (css/js/png/jpg/svg/woff) → cache-first
-  if (/\.(css|js|png|jpg|jpeg|gif|svg|webp|ico|woff2?)$/i.test(url.pathname)) {
-    event.respondWith(
-      caches.match(req).then((cached) =>
-        cached ||
-        fetch(req).then((res) => {
-          const copy = res.clone();
-          caches.open(RUNTIME_CACHE).then((c) => c.put(req, copy));
-          return res;
-        })
-      )
-    );
-    return;
-  }
-
-  // Default
-  event.respondWith(fetch(req).catch(() => caches.match(req)));
+  // 4. Default Fallback
+  event.respondWith(
+    caches.match(req).then((cachedRes) => {
+       return cachedRes || fetch(req);
+    })
+  );
 });

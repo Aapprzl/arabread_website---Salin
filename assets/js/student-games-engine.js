@@ -1,5 +1,7 @@
-import { db } from "./firebase-config.js";
+import { db, auth } from "./firebase-config.js"; // Ensure auth is imported
 import { doc, updateDoc, increment, getDoc, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { insertArabicChar } from "./arabic-utils.js"; // NEW IMPORT
 
 /**
  * STUDENT GAMES ENGINE
@@ -10,6 +12,7 @@ import { doc, updateDoc, increment, getDoc, addDoc, collection, serverTimestamp 
 let currentUserUid = null;
 
 // Listen for user login from the main dashboard script
+// Also updated to real-time listener for robustness
 window.initStudentGames = function(uid) {
   currentUserUid = uid;
   console.log("Student Games Initialized for UID:", uid);
@@ -26,27 +29,44 @@ window.initStudentGames = function(uid) {
 }
 
 /**
+ * HELPER: Wait for Auth (Race Condition Fix)
+ */
+function waitForAuth() {
+    return new Promise((resolve) => {
+        if (auth.currentUser) return resolve(auth.currentUser);
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            unsubscribe();
+            resolve(user);
+        });
+    });
+}
+
+/**
  * GLOBAL SCORING FUNCTION
  * Menambah 1 poin ke user saat ini.
  */
 async function saveOnePoint(gameType = "Mini Game") {
-  if (!currentUserUid) return;
-
   try {
+    const user = await waitForAuth();
+    if (!user) {
+        console.warn("User not logged in, score not saved.");
+        return;
+    }
+    
     // 1. Update Total Poin
-    const userRef = doc(db, "users", currentUserUid);
+    const userRef = doc(db, "users", user.uid);
     await updateDoc(userRef, {
       poinTotal: increment(1)
     });
 
     // 2. Record History in Submissions
-    // Ensure we have user data (from window global if available)
-    const nama = window.currentUser?.nama || "Siswa";
-    const kelas = window.currentUser?.kelas || "-";
+    // Try to get name/class from window cache or Auth display name
+    const nama = (window.currentUser && window.currentUser.nama) || user.displayName || "Siswa";
+    const kelas = (window.currentUser && window.currentUser.kelas) || "-";
 
     await addDoc(collection(db, "submissions"), {
         type: 'game_history',
-        uid: currentUserUid,
+        uid: user.uid,
         nama: nama,
         kelas: kelas,
         quizTitle: gameType, // e.g. "Grammar Game"
@@ -366,56 +386,13 @@ function initHarakatGame() {
 
 // Global Keyboard Helper (if not overlapping with existing one)
 document.addEventListener('click', (e) => {
+    // Check if key is clicked
     if(e.target.classList.contains('key-harakat') || e.target.classList.contains('key-arab')) {
         const char = e.target.dataset.char;
         if(window.activeArabicInput) {
-             // Basic insert logic implies appending
-             // For simplicity in this game engine, just append. 
-             // Real Harakat logic (merging) is complex, let's reuse simple append for now or 
-             // replicate the merging logic if critical. 
-             // User wanted DUPLICATE so I should copy the merging logic.
-             // Implemented 'insertChar' logic below:
-             insertChar(window.activeArabicInput, char);
+             // USE SHARED UTILS (DRY Principle)
+             insertArabicChar(window.activeArabicInput, char);
         }
     }
 });
 
-/* HARAKAT MERGING LOGIC (Copied from Harakat Game) */
-function insertChar(input, char) {
-    const HARAKAT_GROUPS = {
-        vowel: ["َ", "ِ", "ُ", "ً", "ٍ", "ٌ"],
-        sukun: ["ْ"],
-        shadda: ["ّ"]
-    };
-    function getType(c) {
-        for (const t in HARAKAT_GROUPS) if (HARAKAT_GROUPS[t].includes(c)) return t;
-        return null;
-    }
-    function isHarakat(c) { return /[\u064B-\u0652]/.test(c); }
-
-    const value = input.value;
-    const type = getType(char);
-
-    if (!type) {
-        input.value += char;
-        return;
-    }
-
-    let i = value.length - 1;
-    while (i >= 0 && isHarakat(value[i])) i--;
-    if (i < 0) return; // No base char
-
-    const base = value.slice(0, i + 1);
-    let harakat = value.slice(i + 1);
-
-    if (type === "sukun") {
-        harakat = harakat.split("").filter(h => getType(h) === "shadda").join("");
-    } else if (type === "vowel") {
-        harakat = harakat.split("").filter(h => getType(h) === "shadda").join("");
-    }
-    
-    // Remove duplicate of same char
-    harakat = harakat.split("").filter(h => h !== char).join("");
-    
-    input.value = base + harakat + char;
-}

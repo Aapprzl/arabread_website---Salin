@@ -15,44 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Dashboard Guru</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        fontFamily: {
-          sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-        },
-        extend: {
-          colors: {
-            // Override Blue -> Teal for global theme
-            blue: { 
-              50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 
-              400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 
-              800: '#115e59', 900: '#134e4a', 950: '#042f2e' 
-            },
-           // Map Indigo to Teal (Digital Library Harmony)
-            indigo: { 
-              50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 
-              400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 
-              800: '#115e59', 900: '#134e4a', 950: '#042f2e' 
-            },
-            // Cyan accents
-            cyan: {
-             50: '#ecfeff', 100: '#cffafe', 500: '#06b6d4', 600: '#0891b2'
-           },
-            amber: {
-              50: '#ecfeff', 100: '#cffafe', 500: '#06b6d4', 600: '#0891b2'
-            },
-            primary: { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a' },
-            secondary: { 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a' }
-          },
-          fontFamily: { arabic: ['Amiri', 'Scheherazade New', 'serif'] }
-        }
-      }
-    }
-  </script>
+  <link href="assets/css/styles.css" rel="stylesheet">
 
 
 
@@ -1200,6 +1163,21 @@
               <div class="flex items-center gap-3">
                 <!-- Reset Buttons Here -->
                 <div class="flex flex-col sm:flex-row gap-2" onclick="event.stopPropagation()">
+                  
+                  <!-- Tombol SYNC POIN (Baru) -->
+                  <button id="syncPoinBtn" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold
+                      bg-indigo-50 text-indigo-600 border border-indigo-100
+                      hover:bg-indigo-600 hover:text-white hover:border-indigo-600
+                      dark:bg-indigo-900/20 dark:text-indigo-400 dark:border-indigo-900/50 dark:hover:bg-indigo-600 dark:hover:text-white
+                      transition-all" title="Sinkronkan data poin dari Leaderboard ke Database User">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                      <path d="M3 3v5h5"/>
+                      <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+                      <path d="M16 21h5v-5"/>
+                    </svg>
+                    Sync Poin
+                  </button>
                   <button id="resetPoinBtn" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold
                      bg-white border border-slate-300 text-slate-700 shadow-sm
                      hover:bg-slate-50 hover:text-red-600 hover:border-red-200
@@ -2992,6 +2970,91 @@
             confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
           }
         });
+      }
+    });
+    
+    
+    // ================= SINKRONISASI POIN (LEADERBOARD -> USERS) =================
+    const syncBtn = document.getElementById("syncPoinBtn");
+    
+    syncBtn.addEventListener("click", async () => {
+      const result = await Swal.fire({
+          title: "Sinkronisasi Data Poin?",
+          text: "Sistem akan menyalin total poin dari Leaderboard ke Database User. Lakukan ini jika ada siswa yang poinnya 0 padahal sudah bermain.",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#4f46e5", // Indigo
+          cancelButtonColor: "#64748b",
+          confirmButtonText: "Ya, Sinkronkan",
+          cancelButtonText: "Batal",
+          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+          customClass: {
+            popup: 'rounded-[2rem]',
+            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest',
+            cancelButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
+          }
+      });
+      
+      if (!result.isConfirmed) return;
+      
+      try {
+          // 1. Ambil data Leaderboard (Sumber Kebenaran)
+          const lbSnap = await getDocs(collection(db, "leaderboard"));
+          let updatedCount = 0;
+          
+          Swal.fire({
+             title: 'Sedang Memproses...',
+             text: 'Mohon tunggu sebentar',
+             allowOutsideClick: false,
+             didOpen: () => {
+                 Swal.showLoading();
+             }
+          });
+          
+          const promises = [];
+          
+          lbSnap.forEach(docSnap => {
+              const lbData = docSnap.data();
+              const uid = docSnap.id;
+              const realPoints = lbData.poinTotal || 0;
+              
+              if(realPoints > 0) {
+                  // Update Users Collection
+                  const p = updateDoc(doc(db, "users", uid), {
+                      poinTotal: realPoints
+                      // Kita tidak update 'poin' (harian) karena leaderboard adalah akumulasi
+                  }).then(() => {
+                      updatedCount++;
+                  }).catch(e => {
+                      console.warn(`Gagal update user ${uid}:`, e);
+                      // Ignore error if user doc doesn't exist (maybe deleted)
+                  });
+                  promises.push(p);
+              }
+          });
+          
+          await Promise.all(promises);
+          
+          Swal.fire({
+              icon: 'success',
+              title: 'Sinkronisasi Selesai!',
+              text: `Berhasil memperbarui data poin untuk ${updatedCount} siswa.`,
+              background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+              color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
+              confirmButtonColor: '#10b981',
+              customClass: { popup: 'rounded-[2rem]' }
+          });
+          
+      } catch (err) {
+          console.error("Sync error:", err);
+          Swal.fire({
+              icon: 'error',
+              title: 'Gagal Sinkronisasi',
+              text: 'Terjadi kesalahan teknis.',
+              background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
+              color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b'
+          });
       }
     });
 

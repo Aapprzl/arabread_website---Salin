@@ -12,32 +12,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 
-  <script src="https://cdn.tailwindcss.com"></script>
 
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        fontFamily: {
-          sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-        },
-        extend: {
-            colors: {
-            // Default Theme (Will be updated by JS)
-            blue: {
-              50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7',
-              400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857',
-              800: '#065f46', 900: '#064e3b', 950: '#022c22'
-            },
-            emerald: { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a', 950: '#042f2e' },
-            primary: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a' },
-            secondary: { 100:'#dcfce7',500:'#22c55e',600:'#16a34a' }
-          },
-          fontFamily: { arabic: ['Amiri', 'Scheherazade New', 'serif'] }
-        }
-      }
-    }
-  </script>
+
+  <link href="assets/css/styles.css" rel="stylesheet">
+
 
   <style>
     .arabic-text { font-family:'Amiri','Scheherazade New',serif; direction:rtl; }
@@ -53,7 +31,7 @@
   </style>
 
 </head>
-<body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-100">
+<body class="bg-gray-50 min-h-screen bg-slate-50 dark:bg-slate-800 dark:text-slate-100 opacity-0 transition-opacity duration-300">
 
   <!-- Header -->
  <header id="main-header" class="sticky top-0 z-50 w-full bg-emerald-600/95 dark:bg-slate-900/95 backdrop-blur-md text-white shadow-lg border-b border-white/10 transition-all">
