@@ -44,6 +44,11 @@ service cloud.firestore {
       allow write: if isGuru();
     }
 
+    match /grammar_missions/{missionId} {
+      allow read: if true;
+      allow write: if isGuru();
+    }
+
     // =========================================================
     // 👤 USER DATA & PROFILES (DIPERBAIKI)
     // =========================================================

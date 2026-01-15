@@ -1015,6 +1015,95 @@
         </div>
         
             </div> <!-- Close themeContent -->
+
+        <!-- ===============================
+             🧩 MANAJEMEN GRAMMAR (DYNAMIC)
+        =============================== -->
+        <div class="mb-8 px-1 max-w-5xl mx-auto">
+          <div class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+
+            <!-- Header -->
+            <div id="grammarSectionHeader" onclick="toggleGrammar()" class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-teal-50 to-emerald-50 dark:from-slate-900/50 dark:to-slate-800/50 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-teal-100 dark:bg-teal-900/30 rounded-lg text-teal-600 dark:text-teal-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white">Manajemen Grammar (Misi)</h3>
+                    <p class="text-xs text-slate-400 dark:text-slate-500">Kelola misi dan materi grammar.</p>
+                </div>
+              </div>
+              <svg id="grammarChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="2.5" stroke="currentColor"
+                  class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+               </svg>
+            </div>
+
+            <div id="grammarContent" class="hidden">
+                 
+                 <!-- MAIN FORM -->
+                 <div class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">ID Misi (e.g. t1)</label>
+                            <input id="gramId" type="text" placeholder="t1" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-teal-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Urutan (Angka)</label>
+                            <input id="gramOrder" type="number" placeholder="1" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-teal-500">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Judul Misi</label>
+                            <input id="gramTitle" type="text" placeholder="Misi 1: Jenis Kata" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-teal-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Sub-Judul</label>
+                            <input id="gramSubtitle" type="text" placeholder="Isim, Fi'il, & Harf" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-teal-500">
+                        </div>
+                    </div>
+                    
+                    <div>
+                         <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Icon (Emoji)</label>
+                         <input id="gramIcon" type="text" placeholder="🧱" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+
+                    <!-- JSON BUILDER FOR LESSONS -->
+                    <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+                        <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Lessons / Materi (JSON Builder)</label>
+                        <textarea id="gramLessonsJson" rows="6" class="w-full font-mono text-xs px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-900 text-green-400 outline-none focus:ring-2 focus:ring-teal-500" placeholder='[{"id":"t1-01", "judul_id":"...", ...}]'></textarea>
+                        <p class="text-[10px] text-slate-400">Paste JSON here or use the Import Default button below to seed data.</p>
+                    </div>
+
+                    <div class="flex justify-between pt-4">
+                        <button id="btnResetGrammar" class="text-slate-500 hover:text-slate-700 font-bold text-sm px-4">Reset</button>
+                        <button id="btnSaveGrammar" class="bg-teal-600 hover:bg-teal-700 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-teal-500/30 transition-all active:scale-95 flex items-center gap-2">
+                           <span>💾 Simpan Misi Grammar</span>
+                        </button>
+                    </div>
+                 </div>
+
+                 <!-- LIST -->
+                 <div class="px-6 py-8 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-700">
+                    <h4 class="font-bold text-slate-700 dark:text-white mb-6">Daftar Misi Tersedia</h4>
+                    <div id="grammarListContainer" class="space-y-2">
+                        <p class="text-center text-slate-400 italic">Memuat data...</p>
+                    </div>
+                    
+                    <div class="mt-8 pt-8 border-t border-slate-200 dark:border-slate-700 text-center">
+                        <button id="btnImportGrammarDefaults" class="px-6 py-3 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-slate-300 dark:hover:bg-slate-700 transition">
+                            ⚡ Import Default Data (Bank Materi)
+                        </button>
+                        <p id="importStatus" class="text-xs text-slate-400 mt-2"></p>
+                    </div>
+                 </div>
+
+            </div>
+          </div>
+        </div>
           </div>
         </div>
         
@@ -4865,6 +4954,221 @@
        renderVocabList();
        currentQuizData = [];
        renderQuizList();
+    });
+
+    /* =========================================
+       GRAMMAR MANAGEMENT LOGIC (DYNAMIC)
+       ========================================= */
+       
+    // 1. Toggle UI
+    window.toggleGrammar = function() {
+        const content = document.getElementById('grammarContent');
+        const chevron = document.getElementById('grammarChevron');
+        content.classList.toggle('hidden');
+        if (content.classList.contains('hidden')) {
+            chevron.classList.add('-rotate-90');
+        } else {
+            chevron.classList.remove('-rotate-90');
+        }
+    };
+
+    // 2. Render List
+    function renderGrammarList() {
+        const container = document.getElementById('grammarListContainer');
+        if(!container) return;
+        
+        onSnapshot(collection(db, "grammar_missions"), (snapshot) => {
+            if(snapshot.empty) {
+                container.innerHTML = '<p class="text-sm text-slate-500 italic text-center">Belum ada misi grammar.</p>';
+                return;
+            }
+            
+            // Sort by urutan
+            const missions = [];
+            snapshot.forEach(doc => missions.push({id: doc.id, ...doc.data()}));
+            missions.sort((a,b) => (a.urutan||0) - (b.urutan||0));
+
+            let html = '';
+            missions.forEach(m => {
+                const lessonCount = m.lessons ? m.lessons.length : 0;
+                html += `
+                <div class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:rgb-slate-50 relative group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-lg">
+                            ${m.icon || '📝'}
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-slate-800 dark:text-white text-sm">${m.judul_misi || m.id}</h5>
+                            <p class="text-[10px] text-slate-500">${m.sub_judul || ''} • ${lessonCount} Materi</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                         <button onclick="editGrammar('${m.id}')" class="p-2 text-slate-400 hover:text-blue-500">✏️</button>
+                         <button onclick="deleteGrammar('${m.id}')" class="p-2 text-slate-400 hover:text-red-500">🗑️</button>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">' + html + '</div>';
+        });
+    }
+
+    // 3. Save Logic
+    document.getElementById('btnSaveGrammar')?.addEventListener('click', async () => {
+        const id = document.getElementById('gramId').value.trim();
+        if(!id) return Swal.fire('Error', 'ID Misi wajib diisi!', 'error');
+        
+        const data = {
+            id: id,
+            urutan: parseInt(document.getElementById('gramOrder').value) || 99,
+            judul_misi: document.getElementById('gramTitle').value,
+            sub_judul: document.getElementById('gramSubtitle').value,
+            icon: document.getElementById('gramIcon').value,
+            lessons: [] // TODO: Parse JSON
+        };
+        
+        try {
+            const rawJson = document.getElementById('gramLessonsJson').value;
+            if(rawJson) data.lessons = JSON.parse(rawJson);
+        } catch(e) {
+            return Swal.fire('JSON Error', 'Format JSON Lessons tidak valid!', 'error');
+        }
+
+        const btn = document.getElementById('btnSaveGrammar');
+        btn.textContent = '⏳ Menyimpan...';
+        btn.disabled = true;
+
+        try {
+            await setDoc(doc(db, "grammar_missions", id), data, { merge: true });
+            Swal.fire('Sukses', 'Misi Grammar tersimpan!', 'success');
+            document.getElementById('btnResetGrammar').click();
+        } catch(e) {
+            console.error(e);
+            Swal.fire('Error', e.message, 'error');
+        } finally {
+            btn.innerHTML = '<span>💾 Simpan Misi Grammar</span>';
+            btn.disabled = false;
+        }
+    });
+    
+    // 4. Edit Logic
+    window.editGrammar = async (id) => {
+        const snap = await getDoc(doc(db, "grammar_missions", id));
+        if(snap.exists()) {
+             const d = snap.data();
+             document.getElementById('gramId').value = id;
+             document.getElementById('gramOrder').value = d.urutan;
+             document.getElementById('gramTitle').value = d.judul_misi;
+             document.getElementById('gramSubtitle').value = d.sub_judul;
+             document.getElementById('gramIcon').value = d.icon;
+             document.getElementById('gramLessonsJson').value = JSON.stringify(d.lessons || [], null, 2);
+             
+             document.getElementById('grammarContent').classList.remove('hidden');
+             const chevron = document.getElementById('grammarChevron');
+             if(chevron) chevron.classList.remove('-rotate-90');
+             document.getElementById('grammarContent').scrollIntoView({behavior: 'smooth'});
+        }
+    };
+    
+    // 5. Delete Logic
+    window.deleteGrammar = async(id) => {
+        const confirm = await Swal.fire({
+            title: 'Hapus Misi?',
+            text: "Data tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!'
+        });
+        
+        if (confirm.isConfirmed) {
+            try {
+                await deleteDoc(doc(db, "grammar_missions", id));
+                Swal.fire('Terhapus!', 'Misi telah dihapus.', 'success');
+            } catch(e) {
+                Swal.fire('Gagal', e.message, 'error');
+            }
+        }
+    };
+    
+    // 6. Reset Logic
+    document.getElementById('btnResetGrammar')?.addEventListener('click', () => {
+         document.getElementById('gramId').value = '';
+         document.getElementById('gramOrder').value = '';
+         document.getElementById('gramTitle').value = '';
+         document.getElementById('gramSubtitle').value = '';
+         document.getElementById('gramIcon').value = '';
+         document.getElementById('gramLessonsJson').value = '';
+    });
+    
+    // 7. Init
+    renderGrammarList();
+    
+    // 8. MIGRATION LOGIC (Import Default)
+    const DEFAULT_GRAMMAR_DATA = {
+      tahap: [
+        { id: "t1", judul_id: "Jenis Kata", judul_ar: "الكلمة", deskripsi: "Mengenal jenis-jenis kata" },
+        { id: "t2", judul_id: "Menyusun", judul_ar: "الجملة", deskripsi: "Memahami bagaimana kata tersusun" },
+        { id: "t3", judul_id: "Rasa Bahasa", judul_ar: "المعنى في الجملة", deskripsi: "Memahami makna khusus" }
+      ],
+      pelajaran: [
+        { id: "t1-01", tahap: "t1", urutan: 1, judul_id: "Isim", judul_ar: "الاِسْمُ", referensi: "Nahwu al-Muyassar, Hal. 4", tujuan: ["Siswa mengenal kata benda dalam bahasa Arab", "Siswa dapat membedakan isim dari fi'il dan harf"], penjelasan_muyassar: ["Isim adalah kata yang digunakan untuk menamai sesuatu.", "Nama orang, benda, hewan, tempat, dan sifat termasuk isim.", "Isim tidak menunjukkan waktu."], contoh: [{ ar: "مُحَمَّدٌ طَالِبٌ", id: "Muhammad adalah seorang murid.", fokus: "Kata مُحَمَّدٌ dan طَالِبٌ adalah isim" }, { ar: "الْمَدْرَسَةُ كَبِيرَةٌ", id: "Sekolah itu besar.", fokus: "Kata الْمَدْرَسَةُ adalah isim" }], batas_pemula: "Cukup pahami isim sebagai 'nama sesuatu'." },
+        { id: "t1-02", tahap: "t1", urutan: 2, judul_id: "Fi'il", judul_ar: "الفِعْلُ", referensi: "Nahwu al-Muyassar, Hal. 6", tujuan: ["Siswa memahami bahwa fi'il menunjukkan perbuatan", "Siswa mengenal bahwa fi'il berkaitan dengan waktu"], penjelasan_muyassar: ["Fi'il adalah kata yang menunjukkan suatu perbuatan.", "Setiap fi'il berkaitan dengan waktu, baik sudah, sedang, atau akan.", "Kata seperti pergi, makan, dan menulis termasuk fi'il."], contoh: [{ ar: "ذَهَبَ أَحْمَدُ", id: "Ahmad telah pergi.", fokus: "Kata ذَهَبَ adalah fi'il (perbuatan)" }, { ar: "يَكْتُبُ الطَّالِبُ", id: "Murid itu sedang menulis.", fokus: "Kata يَكْتُبُ adalah fi'il" }], batas_pemula: "Tidak perlu membahas jenis-jenis fi'il secara rinci." },
+        { id: "t1-03", tahap: "t1", urutan: 3, judul_id: "Harf", judul_ar: "الحَرْفُ", referensi: "Nahwu al-Muyassar, Hal. 8", tujuan: ["Siswa mengenal kata penghubung dalam bahasa Arab", "Siswa memahami bahwa harf tidak berdiri sendiri"], penjelasan_muyassar: ["Harf adalah kata yang berfungsi menghubungkan kata lain.", "Harf tidak memiliki makna sendiri jika berdiri sendiri.", "Makna harf muncul ketika bersama isim atau fi'il."], contoh: [{ ar: "فِي الْبَيْتِ", id: "Di dalam rumah.", fokus: "Kata فِي adalah harf" }, { ar: "إِلَى الْمَدْرَسَةِ", id: "Ke sekolah.", fokus: "Kata إِلَى adalah harf" }], batas_pemula: "Cukup pahami harf sebagai kata penghubung." },
+        { id: "t2-01", tahap: "t2", urutan: 1, judul_id: "Kalimat dalam Bahasa Arab", judul_ar: "الجُمْلَةُ", referensi: "Nahwu al-Muyassar, Hal. 12", tujuan: ["Siswa memahami pengertian kalimat", "Siswa mengetahui bahwa kalimat tersusun dari kata"], penjelasan_muyassar: ["Kalimat adalah rangkaian kata yang memiliki makna.", "Satu kata saja belum tentu menjadi kalimat.", "Dalam bahasa Arab, kalimat tersusun dari beberapa kata yang saling berkaitan."], contoh: [{ ar: "الطَّالِبُ مُجْتَهِدٌ", id: "Murid itu rajin.", fokus: "Ini adalah satu kalimat utuh" }, { ar: "ذَهَبَ أَحْمَدُ", id: "Ahmad telah pergi.", fokus: "Kalimat terdiri dari beberapa kata" }], batas_pemula: "Fokus pada makna kalimat, bukan susunan i‘rab." },
+        { id: "t2-02", tahap: "t2", urutan: 2, judul_id: "Jumlah Ismiyyah", judul_ar: "الجُمْلَةُ الاِسْمِيَّةُ", referensi: "Nahwu al-Muyassar, Hal. 14", tujuan: ["Siswa mengenal kalimat yang diawali isim", "Siswa memahami konsep subjek dan penjelas"], penjelasan_muyassar: ["Jumlah ismiyyah adalah kalimat yang diawali dengan isim.", "Kalimat ini biasanya membicarakan sesuatu dan menjelaskannya.", "Jumlah ismiyyah sering digunakan untuk menyatakan keadaan."], contoh: [{ ar: "الْبَيْتُ كَبِيرٌ", id: "Rumah itu besar.", fokus: "Kalimat diawali isim الْبَيْتُ" }, { ar: "الطَّالِبُ نَشِيطٌ", id: "Murid itu rajin.", fokus: "Isim di awal kalimat" }], batas_pemula: "Tidak perlu mengenal istilah mubtada’ dan khabar dulu." },
+        { id: "t2-03", tahap: "t2", urutan: 3, judul_id: "Jumlah Fi‘liyyah", judul_ar: "الجُمْلَةُ الْفِعْلِيَّةُ", referensi: "Nahwu al-Muyassar, Hal. 16", tujuan: ["Siswa mengenal kalimat yang diawali fi'il", "Siswa memahami bahwa perbuatan bisa menjadi awal kalimat"], penjelasan_muyassar: ["Jumlah fi‘liyyah adalah kalimat yang diawali dengan fi'il.", "Kalimat ini menekankan pada perbuatan yang terjadi.", "Pelaku perbuatan biasanya disebut setelah fi'il."], contoh: [{ ar: "ذَهَبَ الطَّالِبُ", id: "Murid itu pergi.", fokus: "Kalimat diawali fi'il ذَهَبَ" }, { ar: "يَلْعَبُ الْوَلَدُ", id: "Anak itu bermain.", fokus: "Fi'il muncul di awal kalimat" }], batas_pemula: "Cukup pahami urutan kata, bukan perubahan akhir kata." },
+        { id: "t3-01", tahap: "t3", urutan: 1, judul_id: "Isim Isyarah", judul_ar: "اِسْمُ الإِشَارَةِ", referensi: "Nahwu al-Muyassar, Hal. 20", tujuan: ["Siswa mengenal kata tunjuk dalam bahasa Arab", "Siswa memahami fungsi menunjuk dalam kalimat"], penjelasan_muyassar: ["Isim isyarah adalah kata yang digunakan untuk menunjuk sesuatu.", "Kata tunjuk digunakan ketika sesuatu sudah diketahui atau terlihat.", "Isim isyarah selalu digunakan bersama kata lain."], contoh: [{ ar: "هَذَا بَيْتٌ", id: "Ini adalah rumah.", fokus: "هَذَا adalah kata tunjuk" }, { ar: "تِلْكَ مَدْرَسَةٌ", id: "Itu adalah sekolah.", fokus: "تِلْكَ menunjuk sesuatu yang jauh" }], batas_pemula: "Cukup mengenal fungsi menunjuk, bukan pembagiannya." },
+        { id: "t3-02", tahap: "t3", urutan: 2, judul_id: "Isim Maushul", judul_ar: "اِسْمُ المَوْصُولِ", referensi: "Nahwu al-Muyassar, Hal. 22", tujuan: ["Siswa mengenal kata penghubung makna", "Siswa memahami fungsi 'yang' dalam bahasa Arab"], penjelasan_muyassar: ["Isim maushul digunakan untuk menghubungkan dua bagian kalimat.", "Dalam bahasa Indonesia, sering diterjemahkan dengan kata 'yang'.", "Kata ini membantu menjelaskan sesuatu secara lebih rinci."], contoh: [{ ar: "الطَّالِبُ الَّذِي يَجْتَهِدُ نَاجِحٌ", id: "Murid yang bersungguh-sungguh itu berhasil.", fokus: "الَّذِي menghubungkan penjelasan" }], batas_pemula: "Tidak perlu menghafal semua bentuk isim maushul." },
+        { id: "t3-03", tahap: "t3", urutan: 3, judul_id: "Nida’ (Panggilan)", judul_ar: "النِّدَاءُ", referensi: "Nahwu al-Muyassar, Hal. 25", tujuan: ["Siswa memahami cara memanggil dalam bahasa Arab", "Siswa mengenal fungsi huruf panggilan"], penjelasan_muyassar: ["Nida’ digunakan ketika seseorang dipanggil atau diajak bicara.", "Biasanya menggunakan kata panggilan seperti 'wahai'.", "Panggilan memberi penekanan kepada orang yang diajak bicara."], contoh: [{ ar: "يَا طَالِبُ", id: "Wahai murid!", fokus: "يَا adalah kata panggilan" }], batas_pemula: "Cukup mengenal bentuk umum nida’." },
+        { id: "t3-04", tahap: "t3", urutan: 4, judul_id: "Istifham (Pertanyaan)", judul_ar: "الاِسْتِفْهَامُ", referensi: "Nahwu al-Muyassar, Hal. 27", tujuan: ["Siswa mengenal kalimat tanya sederhana", "Siswa memahami fungsi bertanya dalam kalimat"], penjelasan_muyassar: ["Istifham digunakan untuk bertanya.", "Pertanyaan membantu mendapatkan informasi.", "Dalam bahasa Arab, ada kata khusus untuk bertanya."], contoh: [{ ar: "مَنْ هَذَا؟", id: "Siapa ini?", fokus: "مَنْ digunakan untuk bertanya tentang orang" }, { ar: "مَا هَذَا؟", id: "Apa ini?", fokus: "مَا digunakan untuk bertanya tentang benda" }], batas_pemula: "Cukup mengenal fungsi bertanya, bukan jenisnya." }
+      ]
+    }; // Hardcoded for migration
+
+    document.getElementById('btnImportGrammarDefaults')?.addEventListener('click', async () => {
+        const status = document.getElementById('importStatus');
+        status.textContent = 'Memulai data upload...';
+        
+        const confirm = await Swal.fire({
+            title: 'Import Default Data?',
+            text: "Ini akan menimpa data t1, t2, t3 di database dengan data default.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Import!'
+        });
+        
+        if(!confirm.isConfirmed) {
+            status.textContent = 'Dibatalkan.';
+            return;
+        }
+
+        try {
+            const batch = writeBatch(db);
+            
+             for (const tahap of DEFAULT_GRAMMAR_DATA.tahap) {
+                 const lessons = DEFAULT_GRAMMAR_DATA.pelajaran
+                    .filter(p => p.tahap === tahap.id)
+                    .sort((a,b) => a.urutan - b.urutan);
+                 
+                 const docRef = doc(db, "grammar_missions", tahap.id);
+                 const data = {
+                    urutan: parseInt(tahap.id.replace('t', '')),
+                    judul_misi: tahap.id === 't1' ? "Misi 1: Jenis Kata" : (tahap.id === 't2' ? "Misi 2: Menyusun" : "Misi 3: Rasa Bahasa"),
+                    sub_judul: tahap.id === 't1' ? "Isim, Fi'il, & Harf" : (tahap.id === 't2' ? "Membuat Kalimat" : "Memahami Makna"),
+                    icon: tahap.id === 't1' ? "🧱" : (tahap.id === 't2' ? "🏗️" : "✨"),
+                    lessons: lessons
+                 };
+                batch.set(docRef, data);
+             }
+
+            await batch.commit();
+            status.textContent = '✅ Sukses! Data default berhasil diupload.';
+            Swal.fire('Sukses', 'Data default berhasil diimport!', 'success');
+            renderGrammarList(); // Refresh List
+        } catch(e) {
+            console.error(e);
+            status.textContent = '❌ Error: ' + e.message;
+            Swal.fire('Gagal', e.message, 'error');
+        }
     });
 
   </script>

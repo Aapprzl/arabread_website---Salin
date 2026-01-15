@@ -69,45 +69,11 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-
-      <div data-tahap="t1" class="tahap-btn cursor-pointer relative group">
-        <div class="absolute inset-0 bg-blue-500 rounded-3xl translate-y-2 translate-x-0 transition-transform group-hover:translate-y-3 group-active:translate-y-2"></div>
-        <div class="relative bg-white dark:bg-slate-800 border-2 border-blue-500 p-6 rounded-3xl h-full flex flex-col items-center text-center transition-transform transform group-hover:-translate-y-1 group-active:translate-y-0">
-           <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/50 rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-inner ">
-             🧱
-           </div>
-           <h3 class="font-black text-lg text-slate-800 dark:text-white mb-1">Misi 1: Jenis Kata</h3>
-           <p class="text-xs text-slate-500 font-medium">Isim, Fi'il, & Harf</p>
-           
-           <div class="mt-4 px-3 py-1 bg-blue-500 text-white text-[10px] font-bold uppercase rounded-full">
-             Mulai Sini
-           </div>
-        </div>
+    <div id="mission-buttons-container" class="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-6 max-h-[400px] md:max-h-[520px] overflow-y-auto pr-1 custom-scrollbar content-start">
+      <!-- Loading Skeleton or Empty State -->
+      <div class="col-span-full text-center py-10 opacity-50 text-slate-400 font-bold animate-pulse">
+        ⏳ Memuat Misi...
       </div>
-
-      <div data-tahap="t2" class="tahap-btn cursor-pointer relative group opacity-80 hover:opacity-100 transition-opacity">
-        <div class="absolute inset-0 bg-slate-300 dark:bg-slate-700 rounded-3xl translate-y-2"></div>
-        <div class="relative bg-slate-50 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 p-6 rounded-3xl h-full flex flex-col items-center text-center transition-transform transform group-hover:-translate-y-1 group-active:translate-y-0">
-           <div class="w-14 h-14 bg-slate-200 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-3xl mb-3 grayscale group-hover:grayscale-0 transition-all">
-             🏗️
-           </div>
-           <h3 class="font-bold text-lg text-slate-600 dark:text-slate-300 mb-1">Misi 2: Menyusun</h3>
-           <p class="text-xs text-slate-400 font-medium">Membuat Kalimat</p>
-        </div>
-      </div>
-
-      <div data-tahap="t3" class="tahap-btn cursor-pointer relative group opacity-70 hover:opacity-100 transition-opacity">
-        <div class="absolute inset-0 bg-slate-300 dark:bg-slate-700 rounded-3xl translate-y-2"></div>
-        <div class="relative bg-slate-50 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 p-6 rounded-3xl h-full flex flex-col items-center text-center transition-transform transform group-hover:-translate-y-1 group-active:translate-y-0">
-           <div class="w-14 h-14 bg-slate-200 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-3xl mb-3 grayscale group-hover:grayscale-0 transition-all">
-             ✨
-           </div>
-           <h3 class="font-bold text-lg text-slate-600 dark:text-slate-300 mb-1">Misi 3: Rasa Bahasa</h3>
-           <p class="text-xs text-slate-400 font-medium">Memahami Makna</p>
-        </div>
-      </div>
-
     </div>
 
     <div class="mt-8 bg-amber-50 dark:bg-slate-800/50 border-2 border-dashed border-amber-200 dark:border-slate-700 rounded-2xl p-4 flex items-center justify-center gap-3 text-center">
@@ -159,264 +125,246 @@
   </div>
 </footer>
 
-  <script src="assets/data/bank-materi.js"></script>
+  <script type="module">
+    /* =====================================================
+       FIREBASE CONFIG & INIT
+    ===================================================== */
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
+      authDomain: "tarbiyyat-lughah-presence.firebaseapp.com",
+      projectId: "tarbiyyat-lughah-presence",
+      storageBucket: "tarbiyyat-lughah-presence.firebasestorage.app",
+      messagingSenderId: "542387162985",
+      appId: "1:542387162985:web:82193b0a233367982f6e63"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    /* =====================================================
+       UTILITAS & STATE
+    ===================================================== */
+    const stripHarakat = s => (s || '').replace(/[\u064B-\u065F\u0670]/g, '');
+    const sizeAr = s => {
+      const n = stripHarakat(s).length;
+      if (n > 20) return 'text-3xl md:text-4xl leading-loose';
+      return 'text-4xl md:text-5xl leading-loose';
+    };
+
+    let GLOBAL_MISSIONS = [];
+    let tahapAktif = 't1';
+
+    /* =====================================================
+       TEMPLATE CARD (PERSIS SAMA DENGAN LAMA)
+    ===================================================== */
+    function lessonCard(p, index) {
+      const colors = [
+        'border-blue-400 bg-blue-50 dark:bg-slate-800 dark:border-blue-600',
+        'border-indigo-400 bg-indigo-50 dark:bg-slate-800 dark:border-indigo-600',
+        'border-emerald-400 bg-emerald-50 dark:bg-slate-800 dark:border-emerald-600'
+      ];
+      const themeClass = colors[index % colors.length];
+      const badgeColor = ['bg-blue-500', 'bg-indigo-500', 'bg-emerald-500'][index % 3];
+
+      return `
+      <article class="relative group mt-4">
+        <div class="absolute inset-0 rounded-[2rem] bg-slate-300 dark:bg-slate-900 translate-y-3 translate-x-0 group-hover:translate-y-4 transition-transform"></div>
+        <div class="relative z-10 rounded-[2rem] border-4 ${themeClass} p-6 md:p-8 transition-transform duration-200 group-hover:-translate-y-1 bg-white dark:bg-slate-800">
+          
+          <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6 border-b-2 border-dashed border-slate-200 dark:border-slate-700 pb-4">
+            <div class="flex gap-4">
+              <div class="shrink-0 w-12 h-12 ${badgeColor} text-white rounded-2xl flex items-center justify-center font-black text-xl shadow-lg rotate-3 group-hover:rotate-6 transition-transform">
+                ${index + 1}
+              </div>
+              <div>
+                <h2 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white uppercase tracking-tight">${p.judul_id}</h2>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">${p.batas_pemula}</p>
+              </div>
+            </div>
+            <div class="font-arab text-3xl md:text-4xl text-transparent bg-clip-text bg-gradient-to-l from-blue-600 to-indigo-500 dark:from-blue-300 dark:to-indigo-300 font-bold leading-normal text-right md:text-left">${p.judul_ar}</div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+              <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border-2 border-slate-100 dark:border-slate-700 shadow-sm">
+                <h4 class="text-xs font-black uppercase text-slate-400 mb-3 flex items-center gap-2"><span class="text-lg">🎯</span> Misi Belajar</h4>
+                <ul class="space-y-2">
+                  ${p.tujuan.map(t => `<li class="flex items-start gap-3 text-sm font-medium text-slate-600 dark:text-slate-300"><div class="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-[10px] font-bold">✓</div>${t}</li>`).join('')}
+                </ul>
+              </div>
+              <div class="relative bg-amber-50 dark:bg-amber-900/20 rounded-2xl rounded-tl-none p-5 text-slate-700 dark:text-amber-100 text-sm md:text-base leading-relaxed italic border border-amber-100 dark:border-amber-800/30">
+                <span class="absolute -top-3 left-0 bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100 text-[10px] px-2 py-0.5 rounded font-bold uppercase">Catatan Guru</span>
+                ${p.penjelasan_muyassar.map(e => `<p>${e}</p>`).join('')}
+              </div>
+              <div class="mt-2 flex items-center justify-end gap-1.5 pr-2 opacity-60 hover:opacity-100 transition-opacity select-none cursor-help" title="Sumber Materi">
+                <span class="text-sm">📖</span>
+                <span class="text-[10px] md:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Sumber: ${p.referensi || 'Kitab Rujukan'}</span>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <h4 class="text-xs font-black uppercase text-slate-400 mb-1 flex items-center gap-2"><span class="text-lg">💡</span> Contoh Nyata</h4>
+              <div class="grid gap-4"> ${p.contoh.map(c => `
+                <div class="group/item relative overflow-hidden bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md">
+                  <div class="w-full mb-3"><span class="inline-block px-3 py-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/40 border border-amber-200 dark:border-amber-700/50 text-amber-800 dark:text-amber-200 text-xs md:text-sm font-bold tracking-wide leading-loose">${c.fokus}</span></div>
+                  <div class="font-arab ${sizeAr(c.ar)} text-slate-800 dark:text-slate-100 mb-2 mt-1 group-hover/item:scale-105 transition-transform duration-300">${c.ar}</div>
+                  <div class="text-sm font-medium text-slate-500 dark:text-slate-400 italic">"${c.id}"</div>
+                </div>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>`;
+    }
+
+    /* =====================================================
+       INIT & RENDER
+    ===================================================== */
+    async function initGrammarPage() {
+      // 1. Fetch Data
+      const snap = await getDocs(query(collection(db, "grammar_missions"), orderBy("urutan")));
+      GLOBAL_MISSIONS = [];
+      snap.forEach(d => GLOBAL_MISSIONS.push({id: d.id, ...d.data()}));
+
+      // 2. Render Navigation Buttons
+      const btnContainer = document.getElementById('mission-buttons-container');
+      
+      if(GLOBAL_MISSIONS.length === 0) {
+        btnContainer.innerHTML = '<p class="col-span-3 text-center text-slate-400">Belum ada misi tersedia.</p>';
+        return;
+      }
+      
+      btnContainer.innerHTML = ''; // Clear loading
+
+      GLOBAL_MISSIONS.forEach(m => {
+        const isStart = m.id === 't1';
+        const html = `
+        <div data-tahap="${m.id}" onclick="renderTahap('${m.id}')" class="tahap-btn cursor-pointer relative group opacity-70 hover:opacity-100 transition-opacity">
+            <div class="absolute inset-0 bg-slate-300 dark:bg-slate-700 rounded-2xl md:rounded-3xl translate-y-1.5 md:translate-y-2 transition-all"></div>
+            <div class="relative bg-slate-50 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 p-3 md:p-6 rounded-2xl md:rounded-3xl h-full flex flex-col items-center text-center transition-transform transform group-hover:-translate-y-1 group-active:translate-y-0">
+               <div class="w-10 h-10 md:w-14 md:h-14 bg-slate-200 dark:bg-slate-700 rounded-xl md:rounded-2xl flex items-center justify-center text-xl md:text-3xl mb-2 md:mb-3 grayscale group-hover:grayscale-0 transition-all">
+                 ${m.icon || '📝'}
+               </div>
+               <h3 class="font-bold text-sm md:text-lg text-slate-600 dark:text-slate-300 mb-0.5 md:mb-1 leading-tight">${m.judul_misi}</h3>
+               <p class="text-[10px] md:text-xs text-slate-400 font-medium hidden md:block">${m.sub_judul || ''}</p>
+               ${isStart ? '<div class="mt-2 md:mt-4 px-2 md:px-3 py-0.5 md:py-1 bg-blue-500 text-white text-[9px] md:text-[10px] font-bold uppercase rounded-full">Mulai</div>' : ''}
+            </div>
+        </div>`;
+        btnContainer.innerHTML += html;
+      });
+
+      // 3. Select Initial Tahap
+      const initial = GLOBAL_MISSIONS.find(m => m.id === 't1') ? 't1' : GLOBAL_MISSIONS[0].id;
+      renderTahap(initial);
+    }
+
+    window.renderTahap = function(tahapId) {
+       tahapAktif = tahapId;
+       
+       // Update Buttons Visual
+       document.querySelectorAll('.tahap-btn').forEach(btn => {
+          const id = btn.getAttribute('data-tahap');
+          const isAktif = id === tahapId;
+          const bg = btn.querySelector('.absolute');
+          const content = btn.querySelector('.relative');
+          const icon = content.querySelector('.w-14');
+          const title = content.querySelector('h3');
+
+          if(isAktif) {
+             btn.classList.remove('opacity-70');
+             btn.classList.add('opacity-100');
+             // Active Styles (Blue)
+             if(bg) {
+                 bg.classList.remove('bg-slate-300', 'dark:bg-slate-700', 'translate-y-2');
+                 bg.classList.add('bg-blue-500', 'translate-y-3');
+             }
+             if(content) {
+                 content.classList.remove('border-slate-300', 'dark:border-slate-600', 'bg-slate-50');
+                 content.classList.add('border-blue-500', 'bg-white');
+             }
+             if(icon) {
+                 icon.classList.remove('bg-slate-200', 'grayscale');
+                 icon.classList.add('bg-blue-100', 'dark:bg-blue-900/50');
+             }
+             if(title) {
+                 title.className = `font-black text-lg text-slate-800 dark:text-white mb-1`;
+             }
+          } else {
+             // Inactive Styles (Slate)
+             btn.classList.add('opacity-70');
+             btn.classList.remove('opacity-100');
+             
+             if(bg) {
+                 bg.classList.add('bg-slate-300', 'dark:bg-slate-700', 'translate-y-2');
+                 bg.classList.remove('bg-blue-500', 'translate-y-3');
+             }
+             if(content) {
+                 content.classList.add('border-slate-300', 'dark:border-slate-600', 'bg-slate-50');
+                 content.classList.remove('border-blue-500', 'bg-white');
+             }
+             if(icon) {
+                 icon.classList.add('bg-slate-200', 'grayscale');
+                 icon.classList.remove('bg-blue-100', 'dark:bg-blue-900/50');
+             }
+             if(title) {
+                 title.className = `font-bold text-lg text-slate-600 dark:text-slate-300 mb-1`;
+             }
+          }
+       });
+
+       // Render Cards
+       const grid = document.getElementById('cards-grid');
+       const mission = GLOBAL_MISSIONS.find(m => m.id === tahapId);
+       
+       if(mission && mission.lessons) {
+           // Smooth Scroll ke Card Pertama (Offset untuk Sticky Header)
+           const grid = document.getElementById('cards-grid');
+           const yOffset = -100; // Header height
+           const y = grid.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+           window.scrollTo({top: y, behavior: 'smooth'});
+
+           grid.style.opacity = '0';
+           grid.style.transform = 'translateY(20px)';
+           grid.style.transition = 'all 0.3s ease-out';
+           
+           setTimeout(() => {
+                grid.innerHTML = mission.lessons.map((p, i) => lessonCard(p, i)).join('');
+                grid.style.opacity = '1';
+                grid.style.transform = 'translateY(0)';
+           }, 100);
+           
+           // Update Focus Text
+           const fokusEl = document.getElementById('fokus-saat-ini');
+           if(fokusEl) fokusEl.textContent = mission.deskripsi || mission.sub_judul || "Belajar Grammar";
+       }
+    };
+
+    // Auto-Run
+    initGrammarPage();
+
+  </script>
+
+  <!-- DARK MODE LOGIC (RESTORED) -->
   <script>
     const toggle = document.getElementById('themeToggle');
     const root = document.documentElement;
     if (localStorage.theme === 'dark') {
       root.classList.add('dark');
-      toggle.textContent = '☀️';
+      if(toggle) toggle.textContent = '☀️';
     }
-    toggle.addEventListener('click', () => {
-      root.classList.toggle('dark');
-      const isDark = root.classList.contains('dark');
-      toggle.textContent = isDark ? '☀️' : '🌙';
-      localStorage.theme = isDark ? 'dark' : 'light';
-    });
+    if(toggle) {
+        toggle.addEventListener('click', () => {
+          root.classList.toggle('dark');
+          const isDark = root.classList.contains('dark');
+          toggle.textContent = isDark ? '☀️' : '🌙';
+          localStorage.theme = isDark ? 'dark' : 'light';
+        });
+    }
   </script>
-
-  <script>
-/* =====================================================
-   UTILITAS TIPOGRAFI
-===================================================== */
-const stripHarakat = s => (s || '').replace(/[\u064B-\u065F\u0670]/g, '');
-
-const sizeAr = s => {
-  const n = stripHarakat(s).length;
-  // Font Arab diperbesar drastis untuk anak-anak agar jelas
-  if (n > 20) return 'text-3xl md:text-4xl leading-loose';
-  return 'text-4xl md:text-5xl leading-loose';
-};
-
-/* =====================================================
-   STATE
-===================================================== */
-let tahapAktif = 't1';
-
-/* =====================================================
-   TEMPLATE CARD (PELAJARAN) - VERSI KIDS / FUN
-===================================================== */
-function lessonCard(p, index) {
-  // Warna-warni border/header berdasarkan urutan ganjil genap agar tidak bosan
-  const colors = [
-    'border-blue-400 bg-blue-50 dark:bg-slate-800 dark:border-blue-600', // Genap
-    'border-indigo-400 bg-indigo-50 dark:bg-slate-800 dark:border-indigo-600', // Ganjil
-    'border-emerald-400 bg-emerald-50 dark:bg-slate-800 dark:border-emerald-600' // Kelipatan 3
-  ];
-  const themeClass = colors[index % colors.length];
-
-  // Badge nomor
-  const badgeColor = [
-    'bg-blue-500', 'bg-indigo-500', 'bg-emerald-500'
-  ][index % 3];
-
-  return `
-  <article class="relative group mt-4">
-    
-    <div class="absolute inset-0 rounded-[2rem] bg-slate-300 dark:bg-slate-900 translate-y-3 translate-x-0 group-hover:translate-y-4 transition-transform"></div>
-
-    <div class="relative z-10 rounded-[2rem] border-4 ${themeClass} p-6 md:p-8 transition-transform duration-200 group-hover:-translate-y-1 bg-white dark:bg-slate-800">
-      
-      <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6 border-b-2 border-dashed border-slate-200 dark:border-slate-700 pb-4">
-        <div class="flex gap-4">
-          <div class="shrink-0 w-12 h-12 ${badgeColor} text-white rounded-2xl flex items-center justify-center font-black text-xl shadow-lg rotate-3 group-hover:rotate-6 transition-transform">
-            ${index + 1}
-          </div>
-          
-          <div>
-            <h2 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white uppercase tracking-tight">
-              ${p.judul_id}
-            </h2>
-            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
-              ${p.batas_pemula}
-            </p>
-          </div>
-        </div>
-
-        <div class="font-arab text-3xl md:text-4xl text-transparent bg-clip-text bg-gradient-to-l from-blue-600 to-indigo-500 dark:from-blue-300 dark:to-indigo-300 font-bold leading-normal text-right md:text-left">
-          ${p.judul_ar}
-        </div>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-8">
-        
-        <div class="space-y-6">
-          
-          <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border-2 border-slate-100 dark:border-slate-700 shadow-sm">
-            <h4 class="text-xs font-black uppercase text-slate-400 mb-3 flex items-center gap-2">
-              <span class="text-lg">🎯</span> Misi Belajar
-            </h4>
-            <ul class="space-y-2">
-              ${p.tujuan.map(t => `
-                <li class="flex items-start gap-3 text-sm font-medium text-slate-600 dark:text-slate-300">
-                  <div class="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-[10px] font-bold">✓</div>
-                  ${t}
-                </li>
-              `).join('')}
-            </ul>
-          </div>
-
-          <div class="relative bg-amber-50 dark:bg-amber-900/20 rounded-2xl rounded-tl-none p-5 text-slate-700 dark:text-amber-100 text-sm md:text-base leading-relaxed italic border border-amber-100 dark:border-amber-800/30">
-            <span class="absolute -top-3 left-0 bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100 text-[10px] px-2 py-0.5 rounded font-bold uppercase">Catatan Guru</span>
-            ${p.penjelasan_muyassar.map(e => `<p>${e}</p>`).join('')}
-          </div>
-
-          <div class="mt-2 flex items-center justify-end gap-1.5 pr-2 opacity-60 hover:opacity-100 transition-opacity select-none cursor-help" title="Sumber Materi">
-          <span class="text-sm">📖</span>
-          <span class="text-[10px] md:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-          Sumber: ${p.referensi || 'Kitab Rujukan'}
-          </span>
-          </div>
-
-        </div>
-
-        <div class="space-y-3">
-          <h4 class="text-xs font-black uppercase text-slate-400 mb-1 flex items-center gap-2">
-            <span class="text-lg">💡</span> Contoh Nyata
-          </h4>
-
-          <div class="grid gap-4"> ${p.contoh.map(c => `
-    <div class="group/item relative overflow-hidden bg-white dark:bg-slate-900 rounded-2xl border-2 border-slate-100 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md">
-      
-      <div class="w-full mb-3">
-        <span class="inline-block px-3 py-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/40 border border-amber-200 dark:border-amber-700/50 text-amber-800 dark:text-amber-200 text-xs md:text-sm font-bold tracking-wide leading-loose">
-          ${c.fokus}
-        </span>
-      </div>
-
-      <div class="font-arab ${sizeAr(c.ar)} text-slate-800 dark:text-slate-100 mb-2 mt-1 group-hover/item:scale-105 transition-transform duration-300">
-        ${c.ar}
-      </div>
-      
-      <div class="text-sm font-medium text-slate-500 dark:text-slate-400 italic">
-        "${c.id}"
-      </div>
-      
-    </div>
-  `).join('')}
-</div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </article>`;
-}
-
-/* =====================================================
-   RENDER BERDASARKAN TAHAP
-===================================================== */
-function renderTahap(tahap) {
-  tahapAktif = tahap;
-
-  // Pastikan BANK_MATERI ada
-  if (typeof BANK_MATERI === 'undefined') return;
-
-  const lessons = BANK_MATERI.pelajaran
-    .filter(p => p.tahap === tahap)
-    .sort((a, b) => a.urutan - b.urutan);
-
-  // Efek animasi sederhana
-  const grid = document.getElementById('cards-grid');
-  grid.style.opacity = '0';
-  grid.style.transform = 'translateY(20px)';
-  grid.style.transition = 'all 0.3s ease-out';
-  
-  setTimeout(() => {
-    grid.innerHTML = lessons.map((p, i) => lessonCard(p, i)).join('');
-    grid.style.opacity = '1';
-    grid.style.transform = 'translateY(0)';
-  }, 200);
-
-  updateTampilanTahap();
-}
-
-/* =====================================================
-   UPDATE TAMPILAN TAHAP (Logika Visual Tombol)
-===================================================== */
-function updateTampilanTahap() {
-  const btns = document.querySelectorAll('.tahap-btn');
-  
-  btns.forEach(btn => {
-    const isAktif = btn.dataset.tahap === tahapAktif;
-    const bg = btn.querySelector('.absolute'); // Layer Shadow (Background)
-    const content = btn.querySelector('.relative'); // Layer Border & Konten
-
-    if (isAktif) {
-      // --- KONDISI AKTIF (TOMBOL MENYALA BIRU) ---
-      
-      // 1. Ubah Opacity & Posisi
-      btn.classList.remove('opacity-70', 'opacity-80');
-      btn.classList.add('opacity-100');
-      if(bg) bg.classList.add('translate-y-3'); 
-      if(content) content.classList.add('-translate-y-0');
-
-      // 2. Ganti Warna Shadow jadi Biru
-      if(bg) {
-        bg.classList.remove('bg-slate-300', 'dark:bg-slate-700'); // Hapus abu
-        bg.classList.add('bg-blue-500'); // Tambah biru
-      }
-
-      // 3. Ganti Warna Border jadi Biru
-      if(content) {
-        content.classList.remove('border-slate-300', 'dark:border-slate-600'); // Hapus abu
-        content.classList.add('border-blue-500'); // Tambah biru
-      }
-      
-    } else {
-      // --- KONDISI TIDAK AKTIF (TOMBOL REDUP ABU-ABU) ---
-      
-      // 1. Ubah Opacity & Posisi
-      btn.classList.remove('opacity-100');
-      btn.classList.add('opacity-70');
-      if(bg) bg.classList.remove('translate-y-3');
-
-      // 2. Balikkan Warna Shadow jadi Abu-abu
-      if(bg) {
-        bg.classList.remove('bg-blue-500'); // Hapus biru
-        bg.classList.add('bg-slate-300', 'dark:bg-slate-700'); // Balik ke abu
-      }
-
-      // 3. Balikkan Warna Border jadi Abu-abu
-      if(content) {
-        content.classList.remove('border-blue-500'); // Hapus biru
-        content.classList.add('border-slate-300', 'dark:border-slate-600'); // Balik ke abu
-      }
-    }
-  });
-
-  // Update Teks Target Belajar (Tidak berubah)
-  const fokusEl = document.getElementById('fokus-saat-ini');
-  const fokusText = {
-    t1: "Mengenal jenis-jenis kata (Isim, Fi’il, Harf)",
-    t2: "Menyusun kata menjadi kalimat sempurna",
-    t3: "Memahami makna dan keindahan bahasa"
-  };
-
-  if (fokusEl && fokusText[tahapAktif]) {
-    fokusEl.textContent = fokusText[tahapAktif];
-  }
-}
-
-/* =====================================================
-   INIT
-===================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-  
-  // Event Listeners
-  const btns = document.querySelectorAll('.tahap-btn');
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      renderTahap(btn.dataset.tahap);
-    });
-  });
-
-  // Render Awal
-  renderTahap('t1');
-});
-</script>
 
   
 </body>
