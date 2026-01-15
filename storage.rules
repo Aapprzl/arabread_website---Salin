@@ -1,0 +1,22 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Folder Audio: Siapapun bisa baca/play, tapi hanya Guru (Auth) yang bisa upload/hapus
+    match /audio/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Folder Ebooks (Aturan Lama/Eksisting)
+    match /ebooks/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Default: Harus login untuk akses apapun
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

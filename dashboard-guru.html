@@ -786,7 +786,51 @@
 
                   <div>
                     <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Data Bacaan (JSON Array)</label>
-                    <textarea id="themeReadJson" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 font-mono text-xs outline-none focus:ring-2 focus:ring-blue-500" placeholder='[{"title":"...","ar":"...","idn":"..."}]'></textarea>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Data Bacaan (Builder)</label>
+                    
+                    <!-- Hidden Input untuk menyimpan JSON agar tombol Simpan Tema tetap jalan -->
+                    <input type="hidden" id="themeReadJson">
+
+                    <!-- Form Builder Area -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+                      
+                      <!-- Input Form -->
+                      <div class="grid grid-cols-1 gap-4 mb-4">
+                         <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Teks Arab (Bacaan)</label>
+                            <textarea id="readArInput" rows="2" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-right font-arab text-lg outline-none focus:ring-2 focus:ring-blue-500" placeholder="..."></textarea>
+                         </div>
+                         <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Terjemahan Indonesia</label>
+                            <textarea id="readIdnInput" rows="2" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="..."></textarea>
+                         </div>
+                         <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">File Audio (MP3)</label>
+                            <div class="flex items-center gap-2">
+                              <input type="file" id="readAudioInput" accept="audio/mp3,audio/mpeg" class="block w-full text-xs text-slate-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-full file:border-0
+                                file:text-xs file:font-semibold
+                                file:bg-blue-50 file:text-blue-700
+                                hover:file:bg-blue-100
+                              "/>
+                              <div id="readAudioStatus" class="hidden text-xs text-blue-500 font-bold animate-pulse">⏳ Uploading...</div>
+                            </div>
+                         </div>
+                         <button type="button" id="btnAddReadItem" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs uppercase tracking-widest transition shadow-md">
+                            + Tambah Bacaan ke List
+                         </button>
+                      </div>
+
+                      <!-- Preview List -->
+                      <div class="border-t border-slate-200 dark:border-slate-700 pt-3">
+                        <label class="block text-[10px] font-bold uppercase text-slate-400 mb-2">Preview List Bacaan</label>
+                        <div id="readPreviewList" class="space-y-2 max-h-40 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-300">
+                           <p class="text-center text-xs text-slate-400 italic py-2">Belum ada data bacaan.</p>
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
 
                   <div>
@@ -4292,6 +4336,127 @@
         }
     });
 
+    /* ===============================
+       LOGIC READING BUILDER (AUDIO)
+    ================================ */
+    let currentReadData = [];
+
+    // RENDER LIST
+    function renderReadList() {
+      const listEl = document.getElementById('readPreviewList');
+      const hiddenInput = document.getElementById('themeReadJson');
+      if(!listEl) return;
+
+      listEl.innerHTML = "";
+      
+      // Update hidden JSON
+      if(hiddenInput) hiddenInput.value = JSON.stringify(currentReadData);
+
+      if(currentReadData.length === 0) {
+        listEl.innerHTML = `<p class="text-center text-xs text-slate-400 italic py-2">Belum ada data bacaan.</p>`;
+        return;
+      }
+
+      currentReadData.forEach((item, idx) => {
+         const hasAudio = item.audio ? '🔊' : '🔇';
+         const div = document.createElement('div');
+         div.className = "flex items-center justify-between p-2 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700 text-xs";
+         div.innerHTML = `
+           <div class="flex-1 min-w-0 pr-2">
+             <div class="font-arab font-bold truncate text-right" dir="rtl">${item.ar || '-'}</div>
+             <div class="text-slate-500 truncate">${item.idn || '-'}</div>
+             <div class="text-[9px] text-blue-500 mt-0.5">${hasAudio} ${item.audio ? 'Audio Tersedia' : 'Tanpa Audio'}</div>
+           </div>
+           <button type="button" onclick="deleteReadItem(${idx})" class="p-1.5 text-red-500 hover:bg-red-50 rounded transition">
+             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+           </button>
+         `;
+         listEl.appendChild(div);
+      });
+    }
+
+    // DELETE ITEM
+    window.deleteReadItem = (idx) => {
+       if(confirm('Hapus item bacaan ini?')) {
+          currentReadData.splice(idx, 1);
+          renderReadList();
+       }
+    };
+
+    // ADD ITEM
+    document.getElementById('btnAddReadItem')?.addEventListener('click', async () => {
+       const ar = document.getElementById('readArInput').value.trim();
+       const idn = document.getElementById('readIdnInput').value.trim();
+       const fileInput = document.getElementById('readAudioInput');
+       const statusEl = document.getElementById('readAudioStatus');
+
+       if(!ar || !idn) {
+          return Swal.fire('Data Kurang', 'Teks Arab dan Terjemahan wajib diisi.', 'warning');
+       }
+       if(!fileInput.files[0]) {
+          return Swal.fire('Audio Wajib', 'Mohon upload file audio MP3 untuk bacaan ini.', 'warning');
+       }
+
+       // Upload Process
+       const file = fileInput.files[0];
+       
+       // Validate Theme ID presence (we need a theme folder)
+       let themeId = document.getElementById('themeId').value.trim();
+       if(!themeId) {
+          // If creating new, try to gen ID or use 'temp'
+          const title = document.getElementById('themeTitle').value.trim();
+          if(title) {
+             themeId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-'); 
+          } else {
+             themeId = 'temp-upload';
+          }
+       }
+
+       try {
+           statusEl.textContent = "⏳ Uploading...";
+           statusEl.classList.remove('hidden');
+           
+           const timestamp = Date.now();
+           const audioPath = `audio/${themeId}/${timestamp}.mp3`;
+           // Using global storageRef, storage, uploadBytes, getDownloadURL logic
+           const audioRef = storageRef(storage, audioPath);
+           
+           await uploadBytes(audioRef, file);
+           const audioUrl = await getDownloadURL(audioRef);
+           
+           // Success
+           currentReadData.push({
+              title: "Bacaan Audio", 
+              ar: ar,
+              idn: idn,
+              audio: audioUrl,
+              audioPath: audioPath 
+           });
+           
+           renderReadList();
+           
+           // Reset Inputs
+           document.getElementById('readArInput').value = "";
+           document.getElementById('readIdnInput').value = "";
+           fileInput.value = "";
+           statusEl.classList.add('hidden');
+           
+           Swal.fire({
+             toast: true,
+             position: 'top-end',
+             icon: 'success',
+             title: 'Berhasil ditambahkan',
+             showConfirmButton: false,
+             timer: 1500
+           });
+
+       } catch(e) {
+           console.error(e);
+           statusEl.textContent = "❌ Gagal Upload";
+           Swal.fire('Error', 'Gagal mengupload audio.', 'error');
+       }
+    });
+
     // SAVE LOGIC
     document.getElementById('btnSaveTheme')?.addEventListener('click', async () => {
        let idVal = document.getElementById('themeId').value.trim();
@@ -4390,6 +4555,17 @@
              // Ensure string format for JSON fields
              const safeStr = (val) => typeof val === 'object' ? JSON.stringify(val, null, 2) : (val || '');
              document.getElementById('themeVocabJson').value = safeStr(data.vocabData);
+             
+             // NEW: Load Read Data to Builder
+             try {
+                if (data.readData) {
+                   currentReadData = typeof data.readData === 'string' ? JSON.parse(data.readData) : data.readData;
+                } else {
+                   currentReadData = [];
+                }
+                renderReadList();
+             } catch(e) { console.error("Error loading read data", e); currentReadData = []; renderReadList(); }
+
              document.getElementById('themeReadJson').value = safeStr(data.readData);
              document.getElementById('themeQuizJson').value = safeStr(data.quizData);
              
@@ -4453,6 +4629,8 @@
        document.getElementById('themeVocabJson').value = '';
        document.getElementById('themeReadJson').value = '';
        document.getElementById('themeQuizJson').value = '';
+       currentReadData = [];
+       renderReadList();
     });
 
   </script>
