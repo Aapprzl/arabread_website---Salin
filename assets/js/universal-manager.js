@@ -490,18 +490,36 @@ export async function initQuizPage() {
       setText("questionText", qText);
       setText("arabicQuestion", arText); // Might be same as question if only AR provided
 
+      // RESOLVE CORRECT ANSWER (Letter -> Text)
+      // Database saves "A", "B", "C", "D". We need to find the text at that index.
+      let correctText = q.correct;
+      const letterMap = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
+      
+      if (q.options && letterMap.hasOwnProperty(q.correct)) {
+         const idx = letterMap[q.correct];
+         if (q.options[idx]) {
+            correctText = q.options[idx];
+         }
+      }
+
       const optionsContainer = document.getElementById("options");
       if (optionsContainer && opts.length > 0) {
         optionsContainer.innerHTML = opts
           .map(
-            (opt) => `
-              <button onclick="window.checkAnswer('${opt}', '${q.correct}', this)" 
-                class="quiz-opt w-full text-left bg-slate-50 dark:bg-slate-700/50 hover:bg-amber-50 dark:hover:bg-amber-900/20 
-                       border-2 border-slate-200 dark:border-slate-600 hover:border-amber-400 dark:hover:border-amber-500
-                       text-slate-700 dark:text-slate-200 font-bold p-4 rounded-xl transition-all">
-                ${opt}
-              </button>
-            `
+            (opt) => {
+               // Escape quotes for the onclick attribute
+               const safeOpt = opt.replace(/'/g, "\\'");
+               const safeCorrect = correctText.replace(/'/g, "\\'");
+               
+               return `
+               <button onclick="window.checkAnswer('${safeOpt}', '${safeCorrect}', this)" 
+                 class="quiz-opt w-full text-left bg-slate-50 dark:bg-slate-700/50 hover:bg-amber-50 dark:hover:bg-amber-900/20 
+                        border-2 border-slate-200 dark:border-slate-600 hover:border-amber-400 dark:hover:border-amber-500
+                        text-slate-700 dark:text-slate-200 font-bold text-xl font-arabic p-4 rounded-xl transition-all">
+                 ${opt}
+               </button>
+             `;
+            }
           )
           .join("");
       }

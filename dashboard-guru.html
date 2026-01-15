@@ -49,28 +49,121 @@
 
       <div class="flex items-center gap-3 md:gap-6">
 
-        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-lg border border-white/10">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-300"></span>
-          </span>
-          <span class="text-[10px] font-black uppercase tracking-widest text-emerald-50">Sistem Informasi Guru</span>
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-3 md:gap-6">
+            <div class="flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-lg border border-white/10">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-300"></span>
+              </span>
+              <span class="text-[10px] font-black uppercase tracking-widest text-emerald-50">Sistem Informasi Guru</span>
+            </div>
+
+            <a href="index.html"
+              class="text-[11px] md:text-sm font-bold bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl border border-white/20 transition-all active:scale-95">
+              Beranda
+            </a>
+
+            <button id="darkToggle" class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-xl 
+                   bg-white text-emerald-700 dark:bg-slate-800 dark:text-emerald-400
+                   transition-all active:scale-90 text-base shadow-sm hover:shadow-md" title="Ganti Tema">
+              🌙
+            </button>
         </div>
 
-        <a href="index.html"
-          class="text-[11px] md:text-sm font-bold bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl border border-white/20 transition-all active:scale-95">
-          Beranda
-        </a>
+        <!-- Mobile Menu Button -->
+        <div class="flex md:hidden items-center gap-2">
+            <a id="mobile-back-btn" href="index.html" class="flex items-center justify-center w-9 h-9 rounded-xl 
+                   bg-white/10 text-white border border-white/20
+                   transition-all active:scale-90 text-sm shadow-sm" title="Kembali">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </a>
+            <button id="darkToggleMobile" class="flex items-center justify-center w-9 h-9 rounded-xl 
+                   bg-white/10 text-white border border-white/20
+                   transition-all active:scale-90 text-sm shadow-sm">
+              🌙
+            </button>
+            <button id="mobile-menu-btn" class="hidden p-2 bg-white/10 rounded-xl border border-white/20 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
 
-        <button id="darkToggle" class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-xl 
-               bg-white text-emerald-700 dark:bg-slate-800 dark:text-emerald-400
-               transition-all active:scale-90 text-base shadow-sm hover:shadow-md" title="Ganti Tema">
-          🌙
-        </button>
       </div>
 
     </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 bg-emerald-800 dark:bg-slate-900">
+        <div class="p-4 space-y-2">
+            <button onclick="navToSection('materiSectionHeader', 'themeContent', 'toggleMateri')" class="block w-full text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold text-sm">
+                📚 Manajemen Materi (Upload)
+            </button>
+            <button onclick="navToSection('registerStudentHeader', 'registerStudentContent', 'toggleRegisterStudent')" class="block w-full text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold text-sm">
+                🎓 Daftarkan Siswa
+            </button>
+            <div class="h-px bg-white/10 my-2"></div>
+            <button id="btnLogoutMobile" class="block w-full text-left px-4 py-3 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-100 font-bold text-sm border border-red-500/30">
+                🚪 Keluar / Logout
+            </button>
+        </div>
+    </div>
   </header>
+
+  <script>
+      // Mobile Menu Toggle
+      const btnMob = document.getElementById('mobile-menu-btn');
+      const menuMob = document.getElementById('mobile-menu');
+      if(btnMob && menuMob){
+          btnMob.addEventListener('click', () => {
+              menuMob.classList.toggle('hidden');
+          });
+          // Auto close when clicking any button inside
+          menuMob.querySelectorAll("button").forEach(btn => {
+             btn.addEventListener("click", () => {
+                 menuMob.classList.add("hidden");
+             });
+          });
+      }
+      // Logout Mobile Proxy
+      document.getElementById('btnLogoutMobile')?.addEventListener('click', () => {
+          document.getElementById('btnLogout').click();
+      });
+      // Dark Toggle Mobile Proxy
+      document.getElementById('darkToggleMobile')?.addEventListener('click', () => {
+          document.getElementById('darkToggle').click();
+      });
+
+      // NAVIGATION HELPERS
+      window.smoothScrollTo = function(id) {
+          const el = document.getElementById(id);
+          if(!el) return;
+          const headerOffset = 100;
+          const elementPosition = el.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+          });
+      };
+
+      window.navToSection = function(headerId, contentId, toggleFn) {
+          const content = document.getElementById(contentId);
+          // Toggle if hidden
+          if(content && content.classList.contains('hidden')) {
+              if(typeof window[toggleFn] === 'function') {
+                  window[toggleFn]();
+              }
+          }
+          // Scroll to Header
+          setTimeout(() => {
+              window.smoothScrollTo(headerId);
+          }, 100);
+      };
+  </script>
 
   <script src="https://unpkg.com/feather-icons"></script>
   <script>
@@ -719,7 +812,8 @@
           <div class="w-full max-w-5xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
 
             <!-- Header -->
-            <div onclick="toggleMateri()" class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-900/50 dark:to-slate-800/50 flex items-center justify-between">
+            <!-- Header -->
+            <div id="materiSectionHeader" onclick="toggleMateri()" class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-900/50 dark:to-slate-800/50 flex items-center justify-between">
               <div class="flex items-center gap-3">
                 <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
@@ -780,8 +874,30 @@
                   <h4 class="font-bold text-slate-700 dark:text-white">Data Konten (Format JSON)</h4>
                   
                   <div>
-                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Data Kosakata (JSON Array)</label>
-                    <textarea id="themeVocabJson" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 font-mono text-xs outline-none focus:ring-2 focus:ring-blue-500" placeholder='[{"ar":"...","jamak":"...","arti":"..."}]'></textarea>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Data Kosakata (Builder)</label>
+                    <input type="hidden" id="themeVocabJson">
+                    
+                    <div class="bg-indigo-50 dark:bg-indigo-900/20 rounded-xl border border-indigo-100 dark:border-indigo-800 p-4">
+                       <div class="grid grid-cols-12 gap-2 mb-2">
+                          <div class="col-span-4">
+                             <input id="vocabArInput" class="w-full px-2 py-1.5 rounded border border-slate-300 dark:border-slate-600 font-arab text-right text-sm bg-white dark:bg-slate-800 dark:text-white" placeholder="Mufrod (Arab)" dir="rtl">
+                          </div>
+                          <div class="col-span-4">
+                             <input id="vocabJamakInput" class="w-full px-2 py-1.5 rounded border border-slate-300 dark:border-slate-600 font-arab text-right text-sm bg-white dark:bg-slate-800 dark:text-white" placeholder="Jamak (Opsional)" dir="rtl">
+                          </div>
+                          <div class="col-span-4">
+                             <input id="vocabIdnInput" class="w-full px-2 py-1.5 rounded border border-slate-300 dark:border-slate-600 text-sm bg-white dark:bg-slate-800 dark:text-white" placeholder="Arti (Indonesia)">
+                          </div>
+                       </div>
+                       <button type="button" id="btnAddVocabItem" class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs font-bold uppercase tracking-wider mb-2">+ Tambah Kosa Kata</button>
+                       
+                       <div class="border-t border-indigo-200 dark:border-indigo-800 pt-2">
+                          <label class="block text-[10px] font-bold uppercase text-indigo-400 mb-1">Preview List Kosakata</label>
+                          <div id="vocabPreviewList" class="space-y-1 max-h-40 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-indigo-200">
+                             <p class="text-center text-xs text-slate-400 italic py-2">Belum ada kosakata.</p>
+                          </div>
+                       </div>
+                    </div>
                   </div>
 
                   <div>
@@ -834,8 +950,39 @@
                   </div>
 
                   <div>
-                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Data Kuis (JSON Array)</label>
-                    <textarea id="themeQuizJson" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 font-mono text-xs outline-none focus:ring-2 focus:ring-blue-500" placeholder='[{"question":"...","correct":"...","options":[...]}]'></textarea>
+                    <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Data Kuis (Builder)</label>
+                    <input type="hidden" id="themeQuizJson">
+                    
+                    <div class="bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-100 dark:border-amber-800 p-4">
+                       <div class="space-y-2 mb-3">
+                          <input id="quizQuestionInput" class="w-full px-3 py-2 rounded border border-slate-300 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800 dark:text-white" placeholder="Pertanyaan Kuis">
+                          <input id="quizArInput" class="w-full px-3 py-2 rounded border border-slate-300 dark:border-slate-600 font-arab text-right text-lg bg-white dark:bg-slate-800 dark:text-white" placeholder="Teks Arab (Opsional)" dir="rtl">
+                          
+                          <div class="grid grid-cols-2 gap-2">
+                             <input id="optA" class="px-2 py-1.5 rounded border border-slate-300 dark:border-slate-600 text-sm bg-white dark:bg-slate-800 dark:text-white" placeholder="Opsi A">
+                             <input id="optB" class="px-2 py-1.5 rounded border border-slate-300 dark:border-slate-600 text-sm bg-white dark:bg-slate-800 dark:text-white" placeholder="Opsi B">
+                             <input id="optC" class="px-2 py-1.5 rounded border border-slate-300 dark:border-slate-600 text-sm bg-white dark:bg-slate-800 dark:text-white" placeholder="Opsi C">
+                             <input id="optD" class="px-2 py-1.5 rounded border border-slate-300 dark:border-slate-600 text-sm bg-white dark:bg-slate-800 dark:text-white" placeholder="Opsi D">
+                          </div>
+                          
+                          <select id="correctAnswer" class="w-full px-3 py-2 rounded border border-slate-300 dark:border-slate-600 text-sm font-bold bg-white dark:bg-slate-800 dark:text-white">
+                             <option value="" disabled selected>Pilih Kunci Jawaban...</option>
+                             <option value="A">Jawaban A</option>
+                             <option value="B">Jawaban B</option>
+                             <option value="C">Jawaban C</option>
+                             <option value="D">Jawaban D</option>
+                          </select>
+                       </div>
+                       
+                       <button type="button" id="btnAddQuizItem" class="w-full py-2 bg-amber-500 hover:bg-amber-600 text-white rounded font-bold text-xs uppercase tracking-wider mb-2 shadow-sm">+ Tambah Soal Kuis</button>
+                       
+                       <div class="border-t border-amber-200 dark:border-amber-800 pt-2">
+                          <label class="block text-[10px] font-bold uppercase text-amber-500 mb-1">Preview Soal Kuis</label>
+                          <div id="quizPreviewList" class="space-y-2 max-h-60 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-amber-200">
+                             <p class="text-center text-xs text-slate-400 italic py-2">Belum ada soal.</p>
+                          </div>
+                       </div>
+                    </div>
                   </div>
               </div>
 
@@ -1222,19 +1369,6 @@
                     </svg>
                     Sync Poin
                   </button>
-                  <button id="resetPoinBtn" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold
-                     bg-white border border-slate-300 text-slate-700 shadow-sm
-                     hover:bg-slate-50 hover:text-red-600 hover:border-red-200
-                     dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-600 dark:hover:text-red-400
-                     transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                      <path d="M3 3v5h5" />
-                    </svg>
-                    Reset Hari Ini
-                  </button>
-
                   <button id="resetPoinTotalBtn" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold
                      bg-red-50 text-red-600 border border-red-100
                      hover:bg-red-600 hover:text-white hover:border-red-600
@@ -1275,12 +1409,6 @@
                       <th class="px-6 py-4 whitespace-nowrap w-[20px]">No</th>
                       <th class="px-6 py-4 whitespace-nowrap min-w-[200px]">Nama Siswa</th>
                       <th class="px-6 py-4 whitespace-nowrap">Kelas</th>
-
-                      <th class="px-6 py-4 text-center whitespace-nowrap bg-blue-50/50 dark:bg-blue-900/10">
-                        <span class="flex items-center justify-center gap-1 text-blue-600 dark:text-blue-400">
-                          ⚡ Poin Aktif
-                        </span>
-                      </th>
 
                       <th class="px-6 py-4 text-center whitespace-nowrap bg-purple-50/50 dark:bg-purple-900/10">
                         <span class="flex items-center justify-center gap-1 text-purple-600 dark:text-purple-400">
@@ -1380,7 +1508,7 @@
           <div
             class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
 
-            <div onclick="toggleRegisterStudent()" class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/50">
+            <div id="registerStudentHeader" onclick="toggleRegisterStudent()" class="cursor-pointer px-6 py-5 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/50">
               <div class="flex items-center gap-3">
                 <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -2012,11 +2140,20 @@
     function showLogin() {
       loginSection.classList.remove("hidden");
       dashboardSection.classList.add("hidden");
+      
+      // Mobile Nav: Hide Hamburger, Show Back
+      document.getElementById("mobile-menu-btn")?.classList.add("hidden");
+      document.getElementById("mobile-back-btn")?.classList.remove("hidden");
+      document.getElementById("mobile-menu")?.classList.add("hidden");
     }
 
     function showDashboard() {
       loginSection.classList.add("hidden");
       dashboardSection.classList.remove("hidden");
+
+      // Mobile Nav: Show Hamburger, Hide Back
+      document.getElementById("mobile-menu-btn")?.classList.remove("hidden");
+      document.getElementById("mobile-back-btn")?.classList.add("hidden");
     }
 
     // ================= STATUS SISWA REALTIME =================
@@ -2587,10 +2724,8 @@
                   <td class="px-6 py-4 font-semibold text-slate-500">${no++}</td>
                   <td class="px-6 py-4 font-bold text-slate-800 dark:text-slate-200">${s.nama || '-'}</td>
                   <td class="px-6 py-4 font-bold text-emerald-600 dark:text-emerald-400">${s.kelas || '-'}</td>
-                  <td class="px-6 py-4 text-center">
-                     <span class="bg-indigo-100/50 text-indigo-600 px-2 py-1 rounded text-xs font-bold ring-1 ring-indigo-100">
-                        ${s.history.length} Game
-                     </span>
+                  <td class="px-6 py-4 text-center font-bold text-slate-800 dark:text-slate-200">
+                     ${s.history.length}
                   </td>
                   <td class="px-6 py-4 text-center font-bold text-slate-700 dark:text-slate-300">
                      ${totalSumScore}
@@ -2772,7 +2907,6 @@
         <td class="p-3 border font-bold">${no++}</td>
         <td class="p-3 border font-semibold">${s.nama}</td>
         <td class="p-3 border font-bold">${s.kelas}</td>
-        <td class="p-3 border text-center font-bold">-</td>
         <td class="p-3 border text-center font-bold">
           ${s.poinTotal ?? 0}
         </td>
@@ -2885,72 +3019,8 @@
 
 
 
-    // RESET POIN
-    const resetBtn = document.getElementById("resetPoinBtn");
-
-    resetBtn.addEventListener("click", async () => {
-      const result = await Swal.fire({
-        title: "Reset Poin Harian?",
-        html: "Yakin reset poin hari ini?<br><br><small class='text-slate-500'>✔ Poin aktif akan di-reset<br>✖ Total sepanjang waktu tetap</small>",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#f59e0b",
-        cancelButtonColor: "#64748b",
-        confirmButtonText: "Ya, Reset",
-        cancelButtonText: "Batal",
-        background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
-        color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
-        customClass: {
-          popup: 'rounded-[2rem]',
-          confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest',
-          cancelButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
-        }
-      });
-
-      if (!result.isConfirmed) return;
-
-      try {
-        const snapshot = await getDocs(collection(db, "users"));
-
-        for (const docSnap of snapshot.docs) {
-          const data = docSnap.data();
-
-          // hanya reset siswa
-          if (data.role === "student") {
-            await updateDoc(doc(db, "users", docSnap.id), {
-              poin: 0
-            });
-          }
-        }
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Berhasil!',
-          text: 'Poin harian berhasil di-reset.',
-          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
-          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
-          confirmButtonColor: '#10b981',
-          customClass: {
-            popup: 'rounded-[2rem]',
-            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
-          }
-        });
-      } catch (err) {
-        console.error(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Gagal',
-          text: 'Gagal reset poin.',
-          background: document.documentElement.classList.contains('dark') ? '#1e293b' : '#fff',
-          color: document.documentElement.classList.contains('dark') ? '#fff' : '#1e293b',
-          confirmButtonColor: '#ef4444',
-          customClass: {
-            popup: 'rounded-[2rem]',
-            confirmButton: 'rounded-xl px-6 py-2.5 font-bold uppercase tracking-widest'
-          }
-        });
-      }
-    });
+    // RESET POIN LOGIC REMOVED
+    // const resetBtn = document.getElementById("resetPoinBtn");
 
     // ================= RESET TOTAL POIN SEPANJANG WAKTU =================
     const resetTotalBtn = document.getElementById("resetPoinTotalBtn");
@@ -4337,6 +4407,144 @@
     });
 
     /* ===============================
+       LOGIC VOCAB BUILDER
+    ================================ */
+    let currentVocabData = [];
+
+    function renderVocabList() {
+      const listEl = document.getElementById('vocabPreviewList');
+      const hiddenInput = document.getElementById('themeVocabJson');
+      if(!listEl) return;
+
+      listEl.innerHTML = "";
+      if(hiddenInput) hiddenInput.value = JSON.stringify(currentVocabData);
+
+      if(currentVocabData.length === 0) {
+        listEl.innerHTML = `<p class="text-center text-xs text-slate-400 italic py-2">Belum ada kosakata.</p>`;
+        return;
+      }
+
+      currentVocabData.forEach((item, idx) => {
+         const div = document.createElement('div');
+         div.className = "flex items-center justify-between p-2 bg-white dark:bg-slate-800 rounded border border-indigo-100 dark:border-indigo-900 text-xs";
+         div.innerHTML = `
+           <div class="flex-1 min-w-0 pr-2">
+             <div class="font-arab font-bold truncate text-right text-indigo-700 dark:text-indigo-400" dir="rtl">${item.ar} ${item.jamak ? '('+item.jamak+')' : ''}</div>
+             <div class="text-slate-500 truncate">${item.arti || '-'}</div>
+           </div>
+           <button type="button" onclick="deleteVocabItem(${idx})" class="p-1.5 text-red-500 hover:bg-red-50 rounded transition">
+             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+           </button>
+         `;
+         listEl.appendChild(div);
+      });
+    }
+
+    window.deleteVocabItem = (idx) => {
+       if(confirm('Hapus kosakata ini?')) {
+          currentVocabData.splice(idx, 1);
+          renderVocabList();
+       }
+    };
+
+    document.getElementById('btnAddVocabItem')?.addEventListener('click', () => {
+       const ar = document.getElementById('vocabArInput').value.trim();
+       const jamak = document.getElementById('vocabJamakInput').value.trim();
+       const arti = document.getElementById('vocabIdnInput').value.trim();
+
+       if(!ar || !arti) return Swal.fire('Data Kurang', 'Mufrod Arab dan Arti wajib diisi!', 'warning');
+
+       currentVocabData.push({ ar, jamak, arti });
+       renderVocabList();
+       
+       // Clear Inputs
+       document.getElementById('vocabArInput').value = "";
+       document.getElementById('vocabJamakInput').value = "";
+       document.getElementById('vocabIdnInput').value = "";
+       document.getElementById('vocabArInput').focus();
+    });
+
+    /* ===============================
+       LOGIC QUIZ BUILDER
+    ================================ */
+    let currentQuizData = [];
+
+    function renderQuizList() {
+      const listEl = document.getElementById('quizPreviewList');
+      const hiddenInput = document.getElementById('themeQuizJson');
+      if(!listEl) return;
+
+      listEl.innerHTML = "";
+      if(hiddenInput) hiddenInput.value = JSON.stringify(currentQuizData);
+
+      if(currentQuizData.length === 0) {
+        listEl.innerHTML = `<p class="text-center text-xs text-slate-400 italic py-2">Belum ada soal.</p>`;
+        return;
+      }
+
+      currentQuizData.forEach((item, idx) => {
+         const div = document.createElement('div');
+         div.className = "p-2 bg-white dark:bg-slate-800 rounded border border-amber-100 dark:border-amber-900 text-xs mb-1";
+         div.innerHTML = `
+           <div class="flex justify-between items-start">
+             <div class="flex-1">
+                <span class="font-bold text-slate-800 dark:text-slate-200">Q: ${item.question}</span>
+                ${item.ar ? `<div class="font-arab text-right text-amber-600 dark:text-amber-500 my-1" dir="rtl">${item.ar}</div>` : ''}
+                <div class="grid grid-cols-2 gap-x-2 text-[10px] text-slate-500 mt-1">
+                   <span class="${item.correct==='A'?'font-bold text-green-600':''}">A. ${item.options[0]}</span>
+                   <span class="${item.correct==='B'?'font-bold text-green-600':''}">B. ${item.options[1]}</span>
+                   <span class="${item.correct==='C'?'font-bold text-green-600':''}">C. ${item.options[2]}</span>
+                   <span class="${item.correct==='D'?'font-bold text-green-600':''}">D. ${item.options[3]}</span>
+                </div>
+             </div>
+             <button type="button" onclick="deleteQuizItem(${idx})" class="text-red-500 hover:text-red-700 ml-2">❌</button>
+           </div>
+         `;
+         listEl.appendChild(div);
+      });
+    }
+
+    window.deleteQuizItem = (idx) => {
+       if(confirm('Hapus soal ini?')) {
+          currentQuizData.splice(idx, 1);
+          renderQuizList();
+       }
+    };
+
+    document.getElementById('btnAddQuizItem')?.addEventListener('click', () => {
+       const q = document.getElementById('quizQuestionInput').value.trim();
+       const ar = document.getElementById('quizArInput').value.trim();
+       const a = document.getElementById('optA').value.trim();
+       const b = document.getElementById('optB').value.trim();
+       const c = document.getElementById('optC').value.trim();
+       const d = document.getElementById('optD').value.trim();
+       const correct = document.getElementById('correctAnswer').value;
+
+       if(!q || !a || !b || !c || !d || !correct) {
+          return Swal.fire('Data Kurang', 'Semua form soal dan opsi jawaban wajib diisi!', 'warning');
+       }
+
+       currentQuizData.push({
+          question: q,
+          ar: ar, // Optional
+          options: [a, b, c, d],
+          correct: correct
+       });
+       
+       renderQuizList();
+       
+       // Clear Inputs
+       document.getElementById('quizQuestionInput').value = "";
+       document.getElementById('quizArInput').value = "";
+       document.getElementById('optA').value = "";
+       document.getElementById('optB').value = "";
+       document.getElementById('optC').value = "";
+       document.getElementById('optD').value = "";
+       document.getElementById('correctAnswer').value = "";
+       document.getElementById('quizQuestionInput').focus();
+    });
+
+    /* ===============================
        LOGIC READING BUILDER (AUDIO)
     ================================ */
     let currentReadData = [];
@@ -4554,6 +4762,17 @@
              
              // Ensure string format for JSON fields
              const safeStr = (val) => typeof val === 'object' ? JSON.stringify(val, null, 2) : (val || '');
+             // document.getElementById('themeVocabJson').value = safeStr(data.vocabData);
+             
+             // LOAD VOCAB DATA
+             try {
+                if (data.vocabData) {
+                   currentVocabData = typeof data.vocabData === 'string' ? JSON.parse(data.vocabData) : data.vocabData;
+                } else {
+                   currentVocabData = [];
+                }
+                renderVocabList();
+             } catch(e) { console.error("Error loading vocab data", e); currentVocabData = []; renderVocabList(); }
              document.getElementById('themeVocabJson').value = safeStr(data.vocabData);
              
              // NEW: Load Read Data to Builder
@@ -4567,6 +4786,17 @@
              } catch(e) { console.error("Error loading read data", e); currentReadData = []; renderReadList(); }
 
              document.getElementById('themeReadJson').value = safeStr(data.readData);
+             document.getElementById('themeReadJson').value = safeStr(data.readData);
+
+             // LOAD QUIZ DATA
+             try {
+                if (data.quizData) {
+                   currentQuizData = typeof data.quizData === 'string' ? JSON.parse(data.quizData) : data.quizData;
+                } else {
+                   currentQuizData = [];
+                }
+                renderQuizList();
+             } catch(e) { console.error("Error loading quiz data", e); currentQuizData = []; renderQuizList(); }
              document.getElementById('themeQuizJson').value = safeStr(data.quizData);
              
              document.getElementById('themeId').scrollIntoView({behavior: 'smooth'});
@@ -4631,6 +4861,10 @@
        document.getElementById('themeQuizJson').value = '';
        currentReadData = [];
        renderReadList();
+       currentVocabData = [];
+       renderVocabList();
+       currentQuizData = [];
+       renderQuizList();
     });
 
   </script>

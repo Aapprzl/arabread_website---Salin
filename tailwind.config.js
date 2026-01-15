@@ -53,8 +53,8 @@ module.exports = {
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-        arabic: ['"Amiri"', '"Scheherazade New"', 'serif'],
-        arab: ['"Amiri"', 'serif'], // Alias from grammar-basics
+        arabic: ['"Amiri"', 'serif'],
+        arab: ['"Amiri"', 'serif'],
       }
     },
   },
