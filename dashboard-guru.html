@@ -637,11 +637,15 @@
               <!-- Toolbar -->
               <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700 flex flex-wrap gap-3 justify-between items-center">
                 <div class="flex gap-2">
-                   <button onclick="openAddFlashcardModal()" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-indigo-500/20 transition-all">
-                     <i data-feather="plus" class="w-4 h-4"></i> Tambah Kartu
-                   </button>
+                   <!-- "Tambah Kartu" button removed in favor of inline input -->
+                   <div class="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-lg text-xs font-bold border border-indigo-100 dark:border-indigo-800">
+                     <i data-feather="info" class="w-3.5 h-3.5"></i> Input di tabel
+                   </div>
                    <button onclick="migrateVocabs()" id="btnMigrate" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all hidden">
                      <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Data Lama
+                   </button>
+                   <button onclick="resetFlashcards()" id="btnResetDefault" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-red-500/20 transition-all">
+                     <i data-feather="refresh-cw" class="w-4 h-4"></i> Reset Default
                    </button>
                 </div>
                 <div class="relative">
@@ -5270,7 +5274,7 @@
        ========================================= -->
   <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-      import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+      import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy, writeBatch, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
       
       console.log("Flashcard Module Loading...");
 
@@ -5291,105 +5295,204 @@
       /* -------------------------------------
          1. LOAD FLASHCARDS
          ------------------------------------- */
-      window.loadFlashcards = async () => {
+      /* -------------------------------------
+         1. LOAD & RENDER FLASHCARDS
+         ------------------------------------- */
+      window.allFlashcards = []; // Global State
+
+      /* -------------------------------------
+         1. LOAD & RENDER FLASHCARDS (REALTIME)
+         ------------------------------------- */
+      window.allFlashcards = []; // Global State
+      let unsubscribeFlashcards = null; // Listener Unsubscribe
+
+      window.loadFlashcards = () => {
          const table = document.getElementById('tableFlashcards');
          const counter = document.getElementById('flashcardCount');
          if(!table) return;
 
-         table.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-slate-400 italic">Memuat data...</td></tr>';
+         // Prevent multiple listeners
+         if (unsubscribeFlashcards) {
+             // If already listening, we don't need to do anything, OR we can just return.
+             // But if we want to ensure fresh start (rare), we could unsub.
+             // For now, let's just return if it's already active, BUT 
+             // toggleFlashcards calls this every time. So we should check if data is loaded?
+             // Better: always unsubscribe old and start new to be safe, or just keep one global listener that starts once.
+             // Let's go with: Unsubscribe previous if exists.
+             unsubscribeFlashcards();
+         }
 
-         try {
-             // Gunakan db dari import, bukan window.db
-             const q = query(collection(flashcardDb, "flashcards"), orderBy("id", "asc")); // Urutkan by Indonesia A-Z
-             const snap = await getDocs(q);
+         // Initial Loading State (only if array is empty to prevent flicker)
+         if (window.allFlashcards.length === 0) {
+            table.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-slate-400 italic">Memuat data realtime...</td></tr>';
+         }
+
+         const q = query(collection(flashcardDb, "flashcards"), orderBy("id", "asc"));
+         
+         unsubscribeFlashcards = onSnapshot(q, (snap) => {
+             window.allFlashcards = [];
+             snap.forEach(d => {
+                 window.allFlashcards.push({ docId: d.id, ...d.data() });
+             });
+
+             // Update UI
+             if(counter) counter.innerText = window.allFlashcards.length;
              
-             if(snap.empty) {
-                 table.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-slate-400 italic">Belum ada kartu flashcard.</td></tr>';
-                 if(counter) counter.innerText = '0';
-                 // Tampilkan tombol migrasi jika kosong
+             // Check Empty
+             if(window.allFlashcards.length === 0) {
                  document.getElementById('btnMigrate')?.classList.remove('hidden');
-                 return;
+             } else {
+                 document.getElementById('btnMigrate')?.classList.add('hidden');
              }
 
-             document.getElementById('btnMigrate')?.classList.add('hidden'); // Sembunyikan jika sudah ada data
-             if(counter) counter.innerText = snap.size;
+             // Apply Search Filter if input exists and has value
+             const searchVal = document.getElementById('searchFlashcard')?.value || '';
+             if (searchVal) {
+                 const term = searchVal.toLowerCase();
+                 const filtered = window.allFlashcards.filter(c => 
+                    (c.id && c.id.toLowerCase().includes(term)) || 
+                    (c.ar && c.ar.includes(term)) ||
+                    (c.tema && c.tema.toLowerCase().includes(term))
+                 );
+                 renderFlashcards(filtered);
+             } else {
+                 renderFlashcards(window.allFlashcards);
+             }
 
-             let html = '';
-             let no = 1;
-             snap.forEach(d => {
-                 const card = d.data();
-                 const idDoc = d.id;
-                 html += `
-                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
-                    <td class="px-6 py-4 font-bold text-slate-400">${no++}</td>
-                    <td class="px-6 py-4 text-right font-arab text-xl text-emerald-600 dark:text-emerald-400">${card.ar}</td>
-                    <td class="px-6 py-4 font-bold">${card.id}</td>
-                    <td class="px-6 py-4">
-                        <span class="px-2 py-1 text-[10px] font-bold uppercase bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-lg">
-                           ${card.tema || 'umum'}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <button onclick="deleteFlashcard('${idDoc}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors" title="Hapus">
-                           <i data-feather="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </td>
-                 </tr>
-                 `;
-             });
-             
-             table.innerHTML = html;
-             if(typeof feather !== 'undefined') feather.replace();
+         }, (error) => {
+             console.error("Flashcard Realtime Error:", error);
+             table.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-red-500 italic">Error: ${error.message}</td></tr>`;
+         });
+      };
 
-         } catch(e) {
-             console.error(e);
-             table.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-red-400 italic">Error: ${e.message}</td></tr>`;
-         }
+      // RENDER FUNCTION (Handles Filter & Inline Input)
+      window.renderFlashcards = (data) => {
+          const table = document.getElementById('tableFlashcards');
+          if(!table) return;
+
+          let html = '';
+
+          // 1️⃣ INPUT ROW (ALWAYS TOP)
+          html += `
+            <tr class="bg-indigo-50/50 dark:bg-indigo-900/10 border-b-2 border-indigo-100 dark:border-indigo-800/50">
+                <td class="px-6 py-4 text-center font-bold text-indigo-300">#</td>
+                <td class="px-6 py-4">
+                    <input type="text" id="inNewAr" dir="rtl" placeholder="Arab..." 
+                        class="w-full px-3 py-2 text-right rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none font-arab text-lg shadow-sm">
+                </td>
+                <td class="px-6 py-4">
+                    <input type="text" id="inNewId" placeholder="Indonesia..." 
+                        class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm">
+                </td>
+                <td class="px-6 py-4">
+                    <input type="text" id="inNewTema" placeholder="Tema (opsional)" 
+                        class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm">
+                </td>
+                <td class="px-6 py-4 text-center">
+                    <button onclick="addFlashcardInline()" class="p-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-md transition-all active:scale-95" title="Simpan">
+                        <i data-feather="check" class="w-4 h-4"></i>
+                    </button>
+                </td>
+            </tr>
+          `;
+
+          // 2️⃣ DATA ROWS
+          if(data.length === 0) {
+              html += `<tr><td colspan="5" class="text-center py-8 text-slate-400 italic">Tidak ada data ditemukan.</td></tr>`;
+          } else {
+              let no = 1;
+              data.forEach(card => {
+                  html += `
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group border-b border-slate-50 dark:border-slate-800">
+                     <td class="px-6 py-4 font-bold text-slate-400 text-xs">${no++}</td>
+                     <td class="px-6 py-4 text-right font-arab text-xl text-emerald-600 dark:text-emerald-400">${card.ar}</td>
+                     <td class="px-6 py-4 font-bold text-slate-700 dark:text-slate-200">${card.id}</td>
+                     <td class="px-6 py-4">
+                         <span class="px-2.5 py-1 text-[10px] font-bold uppercase bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-lg tracking-wider">
+                            ${card.tema || 'umum'}
+                         </span>
+                     </td>
+                     <td class="px-6 py-4 text-center">
+                         <button onclick="deleteFlashcard('${card.docId}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors" title="Hapus">
+                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                         </button>
+                     </td>
+                  </tr>
+                  `;
+              });
+          }
+
+          table.innerHTML = html;
+          if(typeof feather !== 'undefined') feather.replace();
+          
+          // Restore focus to Input ID if needed? No, standard behavior is fine.
       };
 
       /* -------------------------------------
-         2. ADD FLASHCARD
+         2. ADD FLASHCARD (INLINE)
          ------------------------------------- */
-      window.openAddFlashcardModal = async () => {
-          const { value: formValues } = await Swal.fire({
-              title: 'Tambah Kartu Baru',
-              html: `
-                <input id="swal-input1" class="swal2-input" placeholder="Bahasa Indonesia (Contoh: Buku)">
-                <input id="swal-input2" class="swal2-input text-right" dir="rtl" placeholder="Bahasa Arab (Contoh: كِتَابٌ)">
-                <input id="swal-input3" class="swal2-input" placeholder="Tema (Contoh: sekolah, rumah, profesi)">
-              `,
-              focusConfirm: false,
-              showCancelButton: true,
-              confirmButtonText: 'Simpan',
-              preConfirm: () => {
-                return [
-                  document.getElementById('swal-input1').value,
-                  document.getElementById('swal-input2').value,
-                  document.getElementById('swal-input3').value
-                ]
-              }
-            });
+      window.addFlashcardInline = async () => {
+          const inAr = document.getElementById('inNewAr');
+          const inId = document.getElementById('inNewId');
+          const inTema = document.getElementById('inNewTema');
 
-            if (formValues) {
-                const [ind, arb, tem] = formValues;
-                if(!ind || !arb) {
-                    return Swal.fire('Gagal', 'Indonesia dan Arab wajib diisi', 'error');
-                }
+          const valAr = inAr.value.trim();
+          const valId = inId.value.trim();
+          const valTema = inTema.value.trim();
 
-                try {
-                    await addDoc(collection(flashcardDb, "flashcards"), {
-                        id: ind,
-                        ar: arb,
-                        tema: tem || 'umum',
-                        createdAt: new Date().toISOString()
-                    });
-                    Swal.fire('Berhasil', 'Kartu ditambahkan', 'success');
-                    window.loadFlashcards();
-                } catch(e) {
-                    Swal.fire('Error', e.message, 'error');
-                }
-            }
+          if(!valAr || !valId) {
+             return Swal.fire({
+                 toast: true,
+                 position: 'top-end',
+                 icon: 'error',
+                 title: 'Harap isi Arab & Indonesia',
+                 showConfirmButton: false,
+                 timer: 3000
+             });
+          }
+
+          try {
+              // Add to Firestore - Listener will handle UI update!
+              await addDoc(collection(flashcardDb, "flashcards"), {
+                  id: valId,
+                  ar: valAr,
+                  tema: valTema || 'umum',
+                  createdAt: new Date().toISOString()
+              });
+
+              // Clear Inputs immediately
+              inAr.value = '';
+              inId.value = '';
+              inTema.value = '';
+              inAr.focus(); 
+
+              Swal.fire({
+                 toast: true,
+                 position: 'top-end',
+                 icon: 'success',
+                 title: 'Kartu ditambahkan',
+                 showConfirmButton: false,
+                 timer: 1500
+             });
+
+          } catch(e) {
+              console.error(e);
+              Swal.fire('Error', e.message, 'error');
+          }
       };
+
+      /* -------------------------------------
+         SEARCH LISTENER
+         ------------------------------------- */
+      document.getElementById('searchFlashcard')?.addEventListener('input', (e) => {
+          const term = e.target.value.toLowerCase();
+          const filtered = window.allFlashcards.filter(c => 
+             (c.id && c.id.toLowerCase().includes(term)) || 
+             (c.ar && c.ar.includes(term)) ||
+             (c.tema && c.tema.toLowerCase().includes(term))
+          );
+          renderFlashcards(filtered);
+      });
 
       /* -------------------------------------
          3. DELETE FLASHCARD
@@ -5406,9 +5509,15 @@
 
           if(res.isConfirmed) {
               try {
+                  // Listener will handle UI update
                   await deleteDoc(doc(flashcardDb, "flashcards", docId));
-                  Swal.fire('Terhapus', 'Kartu berhasil dihapus', 'success');
-                  window.loadFlashcards();
+                  Swal.fire({
+                      title: 'Terhapus',
+                      text: 'Kartu berhasil dihapus',
+                      icon: 'success',
+                      timer: 1000,
+                      showConfirmButton: false
+                  });
               } catch(e) {
                   Swal.fire('Gagal', e.message, 'error');
               }
@@ -5468,6 +5577,110 @@
                           Swal.fire('Error', e.message, 'error');
                       }
                   }
+              });
+          }
+      };
+
+      /* -------------------------------------
+         5. RESET FLASHCARDS (DEFAULT 20)
+         ------------------------------------- */
+      window.resetFlashcards = async () => {
+          const result = await Swal.fire({
+              title: 'Reset ke Default?',
+              text: "PERINGATAN: Semua flashcard yang ada akan DIHAPUS dan digantikan dengan 20 kata dasar. Tindakan ini tidak bisa dibatalkan!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#d33',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Ya, Reset Data!',
+              cancelButtonText: 'Batal'
+          });
+
+          if (!result.isConfirmed) return;
+
+          Swal.fire({
+              title: 'Sedang Mereset...',
+              text: 'Menghapus data lama dan mengupload data baru...',
+              allowOutsideClick: false,
+              didOpen: () => {
+                  Swal.showLoading();
+              }
+          });
+
+          try {
+              // 1. DELETE ALL EXISTING CARDS
+              const allDocsSnapshot = await getDocs(collection(flashcardDb, "flashcards"));
+              
+              const deleteBatch = writeBatch(flashcardDb);
+              let deleteCount = 0;
+              
+              allDocsSnapshot.forEach((doc) => {
+                  deleteBatch.delete(doc.ref);
+                  deleteCount++;
+              });
+
+              if (deleteCount > 0) {
+                  await deleteBatch.commit();
+                  console.log(`Deleted ${deleteCount} existing cards.`);
+              }
+
+              // 2. SEED DEFAULT DATA (20 ITEMS)
+              const defaultVocabs = [
+                  { id: "Buku", ar: "كِتَابٌ", tema: "umum" },
+                  { id: "Pena", ar: "قَلَمٌ", tema: "umum" },
+                  { id: "Sekolah", ar: "مَدْرَسَةٌ", tema: "umum" },
+                  { id: "Guru", ar: "مُدَرِّسٌ", tema: "umum" },
+                  { id: "Murid", ar: "تِلْمِيْذٌ", tema: "umum" },
+                  { id: "Kelas", ar: "فَصْلٌ", tema: "umum" },
+                  { id: "Tas", ar: "حَقِيْبَةٌ", tema: "umum" },
+                  { id: "Papan Tulis", ar: "سَبُّوْرَةٌ", tema: "umum" },
+                  { id: "Meja", ar: "مَكْتَبٌ", tema: "umum" },
+                  { id: "Kursi", ar: "كُرْسِيٌّ", tema: "umum" },
+                  { id: "Pintu", ar: "بَابٌ", tema: "umum" },
+                  { id: "Jendela", ar: "نَافِذَةٌ", tema: "umum" },
+                  { id: "Rumah", ar: "بَيْتٌ", tema: "umum" },
+                  { id: "Jalan", ar: "شَارِعٌ", tema: "umum" },
+                  { id: "Mobil", ar: "سَيَّارَةٌ", tema: "umum" },
+                  { id: "Masjid", ar: "مَسْجِدٌ", tema: "umum" },
+                  { id: "Air", ar: "مَاءٌ", tema: "umum" },
+                  { id: "Roti", ar: "خُبْزٌ", tema: "umum" },
+                  { id: "Baju", ar: "ثَوْبٌ", tema: "umum" },
+                  { id: "Waktu", ar: "وَقْتٌ", tema: "umum" }
+              ];
+
+              const addBatch = writeBatch(flashcardDb);
+              
+              defaultVocabs.forEach((v) => {
+                  const ref = doc(collection(flashcardDb, "flashcards")); // Auto-ID
+                  addBatch.set(ref, {
+                      id: v.id,
+                      ar: v.ar,
+                      tema: v.tema,
+                      createdAt: new Date().toISOString(),
+                      isDefault: true
+                  });
+              });
+
+              await addBatch.commit();
+
+              await addBatch.commit();
+
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Reset Berhasil!',
+                  text: 'Data flashcard telah dikembalikan ke 20 kata dasar.',
+                  timer: 2000,
+                  showConfirmButton: false
+              });
+
+              // window.loadFlashcards(); // Not needed, listener is active!
+
+          } catch (error) {
+              console.error("Reset Failed:", error);
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Gagal Reset',
+                  text: error.message
               });
           }
       };

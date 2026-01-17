@@ -1,11 +1,8 @@
 // assets/js/firebase-config.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-// ... (existing code)
-
-// Export common firestore functions for convenience
-export { collection, getDocs, query, where, orderBy };
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
@@ -15,10 +12,7 @@ const firebaseConfig = {
   storageBucket: "tarbiyyat-lughah-presence.firebasestorage.app",
 };
 
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
 const app = initializeApp(firebaseConfig);
-import { getDatabase } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const rtdb = getDatabase(app);
