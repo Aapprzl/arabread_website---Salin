@@ -377,7 +377,20 @@
 </head>
 
 <body
-  class="min-h-screen flex flex-col font-sans antialiased text-slate-700 dark:text-slate-100 selection:bg-amber-300 selection:text-amber-900 overflow-x-hidden bg-slate-50 dark:bg-slate-900">
+  class="min-h-screen flex flex-col font-sans antialiased text-slate-700 dark:text-slate-100 selection:bg-amber-300 selection:text-amber-900 overflow-x-hidden bg-slate-50 dark:bg-slate-900 relative">
+
+  <!-- BACKGROUND GLOBAL (FIXED) -->
+  <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+    <!-- Teal Blob (Top Left) -->
+    <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-teal-500/10 rounded-full blur-[100px] animate-pulse">
+    </div>
+    <!-- Cyan Blob (Bottom Right) -->
+    <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-500/10 rounded-full blur-[100px] animate-pulse" style="animation-delay: 2s;">
+    </div>
+    <!-- Additional Center Blob for extra vibes -->
+    <div class="absolute top-[40%] left-[30%] w-[40%] h-[40%] bg-blue-500/5 rounded-full blur-[120px] animate-pulse" style="animation-delay: 4s;">
+    </div>
+  </div>
 
   <!-- Header -->
   <header
@@ -506,13 +519,7 @@
 
 
   <!-- HERO MINIMAL – TARBIYYAT AL-LUGHAH -->
-  <section class="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-950 py-16 md:py-24">
-
-    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-teal-500/20 rounded-full blur-[120px] animate-pulse">
-    </div>
-    <div
-      class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-cyan-500/20 rounded-full blur-[120px] animate-pulse">
-    </div>
+  <section class="relative w-full overflow-hidden bg-transparent py-16 md:py-24 z-10">
 
     <div class="relative max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
@@ -1213,12 +1220,9 @@
 
 
   <!-- Materi -->
-  <main id="materi" class="scroll-mt-32 w-full py-16 md:py-24 relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/50">
-    <!-- Dekorasi Latar Belakang -->
-    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-30 dark:opacity-20">
-      <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary-200 dark:bg-primary-900/30 rounded-full blur-[100px]"></div>
-      <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-teal-200 dark:bg-teal-900/30 rounded-full blur-[100px]"></div>
-    </div>
+  <main id="materi" class="scroll-mt-32 w-full py-16 md:py-24 relative overflow-hidden bg-transparent">
+    <!-- Dekorasi Latar Belakang (Dihapus untuk Global BG) -->
+
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 relative">
       <div class="bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl rounded-[2.5rem] md:rounded-[4rem] p-6 md:p-16 border border-white/60 dark:border-slate-700/50 shadow-2xl shadow-primary-900/5 dark:shadow-black/20">
@@ -1612,7 +1616,7 @@
   </section>
 
   <!-- Footer -->
-  <footer class="relative bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 transition-colors pt-16 pb-8">
+  <footer class="relative bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 transition-colors pt-16 pb-8">
     <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-teal-600 via-cyan-500 to-teal-500 opacity-80"></div>
 
     <div class="max-w-7xl mx-auto px-6">
