@@ -2,6 +2,7 @@
 <html lang="id" dir="ltr">
 
 <script src="assets/theme.js"></script>
+<script src="assets/data/vocabs.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
@@ -598,6 +599,94 @@
           </script>
         </div>
 
+
+
+        <!-- ===============================
+             JOKER CARD: MANAJEMEN FLASHCARDS
+        =============================== -->
+        <div class="mb-12 px-1 max-w-5xl mx-auto">
+          <div class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            
+            <div onclick="toggleFlashcards()" class="cursor-pointer px-6 py-5 border-b border-transparent hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex items-center justify-between bg-white dark:bg-slate-800">
+               <div class="flex items-center gap-3">
+                 <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
+                   <i data-feather="layers" class="w-6 h-6"></i>
+                 </div>
+                 <div>
+                   <h3 class="text-xl font-bold text-slate-800 dark:text-white select-none">
+                     Manajemen Flashcards
+                   </h3>
+                   <p class="text-xs text-slate-400 dark:text-slate-500 select-none">
+                     Kelola kosakata untuk game interaktif.
+                   </p>
+                 </div>
+               </div>
+               
+               <div class="flex items-center gap-2">
+                 <span id="flashcardCount" class="text-xs bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 px-2 py-0.5 rounded-full font-bold">0</span>
+                 <svg id="flashcardChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
+                      stroke-width="2.5" stroke="currentColor" 
+                      class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                 </svg>
+               </div>
+            </div>
+
+            <div id="flashcardContent" class="hidden">
+              
+              <!-- Toolbar -->
+              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700 flex flex-wrap gap-3 justify-between items-center">
+                <div class="flex gap-2">
+                   <button onclick="openAddFlashcardModal()" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-indigo-500/20 transition-all">
+                     <i data-feather="plus" class="w-4 h-4"></i> Tambah Kartu
+                   </button>
+                   <button onclick="migrateVocabs()" id="btnMigrate" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all hidden">
+                     <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Data Lama
+                   </button>
+                </div>
+                <div class="relative">
+                  <input type="text" id="searchFlashcard" placeholder="Cari kata..." 
+                         class="pl-9 pr-4 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none w-48">
+                  <i data-feather="search" class="w-4 h-4 absolute left-3 top-2.5 text-slate-400"></i>
+                </div>
+              </div>
+
+              <!-- Table -->
+              <div class="overflow-x-auto w-full max-h-[500px] overflow-y-auto scrollbar-thin">
+                <table class="w-full text-sm text-left">
+                  <thead class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
+                    <tr>
+                      <th class="px-6 py-4">No</th>
+                      <th class="px-6 py-4 text-right">Arab</th>
+                      <th class="px-6 py-4">Indonesia</th>
+                      <th class="px-6 py-4">Tema</th>
+                      <th class="px-6 py-4 text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableFlashcards" class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                     <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <script>
+            function toggleFlashcards() {
+              const content = document.getElementById("flashcardContent");
+              const chevron = document.getElementById("flashcardChevron");
+              if (!content || !chevron) return;
+              content.classList.toggle("hidden");
+              if (content.classList.contains("hidden")) {
+                chevron.classList.add("-rotate-90");
+              } else {
+                chevron.classList.remove("-rotate-90");
+                loadFlashcards(); // Load data when opened
+              }
+            }
+        </script>
 
         <!-- TEMPAT DISKUSI -->
 
@@ -5174,6 +5263,216 @@
   </script>
 
 
+
+
+  <!-- =========================================
+       FLASHCARD LOGIC
+       ========================================= -->
+  <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+      import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+      
+      console.log("Flashcard Module Loading...");
+
+      // Config (Inline to ensure reliability)
+      const flashcardConfig = {
+        apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
+        authDomain: "tarbiyyat-lughah-presence.firebaseapp.com",
+        projectId: "tarbiyyat-lughah-presence",
+        databaseURL: "https://tarbiyyat-lughah-presence-default-rtdb.asia-southeast1.firebasedatabase.app",
+        storageBucket: "tarbiyyat-lughah-presence.firebasestorage.app",
+      };
+
+      const flashcardApp = initializeApp(flashcardConfig);
+      const flashcardDb = getFirestore(flashcardApp);
+      
+      console.log("Flashcard Database Initialized:", flashcardDb);
+
+      /* -------------------------------------
+         1. LOAD FLASHCARDS
+         ------------------------------------- */
+      window.loadFlashcards = async () => {
+         const table = document.getElementById('tableFlashcards');
+         const counter = document.getElementById('flashcardCount');
+         if(!table) return;
+
+         table.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-slate-400 italic">Memuat data...</td></tr>';
+
+         try {
+             // Gunakan db dari import, bukan window.db
+             const q = query(collection(flashcardDb, "flashcards"), orderBy("id", "asc")); // Urutkan by Indonesia A-Z
+             const snap = await getDocs(q);
+             
+             if(snap.empty) {
+                 table.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-slate-400 italic">Belum ada kartu flashcard.</td></tr>';
+                 if(counter) counter.innerText = '0';
+                 // Tampilkan tombol migrasi jika kosong
+                 document.getElementById('btnMigrate')?.classList.remove('hidden');
+                 return;
+             }
+
+             document.getElementById('btnMigrate')?.classList.add('hidden'); // Sembunyikan jika sudah ada data
+             if(counter) counter.innerText = snap.size;
+
+             let html = '';
+             let no = 1;
+             snap.forEach(d => {
+                 const card = d.data();
+                 const idDoc = d.id;
+                 html += `
+                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
+                    <td class="px-6 py-4 font-bold text-slate-400">${no++}</td>
+                    <td class="px-6 py-4 text-right font-arab text-xl text-emerald-600 dark:text-emerald-400">${card.ar}</td>
+                    <td class="px-6 py-4 font-bold">${card.id}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 text-[10px] font-bold uppercase bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-lg">
+                           ${card.tema || 'umum'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button onclick="deleteFlashcard('${idDoc}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors" title="Hapus">
+                           <i data-feather="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </td>
+                 </tr>
+                 `;
+             });
+             
+             table.innerHTML = html;
+             if(typeof feather !== 'undefined') feather.replace();
+
+         } catch(e) {
+             console.error(e);
+             table.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-red-400 italic">Error: ${e.message}</td></tr>`;
+         }
+      };
+
+      /* -------------------------------------
+         2. ADD FLASHCARD
+         ------------------------------------- */
+      window.openAddFlashcardModal = async () => {
+          const { value: formValues } = await Swal.fire({
+              title: 'Tambah Kartu Baru',
+              html: `
+                <input id="swal-input1" class="swal2-input" placeholder="Bahasa Indonesia (Contoh: Buku)">
+                <input id="swal-input2" class="swal2-input text-right" dir="rtl" placeholder="Bahasa Arab (Contoh: كِتَابٌ)">
+                <input id="swal-input3" class="swal2-input" placeholder="Tema (Contoh: sekolah, rumah, profesi)">
+              `,
+              focusConfirm: false,
+              showCancelButton: true,
+              confirmButtonText: 'Simpan',
+              preConfirm: () => {
+                return [
+                  document.getElementById('swal-input1').value,
+                  document.getElementById('swal-input2').value,
+                  document.getElementById('swal-input3').value
+                ]
+              }
+            });
+
+            if (formValues) {
+                const [ind, arb, tem] = formValues;
+                if(!ind || !arb) {
+                    return Swal.fire('Gagal', 'Indonesia dan Arab wajib diisi', 'error');
+                }
+
+                try {
+                    await addDoc(collection(flashcardDb, "flashcards"), {
+                        id: ind,
+                        ar: arb,
+                        tema: tem || 'umum',
+                        createdAt: new Date().toISOString()
+                    });
+                    Swal.fire('Berhasil', 'Kartu ditambahkan', 'success');
+                    window.loadFlashcards();
+                } catch(e) {
+                    Swal.fire('Error', e.message, 'error');
+                }
+            }
+      };
+
+      /* -------------------------------------
+         3. DELETE FLASHCARD
+         ------------------------------------- */
+      window.deleteFlashcard = async (docId) => {
+          const res = await Swal.fire({
+              title: 'Hapus Kartu?',
+              text: "Data tidak bisa dikembalikan",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#d33',
+              confirmButtonText: 'Ya, Hapus'
+          });
+
+          if(res.isConfirmed) {
+              try {
+                  await deleteDoc(doc(flashcardDb, "flashcards", docId));
+                  Swal.fire('Terhapus', 'Kartu berhasil dihapus', 'success');
+                  window.loadFlashcards();
+              } catch(e) {
+                  Swal.fire('Gagal', e.message, 'error');
+              }
+          }
+      };
+
+      /* -------------------------------------
+         4. MIGRATE UTILITY
+         ------------------------------------- */
+      window.migrateVocabs = async () => {
+          if(!window.VOCABS || !window.VOCABS.length) {
+              return Swal.fire('Info', 'Tidak ada data window.VOCABS ditemukan (file js belum load?)', 'info');
+          }
+
+          const res = await Swal.fire({
+              title: `Migrasi ${window.VOCABS.length} Data?`,
+              text: "Ini akan menyalin data dari file statis ke Database. Lakukan hanya sekali.",
+              icon: 'info',
+              showCancelButton: true,
+              confirmButtonText: 'Mulai Migrasi'
+          });
+
+          if(res.isConfirmed) {
+              Swal.fire({
+                  title: 'Sedang Memproses...',
+                  didOpen: async () => {
+                      Swal.showLoading();
+                      try {
+                          const batch = writeBatch(flashcardDb);
+                          let count = 0;
+                          
+                          // Firestore batch limit is 500. We might need chunks if > 500.
+                          // But VOCABS seems small (<100).
+                          
+                          const colRef = collection(flashcardDb, "flashcards");
+                          
+                          for(const v of window.VOCABS) {
+                              // Gunakan ID unik dari kombinasi theme + ind untuk mencegah duplikat simpel
+                              // Tapi addDoc lebih aman untuk batch.
+                              // Kita pakai doc ref random saja
+                              const ref = doc(colRef); 
+                              batch.set(ref, {
+                                  id: v.id,
+                                  ar: v.ar,
+                                  tema: v.tema || 'umum',
+                                  migratedAt: new Date().toISOString()
+                              });
+                              count++;
+                          }
+
+                          await batch.commit();
+                          Swal.fire('Selesai!', `${count} data berhasil dimigrasi.`, 'success');
+                          window.loadFlashcards();
+
+                      } catch(e) {
+                          console.error(e);
+                          Swal.fire('Error', e.message, 'error');
+                      }
+                  }
+              });
+          }
+      };
+
+  </script>
 
   <!-- JS DARK MODE -->
   <script>

@@ -1,6 +1,11 @@
 // assets/js/firebase-config.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+// ... (existing code)
+
+// Export common firestore functions for convenience
+export { collection, getDocs, query, where, orderBy };
 
 const firebaseConfig = {
   apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
@@ -19,4 +24,4 @@ export const auth = getAuth(app);
 export const rtdb = getDatabase(app);
 
 // Export common firestore functions for convenience
-export { collection, getDocs };
+export { collection, getDocs, query, where, orderBy };

@@ -1844,8 +1844,25 @@
   </script>
 
   <!-- JS UNTUK LOGIKA KARTU FLIP KOSAKATA -->
-  <script>
-    (() => {
+
+  
+  <script type="module">
+     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+
+     // Config Firebase (Publik/Client)
+     const flashcardConfig = {
+      apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
+      authDomain: "tarbiyyat-lughah-presence.firebaseapp.com",
+      projectId: "tarbiyyat-lughah-presence",
+      databaseURL: "https://tarbiyyat-lughah-presence-default-rtdb.asia-southeast1.firebasedatabase.app",
+      storageBucket: "tarbiyyat-lughah-presence.firebasestorage.app",
+     };
+
+     const flashcardApp = initializeApp(flashcardConfig);
+     const flashcardDb = getFirestore(flashcardApp);
+
+    (async () => {
       /* =====================
          GUARD DOM
       ===================== */
@@ -1856,24 +1873,38 @@
       const modeID = document.getElementById('mode-id');
 
       if (!grid || !btnSh || !btnRs || !modeAR || !modeID) {
-        console.warn('Flip vocab: elemen DOM tidak lengkap');
         return;
       }
 
       /* =====================
          AMBIL DATA
       ===================== */
-      const fromQuestions = (window.QUESTIONS || [])
-        .map(q => ({ ar: q?.ar, id: q?.id }))
-        .filter(x => typeof x?.ar === 'string' && typeof x?.id === 'string');
+      let raw = [];
+      grid.innerHTML = '<div class="col-span-full text-center py-10 opacity-50"><p>⏳ Mengambil kartu...</p></div>';
 
-      const raw = ((window.VOCABS || []).concat(fromQuestions))
-        .filter(v => typeof v?.ar === 'string' && typeof v?.id === 'string');
+      try {
+          const snap = await getDocs(collection(flashcardDb, "flashcards"));
+          if(!snap.empty) {
+              snap.forEach(d => raw.push(d.data()));
+          } else {
+              // Fallback ke data statis jika DB kosong (misal belum migrasi)
+              if(window.VOCABS) {
+                  raw = window.VOCABS;
+                  console.log("Fallback to static VOCABS");
+              }
+          }
+      } catch(e) {
+          console.error("Gagal load flashcards:", e);
+          if(window.VOCABS) raw = window.VOCABS; // Fallback
+      }
 
-      // deduplikasi ar|id
+      // Filter valid data
       const uniq = [];
       const seen = new Set();
-      for (const v of raw) {
+      
+      const cleanRaw = raw.filter(v => typeof v?.ar === 'string' && typeof v?.id === 'string');
+
+      for (const v of cleanRaw) {
         const key = `${v.ar}|${v.id}`;
         if (!seen.has(key)) {
           seen.add(key);
@@ -1882,7 +1913,7 @@
       }
 
       if (!uniq.length) {
-        console.warn('Flip vocab: bank kosakata kosong');
+        grid.innerHTML = '<div class="col-span-full text-center py-10 opacity-50"><p>❌ Tidak ada data kartu.</p></div>';
         return;
       }
 

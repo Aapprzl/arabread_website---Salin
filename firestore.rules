@@ -39,6 +39,11 @@ service cloud.firestore {
       allow write: if isGuru();
     }
 
+    match /flashcards/{cardId} {
+      allow read: if true;
+      allow write: if isGuru();
+    }
+
     match /themes/{themeId} {
       allow read: if true;
       allow write: if isGuru();

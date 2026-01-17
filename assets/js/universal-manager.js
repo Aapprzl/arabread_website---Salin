@@ -1,4 +1,5 @@
 import { THEME_REGISTRY, fetchThemes } from "./content-registry.js";
+import { db, collection, query, where, getDocs } from "./firebase-config.js";
 
 // ==========================================
 // UNIVERSAL ENGINE
@@ -40,19 +41,35 @@ export async function initVocabPage() {
         ? JSON.parse(CURRENT_THEME.vocabData)
         : CURRENT_THEME.vocabData || [];
   } else {
-    // Legacy support for window.VOCABS
-    if (!window.VOCABS) {
-      try {
-        await loadScript("assets/js/vocabs.js");
-      } catch (e) {
-        console.warn("Failed to load local vocabs", e);
-      }
+    // 1. Try Fetching from FLASHCARDS collection (New System)
+    let firestoreVocabs = [];
+    try {
+       // Filter by tema. Jika tema tidak ketemu, mungkin perlu filter 'vocabFilter' dari registry
+       const filterKey = CURRENT_THEME.vocabFilter || THEME_ID;
+       const q = query(collection(db, "flashcards"), where("tema", "==", filterKey));
+       const snap = await getDocs(q);
+       snap.forEach(d => firestoreVocabs.push(d.data()));
+    } catch(e) {
+       console.warn("Firestore vocab fetch error:", e);
     }
 
-    if (window.VOCABS) {
-      data = window.VOCABS.filter(
-        (v) => v.tema === CURRENT_THEME.vocabFilter || v.tema === THEME_ID
-      );
+    if (firestoreVocabs.length > 0) {
+       data = firestoreVocabs;
+    } else {
+        // 2. Legacy support for window.VOCABS
+        if (!window.VOCABS) {
+          try {
+            await loadScript("assets/js/vocabs.js");
+          } catch (e) {
+            console.warn("Failed to load local vocabs", e);
+          }
+        }
+
+        if (window.VOCABS) {
+          data = window.VOCABS.filter(
+            (v) => v.tema === CURRENT_THEME.vocabFilter || v.tema === THEME_ID
+          );
+        }
     }
   }
 
