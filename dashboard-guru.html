@@ -633,43 +633,65 @@
 
             <div id="flashcardContent" class="hidden">
               
-              <!-- Toolbar -->
-              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700 flex flex-wrap gap-3 justify-between items-center">
-                <div class="flex gap-2">
-                   <!-- "Tambah Kartu" button removed in favor of inline input -->
-                   <div class="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-lg text-xs font-bold border border-indigo-100 dark:border-indigo-800">
-                     <i data-feather="info" class="w-3.5 h-3.5"></i> Input di tabel
+              <!-- Toolbar & Input Form -->
+              <div class="p-4 md:p-6 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700 space-y-4">
+                
+                <!-- Utilities Row -->
+                <div class="flex flex-wrap gap-3 justify-between items-center">
+                  <div class="flex gap-2">
+                     <button onclick="migrateVocabs()" id="btnMigrate" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all">
+                       <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Data Lama
+                     </button>
+                  </div>
+                  <div class="relative w-full md:w-auto">
+                    <input type="text" id="searchFlashcard" placeholder="Cari kata..." 
+                           class="pl-9 pr-4 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none w-full md:w-48 shadow-sm">
+                    <i data-feather="search" class="w-4 h-4 absolute left-3 top-2.5 text-slate-400"></i>
+                  </div>
+                </div>
+
+                <!-- Input Form Row -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-indigo-100 dark:border-indigo-900/30 shadow-sm">
+                   <h4 class="text-xs font-bold uppercase text-indigo-500 mb-3 tracking-wider flex items-center gap-2">
+                     <i data-feather="plus-circle" class="w-3.5 h-3.5"></i> Tambah Kosakata Baru
+                   </h4>
+                   <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_0.8fr_auto] gap-3 items-end">
+                      
+                      <!-- Input Arab -->
+                      <div>
+                        <label class="block text-[10px] font-bold text-slate-400 mb-1">Arab</label>
+                        <input type="text" id="inNewAr" dir="rtl" placeholder="Contoh: كِتَابٌ" 
+                            class="w-full px-3 py-2.5 text-right rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none font-arab text-lg shadow-sm transition-all">
+                      </div>
+
+                      <!-- Input Indo -->
+                      <div>
+                        <label class="block text-[10px] font-bold text-slate-400 mb-1">Indonesia</label>
+                        <input type="text" id="inNewId" placeholder="Contoh: Buku" 
+                            class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none text-sm shadow-sm transition-all">
+                      </div>
+
+                      <!-- Input Tema -->
+                      <div>
+                        <label class="block text-[10px] font-bold text-slate-400 mb-1">Tema</label>
+                        <input type="text" id="inNewTema" placeholder="umum" 
+                            class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none text-sm shadow-sm transition-all">
+                      </div>
+
+                      <!-- Button -->
+                      <button onclick="addFlashcardInline()" class="w-full md:w-auto h-[42px] px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+                          <i data-feather="save" class="w-4 h-4"></i>
+                          <span class="md:hidden">Simpan</span>
+                      </button>
                    </div>
-                   <button onclick="migrateVocabs()" id="btnMigrate" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all">
-                     <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Data Lama
-                   </button>
-                   <button onclick="resetFlashcards()" id="btnResetDefault" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-red-500/20 transition-all">
-                     <i data-feather="refresh-cw" class="w-4 h-4"></i> Reset Default
-                   </button>
                 </div>
-                <div class="relative">
-                  <input type="text" id="searchFlashcard" placeholder="Cari kata..." 
-                         class="pl-9 pr-4 py-2 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 focus:ring-2 focus:ring-indigo-500 outline-none w-48">
-                  <i data-feather="search" class="w-4 h-4 absolute left-3 top-2.5 text-slate-400"></i>
-                </div>
+
               </div>
 
               <!-- Table -->
-              <div class="overflow-x-auto w-full max-h-[500px] overflow-y-auto scrollbar-thin">
-                <table class="w-full text-sm text-left">
-                  <thead class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
-                    <tr>
-                      <th class="px-6 py-4">No</th>
-                      <th class="px-6 py-4 text-right">Arab</th>
-                      <th class="px-6 py-4">Indonesia</th>
-                      <th class="px-6 py-4">Tema</th>
-                      <th class="px-6 py-4 text-center">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tableFlashcards" class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                     <!-- Populated by JS -->
-                  </tbody>
-                </table>
+              <!-- Dynamic List Container (Accordions) -->
+              <div id="flashcardListContainer" class="p-4 space-y-3 min-h-[200px]">
+                 <p class="text-center text-slate-400 italic py-10">Memuat data flashcards...</p>
               </div>
 
             </div>
@@ -724,34 +746,54 @@
 
             <div id="harakatContent" class="hidden">
               
-              <!-- Toolbar -->
-              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700 flex flex-wrap gap-3 justify-between items-center">
-                <div class="flex gap-2">
-                   <div class="flex items-center gap-2 px-3 py-1.5 bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 rounded-lg text-xs font-bold border border-pink-100 dark:border-pink-800">
-                     <i data-feather="info" class="w-3.5 h-3.5"></i> Input di tabel
+              <!-- Toolbar & Input Form -->
+              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700">
+                
+                <h4 class="text-xs font-bold uppercase text-pink-500 mb-3 tracking-wider flex items-center gap-2">
+                   <i data-feather="plus-circle" class="w-3.5 h-3.5"></i> Tambah Soal Harakat
+                </h4>
+
+                <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3 items-end">
+                   <!-- Gundul -->
+                   <div>
+                      <label class="block text-[10px] font-bold text-slate-400 mb-1">Arab Gundul (Plain)</label>
+                      <input type="text" id="inNewHarakatPlain" dir="rtl" placeholder="Contoh: كتب" 
+                         class="w-full px-3 py-2.5 text-right rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-pink-500 outline-none font-arab text-lg shadow-sm transition-all">
                    </div>
-                   <button onclick="migrateHarakatData()" id="btnMigrateHarakat" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all">
-                     <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Statis
+                   
+                   <!-- Harakat -->
+                   <div>
+                       <label class="block text-[10px] font-bold text-slate-400 mb-1">Arab Berharakat</label>
+                       <input type="text" id="inNewHarakatAns" dir="rtl" placeholder="Contoh: كَتَبَ" 
+                          class="w-full px-3 py-2.5 text-right rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-pink-500 outline-none font-arab text-lg shadow-sm transition-all">
+                   </div>
+
+                   <!-- Hint -->
+                   <div>
+                       <label class="block text-[10px] font-bold text-slate-400 mb-1">Arti / Hint</label>
+                       <input type="text" id="inNewHarakatHint" placeholder="Contoh: Menulis" 
+                          class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-pink-500 outline-none text-sm shadow-sm transition-all">
+                   </div>
+
+                   <!-- Save Button -->
+                   <button onclick="addHarakatInline()" class="w-full md:w-auto h-[42px] px-6 bg-pink-600 hover:bg-pink-700 text-white rounded-xl font-bold shadow-lg shadow-pink-500/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+                       <i data-feather="save" class="w-4 h-4"></i>
+                       <span class="md:hidden">Simpan</span>
                    </button>
                 </div>
+                
+                <!-- Migration Button (Legacy) -->
+                <div class="mt-4 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 flex justify-end">
+                   <button onclick="migrateHarakatData()" id="btnMigrateHarakat" class="hidden flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow transition-all">
+                      <i data-feather="upload-cloud" class="w-3 h-3"></i> Migrasi Data Statis
+                   </button>
+                </div>
+
               </div>
 
-              <!-- Table -->
-              <div class="overflow-x-auto w-full max-h-[500px] overflow-y-auto scrollbar-thin">
-                <table class="w-full text-sm text-left">
-                  <thead class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
-                    <tr>
-                      <th class="px-6 py-4">No</th>
-                      <th class="px-6 py-4 text-right">Arab Gundul (Plain)</th>
-                      <th class="px-6 py-4 text-right">Jawaban Berharakat</th>
-                      <th class="px-6 py-4">Hint (Indonesia)</th>
-                      <th class="px-6 py-4 text-center">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tableHarakat" class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                     <!-- Populated by JS -->
-                  </tbody>
-                </table>
+              <!-- List Container -->
+              <div id="harakatListContainer" class="p-4 space-y-3 min-h-[200px]">
+                 <p class="text-center text-slate-400 italic py-10">Memuat data harakat...</p>
               </div>
 
             </div>
@@ -805,37 +847,60 @@
             </div>
 
             <div id="sentenceContent" class="hidden">
-              
-              <!-- Toolbar -->
-              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700 flex flex-wrap gap-3 justify-between items-center">
-                <div class="flex gap-2">
-                   <button onclick="showAddSentenceModal()" class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-teal-500/20 transition-all">
-                     <i data-feather="plus" class="w-4 h-4"></i> Tambah Soal
-                   </button>
-                   <button onclick="migrateSentenceData()" id="btnMigrateSentence" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all">
-                     <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Statis
+              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700">
+                 <h4 class="text-xs font-bold uppercase text-blue-500 mb-3 tracking-wider flex items-center gap-2">
+                   <i data-feather="plus-circle" class="w-3.5 h-3.5"></i> Tambah Soal Susun Kalimat
+                </h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-[80px_1fr_1fr_auto] gap-3 items-start">
+                    <!-- Level -->
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 mb-1">Level</label>
+                         <input type="number" id="sNewLevel" placeholder="1" 
+                           class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-blue-500 outline-none font-bold shadow-sm transition-all">
+                    </div>
+                    
+                    <!-- Title & Desc -->
+                    <div class="space-y-2">
+                       <div>
+                         <label class="block text-[10px] font-bold text-slate-400 mb-1">Judul / Pola</label>
+                         <input type="text" id="sNewTitle" placeholder="Contoh: Jumlah Ismiah" 
+                            class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-blue-500 outline-none text-sm shadow-sm transition-all">
+                       </div>
+                       <div>
+                         <input type="text" id="sNewDesc" placeholder="Deskripsi Singkat (Opsional)" 
+                            class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-blue-500 outline-none text-xs shadow-sm transition-all">
+                       </div>
+                    </div>
+
+                    <!-- Correct Words -->
+                    <div>
+                         <label class="block text-[10px] font-bold text-slate-400 mb-1">Susunan Kata (Arab)</label>
+                         <input type="text" id="sNewCorrect" dir="rtl" placeholder="Contoh: أكل, أحمد, الرز" 
+                            class="w-full px-3 py-2.5 text-right rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-blue-500 outline-none font-arab text-lg shadow-sm transition-all">
+                         <p class="text-[10px] text-slate-400 mt-1 italic">* Pisahkan setiap kata dengan koma (,)</p>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="h-full flex items-end pb-1">
+                       <button onclick="addSentenceQuestion()" class="w-full md:w-auto h-[42px] px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-lg shadow-blue-500/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+                           <i data-feather="save" class="w-4 h-4"></i>
+                           <span class="md:hidden">Simpan</span>
+                       </button>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 flex justify-end">
+                   <button onclick="migrateSentenceData()" id="btnMigrateSentence" class="hidden flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow transition-all">
+                      <i data-feather="upload-cloud" class="w-3 h-3"></i> Migrasi Data Statis
                    </button>
                 </div>
               </div>
 
-              <!-- Table -->
-              <div class="overflow-x-auto w-full max-h-[500px] overflow-y-auto scrollbar-thin">
-                <table class="w-full text-sm text-left">
-                  <thead class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
-                    <tr>
-                      <th class="px-6 py-4">No</th>
-                      <th class="px-6 py-4">Level</th>
-                      <th class="px-6 py-4">Judul / Pola</th>
-                      <th class="px-6 py-4 text-right">Susunan Kata (Arab)</th>
-                      <th class="px-6 py-4 text-center">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tableSentence" class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                     <!-- Populated by JS -->
-                  </tbody>
-                </table>
+              <!-- List Container -->
+              <div id="sentenceListContainer" class="p-4 space-y-3 min-h-[200px]">
+                 <p class="text-center text-slate-400 italic py-10">Memuat data soal...</p>
               </div>
-
             </div>
           </div>
         </div>
@@ -887,31 +952,51 @@
             </div>
 
             <div id="grammarContent" class="hidden">
-              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700 flex flex-wrap gap-3 justify-between items-center">
-                <div class="flex gap-2">
-                   <button onclick="showAddGrammarModal()" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-indigo-500/20 transition-all">
-                     <i data-feather="plus" class="w-4 h-4"></i> Tambah Kata
-                   </button>
-                   <button onclick="migrateGrammarData()" id="btnMigrateGrammar" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all">
-                     <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Statis
+              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700">
+                 <h4 class="text-xs font-bold uppercase text-indigo-500 mb-3 tracking-wider flex items-center gap-2">
+                   <i data-feather="plus-circle" class="w-3.5 h-3.5"></i> Tambah Kosakata
+                </h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-[1fr_200px_auto] gap-3 items-end">
+                    <!-- Arabic Word -->
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 mb-1">Kata (Arab)</label>
+                         <input type="text" id="gNewWord" dir="rtl" placeholder="Contoh: كِتَاب" 
+                           class="w-full px-3 py-2.5 text-right rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none font-arab text-lg shadow-sm transition-all">
+                    </div>
+                    
+                    <!-- Type Select -->
+                    <div>
+                         <label class="block text-[10px] font-bold text-slate-400 mb-1">Jenis Kata</label>
+                         <div class="relative">
+                             <select id="gNewType" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none text-sm font-bold shadow-sm appearance-none transition-all">
+                                <option value="isim">Isim (Kata Benda)</option>
+                                <option value="fiil">Fi'il (Kata Kerja)</option>
+                                <option value="harf">Harf (Huruf)</option>
+                             </select>
+                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+                                <i data-feather="chevron-down" class="w-4 h-4"></i>
+                             </div>
+                         </div>
+                    </div>
+
+                    <!-- Button -->
+                    <button onclick="addGrammarQuestion()" class="w-full md:w-auto h-[42px] px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+                        <i data-feather="save" class="w-4 h-4"></i>
+                        <span class="md:hidden">Simpan</span>
+                    </button>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 flex justify-end">
+                   <button onclick="migrateGrammarData()" id="btnMigrateGrammar" class="hidden flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow transition-all">
+                      <i data-feather="upload-cloud" class="w-3 h-3"></i> Migrasi Data Statis
                    </button>
                 </div>
               </div>
 
-              <div class="overflow-x-auto w-full max-h-[500px] overflow-y-auto scrollbar-thin">
-                <table class="w-full text-sm text-left">
-                  <thead class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
-                    <tr>
-                      <th class="px-6 py-4">No</th>
-                      <th class="px-6 py-4 text-right">Kata (Arab)</th>
-                      <th class="px-6 py-4 text-center">Jenis Kata</th>
-                      <th class="px-6 py-4 text-center">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tableGrammar" class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                     <!-- Populated by JS -->
-                  </tbody>
-                </table>
+              <!-- List Container -->
+              <div id="grammarListContainer" class="p-4 space-y-3 min-h-[200px]">
+                 <p class="text-center text-slate-400 italic py-10">Memuat data grammar...</p>
               </div>
             </div>
           </div>
@@ -5525,14 +5610,14 @@
       let unsubFlash = null;
 
       window.loadFlashcards = () => {
-          const table = document.getElementById('tableFlashcards');
+          const container = document.getElementById('flashcardListContainer');
           const counter = document.getElementById('flashcardCount');
-          if(!table) return;
+          if(!container) return;
 
           if(unsubFlash) unsubFlash();
 
           if(window.allFlashcards.length === 0) {
-              table.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-slate-400 italic">Memuat data...</td></tr>';
+              container.innerHTML = '<p class="text-center text-slate-400 italic py-10">Memuat data flashcards...</p>';
           }
 
           const q = query(collection(db, "flashcards"), orderBy("id", "asc"));
@@ -5560,66 +5645,94 @@
               }
           }, (err) => {
               console.error("Flashcard listener error:", err);
-              // Show migrate button anyway if listener fails (might be permission issue on empty coll)
               document.getElementById('btnMigrate')?.classList.remove('hidden');
           });
       };
 
       window.renderFlashcards = (data) => {
-          const table = document.getElementById('tableFlashcards');
-          if(!table) return;
+          const container = document.getElementById('flashcardListContainer');
+          if(!container) return;
 
-          let html = `
-            <tr class="bg-indigo-50/50 dark:bg-indigo-900/10 border-b-2 border-indigo-100 dark:border-indigo-800/50">
-                <td class="px-6 py-4 text-center font-bold text-indigo-300">#</td>
-                <td class="px-6 py-4">
-                    <input type="text" id="inNewAr" dir="rtl" placeholder="Arab..." 
-                        class="w-full px-3 py-2 text-right rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none font-arab text-lg shadow-sm">
-                </td>
-                <td class="px-6 py-4">
-                    <input type="text" id="inNewId" placeholder="Indonesia..." 
-                        class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm">
-                </td>
-                <td class="px-6 py-4">
-                    <input type="text" id="inNewTema" placeholder="Tema (opsional)" 
-                        class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm">
-                </td>
-                <td class="px-6 py-4 text-center">
-                    <button onclick="addFlashcardInline()" class="p-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-md transition-all active:scale-95" title="Simpan">
-                        <i data-feather="check" class="w-4 h-4"></i>
-                    </button>
-                </td>
-            </tr>
-          `;
-
-          let no = 1;
-          data.forEach(c => {
-              html += `
-              <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
-                 <td class="px-6 py-4 font-bold text-slate-400">${no++}</td>
-                 <td class="px-6 py-4 text-right font-arab text-xl text-emerald-600 dark:text-emerald-400">${c.ar}</td>
-                 <td class="px-6 py-4 font-bold text-slate-700 dark:text-slate-200">${c.id}</td>
-                 <td class="px-6 py-4">
-                     <span class="px-2 py-1 text-[10px] font-bold uppercase bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-lg">
-                        ${c.tema || 'umum'}
-                     </span>
-                 </td>
-                 <td class="px-6 py-4 text-center">
-                     <button onclick="deleteFlashcard('${c.docId}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors">
-                        <i data-feather="trash-2" class="w-4 h-4"></i>
-                     </button>
-                 </td>
-              </tr>`;
-          });
-          
-          if(data.length === 0 && window.allFlashcards.length > 0) {
-              html += `<tr><td colspan="5" class="text-center py-8 text-slate-400 italic">Hasil pencarian kosong.</td></tr>`;
-          } else if(window.allFlashcards.length === 0) {
-              html += `<tr><td colspan="5" class="text-center py-8 text-slate-400 italic">Belum ada data flashcard.</td></tr>`;
+          if(data.length === 0) {
+              container.innerHTML = '<p class="text-center text-slate-400 italic py-10">Data kosong.</p>';
+              return;
           }
 
-          table.innerHTML = html;
+          // Group by Theme
+          const groups = {};
+          data.forEach(item => {
+             const t = (item.tema || 'Umum').trim(); 
+             if(!groups[t]) groups[t] = [];
+             groups[t].push(item);
+          });
+          
+          const sortedThemes = Object.keys(groups).sort();
+
+          let html = '';
+          sortedThemes.forEach((theme, idx) => {
+             const items = groups[theme];
+             const safeId = idx + '-' + theme.replace(/[^a-zA-Z0-9]/g, '');
+
+             html += `
+             <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm transition-all hover:shadow-md">
+                <div onclick="toggleFcAccordion('${safeId}')" class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors select-none group">
+                    <div class="flex items-center gap-3">
+                        <span class="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
+                            <i data-feather="folder" class="w-4 h-4"></i>
+                        </span>
+                        <h5 class="font-bold text-slate-700 dark:text-slate-200 uppercase text-xs tracking-wider">
+                            ${theme}
+                        </h5>
+                        <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-500 rounded text-[10px] font-bold">
+                            ${items.length}
+                        </span>
+                    </div>
+                    <svg id="chev-${safeId}" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90 group-hover:text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+                
+                <div id="body-${safeId}" class="hidden border-t border-slate-100 dark:border-slate-700">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 dark:bg-slate-900/50 text-[10px] uppercase font-bold text-slate-500">
+                                <tr>
+                                    <th class="px-6 py-3 w-10">No</th>
+                                    <th class="px-6 py-3 text-right">Arab</th>
+                                    <th class="px-6 py-3">Indonesia</th>
+                                    <th class="px-6 py-3 text-center w-20">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                                ${items.map((c, i) => `
+                                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+                                    <td class="px-6 py-3 text-slate-400 font-bold text-xs">${i+1}</td>
+                                    <td class="px-6 py-3 text-right font-arab text-lg text-emerald-600 dark:text-emerald-400">${c.ar}</td>
+                                    <td class="px-6 py-3 font-medium text-slate-700 dark:text-slate-200">${c.id}</td>
+                                    <td class="px-6 py-3 text-center">
+                                        <button onclick="deleteFlashcard('${c.docId}')" class="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all" title="Hapus">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </td>
+                                 </tr> 
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+             </div>
+             `;
+          });
+
+          container.innerHTML = html;
           if(typeof feather !== 'undefined') feather.replace();
+      };
+      
+      window.toggleFcAccordion = (id) => {
+          const body = document.getElementById('body-' + id);
+          const chev = document.getElementById('chev-' + id);
+          if(body) body.classList.toggle('hidden');
+          if(chev) chev.classList.toggle('-rotate-90'); 
       };
 
       window.addFlashcardInline = async () => {
@@ -5684,11 +5797,15 @@
          ------------------------------------- */
       let unsubHarakat = null;
       window.loadHarakatQuestions = () => {
-          const table = document.getElementById('tableHarakat');
+          const container = document.getElementById('harakatListContainer');
           const counter = document.getElementById('harakatCount');
-          if(!table) return;
+          if(!container) return;
 
           if(unsubHarakat) unsubHarakat();
+
+          if(window.HARAKAT_DATA_CACHE && window.HARAKAT_DATA_CACHE.length === 0) {
+             container.innerHTML = '<p class="text-center text-slate-400 italic py-10">Memuat data harakat...</p>';
+          }
 
           const q = query(collection(db, "harakat_questions"), orderBy("createdAt", "desc"));
           unsubHarakat = onSnapshot(q, (snap) => {
@@ -5700,65 +5817,103 @@
               if(data.length === 0) btnMigH?.classList.remove('hidden');
               else btnMigH?.classList.add('hidden');
 
-              renderHarakatTable(data);
+              window.HARAKAT_DATA_CACHE = data;
+              renderHarakatAccordions(data);
           }, (err) => {
               console.error("Harakat listener error:", err);
-              // Force show migration button if error (likely permissions on empty collection)
               document.getElementById('btnMigrateHarakat')?.classList.remove('hidden');
           });
       };
 
-      window.renderHarakatTable = (data) => {
-          const table = document.getElementById('tableHarakat');
-          if(!table) return;
-
-          let html = `
-            <tr class="bg-pink-50/50 dark:bg-pink-900/10 border-b-2 border-pink-100 dark:border-pink-800/50">
-                <td class="px-6 py-4 text-center font-bold text-pink-300">#</td>
-                <td class="px-6 py-4">
-                    <input type="text" id="hNewPlain" dir="rtl" placeholder="قلم" 
-                        class="w-full px-3 py-2 text-right rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-pink-500 outline-none font-arab text-lg shadow-sm">
-                </td>
-                <td class="px-6 py-4">
-                    <input type="text" id="hNewAns" dir="rtl" placeholder="قَلَمٌ" 
-                        class="w-full px-3 py-2 text-right rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-pink-500 outline-none font-arab text-lg shadow-sm">
-                </td>
-                <td class="px-6 py-4">
-                    <input type="text" id="hNewHint" placeholder="Pena" 
-                        class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-pink-500 outline-none shadow-sm">
-                </td>
-                <td class="px-6 py-4 text-center">
-                    <button onclick="addHarakatQuestion()" class="p-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg shadow-md transition-all active:scale-95">
-                        <i data-feather="check" class="w-4 h-4"></i>
-                    </button>
-                </td>
-            </tr>`;
-
+      window.renderHarakatAccordions = (data) => {
+          const container = document.getElementById('harakatListContainer');
+          if(!container) return;
+          
           if(data.length === 0) {
-              html += `<tr><td colspan="5" class="text-center py-8 text-slate-400 italic">Belum ada soal harakat.</td></tr>`;
-          } else {
-              let no = 1;
-              data.forEach(h => {
-                  html += `
-                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
-                     <td class="px-6 py-4 font-bold text-slate-400">${no++}</td>
-                     <td class="px-6 py-4 text-right font-arab text-xl">${h.plain || h.word}</td>
-                     <td class="px-6 py-4 text-right font-arab text-xl text-pink-600 dark:text-pink-400 font-bold">${h.answer}</td>
-                     <td class="px-6 py-4 font-medium text-slate-600 dark:text-slate-300">${h.hint || '-'}</td>
-                     <td class="px-6 py-4 text-center">
-                         <button onclick="deleteHarakatQuestion('${h.docId}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors">
-                            <i data-feather="trash-2" class="w-4 h-4"></i>
-                         </button>
-                     </td>
-                  </tr>`;
-              });
+              container.innerHTML = '<p class="text-center text-slate-400 italic py-10">Belum ada soal harakat.</p>';
+              return;
           }
-          table.innerHTML = html;
+
+          // Group by First Letter (Abjad)
+          const groups = {};
+          data.forEach(item => {
+             const key = (item.plain || item.word || '?').trim().charAt(0);
+             if(!groups[key]) groups[key] = [];
+             groups[key].push(item);
+          });
+          
+          const sortedKeys = Object.keys(groups).sort();
+          
+          let html = '';
+          sortedKeys.forEach((key, idx) => {
+              const items = groups[key];
+              const safeId = 'harakat-' + idx;
+              
+              html += `
+              <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm transition-all hover:shadow-md">
+                <div onclick="toggleHarakatAccordion('${safeId}')" class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors select-none group">
+                    <div class="flex items-center gap-3">
+                        <span class="p-2 bg-pink-50 dark:bg-pink-900/20 rounded-lg text-pink-600 dark:text-pink-400 font-arab font-bold text-lg group-hover:scale-110 transition-transform w-10 text-center">
+                            ${key}
+                        </span>
+                        <h5 class="font-bold text-slate-700 dark:text-slate-200 uppercase text-xs tracking-wider">
+                            Kelompok Huruf "${key}"
+                        </h5>
+                        <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-500 rounded text-[10px] font-bold">
+                            ${items.length}
+                        </span>
+                    </div>
+                    <svg id="chev-${safeId}" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90 group-hover:text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+
+                <div id="body-${safeId}" class="hidden border-t border-slate-100 dark:border-slate-700">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 dark:bg-slate-900/50 text-[10px] uppercase font-bold text-slate-500">
+                                <tr>
+                                    <th class="px-6 py-3 w-10">No</th>
+                                    <th class="px-6 py-3 text-right">Plain</th>
+                                    <th class="px-6 py-3 text-right">Jawaban</th>
+                                    <th class="px-6 py-3">Hint</th>
+                                    <th class="px-6 py-3 text-center w-20">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                                ${items.map((h, i) => `
+                                 <tr class="hover:bg-pink-50/30 dark:hover:bg-pink-900/10 transition-colors">
+                                    <td class="px-6 py-3 text-slate-400 font-bold text-xs">${i+1}</td>
+                                    <td class="px-6 py-3 text-right font-arab text-lg text-slate-700 dark:text-slate-300">${h.plain || h.word}</td>
+                                    <td class="px-6 py-3 text-right font-arab text-xl text-pink-600 dark:text-pink-400 font-bold">${h.answer}</td>
+                                    <td class="px-6 py-3 font-medium text-slate-600 dark:text-slate-400 text-xs">${h.hint || '-'}</td>
+                                    <td class="px-6 py-3 text-center">
+                                        <button onclick="deleteHarakatQuestion('${h.docId}')" class="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all" title="Hapus">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </td>
+                                 </tr> 
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              </div>
+              `;
+          });
+          container.innerHTML = html;
           if(typeof feather !== 'undefined') feather.replace();
       };
+      
+      window.toggleHarakatAccordion = (id) => {
+          const body = document.getElementById('body-' + id);
+          const chev = document.getElementById('chev-' + id);
+          if(body) body.classList.toggle('hidden');
+          if(chev) chev.classList.toggle('-rotate-90');
+      };
 
-      window.addHarakatQuestion = async () => {
-          const p = document.getElementById('hNewPlain'), a = document.getElementById('hNewAns'), h = document.getElementById('hNewHint');
+      window.addHarakatInline = async () => {
+          const p = document.getElementById('inNewHarakatPlain'), a = document.getElementById('inNewHarakatAns'), h = document.getElementById('inNewHarakatHint');
           if(!p.value.trim() || !a.value.trim()) return Swal.fire('Error', 'Harap isi Arab & Jawaban', 'error');
           try {
               await addDoc(collection(db, "harakat_questions"), { plain: p.value.trim(), answer: a.value.trim(), hint: h.value.trim(), createdAt: new Date().toISOString() });
@@ -5788,11 +5943,15 @@
          ------------------------------------- */
       let unsubSentence = null;
       window.loadSentenceQuestions = () => {
-          const table = document.getElementById('tableSentence');
+          const container = document.getElementById('sentenceListContainer');
           const counter = document.getElementById('sentenceCount');
-          if(!table) return;
+          if(!container) return;
 
           if(unsubSentence) unsubSentence();
+          
+          if(window.SENTENCE_DATA_CACHE && window.SENTENCE_DATA_CACHE.length === 0) {
+             container.innerHTML = '<p class="text-center text-slate-400 italic py-10">Memuat data soal...</p>';
+          }
 
           const q = query(collection(db, "sentence_questions"), orderBy("createdAt", "desc"));
           unsubSentence = onSnapshot(q, (snap) => {
@@ -5804,74 +5963,103 @@
               if(data.length === 0) btnMigS?.classList.remove('hidden');
               else btnMigS?.classList.add('hidden');
 
-              renderSentenceTable(data);
+              window.SENTENCE_DATA_CACHE = data;
+              renderSentenceAccordions(data);
           }, (err) => {
               console.error("Sentence listener error:", err);
               document.getElementById('btnMigrateSentence')?.classList.remove('hidden');
           });
       };
 
-      window.renderSentenceTable = (data) => {
-          const table = document.getElementById('tableSentence');
-          if(!table) return;
-
-          let html = `
-            <tr class="bg-blue-50/50 dark:bg-blue-900/10 border-b-2 border-blue-100 dark:border-blue-800/50">
-                <td class="px-6 py-4 text-center font-bold text-blue-300">#</td>
-                <td class="px-6 py-4">
-                    <input type="number" id="sNewLevel" placeholder="1" 
-                        class="w-16 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none shadow-sm font-bold">
-                </td>
-                <td class="px-6 py-4">
-                    <input type="text" id="sNewTitle" placeholder="Pola Kalimat" 
-                        class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none shadow-sm mb-2 font-bold">
-                    <input type="text" id="sNewDesc" placeholder="Deskripsi Gramatikal" 
-                        class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none shadow-sm text-xs">
-                </td>
-                <td class="px-6 py-4">
-                    <input type="text" id="sNewCorrect" dir="rtl" placeholder="أكل, أحمد, اللبن" 
-                        class="w-full px-3 py-2 text-right rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none font-arab text-lg shadow-sm">
-                    <p class="text-[10px] text-slate-400 mt-1">Pisahkan kata dengan koma</p>
-                </td>
-                <td class="px-6 py-4 text-center">
-                    <button onclick="addSentenceQuestion()" class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition-all active:scale-95">
-                        <i data-feather="plus" class="w-4 h-4"></i>
-                    </button>
-                </td>
-            </tr>`;
-
+      window.renderSentenceAccordions = (data) => {
+          const container = document.getElementById('sentenceListContainer');
+          if(!container) return;
+          
           if(data.length === 0) {
-              html += `<tr><td colspan="5" class="text-center py-8 text-slate-400 italic">Belum ada soal susun kalimat.</td></tr>`;
-          } else {
-              let no = 1;
-              data.forEach(s => {
-                  html += `
-                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
-                     <td class="px-6 py-4 font-bold text-slate-400">${no++}</td>
-                     <td class="px-6 py-4">
-                        <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 rounded text-xs font-bold text-slate-600 dark:text-slate-300">Lvl ${s.level}</span>
-                     </td>
-                     <td class="px-6 py-4">
-                        <div class="font-bold text-slate-700 dark:text-slate-200 uppercase text-xs tracking-wider">${s.title}</div>
-                        <div class="text-[10px] text-slate-500 italic">${s.description || '-'}</div>
-                     </td>
-                     <td class="px-6 py-4 text-right">
-                        <div class="flex flex-row-reverse gap-1 justify-start">
-                           ${s.correct.map(w => `<span class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded text-sm font-arab border border-blue-100 dark:border-blue-800">${w}</span>`).join('')}
-                        </div>
-                     </td>
-                     <td class="px-6 py-4 text-center">
-                         <button onclick="deleteSentenceQuestion('${s.docId}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors">
-                            <i data-feather="trash-2" class="w-4 h-4"></i>
-                         </button>
-                     </td>
-                  </tr>`;
-              });
+              container.innerHTML = '<p class="text-center text-slate-400 italic py-10">Belum ada soal susun kalimat.</p>';
+              return;
           }
-          table.innerHTML = html;
+
+          // Group by Level
+          const groups = {};
+          data.forEach(item => {
+             const key = item.level || '1';
+             if(!groups[key]) groups[key] = [];
+             groups[key].push(item);
+          });
+          
+          const sortedLevels = Object.keys(groups).sort((a,b) => parseInt(a) - parseInt(b));
+          
+          let html = '';
+          sortedLevels.forEach((level, idx) => {
+              const items = groups[level];
+              const safeId = 'sentence-lvl-' + level;
+              
+              html += `
+              <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm transition-all hover:shadow-md">
+                <div onclick="toggleSentenceAccordion('${safeId}')" class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors select-none group">
+                    <div class="flex items-center gap-3">
+                        <span class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400 font-bold text-sm min-w-[3rem] text-center group-hover:scale-110 transition-transform">
+                            Lvl ${level}
+                        </span>
+                        <h5 class="font-bold text-slate-700 dark:text-slate-200 uppercase text-xs tracking-wider">
+                            Level ${level} - ${items.length} Soal
+                        </h5>
+                    </div>
+                    <svg id="chev-${safeId}" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90 group-hover:text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+
+                <div id="body-${safeId}" class="hidden border-t border-slate-100 dark:border-slate-700">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 dark:bg-slate-900/50 text-[10px] uppercase font-bold text-slate-500">
+                                <tr>
+                                    <th class="px-6 py-3 w-10">No</th>
+                                    <th class="px-6 py-3">Judul / Pola</th>
+                                    <th class="px-6 py-3 text-right">Susunan Kata</th>
+                                    <th class="px-6 py-3 text-center w-20">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                                ${items.map((s, i) => `
+                                 <tr class="hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
+                                    <td class="px-6 py-3 text-slate-400 font-bold text-xs">${i+1}</td>
+                                    <td class="px-6 py-3">
+                                       <div class="font-bold text-slate-700 dark:text-slate-200 uppercase text-xs tracking-wider">${s.title}</div>
+                                       <div class="text-[10px] text-slate-500 italic">${s.description || '-'}</div>
+                                    </td>
+                                    <td class="px-6 py-3 text-right">
+                                       <div class="flex flex-row-reverse gap-1 justify-start flex-wrap">
+                                          ${(s.correct || []).map(w => `<span class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded text-sm font-arab border border-blue-100 dark:border-blue-800">${w}</span>`).join('')}
+                                       </div>
+                                    </td>
+                                    <td class="px-6 py-3 text-center">
+                                        <button onclick="deleteSentenceQuestion('${s.docId}')" class="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all" title="Hapus">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </td>
+                                 </tr> 
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              </div>
+              `;
+          });
+          container.innerHTML = html;
           if(typeof feather !== 'undefined') feather.replace();
       };
 
+      window.toggleSentenceAccordion = (id) => {
+          const body = document.getElementById('body-' + id);
+          const chev = document.getElementById('chev-' + id);
+          if(body) body.classList.toggle('hidden');
+          if(chev) chev.classList.toggle('-rotate-90');
+      };
+      
       window.addSentenceQuestion = async () => {
           const lvl = document.getElementById('sNewLevel'), title = document.getElementById('sNewTitle'), desc = document.getElementById('sNewDesc'), corr = document.getElementById('sNewCorrect');
           if(!title.value.trim() || !corr.value.trim()) return Swal.fire('Error', 'Harap isi Judul & Susunan Kata', 'error');
@@ -5916,11 +6104,15 @@
          ------------------------------------- */
       let unsubGrammar = null;
       window.loadGrammarQuestions = () => {
-          const table = document.getElementById('tableGrammar');
+          const container = document.getElementById('grammarListContainer');
           const counter = document.getElementById('grammarCount');
-          if(!table) return;
+          if(!container) return;
 
           if(unsubGrammar) unsubGrammar();
+
+          if(window.GRAMMAR_DATA_CACHE && window.GRAMMAR_DATA_CACHE.length === 0) {
+             container.innerHTML = '<p class="text-center text-slate-400 italic py-10">Memuat data grammar...</p>';
+          }
 
           const q = query(collection(db, "grammar_questions"), orderBy("createdAt", "desc"));
           unsubGrammar = onSnapshot(q, (snap) => {
@@ -5932,64 +6124,106 @@
               if(data.length === 0) btnMigG?.classList.remove('hidden');
               else btnMigG?.classList.add('hidden');
 
-              renderGrammarTable(data);
+              window.GRAMMAR_DATA_CACHE = data;
+              renderGrammarAccordions(data);
           }, (err) => {
               console.error("Grammar listener error:", err);
               document.getElementById('btnMigrateGrammar')?.classList.remove('hidden');
           });
       };
 
-      window.renderGrammarTable = (data) => {
-          const table = document.getElementById('tableGrammar');
-          if(!table) return;
-
-          let html = `
-            <tr class="bg-indigo-50/50 dark:bg-indigo-900/10 border-b-2 border-indigo-100 dark:border-indigo-800/50">
-                <td class="px-6 py-4 text-center font-bold text-indigo-300">#</td>
-                <td class="px-6 py-4">
-                    <input type="text" id="gNewWord" dir="rtl" placeholder="كتاب" 
-                        class="w-full px-3 py-2 text-right rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none font-arab text-lg shadow-sm">
-                </td>
-                <td class="px-6 py-4 text-center">
-                    <select id="gNewType" class="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm font-bold">
-                        <option value="isim">Isim</option>
-                        <option value="fiil">Fi'il</option>
-                        <option value="harf">Harf</option>
-                    </select>
-                </td>
-                <td class="px-6 py-4 text-center">
-                    <button onclick="addGrammarQuestion()" class="p-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-md transition-all active:scale-95">
-                        <i data-feather="plus" class="w-4 h-4"></i>
-                    </button>
-                </td>
-            </tr>`;
-
+      window.renderGrammarAccordions = (data) => {
+          const container = document.getElementById('grammarListContainer');
+          if(!container) return;
+          
           if(data.length === 0) {
-              html += `<tr><td colspan="4" class="text-center py-8 text-slate-400 italic">Belum ada soal grammar.</td></tr>`;
-          } else {
-              let no = 1;
-              data.forEach(g => {
-                  const typeLabel = {
-                      'isim': '<span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-[10px] font-bold uppercase">Isim</span>',
-                      'fiil': '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-[10px] font-bold uppercase">Fi\'il</span>',
-                      'harf': '<span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-[10px] font-bold uppercase">Harf</span>'
-                  }[g.type] || g.type;
-
-                  html += `
-                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
-                     <td class="px-6 py-4 font-bold text-slate-400">${no++}</td>
-                     <td class="px-6 py-4 text-right font-arab text-xl">${g.word}</td>
-                     <td class="px-6 py-4 text-center">${typeLabel}</td>
-                     <td class="px-6 py-4 text-center">
-                         <button onclick="deleteGrammarQuestion('${g.docId}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors">
-                            <i data-feather="trash-2" class="w-4 h-4"></i>
-                         </button>
-                     </td>
-                  </tr>`;
-              });
+              container.innerHTML = '<p class="text-center text-slate-400 italic py-10">Belum ada kosakata grammar.</p>';
+              return;
           }
-          table.innerHTML = html;
+
+          // Group by Type
+          const groups = {};
+          data.forEach(item => {
+             const key = item.type || 'isim';
+             if(!groups[key]) groups[key] = [];
+             groups[key].push(item);
+          });
+          
+          const typeLabels = {
+              'isim': 'Isim (Kata Benda)',
+              'fiil': 'Fi\'il (Kata Kerja)',
+              'harf': 'Harf (Huruf)'
+          };
+          
+          const sortedKeys = ['isim', 'fiil', 'harf'].filter(k => groups[k]); // predefined order
+          // Add others if any
+          Object.keys(groups).forEach(k => {
+              if(!sortedKeys.includes(k)) sortedKeys.push(k);
+          });
+          
+          let html = '';
+          sortedKeys.forEach((key, idx) => {
+              const items = groups[key];
+              const safeId = 'grammar-' + key;
+              const label = typeLabels[key] || key.toUpperCase();
+              
+              html += `
+              <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm transition-all hover:shadow-md">
+                <div onclick="toggleGrammarAccordion('${safeId}')" class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors select-none group">
+                    <div class="flex items-center gap-3">
+                        <span class="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg text-indigo-600 dark:text-indigo-400 font-bold text-sm min-w-[3rem] text-center group-hover:scale-110 transition-transform uppercase">
+                            ${key.substring(0,2)}
+                        </span>
+                        <h5 class="font-bold text-slate-700 dark:text-slate-200 uppercase text-xs tracking-wider">
+                            ${label}
+                        </h5>
+                        <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-500 rounded text-[10px] font-bold">
+                            ${items.length}
+                        </span>
+                    </div>
+                    <svg id="chev-${safeId}" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90 group-hover:text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+
+                <div id="body-${safeId}" class="hidden border-t border-slate-100 dark:border-slate-700">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 dark:bg-slate-900/50 text-[10px] uppercase font-bold text-slate-500">
+                                <tr>
+                                    <th class="px-6 py-3 w-10">No</th>
+                                    <th class="px-6 py-3 text-right">Kata (Arab)</th>
+                                    <th class="px-6 py-3 text-center w-20">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                                ${items.map((g, i) => `
+                                 <tr class="hover:bg-indigo-50/30 dark:hover:bg-indigo-900/10 transition-colors">
+                                    <td class="px-6 py-3 text-slate-400 font-bold text-xs">${i+1}</td>
+                                    <td class="px-6 py-3 text-right font-arab text-xl text-slate-700 dark:text-slate-300">${g.word}</td>
+                                    <td class="px-6 py-3 text-center">
+                                        <button onclick="deleteGrammarQuestion('${g.docId}')" class="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all" title="Hapus">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </td>
+                                 </tr> 
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              </div>
+              `;
+          });
+          container.innerHTML = html;
           if(typeof feather !== 'undefined') feather.replace();
+      };
+      
+      window.toggleGrammarAccordion = (id) => {
+          const body = document.getElementById('body-' + id);
+          const chev = document.getElementById('chev-' + id);
+          if(body) body.classList.toggle('hidden');
+          if(chev) chev.classList.toggle('-rotate-90');
       };
 
       window.addGrammarQuestion = async () => {
