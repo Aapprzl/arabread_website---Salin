@@ -55,21 +55,6 @@ export async function initVocabPage() {
 
     if (firestoreVocabs.length > 0) {
        data = firestoreVocabs;
-    } else {
-        // 2. Legacy support for window.VOCABS
-        if (!window.VOCABS) {
-          try {
-            await loadScript("assets/js/vocabs.js");
-          } catch (e) {
-            console.warn("Failed to load local vocabs", e);
-          }
-        }
-
-        if (window.VOCABS) {
-          data = window.VOCABS.filter(
-            (v) => v.tema === CURRENT_THEME.vocabFilter || v.tema === THEME_ID
-          );
-        }
     }
   }
 

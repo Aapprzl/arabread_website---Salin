@@ -54,6 +54,21 @@ service cloud.firestore {
       allow write: if isGuru();
     }
 
+    match /harakat_questions/{questionId} {
+      allow read: if true;
+      allow write: if isGuru();
+    }
+
+    match /sentence_questions/{questionId} {
+      allow read: if true;
+      allow write: if isGuru();
+    }
+
+    match /grammar_questions/{questionId} {
+      allow read: if true;
+      allow write: if isGuru();
+    }
+
     // =========================================================
     // 👤 USER DATA & PROFILES (DIPERBAIKI)
     // =========================================================

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr" class="scroll-smooth">
 
-<script src="assets/data/vocabs.js"></script>
 <script src="assets/data/materials.js"></script>
 
 <script src="https://unpkg.com/feather-icons"></script>
@@ -476,13 +475,25 @@
             </svg>
           </a>
 
-          <a href="#dashboard-siswa"
+          <a href="#harakat-game"
             class="mobile-link group flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 active:scale-95 mt-2">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 flex items-center justify-center bg-amber-500/20 rounded-lg text-lg">🎯</span>
+              <span class="text-sm font-bold text-white tracking-wide">Game Harakat</span>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+          
+          <a href="#dashboard-siswa"
+            class="mobile-link group flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 active:scale-95">
             <div class="flex items-center gap-3">
               <span class="w-8 h-8 flex items-center justify-center bg-rose-500/20 rounded-lg text-lg">🔐</span>
               <span class="text-sm font-bold text-white tracking-wide">Masuk Akun</span>
             </div>
-
             <svg xmlns="http://www.w3.org/2000/svg"
               class="w-4 h-4 text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all" fill="none"
               viewBox="0 0 24 24" stroke="currentColor">
@@ -586,7 +597,6 @@
 
 
   <!-- GAMES GRAMATIKAL -->
-  <script src="assets/data/game-data.js"></script>
 
   <section id="game-area" class="max-w-7xl mx-auto px-4 py-12 mb-14">
 
@@ -725,6 +735,139 @@
 
     </div>
   </section>
+
+  <!-- GAME GRAMATIKAL LOGIC -->
+  <script type="module">
+    import { db, collection, getDocs } from './assets/js/firebase-config.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const gameWord = document.getElementById('game-word');
+      const scoreEl = document.getElementById('score-val');
+      const timerEl = document.getElementById('timer-val');
+      const comboEl = document.getElementById('combo-val');
+      const feedbackEl = document.getElementById('game-feedback');
+      const overlay = document.getElementById('game-overlay');
+      const overlayTitle = document.getElementById('overlay-title');
+      const overlayDesc = document.getElementById('overlay-desc');
+
+      if (!gameWord || !scoreEl) return;
+
+      let questions = [];
+
+      // Initial Data Load
+      try {
+        const snap = await getDocs(collection(db, "grammar_questions"));
+        snap.forEach(doc => questions.push(doc.data()));
+        console.log("Grammar Game Firestore Data Loaded:", questions.length);
+      } catch (e) {
+        console.error("Firestore Loading Error:", e);
+        // Fallback basics if Firestore fails
+        questions = [
+          { word: "كِتَابٌ", type: "isim" }, { word: "يَكْتُبُ", type: "fiil" }, { word: "فِي", type: "harf" }
+        ];
+      }
+
+      let currentQuestion = null;
+      let score = 0;
+      let combo = 0;
+      let timer = 60;
+      let timerInterval = null;
+      let isPlaying = false;
+      let gameStarted = false;
+
+      function updateDisplay() {
+        scoreEl.innerText = score;
+        comboEl.innerText = 'x' + combo;
+        timerEl.innerText = timer;
+      }
+
+      function loadQuestion() {
+        if (questions.length === 0) {
+          gameWord.innerText = "...";
+          return;
+        }
+        const rand = Math.floor(Math.random() * questions.length);
+        currentQuestion = questions[rand];
+        gameWord.innerText = currentQuestion.word;
+      }
+
+      function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          timer--;
+          timerEl.innerText = timer;
+          if (timer <= 10) {
+            timerEl.parentElement.classList.add('text-red-500');
+          }
+          if (timer <= 0) {
+            endGame();
+          }
+        }, 1000);
+      }
+
+      function endGame() {
+        isPlaying = false;
+        gameStarted = false;
+        clearInterval(timerInterval);
+        
+        overlayTitle.innerText = "🏁 Game Selesai!";
+        overlayDesc.innerHTML = `Skor Akhir: <span class="text-4xl font-black text-blue-600 block mt-2">${score}</span>`;
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+      }
+
+      function showFeedback(isCorrect) {
+        feedbackEl.innerText = isCorrect ? '✅' : '❌';
+        feedbackEl.classList.remove('opacity-0', 'scale-50');
+        feedbackEl.classList.add('opacity-100', 'scale-100');
+        setTimeout(() => {
+          feedbackEl.classList.remove('opacity-100', 'scale-100');
+          feedbackEl.classList.add('opacity-0', 'scale-50');
+        }, 400);
+      }
+
+      window.resetGame = function() {
+        score = 0;
+        combo = 0;
+        timer = 60;
+        isPlaying = true;
+        gameStarted = true;
+        
+        updateDisplay();
+        timerEl.parentElement.classList.remove('text-red-500');
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        
+        loadQuestion();
+        startTimer();
+      };
+
+      window.checkAnswer = function(type) {
+        if (!isPlaying) {
+          if (!gameStarted) {
+            window.resetGame();
+            return;
+          }
+          return;
+        }
+
+        if (!currentQuestion) return;
+
+        if (type === currentQuestion.type) {
+          score += 10 + (combo * 2);
+          combo++;
+          showFeedback(true);
+        } else {
+          combo = 0;
+          showFeedback(false);
+        }
+
+        updateDisplay();
+        loadQuestion();
+      };
+
+      // Initial load
+      loadQuestion();
+    });
+  </script>
 
 
   <!-- ===============================
@@ -902,6 +1045,9 @@
              border-2 border-slate-300 dark:border-slate-600
              focus:border-amber-500 focus:ring-4 focus:ring-amber-500/10
              outline-none transition-all duration-300 min-h-[120px] md:min-h-[140px] w-full min-w-0" />
+                
+                <!-- Feedback langsung di bawah input -->
+                <div id="harakat-feedback" class="hidden mt-2 py-2 px-4 rounded-lg text-sm font-bold text-center transition-all"></div>
               </div>
 
             </div>
@@ -940,9 +1086,6 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
               </button>
-            </div>
-
-            <div id="harakat-feedback" class="hidden mt-4 p-4 rounded-xl text-center font-bold animate-bounce-in">
             </div>
 
           </div>
@@ -2057,179 +2200,215 @@
     })();
   </script>
 
-  <!-- JS UNTUK KUIS GRAMATIKAL -->
-  <script>
-    // STATE VARIABLE
-    let currentQuestion = {};
-    let score = 0;
-    let combo = 0;
-    let timer = 60;
-    let timerInterval;
-    let isPlaying = false;
+  <!-- HARAKAT GAME JS (FIRESTORE) - Logic for OLD UI above -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-    // "Deck" Soal (Supaya tidak ada soal berulang sebelum deck habis)
-    let questionDeck = [];
+    const harakatConfig = {
+      apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
+      authDomain: "tarbiyyat-lughah-presence.firebaseapp.com",
+      projectId: "tarbiyyat-lughah-presence",
+      databaseURL: "https://tarbiyyat-lughah-presence-default-rtdb.asia-southeast1.firebasedatabase.app",
+      storageBucket: "tarbiyyat-lughah-presence.firebasestorage.app",
+    };
 
-    // Elemen DOM
-    const wordEl = document.getElementById('game-word');
-    const scoreEl = document.getElementById('score-val');
-    const comboEl = document.getElementById('combo-val');
-    const timerEl = document.getElementById('timer-val');
-    const feedbackEl = document.getElementById('game-feedback');
-    const overlay = document.getElementById('game-overlay');
-    const overlayTitle = document.getElementById('overlay-title');
-    const overlayDesc = document.getElementById('overlay-desc');
+    const harakatApp = initializeApp(harakatConfig);
+    const harakatDb = getFirestore(harakatApp);
 
-    // 1. FUNGSI MEMULAI GAME
-    // 1. FUNGSI MEMULAI GAME / RESET
-    function resetGame() {
-      // Reset State
-      score = 0;
-      combo = 0;
-      timer = 60;
-      isPlaying = false; // Belum main sampai user klik jawaban
+    // STATE
+    let questions = [];
+    let currentQuestion = null;
 
-      clearInterval(timerInterval);
-      timerInterval = null;
-
-      // Update UI
-      scoreEl.innerText = '0';
-      comboEl.innerText = 'x0';
-      timerEl.innerText = '60';
-      timerEl.parentElement.classList.remove('text-red-500');
-
-      // Sembunyikan Overlay
-      overlay.classList.add('opacity-0', 'pointer-events-none');
-
-      // Siapkan Soal
-      shuffleDeck();
-      loadQuestion();
+    // DOM Elements for OLD UI
+    const oldQuestionEl = document.getElementById('harakat-question');
+    const oldInputEl = document.getElementById('harakat-input');
+    const oldFeedbackEl = document.getElementById('harakat-feedback');
+    const shuffleBtn = document.getElementById('shuffle-question');
+    
+    // Load question to OLD UI
+    function loadQuestionOld() {
+        if (questions.length === 0) {
+            if (oldQuestionEl) oldQuestionEl.innerText = "Memuat soal...";
+            return;
+        }
+        const rand = Math.floor(Math.random() * questions.length);
+        currentQuestion = questions[rand];
+        if (oldQuestionEl) oldQuestionEl.innerText = currentQuestion.word || currentQuestion.plain || "...";
+        if (oldInputEl) oldInputEl.value = '';
     }
 
-    // Initialize on Load
-    document.addEventListener("DOMContentLoaded", resetGame);
+    // LOAD DATA
+    const q = collection(harakatDb, "harakat_questions");
+    onSnapshot(q, (snap) => {
+        questions = [];
+        snap.forEach(d => questions.push(d.data()));
+        // Auto-load first question for old UI when data arrives
+        if (questions.length > 0) {
+            loadQuestionOld();
+        }
+    });
 
-    function startTimer() {
-      if (timerInterval) return; // Sudah jalan
-      isPlaying = true;
-
-      timerInterval = setInterval(() => {
-        timer--;
-        timerEl.innerText = timer;
-
-        if (timer <= 10) {
-          timerEl.parentElement.classList.add('text-red-500', 'animate-pulse');
+    // Check answer from OLD UI
+    window.checkHarakatAnswer = function() {
+        if (!currentQuestion) {
+            loadQuestionOld();
+            return;
+        }
+        const userAns = oldInputEl?.value?.trim() || '';
+        if (!userAns) {
+            if (oldFeedbackEl) {
+                oldFeedbackEl.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+                oldFeedbackEl.classList.add('bg-amber-100', 'text-amber-700');
+                oldFeedbackEl.innerText = "❗ Jawaban masih kosong";
+            }
+            return;
         }
 
-        if (timer <= 0) {
-          endGame();
+        if (userAns === currentQuestion.answer) {
+            // Show success popup
+            showCorrectPopup();
+            setTimeout(() => {
+                hideCorrectPopup();
+                loadQuestionOld();
+            }, 1400);
+        } else {
+            if (oldFeedbackEl) {
+                oldFeedbackEl.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-amber-100', 'text-amber-700');
+                oldFeedbackEl.classList.add('bg-red-100', 'text-red-700');
+                oldFeedbackEl.innerText = "❌ Salah, coba lagi!";
+                
+                // Auto-hide after 2 seconds
+                setTimeout(() => {
+                    oldFeedbackEl.classList.add('hidden');
+                }, 2000);
+            }
         }
-      }, 1000);
+    };
+
+    // Popup helper functions
+    const correctPopup = document.getElementById('harakat-correct-popup');
+    
+    function showCorrectPopup() {
+        if (correctPopup) correctPopup.classList.add('active');
     }
 
-    // 2. FUNGSI MENGACAK DECK (Logic "Bag of Words")
-    function shuffleDeck() {
-      // Copy data dari GAME_DATA (yang ada di file eksternal)
-      questionDeck = [...GAME_DATA];
-
-      // Algoritma Fisher-Yates Shuffle (Acak Sempurna)
-      for (let i = questionDeck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [questionDeck[i], questionDeck[j]] = [questionDeck[j], questionDeck[i]];
-      }
+    function hideCorrectPopup() {
+        if (correctPopup) correctPopup.classList.remove('active');
     }
 
-    // 3. LOAD SOAL BARU
-    function loadQuestion() {
-      // Jika deck habis, kocok ulang
-      if (questionDeck.length === 0) {
-        shuffleDeck();
-      }
+    // Shuffle button for OLD UI
+    shuffleBtn?.addEventListener('click', () => {
+        loadQuestionOld();
+    });
 
-      // Ambil 1 soal dari deck (pop)
-      currentQuestion = questionDeck.pop();
+    // =============================================
+    // KEYBOARD TOGGLE & INPUT LOGIC
+    // (Wait for arabic-keyboard.js to inject the element)
+    // =============================================
+    function initKeyboardListeners() {
+        const toggleKeyboardBtn = document.getElementById('toggle-keyboard');
+        const keyboardEl = document.getElementById('arabic-keyboard');
 
-      // Animasi Masuk
-      wordEl.style.opacity = 0;
-      wordEl.style.transform = "scale(0.8)";
-      setTimeout(() => {
-        wordEl.textContent = currentQuestion.word;
-        wordEl.style.opacity = 1;
-        wordEl.style.transform = "scale(1)";
-      }, 100);
+        if (!keyboardEl) {
+            // Keyboard not yet injected, retry after 200ms
+            setTimeout(initKeyboardListeners, 200);
+            return;
+        }
+
+        console.log("Keyboard element found, attaching listeners...");
+
+        toggleKeyboardBtn?.addEventListener('click', () => {
+            keyboardEl?.classList.toggle('hidden');
+            toggleKeyboardBtn.classList.toggle('active');
+        });
+
+        // Keyboard key clicks
+        keyboardEl?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.key-arab, .key-harakat');
+            if (!btn) return;
+            const char = btn.dataset.char;
+            if (char && oldInputEl) {
+                oldInputEl.value += char;
+                oldInputEl.focus();
+            }
+        });
+
+        // Backspace
+        document.getElementById('key-backspace')?.addEventListener('click', () => {
+            if (oldInputEl) {
+                oldInputEl.value = oldInputEl.value.slice(0, -1);
+                oldInputEl.focus();
+            }
+        });
+
+        // Space
+        document.getElementById('key-space')?.addEventListener('click', () => {
+            if (oldInputEl) {
+                oldInputEl.value += ' ';
+                oldInputEl.focus();
+            }
+        });
+
+        // Enter
+        document.getElementById('key-enter')?.addEventListener('click', () => {
+            window.checkHarakatAnswer();
+        });
     }
 
-    // 4. CEK JAWABAN
-    function checkAnswer(userChoice) {
-      // Mulai timer jika belum jalan
-      if (!timerInterval && timer > 0) {
-        startTimer();
-      }
+    // Start polling for keyboard element
+    initKeyboardListeners();
 
-      if (timer <= 0) return; // Game over
-
-      const isCorrect = userChoice === currentQuestion.type;
-
-      if (isCorrect) {
-        // Logic Skor
-        combo++;
-        score += 10 + (combo > 5 ? 5 : 0); // Bonus extra kalau combo tinggi
-        playSound('correct');
-        showFeedback(true);
-      } else {
-        combo = 0;
-        score = Math.max(0, score - 5);
-        playSound('wrong');
-        showFeedback(false);
-      }
-
-      // Update UI Skor
-      scoreEl.innerText = score;
-      comboEl.innerText = 'x' + combo;
-      comboEl.className = combo > 1 ? "text-3xl font-black text-amber-500 animate-bounce" : "text-3xl font-black text-slate-300";
-
-      // Lanjut Soal
-      loadQuestion();
-    }
-
-    // 5. FEEDBACK VISUAL
-    function showFeedback(isCorrect) {
-      feedbackEl.textContent = isCorrect ? '✅' : '❌';
-      feedbackEl.style.opacity = 1;
-      feedbackEl.style.transform = "scale(1.2)"; // Membesar
-
-      // Warna teks soal berubah sesaat
-      wordEl.classList.add(isCorrect ? 'text-green-500' : 'text-red-500');
-
-      setTimeout(() => {
-        feedbackEl.style.opacity = 0;
-        feedbackEl.style.transform = "scale(0.5)";
-        wordEl.classList.remove('text-green-500', 'text-red-500');
-      }, 400);
-    }
-
-    // 6. GAME OVER
-    function endGame() {
-      isPlaying = false;
-      clearInterval(timerInterval);
-
-      // Tampilkan Overlay lagi dengan skor akhir
-      overlayTitle.innerText = "Waktu Habis! 🏁";
-      overlayDesc.innerHTML = `Skor Akhirmu: <strong class="text-2xl text-blue-600 block mt-2">${score}</strong>`;
-
-      // Ganti tombol jadi "Main Lagi"
-      const btn = overlay.querySelector('button');
-      if (btn) btn.innerText = "Main Lagi 🔄";
-
-      overlay.classList.remove('opacity-0', 'pointer-events-none');
-    }
-
-    // Dummy Sound Function
-    function playSound(type) {
-      // Opsi: Tambahkan Audio() di sini
-    }
-
+    // Enter key on input
+    oldInputEl?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') window.checkHarakatAnswer();
+    });
   </script>
+
+  <!-- ===============================
+       🎓 GAME GRAMATIKAL (FLIP CARDS)
+  ================================== -->
+  <section id="grammar-game" class="scroll-mt-28 w-full py-16 md:py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+    
+    <!-- Dekorasi Latar -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div class="absolute top-0 left-0 w-1/2 h-full bg-teal-500/5 dark:bg-teal-500/10 blur-[120px] rounded-full -translate-x-1/2"></div>
+      <div class="absolute bottom-0 right-0 w-1/3 h-1/2 bg-purple-500/5 dark:bg-purple-500/10 blur-[100px] rounded-full translate-x-1/2"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-4 relative">
+      <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-2xl border-4 border-slate-50 dark:border-slate-700/50 overflow-hidden">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-teal-600 to-emerald-600 dark:from-teal-700 dark:to-emerald-800 px-6 py-5 text-center">
+          <span class="inline-block px-4 py-1.5 mb-3 text-[10px] font-black uppercase tracking-[0.3em] bg-white/20 text-white rounded-full ring-2 ring-white/30">
+            Gramatikal
+          </span>
+          <h2 class="text-2xl md:text-3xl font-black text-white mb-1">Tebak Jenis Kata</h2>
+          <p class="text-teal-100 text-sm font-medium">Klik kartu untuk melihat penjelasan</p>
+        </div>
+
+        <div class="p-6 md:p-10">
+          
+          <!-- Control Buttons -->
+          <div class="flex justify-center gap-4 mb-8">
+            <button id="gbtn-shuffle" class="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-lg shadow-teal-500/20 transition-all active:scale-95">
+              🔀 Acak Baru
+            </button>
+            <button id="gbtn-reset" class="px-6 py-3 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-white rounded-2xl font-black uppercase tracking-widest text-xs transition-all">
+              ↩️ Balik Semua
+            </button>
+          </div>
+
+          <!-- Card Grid -->
+          <div id="gcard-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <!-- Cards will be dynamically inserted here by JavaScript -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- flip kartu untuk gramatikal -->
   <script>
@@ -2240,6 +2419,7 @@
       const grid = document.getElementById('gcard-grid');
       const btnSh = document.getElementById('gbtn-shuffle');
       const btnRs = document.getElementById('gbtn-reset');
+      
       if (!grid || !btnSh || !btnRs) {
         return;
       }
@@ -2256,9 +2436,8 @@
         typeof m.explain_id === 'string' &&
         typeof m.example_ar === 'string'
       );
-
+      
       if (!GRAMMAR.length) {
-        console.warn('Grammar cards: data MATERIALS kosong');
         return;
       }
 
@@ -2617,13 +2796,10 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- BANK SOAL SUSUN KATA -->
-  <script src="./assets/data/sentence-game-data.js"></script>
-  <script src="./assets/js/sentence-game.js"></script>
+  <script type="module" src="./assets/js/sentence-game.js"></script>
 
   <!-- BANK SOAL BERI HARAKAT -->
-  <script src="./assets/data/harakat-game-data.js"></script>
   <script src="assets/js/arabic-keyboard.js"></script>
-  <script src="./assets/js/harakat-game.js"></script>
 
 
 

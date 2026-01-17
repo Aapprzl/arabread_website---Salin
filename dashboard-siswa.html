@@ -846,8 +846,6 @@
     </div>
   </footer>
 
-  <!-- DATA SOAL -->
-  <script src="assets/data/vocabs.js"></script>
 
   <!-- MAIN LOGIC -->
   <script type="module">
@@ -1743,9 +1741,6 @@
   <script type="module" src="assets/presence.js"></script>
 
   <!-- GAME ASSETS & ENGINE for STUDENT -->
-  <script src="assets/data/game-data.js"></script>
-  <script src="assets/data/sentence-game-data.js"></script>
-  <script src="assets/data/harakat-game-data.js"></script>
   <script src="assets/js/arabic-keyboard.js"></script>
   <script type="module">
       import { db, auth } from "./assets/js/firebase-config.js";
@@ -1942,7 +1937,8 @@
       });
 
       // --- GAME 1: GRAMMAR ---
-      window.initGrammarGame = function() {
+      // --- GAME 1: GRAMMAR (FIRESTORE) ---
+      window.initGrammarGame = async function() {
         const wordEl = document.getElementById('sg-grammar-word');
         const feedbackEl = document.getElementById('sg-grammar-feedback');
         
@@ -1953,52 +1949,59 @@
           { word: "مِنْ", type: "harf" }, { word: "فِي", type: "harf" }
         ];
 
+        let questions = [];
         let currentQ = null;
 
+        // Load Data from Firestore
+        try {
+            const snap = await getDocs(collection(db, "grammar_questions"));
+            snap.forEach(d => questions.push(d.data()));
+            console.log("Siswa Grammar Questions Loaded:", questions.length);
+        } catch(e) {
+            console.error("Err loading grammar questions for siswa:", e);
+            questions = (window.GAME_DATA && window.GAME_DATA.length) ? window.GAME_DATA : LOCAL_DATA;
+        }
+
         window.loadGrammarQuestion = function() {
-           const allData = (window.GAME_DATA && window.GAME_DATA.length) ? window.GAME_DATA : LOCAL_DATA;
+           const allData = questions.length ? questions : ((window.GAME_DATA && window.GAME_DATA.length) ? window.GAME_DATA : LOCAL_DATA);
+           if(!allData.length) return;
            currentQ = allData[Math.floor(Math.random() * allData.length)];
-           if(wordEl) wordEl.textContent = currentQ.word;
+           if(wordEl) {
+              wordEl.textContent = currentQ.word;
+              wordEl.className = "font-arab text-5xl md:text-6xl font-black text-slate-800 dark:text-white leading-loose mb-2";
+           }
            if(feedbackEl) feedbackEl.style.opacity = 0;
            
            // Ensure buttons work
            document.querySelectorAll('.sg-grammar-btn').forEach(btn => {
               btn.onclick = () => {
+                 if(!currentQ) return;
                  if(btn.dataset.type === currentQ.type) {
                     if(feedbackEl) feedbackEl.textContent = '✅';
                     if(feedbackEl) feedbackEl.style.opacity = 1;
-                    
-                    // SAVE HISTORY: Correct
                     saveGameRecord("Game Grammar", true);
-                    
                     setTimeout(window.loadGrammarQuestion, 800);
                  } else {
-                    // Logic Baru: Salah -> Lanjut (jangan suruh ulang)
                     if(feedbackEl) feedbackEl.textContent = '❌';
                     if(feedbackEl) feedbackEl.style.opacity = 1;
-                    
-                    // SAVE HISTORY: Wrong
                     saveGameRecord("Game Grammar", false);
-
                     setTimeout(() => { 
                         if(feedbackEl) feedbackEl.style.opacity = 0; 
-                        window.loadGrammarQuestion(); // <-- Langsung Ganti Soal
+                        window.loadGrammarQuestion(); 
                     }, 500);
                  }
               }
            });
         };
         
-        // Remove Start Button if exists
         const startBtn = document.querySelector('button[onclick="window.startGrammarGame()"]');
         if(startBtn) startBtn.remove();
 
-        // Init Directly
         window.loadGrammarQuestion();
       }
 
       // --- GAME 2: SENTENCE ---
-      window.initSentenceGame = function() {
+      window.initSentenceGame = async function() {
          const LOCAL_SENTENCE = [
            { title:"Kalimat 1", description:"Susun kalimat", correct:["أَنَا", "طَالِبٌ"] },
            { title:"Kalimat 2", description:"Susun kalimat", correct:["هُوَ", "أُسْتَاذٌ"] }
@@ -2007,10 +2010,22 @@
          const dropZone = document.getElementById("sg-sentence-drop");
          const titleEl = document.getElementById("sg-sentence-title");
          const descEl = document.getElementById("sg-sentence-desc");
+         let questions = [];
          let currentQ = null;
 
+         // Load Data from Firestore
+         try {
+             const snap = await getDocs(collection(db, "sentence_questions"));
+             snap.forEach(d => questions.push(d.data()));
+             console.log("Siswa Sentence Questions Loaded:", questions.length);
+         } catch(e) {
+             console.error("Err loading sentence questions for siswa:", e);
+             questions = (window.SENTENCE_GAME_DATA && window.SENTENCE_GAME_DATA.length) ? window.SENTENCE_GAME_DATA : LOCAL_SENTENCE;
+         }
+
          window.loadSentenceGame = function() {
-            const allData = (window.SENTENCE_GAME_DATA && window.SENTENCE_GAME_DATA.length) ? window.SENTENCE_GAME_DATA : LOCAL_SENTENCE;
+            const allData = questions.length ? questions : ((window.SENTENCE_GAME_DATA && window.SENTENCE_GAME_DATA.length) ? window.SENTENCE_GAME_DATA : LOCAL_SENTENCE);
+            if(!allData.length) return;
             currentQ = allData[Math.floor(Math.random() * allData.length)];
             
             if(wordBank) wordBank.innerHTML = "";
@@ -2021,7 +2036,7 @@
             const words = [...currentQ.correct].sort(() => Math.random() - 0.5);
             words.forEach(w => {
                const div = document.createElement("div");
-               div.className = "px-3 py-2 bg-blue-100 dark:bg-blue-900 rounded cursor-pointer border hover:border-blue-500";
+               div.className = "px-3 py-2 bg-blue-100 dark:bg-blue-900 rounded cursor-pointer border hover:border-blue-500 font-arab text-lg";
                div.textContent = w;
                div.onclick = function() {
                   if(this.parentNode === wordBank) dropZone.appendChild(this);
@@ -2034,19 +2049,16 @@
          const checkBtn = document.getElementById("sg-sentence-check");
          if(checkBtn) {
             checkBtn.onclick = function() {
+               if(!currentQ) return;
                const ans = [...dropZone.children].map(c => c.textContent);
                const correct = currentQ.correct;
                const isRight = ans.length === correct.length && ans.every((v, k) => v === correct[k]);
                if(isRight) {
                   Swal.fire({ title:'Benar!', icon:'success', timer:1000, showConfirmButton:false });
-                  
-                  // SAVE HISTORY
                   saveGameRecord("Game Kalimat", true);
-                  
                   setTimeout(window.loadSentenceGame, 1000);
                } else {
                   Swal.fire({ title:'Salah', icon:'error', timer:1000, showConfirmButton:false });
-                  // SAVE HISTORY - Wrong
                   saveGameRecord("Game Kalimat", false);
                }
             };
@@ -2055,12 +2067,8 @@
          window.loadSentenceGame();
       }
 
-      // --- GAME 3: HARAKAT ---
-      window.initHarakatGame = function() {
-         const LOCAL_HARAKAT = [
-            { plain: "كتب", answer: "كَتَبَ" },
-            { plain: "علم", answer: "عَلِمَ" }
-         ];
+      // --- GAME 3: HARAKAT (FIRESTORE) ---
+      window.initHarakatGame = async function() {
          const qEl = document.getElementById("sg-harakat-question");
          const iEl = document.getElementById("sg-harakat-input");
          if(qEl) {
@@ -2070,11 +2078,9 @@
          if(iEl) {
              iEl.classList.remove('text-2xl');
              iEl.classList.add('text-5xl', 'font-bold', 'py-4');
-             // Force Custom Keyboard Only
              iEl.setAttribute("inputmode", "none");
              iEl.setAttribute("autocomplete", "off");
              
-             // Auto-Show Keyboard Logic
              const showKeyboard = () => {
                  const kb = document.getElementById('arabic-keyboard');
                  if(kb) {
@@ -2082,33 +2088,38 @@
                      window.activeArabicInput = iEl;
                  }
              };
-             
-             iEl.removeEventListener('focus', showKeyboard); // prevent dupe
-             iEl.removeEventListener('click', showKeyboard); 
-             
              iEl.addEventListener('focus', showKeyboard);
              iEl.addEventListener('click', showKeyboard);
          }
 
+         let questions = [];
          let currentQ = null;
 
+         // Load Data from Firestore
+         try {
+             const snap = await getDocs(collection(db, "harakat_questions"));
+             snap.forEach(d => questions.push(d.data()));
+             console.log("Siswa Harakat Questions Loaded:", questions.length);
+         } catch(e) {
+             console.error("Err loading harakat questions for siswa:", e);
+             // Fallback
+             questions = [ { plain: "كتب", answer: "كَتَبَ" }, { plain: "علم", answer: "عَلِمَ" } ];
+         }
+
          window.loadHarakatGame = function() {
-            const allData = (window.HARAKAT_GAME_DATA && window.HARAKAT_GAME_DATA.length) ? window.HARAKAT_GAME_DATA : LOCAL_HARAKAT;
-            currentQ = allData[Math.floor(Math.random() * allData.length)];
-            if(qEl) qEl.textContent = currentQ.plain;
+            if(!questions.length) return;
+            currentQ = questions[Math.floor(Math.random() * questions.length)];
+            if(qEl) qEl.textContent = currentQ.plain || currentQ.word;
             if(iEl) {
                 iEl.value = "";
                 iEl.focus();
-                // Set active input for keyboard
                 window.activeArabicInput = iEl;
             }
          };
          
-         // Bind Shuffle
          const shuffleBtn = document.getElementById("sg-harakat-shuffle");
          if(shuffleBtn) shuffleBtn.onclick = window.loadHarakatGame;
          
-         // Bind Keyboard Toggle
          const kbdBtn = document.getElementById("sg-harakat-keyboard-toggle");
          if(kbdBtn) {
              kbdBtn.onclick = () => {
@@ -2118,7 +2129,6 @@
              }
          }
 
-         // Bind Physical Enter
          if(iEl) {
              iEl.addEventListener("keydown", (e) => {
                  if(e.key === "Enter") {
@@ -2126,33 +2136,25 @@
                      document.getElementById("sg-harakat-check").click();
                  }
              });
-             // Focus handling
-             iEl.onfocus = () => window.activeArabicInput = iEl;
          }
 
          const btn = document.getElementById("sg-harakat-check");
          if(btn) {
             btn.onclick = function() {
-               if(!iEl.value) return;
-               // Simple normalize
+               if(!iEl.value || !currentQ) return;
                const user = iEl.value.trim(); 
                const ans = currentQ.answer.trim();
                if(user === ans) {
                   Swal.fire({ title:'Benar! (+1 Poin)', icon:'success', timer:1000, showConfirmButton:false });
-                  
-                  // SAVE HISTORY
                   saveGameRecord("Game Harakat", true);
-                  
                   setTimeout(window.loadHarakatGame, 1000);
                } else {
-                  Swal.fire({ title:'Salah', icon:'error' });
-                  // SAVE HISTORY
+                  Swal.fire({ title:'Salah', icon:'error', text: `Jawaban benar: ${ans}` });
                   saveGameRecord("Game Harakat", false);
                }
             };
          }
          
-         // Init
          window.loadHarakatGame();
       }
 

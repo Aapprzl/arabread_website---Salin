@@ -2,7 +2,6 @@
 <html lang="id" dir="ltr">
 
 <script src="assets/theme.js"></script>
-<script src="assets/data/vocabs.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
@@ -641,7 +640,7 @@
                    <div class="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-lg text-xs font-bold border border-indigo-100 dark:border-indigo-800">
                      <i data-feather="info" class="w-3.5 h-3.5"></i> Input di tabel
                    </div>
-                   <button onclick="migrateVocabs()" id="btnMigrate" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all hidden">
+                   <button onclick="migrateVocabs()" id="btnMigrate" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all">
                      <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Data Lama
                    </button>
                    <button onclick="resetFlashcards()" id="btnResetDefault" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-red-500/20 transition-all">
@@ -688,6 +687,247 @@
               } else {
                 chevron.classList.remove("-rotate-90");
                 loadFlashcards(); // Load data when opened
+              }
+            }
+        </script>
+
+        <!-- ===============================
+             JOKER CARD: MANAJEMEN GAME HARAKAT
+        =============================== -->
+        <div class="mb-12 px-1 max-w-5xl mx-auto">
+          <div class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            
+            <div onclick="toggleHarakat()" class="cursor-pointer px-6 py-5 border-b border-transparent hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex items-center justify-between bg-white dark:bg-slate-800">
+               <div class="flex items-center gap-3">
+                 <div class="p-2 bg-pink-100 dark:bg-pink-900/30 rounded-lg text-pink-600 dark:text-pink-400">
+                   <i data-feather="crosshair" class="w-6 h-6"></i>
+                 </div>
+                 <div>
+                   <h3 class="text-xl font-bold text-slate-800 dark:text-white select-none">
+                     Manajemen Game Harakat
+                   </h3>
+                   <p class="text-xs text-slate-400 dark:text-slate-500 select-none">
+                     Kelola soal untuk mini-game tebak harakat.
+                   </p>
+                 </div>
+               </div>
+               
+               <div class="flex items-center gap-2">
+                 <span id="harakatCount" class="text-xs bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400 px-2 py-0.5 rounded-full font-bold">0</span>
+                 <svg id="harakatChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
+                      stroke-width="2.5" stroke="currentColor" 
+                      class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                 </svg>
+               </div>
+            </div>
+
+            <div id="harakatContent" class="hidden">
+              
+              <!-- Toolbar -->
+              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700 flex flex-wrap gap-3 justify-between items-center">
+                <div class="flex gap-2">
+                   <div class="flex items-center gap-2 px-3 py-1.5 bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400 rounded-lg text-xs font-bold border border-pink-100 dark:border-pink-800">
+                     <i data-feather="info" class="w-3.5 h-3.5"></i> Input di tabel
+                   </div>
+                   <button onclick="migrateHarakatData()" id="btnMigrateHarakat" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all">
+                     <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Statis
+                   </button>
+                </div>
+              </div>
+
+              <!-- Table -->
+              <div class="overflow-x-auto w-full max-h-[500px] overflow-y-auto scrollbar-thin">
+                <table class="w-full text-sm text-left">
+                  <thead class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
+                    <tr>
+                      <th class="px-6 py-4">No</th>
+                      <th class="px-6 py-4 text-right">Arab Gundul (Plain)</th>
+                      <th class="px-6 py-4 text-right">Jawaban Berharakat</th>
+                      <th class="px-6 py-4">Hint (Indonesia)</th>
+                      <th class="px-6 py-4 text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableHarakat" class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                     <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <script>
+            function toggleHarakat() {
+              const content = document.getElementById("harakatContent");
+              const chevron = document.getElementById("harakatChevron");
+              if (!content || !chevron) return;
+              content.classList.toggle("hidden");
+              if (content.classList.contains("hidden")) {
+                chevron.classList.add("-rotate-90");
+              } else {
+                chevron.classList.remove("-rotate-90");
+                loadHarakatQuestions(); // Load data when opened
+              }
+            }
+        </script>
+
+        <!-- ===============================
+             JOKER CARD: MANAJEMEN GAME SUSUN KALIMAT
+        =============================== -->
+        <div class="mb-12 px-1 max-w-5xl mx-auto">
+          <div class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            
+            <div onclick="toggleSentenceGame()" class="cursor-pointer px-6 py-5 border-b border-transparent hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex items-center justify-between bg-white dark:bg-slate-800">
+               <div class="flex items-center gap-3">
+                 <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
+                   <i data-feather="grid" class="w-6 h-6"></i>
+                 </div>
+                 <div>
+                   <h3 class="text-xl font-bold text-slate-800 dark:text-white select-none">
+                     Manajemen Game Susun Kalimat
+                   </h3>
+                   <p class="text-xs text-slate-400 dark:text-slate-500 select-none">
+                     Kelola soal untuk mini-game menyusun kalimat Arab.
+                   </p>
+                 </div>
+               </div>
+               
+               <div class="flex items-center gap-2">
+                 <span id="sentenceCount" class="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 px-2 py-0.5 rounded-full font-bold">0</span>
+                 <svg id="sentenceChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
+                      stroke-width="2.5" stroke="currentColor" 
+                      class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                 </svg>
+               </div>
+            </div>
+
+            <div id="sentenceContent" class="hidden">
+              
+              <!-- Toolbar -->
+              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700 flex flex-wrap gap-3 justify-between items-center">
+                <div class="flex gap-2">
+                   <button onclick="showAddSentenceModal()" class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-teal-500/20 transition-all">
+                     <i data-feather="plus" class="w-4 h-4"></i> Tambah Soal
+                   </button>
+                   <button onclick="migrateSentenceData()" id="btnMigrateSentence" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all">
+                     <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Statis
+                   </button>
+                </div>
+              </div>
+
+              <!-- Table -->
+              <div class="overflow-x-auto w-full max-h-[500px] overflow-y-auto scrollbar-thin">
+                <table class="w-full text-sm text-left">
+                  <thead class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
+                    <tr>
+                      <th class="px-6 py-4">No</th>
+                      <th class="px-6 py-4">Level</th>
+                      <th class="px-6 py-4">Judul / Pola</th>
+                      <th class="px-6 py-4 text-right">Susunan Kata (Arab)</th>
+                      <th class="px-6 py-4 text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableSentence" class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                     <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <script>
+            function toggleSentenceGame() {
+              const content = document.getElementById("sentenceContent");
+              const chevron = document.getElementById("sentenceChevron");
+              if (!content || !chevron) return;
+              content.classList.toggle("hidden");
+              if (content.classList.contains("hidden")) {
+                chevron.classList.add("-rotate-90");
+              } else {
+                chevron.classList.remove("-rotate-90");
+                loadSentenceQuestions(); // Function name in the upcoming script
+              }
+            }
+        </script>
+
+        <!-- ===============================
+             MANAJEMEN GAME TEBAK JENIS KATA (GRAMMAR)
+        =============================== -->
+        <div class="mb-12 px-1 max-w-5xl mx-auto">
+          <div class="w-full bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+            
+            <div onclick="toggleGrammarGame()" class="cursor-pointer px-6 py-5 border-b border-transparent hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors flex items-center justify-between bg-white dark:bg-slate-800">
+               <div class="flex items-center gap-3">
+                 <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
+                   <i data-feather="type" class="w-6 h-6"></i>
+                 </div>
+                 <div>
+                   <h3 class="text-xl font-bold text-slate-800 dark:text-white select-none">
+                     Manajemen Game Tebak Jenis Kata
+                   </h3>
+                   <p class="text-xs text-slate-400 dark:text-slate-500 select-none">
+                     Kelola kosakata untuk game klasifikasi Isim, Fi'il, dan Harf.
+                   </p>
+                 </div>
+               </div>
+               
+               <div class="flex items-center gap-2">
+                 <span id="grammarCount" class="text-xs bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 px-2 py-0.5 rounded-full font-bold">0</span>
+                 <svg id="grammarChevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
+                      stroke-width="2.5" stroke="currentColor" 
+                      class="w-5 h-5 text-slate-400 transition-transform duration-300 transform -rotate-90">
+                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                 </svg>
+               </div>
+            </div>
+
+            <div id="grammarContent" class="hidden">
+              <div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-100 dark:border-slate-700 flex flex-wrap gap-3 justify-between items-center">
+                <div class="flex gap-2">
+                   <button onclick="showAddGrammarModal()" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-indigo-500/20 transition-all">
+                     <i data-feather="plus" class="w-4 h-4"></i> Tambah Kata
+                   </button>
+                   <button onclick="migrateGrammarData()" id="btnMigrateGrammar" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-amber-500/20 transition-all">
+                     <i data-feather="upload-cloud" class="w-4 h-4"></i> Migrasi Statis
+                   </button>
+                </div>
+              </div>
+
+              <div class="overflow-x-auto w-full max-h-[500px] overflow-y-auto scrollbar-thin">
+                <table class="w-full text-sm text-left">
+                  <thead class="bg-slate-100 dark:bg-slate-900/80 text-xs uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
+                    <tr>
+                      <th class="px-6 py-4">No</th>
+                      <th class="px-6 py-4 text-right">Kata (Arab)</th>
+                      <th class="px-6 py-4 text-center">Jenis Kata</th>
+                      <th class="px-6 py-4 text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableGrammar" class="divide-y divide-slate-100 dark:divide-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                     <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+            function toggleGrammarGame() {
+              const content = document.getElementById("grammarContent");
+              const chevron = document.getElementById("grammarChevron");
+              if (!content || !chevron) return;
+              content.classList.toggle("hidden");
+              if (content.classList.contains("hidden")) {
+                chevron.classList.add("-rotate-90");
+              } else {
+                chevron.classList.remove("-rotate-90");
+                loadGrammarQuestions(); 
               }
             }
         </script>
@@ -5270,110 +5510,66 @@
 
 
   <!-- =========================================
-       FLASHCARD LOGIC
+       FLASHCARD & HARAKAT LOGIC (CONSOLIDATED)
        ========================================= -->
   <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-      import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy, writeBatch, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+      import { db, auth } from "./assets/js/firebase-config.js";
+      import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy, writeBatch, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
       
-      console.log("Flashcard Module Loading...");
-
-      // Config (Inline to ensure reliability)
-      const flashcardConfig = {
-        apiKey: "AIzaSyAo4Hed-LHh2YIdkOE9PEinMGjG9UwAMUQ",
-        authDomain: "tarbiyyat-lughah-presence.firebaseapp.com",
-        projectId: "tarbiyyat-lughah-presence",
-        databaseURL: "https://tarbiyyat-lughah-presence-default-rtdb.asia-southeast1.firebasedatabase.app",
-        storageBucket: "tarbiyyat-lughah-presence.firebasestorage.app",
-      };
-
-      const flashcardApp = initializeApp(flashcardConfig);
-      const flashcardDb = getFirestore(flashcardApp);
-      
-      console.log("Flashcard Database Initialized:", flashcardDb);
+      console.log("Teacher Dashboard Module Loading (Shared Firebase)...");
 
       /* -------------------------------------
-         1. LOAD FLASHCARDS
+         1. FLASHCARDS LOGIC
          ------------------------------------- */
-      /* -------------------------------------
-         1. LOAD & RENDER FLASHCARDS
-         ------------------------------------- */
-      window.allFlashcards = []; // Global State
-
-      /* -------------------------------------
-         1. LOAD & RENDER FLASHCARDS (REALTIME)
-         ------------------------------------- */
-      window.allFlashcards = []; // Global State
-      let unsubscribeFlashcards = null; // Listener Unsubscribe
+      window.allFlashcards = [];
+      let unsubFlash = null;
 
       window.loadFlashcards = () => {
-         const table = document.getElementById('tableFlashcards');
-         const counter = document.getElementById('flashcardCount');
-         if(!table) return;
+          const table = document.getElementById('tableFlashcards');
+          const counter = document.getElementById('flashcardCount');
+          if(!table) return;
 
-         // Prevent multiple listeners
-         if (unsubscribeFlashcards) {
-             // If already listening, we don't need to do anything, OR we can just return.
-             // But if we want to ensure fresh start (rare), we could unsub.
-             // For now, let's just return if it's already active, BUT 
-             // toggleFlashcards calls this every time. So we should check if data is loaded?
-             // Better: always unsubscribe old and start new to be safe, or just keep one global listener that starts once.
-             // Let's go with: Unsubscribe previous if exists.
-             unsubscribeFlashcards();
-         }
+          if(unsubFlash) unsubFlash();
 
-         // Initial Loading State (only if array is empty to prevent flicker)
-         if (window.allFlashcards.length === 0) {
-            table.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-slate-400 italic">Memuat data realtime...</td></tr>';
-         }
+          if(window.allFlashcards.length === 0) {
+              table.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-slate-400 italic">Memuat data...</td></tr>';
+          }
 
-         const q = query(collection(flashcardDb, "flashcards"), orderBy("id", "asc"));
-         
-         unsubscribeFlashcards = onSnapshot(q, (snap) => {
-             window.allFlashcards = [];
-             snap.forEach(d => {
-                 window.allFlashcards.push({ docId: d.id, ...d.data() });
-             });
+          const q = query(collection(db, "flashcards"), orderBy("id", "asc"));
+          unsubFlash = onSnapshot(q, (snap) => {
+              window.allFlashcards = [];
+              snap.forEach(d => window.allFlashcards.push({ docId: d.id, ...d.data() }));
 
-             // Update UI
-             if(counter) counter.innerText = window.allFlashcards.length;
-             
-             // Check Empty
-             if(window.allFlashcards.length === 0) {
-                 document.getElementById('btnMigrate')?.classList.remove('hidden');
-             } else {
-                 document.getElementById('btnMigrate')?.classList.add('hidden');
-             }
+              if(counter) counter.innerText = window.allFlashcards.length;
+              
+              const btnMig = document.getElementById('btnMigrate');
+              if(window.allFlashcards.length === 0) btnMig?.classList.remove('hidden');
+              else btnMig?.classList.add('hidden');
 
-             // Apply Search Filter if input exists and has value
-             const searchVal = document.getElementById('searchFlashcard')?.value || '';
-             if (searchVal) {
-                 const term = searchVal.toLowerCase();
-                 const filtered = window.allFlashcards.filter(c => 
-                    (c.id && c.id.toLowerCase().includes(term)) || 
-                    (c.ar && c.ar.includes(term)) ||
-                    (c.tema && c.tema.toLowerCase().includes(term))
-                 );
-                 renderFlashcards(filtered);
-             } else {
-                 renderFlashcards(window.allFlashcards);
-             }
-
-         }, (error) => {
-             console.error("Flashcard Realtime Error:", error);
-             table.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-red-500 italic">Error: ${error.message}</td></tr>`;
-         });
+              const searchVal = document.getElementById('searchFlashcard')?.value || '';
+              if (searchVal) {
+                  const term = searchVal.toLowerCase();
+                  const filtered = window.allFlashcards.filter(c => 
+                     (c.id && c.id.toLowerCase().includes(term)) || 
+                     (c.ar && c.ar.includes(term)) ||
+                     (c.tema && c.tema.toLowerCase().includes(term))
+                  );
+                  renderFlashcards(filtered);
+              } else {
+                  renderFlashcards(window.allFlashcards);
+              }
+          }, (err) => {
+              console.error("Flashcard listener error:", err);
+              // Show migrate button anyway if listener fails (might be permission issue on empty coll)
+              document.getElementById('btnMigrate')?.classList.remove('hidden');
+          });
       };
 
-      // RENDER FUNCTION (Handles Filter & Inline Input)
       window.renderFlashcards = (data) => {
           const table = document.getElementById('tableFlashcards');
           if(!table) return;
 
-          let html = '';
-
-          // 1️⃣ INPUT ROW (ALWAYS TOP)
-          html += `
+          let html = `
             <tr class="bg-indigo-50/50 dark:bg-indigo-900/10 border-b-2 border-indigo-100 dark:border-indigo-800/50">
                 <td class="px-6 py-4 text-center font-bold text-indigo-300">#</td>
                 <td class="px-6 py-4">
@@ -5396,294 +5592,450 @@
             </tr>
           `;
 
-          // 2️⃣ DATA ROWS
-          if(data.length === 0) {
-              html += `<tr><td colspan="5" class="text-center py-8 text-slate-400 italic">Tidak ada data ditemukan.</td></tr>`;
-          } else {
-              let no = 1;
-              data.forEach(card => {
-                  html += `
-                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group border-b border-slate-50 dark:border-slate-800">
-                     <td class="px-6 py-4 font-bold text-slate-400 text-xs">${no++}</td>
-                     <td class="px-6 py-4 text-right font-arab text-xl text-emerald-600 dark:text-emerald-400">${card.ar}</td>
-                     <td class="px-6 py-4 font-bold text-slate-700 dark:text-slate-200">${card.id}</td>
-                     <td class="px-6 py-4">
-                         <span class="px-2.5 py-1 text-[10px] font-bold uppercase bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-lg tracking-wider">
-                            ${card.tema || 'umum'}
-                         </span>
-                     </td>
-                     <td class="px-6 py-4 text-center">
-                         <button onclick="deleteFlashcard('${card.docId}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors" title="Hapus">
-                            <i data-feather="trash-2" class="w-4 h-4"></i>
-                         </button>
-                     </td>
-                  </tr>
-                  `;
-              });
+          let no = 1;
+          data.forEach(c => {
+              html += `
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
+                 <td class="px-6 py-4 font-bold text-slate-400">${no++}</td>
+                 <td class="px-6 py-4 text-right font-arab text-xl text-emerald-600 dark:text-emerald-400">${c.ar}</td>
+                 <td class="px-6 py-4 font-bold text-slate-700 dark:text-slate-200">${c.id}</td>
+                 <td class="px-6 py-4">
+                     <span class="px-2 py-1 text-[10px] font-bold uppercase bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-lg">
+                        ${c.tema || 'umum'}
+                     </span>
+                 </td>
+                 <td class="px-6 py-4 text-center">
+                     <button onclick="deleteFlashcard('${c.docId}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors">
+                        <i data-feather="trash-2" class="w-4 h-4"></i>
+                     </button>
+                 </td>
+              </tr>`;
+          });
+          
+          if(data.length === 0 && window.allFlashcards.length > 0) {
+              html += `<tr><td colspan="5" class="text-center py-8 text-slate-400 italic">Hasil pencarian kosong.</td></tr>`;
+          } else if(window.allFlashcards.length === 0) {
+              html += `<tr><td colspan="5" class="text-center py-8 text-slate-400 italic">Belum ada data flashcard.</td></tr>`;
           }
 
           table.innerHTML = html;
           if(typeof feather !== 'undefined') feather.replace();
-          
-          // Restore focus to Input ID if needed? No, standard behavior is fine.
+      };
+
+      window.addFlashcardInline = async () => {
+          const ar = document.getElementById('inNewAr'), id = document.getElementById('inNewId'), tm = document.getElementById('inNewTema');
+          if(!ar.value.trim() || !id.value.trim()) return Swal.fire('Error', 'Harap isi Arab & Indonesia', 'error');
+          try {
+              await addDoc(collection(db, "flashcards"), { id: id.value.trim(), ar: ar.value.trim(), tema: tm.value.trim() || 'umum', createdAt: new Date().toISOString() });
+              ar.value = ''; id.value = ''; tm.value = ''; ar.focus();
+          } catch(e) { Swal.fire('Error', e.message, 'error'); }
+      };
+
+      window.deleteFlashcard = async (docId) => {
+          if((await Swal.fire({ title: 'Hapus?', icon: 'warning', showCancelButton: true })).isConfirmed) {
+              try { await deleteDoc(doc(db, "flashcards", docId)); } catch(e) { Swal.fire('Error', e.message, 'error'); }
+          }
+      };
+
+      window.resetFlashcards = async () => {
+          if(!(await Swal.fire({ title: 'Reset Default?', text: 'Hapus semua & isi 20 kata dasar?', icon: 'warning', showCancelButton: true })).isConfirmed) return;
+          try {
+              const snap = await getDocs(collection(db, "flashcards"));
+              const batch = writeBatch(db);
+              snap.forEach(d => batch.delete(d.ref));
+              const defaults = [
+                  { id: "Buku", ar: "كِتَابٌ", tema: "umum" }, { id: "Pena", ar: "قَلَمٌ", tema: "umum" }, 
+                  { id: "Sekolah", ar: "مَدْرَسَةٌ", tema: "umum" }, { id: "Guru", ar: "مُدَرِّسٌ", tema: "umum" },
+                  { id: "Murid", ar: "تِلْمِيْذٌ", tema: "umum" }, { id: "Kelas", ar: "فَصْلٌ", tema: "umum" },
+                  { id: "Tas", ar: "حَقِيْبَةٌ", tema: "umum" }, { id: "Papan Tulis", ar: "سَبُّوْرَةٌ", tema: "umum" },
+                  { id: "Meja", ar: "مَكْتَبٌ", tema: "umum" }, { id: "Kursi", ar: "كُرْسِيٌّ", tema: "umum" },
+                  { id: "Pintu", ar: "بَابٌ", tema: "umum" }, { id: "Jendela", ar: "نَافِذَةٌ", tema: "umum" },
+                  { id: "Rumah", ar: "بَيْتٌ", tema: "umum" }, { id: "Jalan", ar: "شَارِعٌ", tema: "umum" },
+                  { id: "Mobil", ar: "سَيَّارَةٌ", tema: "umum" }, { id: "Masjid", ar: "مَسْجِدٌ", tema: "umum" },
+                  { id: "Air", ar: "مَاءٌ", tema: "umum" }, { id: "Roti", ar: "خُبْزٌ", tema: "umum" },
+                  { id: "Baju", ar: "ثَوْبٌ", tema: "umum" }, { id: "Waktu", ar: "وَقْتٌ", tema: "umum" }
+              ];
+              defaults.forEach(v => batch.set(doc(collection(db, "flashcards")), { ...v, createdAt: new Date().toISOString() }));
+              await batch.commit();
+              Swal.fire('Berhasil', 'Data direset', 'success');
+          } catch(e) { Swal.fire('Error', e.message, 'error'); }
+      };
+
+      window.migrateVocabs = async () => {
+          if(!window.VOCAB_DATA || !window.VOCAB_DATA.length) return Swal.fire('Info', 'Data lokal tidak ditemukan', 'info');
+          if(!(await Swal.fire({ title: 'Migrasi Kosakata?', text: `Migrasi ${window.VOCAB_DATA.length} kosakata statis?`, icon: 'info', showCancelButton: true })).isConfirmed) return;
+          try {
+              const batch = writeBatch(db);
+              window.VOCAB_DATA.forEach(v => {
+                  batch.set(doc(collection(db, "flashcards")), { 
+                      id: v.id, 
+                      ar: v.ar, 
+                      tema: v.tema || 'statis',
+                      createdAt: new Date().toISOString() 
+                  });
+              });
+              await batch.commit();
+              Swal.fire('Berhasil', 'Kosakata dimigrasi', 'success');
+          } catch(e) { Swal.fire('Error', e.message, 'error'); }
       };
 
       /* -------------------------------------
-         2. ADD FLASHCARD (INLINE)
+         2. HARAKAT QUESTIONS LOGIC
          ------------------------------------- */
-      window.addFlashcardInline = async () => {
-          const inAr = document.getElementById('inNewAr');
-          const inId = document.getElementById('inNewId');
-          const inTema = document.getElementById('inNewTema');
+      let unsubHarakat = null;
+      window.loadHarakatQuestions = () => {
+          const table = document.getElementById('tableHarakat');
+          const counter = document.getElementById('harakatCount');
+          if(!table) return;
 
-          const valAr = inAr.value.trim();
-          const valId = inId.value.trim();
-          const valTema = inTema.value.trim();
+          if(unsubHarakat) unsubHarakat();
 
-          if(!valAr || !valId) {
-             return Swal.fire({
-                 toast: true,
-                 position: 'top-end',
-                 icon: 'error',
-                 title: 'Harap isi Arab & Indonesia',
-                 showConfirmButton: false,
-                 timer: 3000
-             });
+          const q = query(collection(db, "harakat_questions"), orderBy("createdAt", "desc"));
+          unsubHarakat = onSnapshot(q, (snap) => {
+              const data = [];
+              snap.forEach(d => data.push({ docId: d.id, ...d.data() }));
+              if(counter) counter.innerText = data.length;
+              
+              const btnMigH = document.getElementById('btnMigrateHarakat');
+              if(data.length === 0) btnMigH?.classList.remove('hidden');
+              else btnMigH?.classList.add('hidden');
+
+              renderHarakatTable(data);
+          }, (err) => {
+              console.error("Harakat listener error:", err);
+              // Force show migration button if error (likely permissions on empty collection)
+              document.getElementById('btnMigrateHarakat')?.classList.remove('hidden');
+          });
+      };
+
+      window.renderHarakatTable = (data) => {
+          const table = document.getElementById('tableHarakat');
+          if(!table) return;
+
+          let html = `
+            <tr class="bg-pink-50/50 dark:bg-pink-900/10 border-b-2 border-pink-100 dark:border-pink-800/50">
+                <td class="px-6 py-4 text-center font-bold text-pink-300">#</td>
+                <td class="px-6 py-4">
+                    <input type="text" id="hNewPlain" dir="rtl" placeholder="قلم" 
+                        class="w-full px-3 py-2 text-right rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-pink-500 outline-none font-arab text-lg shadow-sm">
+                </td>
+                <td class="px-6 py-4">
+                    <input type="text" id="hNewAns" dir="rtl" placeholder="قَلَمٌ" 
+                        class="w-full px-3 py-2 text-right rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-pink-500 outline-none font-arab text-lg shadow-sm">
+                </td>
+                <td class="px-6 py-4">
+                    <input type="text" id="hNewHint" placeholder="Pena" 
+                        class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-pink-500 outline-none shadow-sm">
+                </td>
+                <td class="px-6 py-4 text-center">
+                    <button onclick="addHarakatQuestion()" class="p-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg shadow-md transition-all active:scale-95">
+                        <i data-feather="check" class="w-4 h-4"></i>
+                    </button>
+                </td>
+            </tr>`;
+
+          if(data.length === 0) {
+              html += `<tr><td colspan="5" class="text-center py-8 text-slate-400 italic">Belum ada soal harakat.</td></tr>`;
+          } else {
+              let no = 1;
+              data.forEach(h => {
+                  html += `
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
+                     <td class="px-6 py-4 font-bold text-slate-400">${no++}</td>
+                     <td class="px-6 py-4 text-right font-arab text-xl">${h.plain || h.word}</td>
+                     <td class="px-6 py-4 text-right font-arab text-xl text-pink-600 dark:text-pink-400 font-bold">${h.answer}</td>
+                     <td class="px-6 py-4 font-medium text-slate-600 dark:text-slate-300">${h.hint || '-'}</td>
+                     <td class="px-6 py-4 text-center">
+                         <button onclick="deleteHarakatQuestion('${h.docId}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors">
+                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                         </button>
+                     </td>
+                  </tr>`;
+              });
           }
+          table.innerHTML = html;
+          if(typeof feather !== 'undefined') feather.replace();
+      };
+
+      window.addHarakatQuestion = async () => {
+          const p = document.getElementById('hNewPlain'), a = document.getElementById('hNewAns'), h = document.getElementById('hNewHint');
+          if(!p.value.trim() || !a.value.trim()) return Swal.fire('Error', 'Harap isi Arab & Jawaban', 'error');
+          try {
+              await addDoc(collection(db, "harakat_questions"), { plain: p.value.trim(), answer: a.value.trim(), hint: h.value.trim(), createdAt: new Date().toISOString() });
+              p.value = ''; a.value = ''; h.value = ''; p.focus();
+          } catch(e) { Swal.fire('Error', e.message, 'error'); }
+      };
+
+      window.deleteHarakatQuestion = async (docId) => {
+          if((await Swal.fire({ title: 'Hapus Soal?', icon: 'warning', showCancelButton: true })).isConfirmed) {
+              try { await deleteDoc(doc(db, "harakat_questions", docId)); } catch(e) { Swal.fire('Error', e.message, 'error'); }
+          }
+      };
+
+      window.migrateHarakatData = async () => {
+          if(!window.HARAKAT_GAME_DATA || !window.HARAKAT_GAME_DATA.length) return Swal.fire('Info', 'Data statis tidak ditemukan', 'info');
+          if(!(await Swal.fire({ title: 'Migrasi Harakat?', text: `Migrasi ${window.HARAKAT_GAME_DATA.length} soal?`, icon: 'info', showCancelButton: true })).isConfirmed) return;
+          try {
+              const batch = writeBatch(db);
+              window.HARAKAT_GAME_DATA.forEach(q => batch.set(doc(collection(db, "harakat_questions")), { ...q, createdAt: new Date().toISOString() }));
+              await batch.commit();
+              Swal.fire('Berhasil', 'Data Harakat dimigrasi', 'success');
+          } catch(e) { Swal.fire('Error', e.message, 'error'); }
+      };
+
+      /* -------------------------------------
+         3. SENTENCE QUESTIONS LOGIC
+         ------------------------------------- */
+      let unsubSentence = null;
+      window.loadSentenceQuestions = () => {
+          const table = document.getElementById('tableSentence');
+          const counter = document.getElementById('sentenceCount');
+          if(!table) return;
+
+          if(unsubSentence) unsubSentence();
+
+          const q = query(collection(db, "sentence_questions"), orderBy("createdAt", "desc"));
+          unsubSentence = onSnapshot(q, (snap) => {
+              const data = [];
+              snap.forEach(d => data.push({ docId: d.id, ...d.data() }));
+              if(counter) counter.innerText = data.length;
+              
+              const btnMigS = document.getElementById('btnMigrateSentence');
+              if(data.length === 0) btnMigS?.classList.remove('hidden');
+              else btnMigS?.classList.add('hidden');
+
+              renderSentenceTable(data);
+          }, (err) => {
+              console.error("Sentence listener error:", err);
+              document.getElementById('btnMigrateSentence')?.classList.remove('hidden');
+          });
+      };
+
+      window.renderSentenceTable = (data) => {
+          const table = document.getElementById('tableSentence');
+          if(!table) return;
+
+          let html = `
+            <tr class="bg-blue-50/50 dark:bg-blue-900/10 border-b-2 border-blue-100 dark:border-blue-800/50">
+                <td class="px-6 py-4 text-center font-bold text-blue-300">#</td>
+                <td class="px-6 py-4">
+                    <input type="number" id="sNewLevel" placeholder="1" 
+                        class="w-16 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none shadow-sm font-bold">
+                </td>
+                <td class="px-6 py-4">
+                    <input type="text" id="sNewTitle" placeholder="Pola Kalimat" 
+                        class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none shadow-sm mb-2 font-bold">
+                    <input type="text" id="sNewDesc" placeholder="Deskripsi Gramatikal" 
+                        class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none shadow-sm text-xs">
+                </td>
+                <td class="px-6 py-4">
+                    <input type="text" id="sNewCorrect" dir="rtl" placeholder="أكل, أحمد, اللبن" 
+                        class="w-full px-3 py-2 text-right rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none font-arab text-lg shadow-sm">
+                    <p class="text-[10px] text-slate-400 mt-1">Pisahkan kata dengan koma</p>
+                </td>
+                <td class="px-6 py-4 text-center">
+                    <button onclick="addSentenceQuestion()" class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition-all active:scale-95">
+                        <i data-feather="plus" class="w-4 h-4"></i>
+                    </button>
+                </td>
+            </tr>`;
+
+          if(data.length === 0) {
+              html += `<tr><td colspan="5" class="text-center py-8 text-slate-400 italic">Belum ada soal susun kalimat.</td></tr>`;
+          } else {
+              let no = 1;
+              data.forEach(s => {
+                  html += `
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
+                     <td class="px-6 py-4 font-bold text-slate-400">${no++}</td>
+                     <td class="px-6 py-4">
+                        <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-700 rounded text-xs font-bold text-slate-600 dark:text-slate-300">Lvl ${s.level}</span>
+                     </td>
+                     <td class="px-6 py-4">
+                        <div class="font-bold text-slate-700 dark:text-slate-200 uppercase text-xs tracking-wider">${s.title}</div>
+                        <div class="text-[10px] text-slate-500 italic">${s.description || '-'}</div>
+                     </td>
+                     <td class="px-6 py-4 text-right">
+                        <div class="flex flex-row-reverse gap-1 justify-start">
+                           ${s.correct.map(w => `<span class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 px-2 py-1 rounded text-sm font-arab border border-blue-100 dark:border-blue-800">${w}</span>`).join('')}
+                        </div>
+                     </td>
+                     <td class="px-6 py-4 text-center">
+                         <button onclick="deleteSentenceQuestion('${s.docId}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors">
+                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                         </button>
+                     </td>
+                  </tr>`;
+              });
+          }
+          table.innerHTML = html;
+          if(typeof feather !== 'undefined') feather.replace();
+      };
+
+      window.addSentenceQuestion = async () => {
+          const lvl = document.getElementById('sNewLevel'), title = document.getElementById('sNewTitle'), desc = document.getElementById('sNewDesc'), corr = document.getElementById('sNewCorrect');
+          if(!title.value.trim() || !corr.value.trim()) return Swal.fire('Error', 'Harap isi Judul & Susunan Kata', 'error');
+          
+          const words = corr.value.split(',').map(w => w.trim()).filter(w => w !== "");
+          if(words.length < 2) return Swal.fire('Error', 'Susunan kata minimal 2 kata dipisah koma', 'error');
 
           try {
-              // Add to Firestore - Listener will handle UI update!
-              await addDoc(collection(flashcardDb, "flashcards"), {
-                  id: valId,
-                  ar: valAr,
-                  tema: valTema || 'umum',
-                  createdAt: new Date().toISOString()
+              await addDoc(collection(db, "sentence_questions"), { 
+                  level: parseInt(lvl.value) || 1, 
+                  title: title.value.trim(), 
+                  description: desc.value.trim(), 
+                  correct: words,
+                  createdAt: new Date().toISOString() 
               });
+              lvl.value = ''; title.value = ''; desc.value = ''; corr.value = ''; title.focus();
+          } catch(e) { Swal.fire('Error', e.message, 'error'); }
+      };
 
-              // Clear Inputs immediately
-              inAr.value = '';
-              inId.value = '';
-              inTema.value = '';
-              inAr.focus(); 
-
-              Swal.fire({
-                 toast: true,
-                 position: 'top-end',
-                 icon: 'success',
-                 title: 'Kartu ditambahkan',
-                 showConfirmButton: false,
-                 timer: 1500
-             });
-
-          } catch(e) {
-              console.error(e);
-              Swal.fire('Error', e.message, 'error');
+      window.deleteSentenceQuestion = async (docId) => {
+          if((await Swal.fire({ title: 'Hapus Soal?', icon: 'warning', showCancelButton: true })).isConfirmed) {
+              try { await deleteDoc(doc(db, "sentence_questions", docId)); } catch(e) { Swal.fire('Error', e.message, 'error'); }
           }
       };
 
+      window.migrateSentenceData = async () => {
+          if(!window.SENTENCE_GAME_DATA || !window.SENTENCE_GAME_DATA.length) return Swal.fire('Info', 'Data statis tidak ditemukan', 'info');
+          if(!(await Swal.fire({ title: 'Migrasi Susun Kalimat?', text: `Migrasi ${window.SENTENCE_GAME_DATA.length} soal?`, icon: 'info', showCancelButton: true })).isConfirmed) return;
+          try {
+              const batch = writeBatch(db);
+              window.SENTENCE_GAME_DATA.forEach(q => {
+                  const { id, ...rest } = q;
+                  batch.set(doc(collection(db, "sentence_questions")), { ...rest, createdAt: new Date().toISOString() });
+              });
+              await batch.commit();
+              Swal.fire('Berhasil', 'Data Susun Kalimat dimigrasi', 'success');
+          } catch(e) { Swal.fire('Error', e.message, 'error'); }
+      };
+
       /* -------------------------------------
-         SEARCH LISTENER
+         4. GRAMMAR QUESTIONS LOGIC
+         ------------------------------------- */
+      let unsubGrammar = null;
+      window.loadGrammarQuestions = () => {
+          const table = document.getElementById('tableGrammar');
+          const counter = document.getElementById('grammarCount');
+          if(!table) return;
+
+          if(unsubGrammar) unsubGrammar();
+
+          const q = query(collection(db, "grammar_questions"), orderBy("createdAt", "desc"));
+          unsubGrammar = onSnapshot(q, (snap) => {
+              const data = [];
+              snap.forEach(d => data.push({ docId: d.id, ...d.data() }));
+              if(counter) counter.innerText = data.length;
+              
+              const btnMigG = document.getElementById('btnMigrateGrammar');
+              if(data.length === 0) btnMigG?.classList.remove('hidden');
+              else btnMigG?.classList.add('hidden');
+
+              renderGrammarTable(data);
+          }, (err) => {
+              console.error("Grammar listener error:", err);
+              document.getElementById('btnMigrateGrammar')?.classList.remove('hidden');
+          });
+      };
+
+      window.renderGrammarTable = (data) => {
+          const table = document.getElementById('tableGrammar');
+          if(!table) return;
+
+          let html = `
+            <tr class="bg-indigo-50/50 dark:bg-indigo-900/10 border-b-2 border-indigo-100 dark:border-indigo-800/50">
+                <td class="px-6 py-4 text-center font-bold text-indigo-300">#</td>
+                <td class="px-6 py-4">
+                    <input type="text" id="gNewWord" dir="rtl" placeholder="كتاب" 
+                        class="w-full px-3 py-2 text-right rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none font-arab text-lg shadow-sm">
+                </td>
+                <td class="px-6 py-4 text-center">
+                    <select id="gNewType" class="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm font-bold">
+                        <option value="isim">Isim</option>
+                        <option value="fiil">Fi'il</option>
+                        <option value="harf">Harf</option>
+                    </select>
+                </td>
+                <td class="px-6 py-4 text-center">
+                    <button onclick="addGrammarQuestion()" class="p-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-md transition-all active:scale-95">
+                        <i data-feather="plus" class="w-4 h-4"></i>
+                    </button>
+                </td>
+            </tr>`;
+
+          if(data.length === 0) {
+              html += `<tr><td colspan="4" class="text-center py-8 text-slate-400 italic">Belum ada soal grammar.</td></tr>`;
+          } else {
+              let no = 1;
+              data.forEach(g => {
+                  const typeLabel = {
+                      'isim': '<span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-[10px] font-bold uppercase">Isim</span>',
+                      'fiil': '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-[10px] font-bold uppercase">Fi\'il</span>',
+                      'harf': '<span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-[10px] font-bold uppercase">Harf</span>'
+                  }[g.type] || g.type;
+
+                  html += `
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
+                     <td class="px-6 py-4 font-bold text-slate-400">${no++}</td>
+                     <td class="px-6 py-4 text-right font-arab text-xl">${g.word}</td>
+                     <td class="px-6 py-4 text-center">${typeLabel}</td>
+                     <td class="px-6 py-4 text-center">
+                         <button onclick="deleteGrammarQuestion('${g.docId}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors">
+                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                         </button>
+                     </td>
+                  </tr>`;
+              });
+          }
+          table.innerHTML = html;
+          if(typeof feather !== 'undefined') feather.replace();
+      };
+
+      window.addGrammarQuestion = async () => {
+          const word = document.getElementById('gNewWord'), type = document.getElementById('gNewType');
+          if(!word.value.trim()) return Swal.fire('Error', 'Harap isi kosa kata', 'error');
+          try {
+              await addDoc(collection(db, "grammar_questions"), { 
+                  word: word.value.trim(), 
+                  type: type.value, 
+                  createdAt: new Date().toISOString() 
+              });
+              word.value = ''; word.focus();
+          } catch(e) { Swal.fire('Error', e.message, 'error'); }
+      };
+
+      window.deleteGrammarQuestion = async (docId) => {
+          if((await Swal.fire({ title: 'Hapus Soal?', icon: 'warning', showCancelButton: true })).isConfirmed) {
+              try { await deleteDoc(doc(db, "grammar_questions", docId)); } catch(e) { Swal.fire('Error', e.message, 'error'); }
+          }
+      };
+
+      window.migrateGrammarData = async () => {
+          if(!window.GAME_DATA || !window.GAME_DATA.length) return Swal.fire('Info', 'Data statis tidak ditemukan', 'info');
+          if(!(await Swal.fire({ title: 'Migrasi Grammar?', text: `Migrasi ${window.GAME_DATA.length} soal?`, icon: 'info', showCancelButton: true })).isConfirmed) return;
+          try {
+              const batch = writeBatch(db);
+              window.GAME_DATA.forEach(q => {
+                  batch.set(doc(collection(db, "grammar_questions")), { ...q, createdAt: new Date().toISOString() });
+              });
+              await batch.commit();
+              Swal.fire('Berhasil', 'Data Grammar dimigrasi', 'success');
+          } catch(e) { Swal.fire('Error', e.message, 'error'); }
+      };
+
+      /* -------------------------------------
+         5. SEARCH & INIT
          ------------------------------------- */
       document.getElementById('searchFlashcard')?.addEventListener('input', (e) => {
           const term = e.target.value.toLowerCase();
-          const filtered = window.allFlashcards.filter(c => 
-             (c.id && c.id.toLowerCase().includes(term)) || 
-             (c.ar && c.ar.includes(term)) ||
-             (c.tema && c.tema.toLowerCase().includes(term))
-          );
+          const filtered = window.allFlashcards.filter(c => (c.id && c.id.toLowerCase().includes(term)) || (c.ar && c.ar.includes(term)) || (c.tema && c.tema.toLowerCase().includes(term)));
           renderFlashcards(filtered);
       });
 
-      /* -------------------------------------
-         3. DELETE FLASHCARD
-         ------------------------------------- */
-      window.deleteFlashcard = async (docId) => {
-          const res = await Swal.fire({
-              title: 'Hapus Kartu?',
-              text: "Data tidak bisa dikembalikan",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#d33',
-              confirmButtonText: 'Ya, Hapus'
-          });
-
-          if(res.isConfirmed) {
-              try {
-                  // Listener will handle UI update
-                  await deleteDoc(doc(flashcardDb, "flashcards", docId));
-                  Swal.fire({
-                      title: 'Terhapus',
-                      text: 'Kartu berhasil dihapus',
-                      icon: 'success',
-                      timer: 1000,
-                      showConfirmButton: false
-                  });
-              } catch(e) {
-                  Swal.fire('Gagal', e.message, 'error');
-              }
-          }
-      };
-
-      /* -------------------------------------
-         4. MIGRATE UTILITY
-         ------------------------------------- */
-      window.migrateVocabs = async () => {
-          if(!window.VOCABS || !window.VOCABS.length) {
-              return Swal.fire('Info', 'Tidak ada data window.VOCABS ditemukan (file js belum load?)', 'info');
-          }
-
-          const res = await Swal.fire({
-              title: `Migrasi ${window.VOCABS.length} Data?`,
-              text: "Ini akan menyalin data dari file statis ke Database. Lakukan hanya sekali.",
-              icon: 'info',
-              showCancelButton: true,
-              confirmButtonText: 'Mulai Migrasi'
-          });
-
-          if(res.isConfirmed) {
-              Swal.fire({
-                  title: 'Sedang Memproses...',
-                  didOpen: async () => {
-                      Swal.showLoading();
-                      try {
-                          const batch = writeBatch(flashcardDb);
-                          let count = 0;
-                          
-                          // Firestore batch limit is 500. We might need chunks if > 500.
-                          // But VOCABS seems small (<100).
-                          
-                          const colRef = collection(flashcardDb, "flashcards");
-                          
-                          for(const v of window.VOCABS) {
-                              // Gunakan ID unik dari kombinasi theme + ind untuk mencegah duplikat simpel
-                              // Tapi addDoc lebih aman untuk batch.
-                              // Kita pakai doc ref random saja
-                              const ref = doc(colRef); 
-                              batch.set(ref, {
-                                  id: v.id,
-                                  ar: v.ar,
-                                  tema: v.tema || 'umum',
-                                  migratedAt: new Date().toISOString()
-                              });
-                              count++;
-                          }
-
-                          await batch.commit();
-                          Swal.fire('Selesai!', `${count} data berhasil dimigrasi.`, 'success');
-                          window.loadFlashcards();
-
-                      } catch(e) {
-                          console.error(e);
-                          Swal.fire('Error', e.message, 'error');
-                      }
-                  }
-              });
-          }
-      };
-
-      /* -------------------------------------
-         5. RESET FLASHCARDS (DEFAULT 20)
-         ------------------------------------- */
-      window.resetFlashcards = async () => {
-          const result = await Swal.fire({
-              title: 'Reset ke Default?',
-              text: "PERINGATAN: Semua flashcard yang ada akan DIHAPUS dan digantikan dengan 20 kata dasar. Tindakan ini tidak bisa dibatalkan!",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#d33',
-              cancelButtonColor: '#3085d6',
-              confirmButtonText: 'Ya, Reset Data!',
-              cancelButtonText: 'Batal'
-          });
-
-          if (!result.isConfirmed) return;
-
-          Swal.fire({
-              title: 'Sedang Mereset...',
-              text: 'Menghapus data lama dan mengupload data baru...',
-              allowOutsideClick: false,
-              didOpen: () => {
-                  Swal.showLoading();
-              }
-          });
-
-          try {
-              // 1. DELETE ALL EXISTING CARDS
-              const allDocsSnapshot = await getDocs(collection(flashcardDb, "flashcards"));
-              
-              const deleteBatch = writeBatch(flashcardDb);
-              let deleteCount = 0;
-              
-              allDocsSnapshot.forEach((doc) => {
-                  deleteBatch.delete(doc.ref);
-                  deleteCount++;
-              });
-
-              if (deleteCount > 0) {
-                  await deleteBatch.commit();
-                  console.log(`Deleted ${deleteCount} existing cards.`);
-              }
-
-              // 2. SEED DEFAULT DATA (20 ITEMS)
-              const defaultVocabs = [
-                  { id: "Buku", ar: "كِتَابٌ", tema: "umum" },
-                  { id: "Pena", ar: "قَلَمٌ", tema: "umum" },
-                  { id: "Sekolah", ar: "مَدْرَسَةٌ", tema: "umum" },
-                  { id: "Guru", ar: "مُدَرِّسٌ", tema: "umum" },
-                  { id: "Murid", ar: "تِلْمِيْذٌ", tema: "umum" },
-                  { id: "Kelas", ar: "فَصْلٌ", tema: "umum" },
-                  { id: "Tas", ar: "حَقِيْبَةٌ", tema: "umum" },
-                  { id: "Papan Tulis", ar: "سَبُّوْرَةٌ", tema: "umum" },
-                  { id: "Meja", ar: "مَكْتَبٌ", tema: "umum" },
-                  { id: "Kursi", ar: "كُرْسِيٌّ", tema: "umum" },
-                  { id: "Pintu", ar: "بَابٌ", tema: "umum" },
-                  { id: "Jendela", ar: "نَافِذَةٌ", tema: "umum" },
-                  { id: "Rumah", ar: "بَيْتٌ", tema: "umum" },
-                  { id: "Jalan", ar: "شَارِعٌ", tema: "umum" },
-                  { id: "Mobil", ar: "سَيَّارَةٌ", tema: "umum" },
-                  { id: "Masjid", ar: "مَسْجِدٌ", tema: "umum" },
-                  { id: "Air", ar: "مَاءٌ", tema: "umum" },
-                  { id: "Roti", ar: "خُبْزٌ", tema: "umum" },
-                  { id: "Baju", ar: "ثَوْبٌ", tema: "umum" },
-                  { id: "Waktu", ar: "وَقْتٌ", tema: "umum" }
-              ];
-
-              const addBatch = writeBatch(flashcardDb);
-              
-              defaultVocabs.forEach((v) => {
-                  const ref = doc(collection(flashcardDb, "flashcards")); // Auto-ID
-                  addBatch.set(ref, {
-                      id: v.id,
-                      ar: v.ar,
-                      tema: v.tema,
-                      createdAt: new Date().toISOString(),
-                      isDefault: true
-                  });
-              });
-
-              await addBatch.commit();
-
-              await addBatch.commit();
-
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Reset Berhasil!',
-                  text: 'Data flashcard telah dikembalikan ke 20 kata dasar.',
-                  timer: 2000,
-                  showConfirmButton: false
-              });
-
-              // window.loadFlashcards(); // Not needed, listener is active!
-
-          } catch (error) {
-              console.error("Reset Failed:", error);
-              Swal.fire({
-                  icon: 'error',
-                  title: 'Gagal Reset',
-                  text: error.message
-              });
-          }
-      };
+      // Initialization - Harakat initialized when section is opened
+      window.loadFlashcards();
+  </script>
 
   </script>
 
@@ -5720,7 +6072,7 @@
   <!-- Panggil script presence -->
   <script type="module" src="./assets/presence.js"></script>
 
-  <!-- PALING BAWAH, sebelum </body> -->
+
   <script type="module" src="./assets/discussion.js"></script>
 
 </body>
