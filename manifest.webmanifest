@@ -2,7 +2,7 @@
   "id": "arabread.app.v1",
   "name": "Tarbiyyat al-Lughah",
   "short_name": "Tarb. Lughah",
-  "description": "Aplikasi web pembelajaran membaca Bahasa Arab untuk siswa MTs, berbasis website interaktif dengan kuis, audio, dan latihan kosakata.",
+  "description": "التربية اللغوية (Tarbiyyat al-Lughah) adalah ekosistem Next-Gen Interactive Learning yang dirancang khusus untuk merevolusi cara siswa MTs menguasai Maharah Qira'ah (Kemampuan Membaca).",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -28,13 +28,25 @@
       "src": "/assets/screenshots/homepage.png",
       "sizes": "1280x720",
       "type": "image/png",
-      "label": "Halaman utama ArabRead"
+      "label": "Halaman utama Tarbiyyat al-Lughah"
     },
     {
-      "src": "/assets/screenshots/quiz.png",
+      "src": "/assets/screenshots/tentang.png",
       "sizes": "1280x720",
       "type": "image/png",
-      "label": "Tampilan kuis kosakata"
+      "label": "Tampilan tentang"
+    },
+    {
+      "src": "/assets/screenshots/perpustakaan.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Tampilan perpustakaan"
+    },
+    {
+      "src": "/assets/screenshots/materi.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Tampilan materi"
     }
   ]
 }
