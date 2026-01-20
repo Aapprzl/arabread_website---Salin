@@ -2,7 +2,7 @@ const CACHE_VERSION = 'v2.0.0-robust'; // Update versi ini jika ada perubahan fi
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
-const ROOT = '/arabread_website---Salin/'; // Sesuaikan dengan path deployment (misal '/' jika di root domain)
+const ROOT = '/'; // Sesuaikan dengan path deployment (misal '/' jika di root domain)
 
 // Assets inti yang WAJIB ada agar aplikasi jalan offline (App Shell)
 const PRECACHE_ASSETS = [
