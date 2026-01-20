@@ -8,6 +8,7 @@
   pdfjsLib.GlobalWorkerOptions.workerSrc =
     "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 
 <head>
@@ -3113,6 +3114,15 @@
         document.getElementById("resNama").textContent = nama;
         document.getElementById("resEmail").textContent = data.email;
         document.getElementById("resPassword").textContent = data.password;
+        
+        // TAMPILKAN POPUP SUKSES
+        Swal.fire({
+            icon: 'success',
+            title: 'Siswa Terdaftar!',
+            text: `Akun untuk ${nama} berhasil dibuat.`,
+            timer: 2000,
+            showConfirmButton: false
+        });
 
         // 4️⃣ SIAPKAN DATA PDF
         const dataPdf = {
@@ -3126,6 +3136,20 @@
         // 5️⃣ CETAK PDF SAAT TOMBOL DIKLIK
         document.getElementById("btnCetakPdf").onclick = () => {
           generateAkunPdf(dataPdf);
+          
+          // Auto-hide setelah download dimulai (delay dikit biar user 'ngeh')
+          setTimeout(() => {
+              document.getElementById("akunResult").classList.add("hidden");
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Sedang Mengunduh...',
+                  text: 'Silahkan cek folder download Anda',
+                  toast: true,
+                  position: 'bottom-end',
+                  showConfirmButton: false,
+                  timer: 3000
+              });
+          }, 800);
         };
 
         // 6️⃣ RESET FORM
