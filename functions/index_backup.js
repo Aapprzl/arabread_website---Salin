@@ -9,7 +9,6 @@ function generatePassword(length = 8) {
 
 
 const { onRequest } = require("firebase-functions/v2/https");
-const { onDocumentDeleted } = require("firebase-functions/v2/firestore");
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cors = require("cors")({ origin: true });
@@ -101,25 +100,5 @@ exports.cleanupAnonymousUsers = functions.https.onRequest(async (req, res) => {
     return res.status(500).send(
       "❌ Gagal cleanup anonymous users: " + error.message
     );
-  }
-});
-
-/* ======================================================
-   🔥 AUTO DELETE AUTH USER WHEN FIRESTORE USER DELETED
-   ====================================================== */
-exports.onUserDeleted = onDocumentDeleted({
-  document: "users/{userId}",
-  region: "asia-southeast1"
-}, async (event) => {
-  const userId = event.params.userId;
-  try {
-    await admin.auth().deleteUser(userId);
-    console.log(`✅ Success: Hubungan ke Auth ${userId} telah diputus (User Auth dihapus).`);
-  } catch (error) {
-    if (error.code === 'auth/user-not-found') {
-        console.log(`ℹ️ Info: User Auth ${userId} sudah tidak ada.`);
-    } else {
-        console.error(`❌ Gagal menghapus User Auth ${userId}:`, error);
-    }
   }
 });
