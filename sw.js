@@ -62,6 +62,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // 1.c SKIP request non-HTTP/HTTPS (Extension, data:, etc)
+  if (!url.protocol.startsWith('http')) {
+    return;
+  }
+
   // 2. STRATEGI: NETWORK FIRST (Untuk HTML)
   // Cocok untuk file yang sering berubah isinya (content).
   // Jika online -> ambil terbaru. Jika offline -> ambil cache.
