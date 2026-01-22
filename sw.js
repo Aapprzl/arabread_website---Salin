@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v2.0.0-robust'; // Update versi ini jika ada perubahan file core (HTML structure/assets names)
+const CACHE_VERSION = 'v2.0.1-icon-fix'; // Update versi ini jika ada perubahan file core (HTML structure/assets names)
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
