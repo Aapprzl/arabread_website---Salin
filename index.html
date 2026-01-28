@@ -598,7 +598,7 @@
             </div>
           </div>
 
-          <!-- DISPLAY MOBILE: BUTTON GRAMMAR CARD -->
+          <!-- DISPLAY MOBILE: BUTTON GRAMMAR CARD (INITIAL VERSION) -->
           <div class="block md:hidden">
               <a href="grammar-basics.html" class="flex flex-col items-center justify-center text-center space-y-4 py-8 group active:scale-95 transition-transform">
                   
@@ -865,27 +865,33 @@
       }
 
       window.resetGame = function() {
+        if (timerInterval) clearInterval(timerInterval);
         score = 0;
         combo = 0;
         timer = 60;
         isPlaying = true;
-        gameStarted = true;
+        gameStarted = false; // Menunggu interaksi pertama
         
         updateDisplay();
         timerEl.parentElement.classList.remove('text-red-500');
         overlay.classList.add('opacity-0', 'pointer-events-none');
         
         loadQuestion();
-        startTimer();
+        // Timer tidak langsung jalan
       };
 
       window.checkAnswer = function(type) {
-        if (!isPlaying) {
-          if (!gameStarted) {
+        // Auto-init jika belum pernah main
+        if (!isPlaying && !gameStarted) {
             window.resetGame();
-            return;
-          }
-          return;
+        }
+
+        if (!isPlaying) return;
+
+        // Mulai timer saat user pertama kali klik jawaban
+        if (!gameStarted) {
+            gameStarted = true;
+            startTimer();
         }
 
         if (!currentQuestion) return;
