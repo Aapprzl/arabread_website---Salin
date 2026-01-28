@@ -1,271 +1,203 @@
 <!DOCTYPE html>
 <html lang="id">
 
-
-<script src="assets/theme.js"></script>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tarbiyyat al-Lughah</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarbiyyat al-Lughah</title>
 
-  <!-- Fonts & Tailwind -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="assets/css/styles.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    /* Cursor typing */
-    .cursor::after {
-      content: '|';
-      margin-left: 4px;
-      animation: blink 1s infinite;
+<script>
+    // CRITICAL: Theme Init moved to HEAD to prevent flicker
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-
-    /* Animated gradient */
-    .animated-gradient {
-      background: linear-gradient(
-        120deg,
-        #f8fafc,
-        #eef6ff,
-        #e6fffa,
-        #f0f9ff
-      );
-      background-size: 300% 300%;
-      animation: gradientMove 12s ease infinite;
-    }
-
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .animated-gradient::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23000000' fill-opacity='0.02'/%3E%3C/svg%3E");
-      pointer-events: none;
-    }
-
-    .fade-out {
-  animation: fadeOut 0.6s ease forwards;
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-}
-
-  </style>
-
-
-
-
+</script>
+<link href="assets/css/styles.css" rel="stylesheet">
 </head>
 
-<body class="fixed inset-0 w-screen h-screen bg-white dark:bg-slate-950 flex items-center justify-center px-6 overflow-hidden transition-colors duration-500 selection:bg-blue-200">
+<body class="min-h-screen bg-white dark:bg-slate-950 flex flex-col items-center justify-center px-6 overflow-x-hidden transition-colors duration-500 selection:bg-blue-200 relative">
 
-  <div class="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] bg-blue-500/10 dark:bg-blue-600/5 rounded-full blur-[100px] pointer-events-none overflow-hidden"></div>
-  <div class="absolute bottom-[-5%] right-[-5%] w-[50%] h-[50%] bg-emerald-500/10 dark:bg-emerald-600/5 rounded-full blur-[100px] pointer-events-none overflow-hidden"></div>
+<!-- glow bg -->
+<div class="fixed -top-20 -left-20 w-[60%] h-[60%] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+<div class="fixed -bottom-20 -right-20 w-[60%] h-[60%] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
- <button id="themeToggle" 
-    class="fixed z-[9999] 
-           bottom-6 right-6 
-           lg:top-8 lg:bottom-auto 
-           w-14 h-14 md:w-16 md:h-16 lg:w-12 lg:h-12 
-           flex items-center justify-center rounded-2xl 
-           bg-white dark:bg-slate-900 
-           text-slate-600 dark:text-yellow-400 
-           border-2 border-slate-200 dark:border-slate-800 
-           shadow-2xl transition-all active:scale-90 hover:scale-105">
-      <span id="themeIcon" class="text-2xl md:text-3xl lg:text-lg">🌙</span>
-  </button>
+<!-- theme button -->
+<button id="themeToggle"
+class="fixed z-[9999] bottom-6 right-6 lg:top-8 lg:bottom-auto w-14 h-14 md:w-16 md:h-16 lg:w-12 lg:h-12 flex items-center justify-center rounded-2xl bg-white dark:bg-slate-900 text-slate-600 dark:text-yellow-400 border-2 border-slate-200 dark:border-slate-800 shadow-2xl transition-all active:scale-90 hover:scale-105">
+<span id="themeIcon" class="text-2xl md:text-3xl lg:text-lg">🌙</span>
+</button>
 
-  <main class="w-full max-w-7xl mx-auto relative z-10 flex flex-col items-center justify-center min-h-screen py-10 px-4 md:px-6">
+<main class="max-w-7xl mx-auto w-full relative z-10 flex flex-col items-center justify-center flex-grow py-12 md:py-20 animate-fade-in">
 
-    <!-- HEADER LOGO -->
-    <div class="mb-8 md:mb-12 animate-fade-in text-center w-full">
-      <h1 class="font-arab text-6xl md:text-8xl font-bold 
-                 bg-gradient-to-b from-blue-600 to-blue-900 dark:from-blue-400 dark:to-blue-600 
-                 bg-clip-text text-transparent py-2 leading-relaxed drop-shadow-xl" 
-          style="font-family: 'Amiri', serif;">
-        تربية اللغة
-      </h1>
-      
-      <div class="mt-2 space-y-1">
-        <p class="font-black text-slate-800 dark:text-white text-lg md:text-2xl uppercase tracking-[0.3em] italic opacity-90">
-          Tarbiyyat <span class="text-blue-600">al-Lughah</span>
-        </p>
-        <p class="text-[10px] md:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">
-          Media Pembelajaran Bahasa Arab Interaktif
-        </p>
-      </div>
+<!-- HEADER -->
+<div class="text-center mb-10 md:mb-16 w-full">
 
-       <div class="mt-6 flex items-center justify-center">
-            <div class="px-6 py-2 rounded-full bg-slate-100/80 dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-2">
-                <span id="typingText" class="text-slate-600 dark:text-slate-300 text-xs md:text-sm font-semibold tracking-wide min-h-[1.2rem]"></span>
-                <span class="w-1 h-4 bg-blue-500 rounded-full animate-pulse"></span>
-            </div>
-        </div>
-    </div>
+<h1 class="font-arab text-5xl sm:text-6xl md:text-8xl font-bold 
+bg-gradient-to-b from-blue-600 to-blue-900 dark:from-blue-400 dark:to-blue-600 
+bg-clip-text text-transparent leading-relaxed drop-shadow-xl py-2" style="font-family: 'Amiri', serif;">
+تربية اللغة
+</h1>
 
-    <!-- ROLE CARD GRID -->
-    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 animate-fade-in" style="animation-delay: 0.3s;">
+<div class="mt-2 space-y-2">
+<p class="font-black text-slate-800 dark:text-white text-base sm:text-lg md:text-2xl uppercase tracking-[0.2em] sm:tracking-[0.3em] italic">
+  Tarbiyyat <span class="text-blue-600">al-Lughah</span>
+</p>
+<p class="text-[10px] md:text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">
+  Media Pembelajaran Bahasa Arab Interaktif
+</p>
+</div>
 
-        <!-- 1. PENGUNJUNG -->
-        <button onclick="selectRole('visitor', 'index.html')" 
-                class="group relative flex flex-col items-center p-6 md:p-8 rounded-[2rem] bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left">
-            <div class="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/5 rounded-[2rem] transition-colors"></div>
-            
-            <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center text-4xl mb-4 group-hover:scale-110 transition-transform">
-                🌍
-            </div>
-            <h3 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                Pengunjung
-            </h3>
-            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium text-center">
-                Akses materi publik, kosa kata, dan game dasar tanpa login.
-            </p>
-        </button>
+<!-- typing badge -->
+<div class="mt-6 md:mt-8 flex justify-center">
+<div class="px-6 py-2 rounded-full bg-slate-100/80 dark:bg-slate-900/50 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-2">
 
-        <!-- 2. SISWA -->
-        <button onclick="selectRole('student', 'dashboard-siswa.html')"
-                class="group relative flex flex-col items-center p-6 md:p-8 rounded-[2rem] bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-             <div class="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/5 rounded-[2rem] transition-colors"></div>
+<span id="typingText"
+dir="auto"
+class="text-slate-600 dark:text-slate-300 text-xs md:text-sm font-semibold tracking-wide min-h-[1.2rem]">
+</span>
 
-            <div class="w-16 h-16 md:w-20 md:h-20 bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center text-4xl mb-4 group-hover:scale-110 transition-transform">
-                🎓
-            </div>
-            <h3 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                Siswa
-            </h3>
-            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium text-center">
-                Login untuk akses materi lengkap, ujian, dan leaderboard.
-            </p>
-        </button>
+<span class="w-[2px] h-4 bg-blue-500 rounded-full animate-pulse"></span>
 
-        <!-- 3. GURU -->
-        <button onclick="selectRole('teacher', 'dashboard-guru.html')"
-                class="group relative flex flex-col items-center p-6 md:p-8 rounded-[2rem] bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-             <div class="absolute inset-0 bg-rose-500/0 group-hover:bg-rose-500/5 rounded-[2rem] transition-colors"></div>
+</div>
+</div>
 
-            <div class="w-16 h-16 md:w-20 md:h-20 bg-rose-100 dark:bg-rose-900/30 rounded-2xl flex items-center justify-center text-4xl mb-4 group-hover:scale-110 transition-transform">
-                👨‍🏫
-            </div>
-            <h3 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white mb-2 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
-                Guru
-            </h3>
-            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium text-center">
-                Dashboard untuk mengelola siswa, materi, dan nilai.
-            </p>
-        </button>
+</div>
 
-    </div>
+<!-- CARD GRID -->
+<div class="w-full grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 pb-10" style="animation-delay: 0.3s;">
 
-    <!-- FOOTER NOTE -->
-     <p class="mt-12 text-slate-400 dark:text-slate-600 text-[10px] uppercase tracking-widest font-bold animate-fade-in" style="animation-delay: 0.6s;">
-      Silahkan pilih akses Anda untuk melanjutkan
-    </p>
+<!-- Pengunjung -->
+<button onclick="selectRole('visitor','index.html')"
+class="group relative flex flex-col items-center p-6 md:p-8 rounded-[2rem] bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left h-full">
+    <div class="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/5 rounded-[2rem] transition-colors"></div>
+    <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center text-4xl mb-4 group-hover:scale-110 transition-transform">🌍</div>
+    <h3 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Pengunjung</h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 font-medium text-center leading-relaxed">Akses materi publik, kosa kata, dan game dasar tanpa login.</p>
+</button>
 
-  </main>
+<!-- Siswa -->
+<button onclick="selectRole('student','dashboard-siswa.html')"
+class="group relative flex flex-col items-center p-6 md:p-8 rounded-[2rem] bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 h-full">
+    <div class="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/5 rounded-[2rem] transition-colors"></div>
+    <div class="w-16 h-16 md:w-20 md:h-20 bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center text-4xl mb-4 group-hover:scale-110 transition-transform">🎓</div>
+    <h3 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Siswa</h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 font-medium text-center leading-relaxed">Login untuk akses materi lengkap, ujian, dan leaderboard.</p>
+</button>
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap');
-    
-    .font-arab { font-family: 'Amiri', serif; }
+<!-- Guru -->
+<button onclick="selectRole('teacher','dashboard-guru.html')"
+class="group relative flex flex-col items-center p-6 md:p-8 rounded-[2rem] bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 h-full">
+    <div class="absolute inset-0 bg-rose-500/0 group-hover:bg-rose-500/5 rounded-[2rem] transition-colors"></div>
+    <div class="w-16 h-16 md:w-20 md:h-20 bg-rose-100 dark:bg-rose-900/30 rounded-2xl flex items-center justify-center text-4xl mb-4 group-hover:scale-110 transition-transform">👨‍🏫</div>
+    <h3 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white mb-2 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">Guru</h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 font-medium text-center">Dashboard untuk mengelola siswa, materi, dan nilai.</p>
+</button>
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0;
-    }
-  </style>
+</div>
 
- <script>
-    // Typing Animation (Simplified)
-     const texts = ["Marhaban!", "Ahlan wa Sahlan", "Selamat Datang"];
-     let count = 0;
-     let index = 0;
-     let currentText = "";
-     let letter = "";
-     
-     (function type() {
-         if (count === texts.length) {
-             count = 0;
-         }
-         currentText = texts[count];
-         letter = currentText.slice(0, ++index);
-         
-         const el = document.getElementById("typingText");
-         if(el) el.textContent = letter;
-         
-         if (letter.length === currentText.length) {
-             count++;
-             index = 0;
-             setTimeout(type, 2000); // Wait before next word
-         } else {
-             setTimeout(type, 100);
-         }
-     })();
+<p class="mt-12 text-slate-400 dark:text-slate-600 text-[10px] uppercase tracking-widest font-bold animate-fade-in" style="animation-delay: 0.6s;">
+Silahkan pilih akses Anda untuk melanjutkan
+</p>
 
-    // THEME LOGIC
-    const themeToggle = document.getElementById("themeToggle");
-    const themeIcon = document.getElementById("themeIcon");
-    const html = document.documentElement;
+</main>
 
-    function updateTheme() {
-        if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-        html.classList.add("dark");
-        if (themeIcon) themeIcon.textContent = "☀️";
-        } else {
-        html.classList.remove("dark");
-        if (themeIcon) themeIcon.textContent = "🌙";
-        }
-    }
-    if (themeToggle) {
-        themeToggle.addEventListener("click", () => {
-        localStorage.theme = html.classList.contains("dark") ? "light" : "dark";
-        updateTheme();
-        });
-    }
-    updateTheme();
+<!-- ================= SCRIPT ================= -->
+
+<script>
+/* SMOOTH TYPING */
+const texts=[
+"Marhaban!",
+"Ahlan wa Sahlan",
+"Selamat Datang",
+"أهلاً وسهلاً بكم",
+"مرحبا بكم في موقعنا",
+"تعلم اللغة العربية بسهولة",
+"ابدأ رحلتك مع اللغة العربية",
+"Belajar Bahasa Arab dengan Mudah",
+"Mari Kuasai Bahasa Arab Bersama",
+"Tempat Terbaik Belajar Bahasa Arab",
+"اللغة العربية لغة جميلة",
+"اللغة العربية مفتاح العلم",
+"اللغة العربية لغة القرآن",
+"Selamat Belajar!",
+"Semoga Sukses!",
+"Ayo Mulai Sekarang!"
+];
+
+let textIndex=0;
+let charIndex=0;
+let deleting=false;
+
+const typingSpeed=80;
+const deletingSpeed=40;
+const pauseEnd=1400;
+
+const el=document.getElementById("typingText");
+
+function typingLoop(){
+ if(!el) return;
+
+ const current=texts[textIndex];
+
+ if(!deleting){
+   el.textContent=current.slice(0,charIndex+1);
+   charIndex++;
+   if(charIndex===current.length){
+     setTimeout(()=>deleting=true,pauseEnd);
+   }
+ } else {
+   el.textContent=current.slice(0,charIndex-1);
+   charIndex--;
+   if(charIndex===0){
+     deleting=false;
+     textIndex=(textIndex+1)%texts.length;
+   }
+ }
+
+ setTimeout(typingLoop,deleting?deletingSpeed:typingSpeed);
+}
+
+typingLoop();
 
 
-    // === ROLE SELECT LOGIC ===
-    window.selectRole = (role, url) => {
-        // Save metadata
-        localStorage.setItem("arabread_role", role);
-        localStorage.setItem("arabread_intro_time", Date.now()); // Mark that intro is done
-        
-        // Visual Feedback (Fade Out)
-        document.body.classList.add("fade-out");
-        
-        // Redirect
-        setTimeout(() => {
-            window.location.assign(url);
-        }, 300);
-    }
- </script>
+/* THEME TOGGLE LOGIC (Post-Load) */
+const toggle=document.getElementById("themeToggle");
+const icon=document.getElementById("themeIcon");
+const html=document.documentElement;
+
+// Sync icon on load
+if (html.classList.contains('dark')) {
+  if(icon) icon.textContent="☀️";
+} else {
+  if(icon) icon.textContent="🌙";
+}
+
+toggle.onclick=()=>{
+  if (html.classList.contains('dark')) {
+    html.classList.remove('dark');
+    localStorage.theme = 'light';
+    icon.textContent="🌙";
+  } else {
+    html.classList.add('dark');
+    localStorage.theme = 'dark';
+    icon.textContent="☀️";
+  }
+};
 
 
-
-
+/* ROLE */
+window.selectRole=(role,url)=>{
+ localStorage.setItem("arabread_role",role);
+ document.body.classList.add("fade-out");
+ setTimeout(()=>window.location.assign(url),300);
+};
+</script>
 
 </body>
-
-
 </html>
