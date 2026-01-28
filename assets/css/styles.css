@@ -858,18 +858,6 @@ video {
   top: 100%;
 }
 
-.-right-2 {
-  right: -0.5rem;
-}
-
-.-top-2 {
-  top: -0.5rem;
-}
-
-.top-1\/2 {
-  top: 50%;
-}
-
 .z-0 {
   z-index: 0;
 }
@@ -1420,6 +1408,10 @@ video {
 
 .min-h-screen {
   min-height: 100vh;
+}
+
+.min-h-\[80px\] {
+  min-height: 80px;
 }
 
 .w-0 {
@@ -10152,10 +10144,6 @@ video {
   border-color: rgb(255 255 255 / 0.6);
 }
 
-.border-white\/30 {
-  border-color: rgb(255 255 255 / 0.3);
-}
-
 .border-t-transparent {
   border-top-color: transparent;
 }
@@ -18191,10 +18179,6 @@ video {
   background-color: rgb(234 179 8 / var(--tw-bg-opacity, 1));
 }
 
-.bg-purple-400\/30 {
-  background-color: rgb(192 132 252 / 0.3);
-}
-
 .bg-gradient-to-b {
   background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }
@@ -18217,10 +18201,6 @@ video {
 
 .bg-gradient-to-tr {
   background-image: linear-gradient(to top right, var(--tw-gradient-stops));
-}
-
-.bg-\[url\(\'https\:\/\/www\.transparenttextures\.com\/patterns\/cubes\.png\'\)\] {
-  background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
 }
 
 .from-amber-400 {
@@ -18420,11 +18400,6 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), #fff var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
-.via-indigo-600 {
-  --tw-gradient-to: rgb(13 148 136 / 0)  var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), #0d9488 var(--tw-gradient-via-position), var(--tw-gradient-to);
-}
-
 .to-amber-600 {
   --tw-gradient-to: #d97706 var(--tw-gradient-to-position);
 }
@@ -18553,17 +18528,9 @@ video {
   --tw-gradient-to: #ca8a04 var(--tw-gradient-to-position);
 }
 
-.to-purple-600 {
-  --tw-gradient-to: #9333ea var(--tw-gradient-to-position);
-}
-
 .bg-clip-text {
   -webkit-background-clip: text;
           background-clip: text;
-}
-
-.bg-repeat {
-  background-repeat: repeat;
 }
 
 .object-contain {
@@ -19041,6 +19008,10 @@ video {
 
 .leading-tight {
   line-height: 1.25;
+}
+
+.leading-\[1\.3\] {
+  line-height: 1.3;
 }
 
 .tracking-\[0\.2em\] {
@@ -27053,10 +27024,6 @@ video {
   color: rgb(161 98 7 / var(--tw-text-opacity, 1));
 }
 
-.text-white\/50 {
-  color: rgb(255 255 255 / 0.5);
-}
-
 .underline {
   text-decoration-line: underline;
 }
@@ -27160,10 +27127,6 @@ video {
 
 .mix-blend-multiply {
   mix-blend-mode: multiply;
-}
-
-.mix-blend-overlay {
-  mix-blend-mode: overlay;
 }
 
 .shadow {
@@ -27414,11 +27377,6 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-.blur-\[60px\] {
-  --tw-blur: blur(60px);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
 .drop-shadow-md {
   --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -27501,10 +27459,6 @@ video {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-}
-
-.delay-700 {
-  transition-delay: 700ms;
 }
 
 .duration-200 {
@@ -123007,6 +122961,10 @@ body {
 
   .md\:min-h-\[80px\] {
     min-height: 80px;
+  }
+
+  .md\:min-h-\[100px\] {
+    min-height: 100px;
   }
 
   .md\:w-10 {
