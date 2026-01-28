@@ -42,6 +42,8 @@
     href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
   <link href="assets/css/styles.css" rel="stylesheet">
+  <!-- AOS Animation Library -->
+  <link rel="stylesheet" href="assets/vendor/aos/aos.css" />
 
   <style>
     .arabic-text {
@@ -525,7 +527,7 @@
 
 
   <!-- HERO MINIMAL – TARBIYYAT AL-LUGHAH -->
-  <section class="relative w-full overflow-hidden bg-transparent py-16 md:py-24 z-10">
+  <section class="relative w-full overflow-hidden bg-transparent py-16 md:py-24 z-10" data-aos="fade-up">
 
     <div class="relative max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
@@ -1271,7 +1273,7 @@
 
 
   <!-- Materi -->
-  <main id="materi" class="scroll-mt-32 w-full py-16 md:py-24 relative overflow-hidden bg-transparent">
+  <main id="materi" class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-transparent" data-aos="fade-up">
     <!-- Dekorasi Latar Belakang (Dihapus untuk Global BG) -->
 
 
@@ -1398,7 +1400,7 @@
 
 
     <!-- DASHBOARD SISWA LOGIN -->
-    <section id="dashboard-siswa" class="scroll-mt-28 w-full max-w-4xl mx-auto px-4 py-8 md:py-16 mb-10">
+    <section id="dashboard-siswa" class="scroll-mt-28 w-full max-w-4xl mx-auto px-4 py-8 md:py-16 mb-10" data-aos="fade-right">
 
       <article
         class="bg-white dark:bg-slate-800 rounded-2xl md:rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden transform transition-all hover:scale-[1.01]">
@@ -1478,7 +1480,7 @@
 
 
     <!-- DASBORD GURU LOGIN -->
-    <section id="dashboard-guru" class="w-full max-w-4xl mx-auto px-4 py-8 md:py-16 mb-10">
+    <section id="dashboard-guru" class="w-full max-w-4xl mx-auto px-4 py-8 md:py-16 mb-10" data-aos="fade-left">
 
       <article
         class="bg-white dark:bg-slate-800 rounded-2xl md:rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden transform transition-all hover:scale-[1.01]">
@@ -1565,7 +1567,7 @@
 
   <!-- Tentang -->
   <!-- Tentang -->
-  <section id="tentang" class="max-w-7xl mx-auto px-4 pb-16 md:pb-24">
+  <section id="tentang" class="max-w-7xl mx-auto px-4 pb-16 md:pb-24" data-aos="zoom-in" data-aos-duration="1000">
     <div class="relative bg-white dark:bg-slate-800 rounded-[2.5rem] shadow-2xl border-4 border-slate-100 dark:border-slate-700 overflow-hidden">
       
       <!-- Background Decorations -->
@@ -2143,7 +2145,7 @@
       function renderCards(items) {
         grid.innerHTML = '';
 
-        items.forEach(v => {
+        items.forEach((v, index) => {
           const front = mode === 'ar'
             ? `<div class="font-arab ${sizeClassForArabic(v.ar)} font-bold text-slate-800 dark:text-white text-center leading-[1.8] drop-shadow-sm px-2">
       ${v.ar}
@@ -2164,6 +2166,8 @@
           card.type = 'button';
           card.className = 'card3d w-full select-none focus:outline-none';
           card.setAttribute('aria-label', 'kartu kosakata');
+          card.setAttribute('data-aos', 'zoom-in');
+          card.setAttribute('data-aos-delay', index * 100); // Stagger animation
 
           card.innerHTML = `
   <div class="card3d-inner group">
@@ -2195,6 +2199,8 @@
 
           grid.appendChild(card);
         });
+        
+        setTimeout(() => { if (window.AOS) window.AOS.refresh(); }, 300);
       }
 
       function rerender() {
@@ -2502,9 +2508,9 @@
         return;
       }
 
-      filtered.forEach(e => {
+      filtered.forEach((e, i) => {
         wrap.innerHTML += `
-  <div class="group bg-teal-50/50 dark:bg-slate-800 rounded-xl md:rounded-2xl shadow-md hover:shadow-xl border border-teal-200 dark:border-slate-700 p-2 md:p-4 transition-all duration-300 hover:-translate-y-1 flex flex-col">
+  <div class="group bg-teal-50/50 dark:bg-slate-800 rounded-xl md:rounded-2xl shadow-md hover:shadow-xl border border-teal-200 dark:border-slate-700 p-2 md:p-4 transition-all duration-300 hover:-translate-y-1 flex flex-col" data-aos="fade-up" data-aos-delay="${i * 50}">
     
     <div class="relative aspect-[3/4] mb-2 md:mb-4 overflow-hidden rounded-lg bg-white dark:bg-slate-900 flex items-center justify-center border border-teal-100 dark:border-slate-700">
       <img src="${e.coverUrl}" 
@@ -2533,6 +2539,8 @@
   </div>
 `;
       });
+      
+      setTimeout(() => { if (window.AOS) window.AOS.refresh(); }, 300);
     }
 
     /* ===============================
@@ -2735,7 +2743,7 @@
            }[theme.color || 'blue'];
 
            grid.innerHTML += `
-            <article class="group bg-white dark:bg-slate-800 rounded-3xl shadow-md hover:shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden transition-all duration-300 hover:-translate-y-2">
+            <article class="group bg-white dark:bg-slate-800 rounded-3xl shadow-md hover:shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden transition-all duration-300 hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
                 <div class="relative bg-gradient-to-br ${colors} dark:to-slate-900 px-6 py-8 text-center overflow-hidden">
                 <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
                 <h3 class="arabic-text text-4xl font-bold text-white mb-2 leading-relaxed drop-shadow-sm" style="font-family: 'Amiri', serif;">
@@ -2762,6 +2770,12 @@
             </article>
            `;
        });
+       
+       // Refresh AOS setelah konten dimuat
+       setTimeout(() => {
+         if(window.AOS) window.AOS.refresh();
+       }, 500);
+
     });
   </script>
   <script>
@@ -2776,7 +2790,23 @@
       });
     }
   </script>
+  <!-- Initialize AOS -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AOS.init({
+        once: true,
+        duration: 800,
+        offset: 50, // Dikurangi agar animasi lebih mudah muncul
+        easing: 'ease-out-cubic',
+        anchorPlacement: 'top-bottom', // Animasi mulai saat bagian atas elemen menyentuh bagian bawah layar
+      });
+      
+      // Force refresh setelah window load (untuk memastikan gambar/konten selesai load)
+      window.addEventListener('load', () => {
+        AOS.refresh();
+      });
+    });
+  </script>
 </body>
-
-
 </html>
