@@ -10,7 +10,23 @@
 
 <script src="assets/theme.js"></script>
 
-<!-- Script redirect intro dihapus -->
+  <!-- INTRO REDIRECT LOGIC (3 HOURS EXPIRE) -->
+  <script>
+    (function () {
+      try {
+        const lastSeen = localStorage.getItem("lastIntroSeen");
+        const threeHours = 3 * 60 * 60 * 1000; // 3 jam dalam ms
+        const now = Date.now();
+
+        if (!lastSeen || (now - Number(lastSeen) > threeHours)) {
+          // Cegah redirect loop jika sudah di intro (sebenarnya ini file index, jadi aman)
+          window.location.replace("intro.html");
+        }
+      } catch (e) {
+        console.error("Redirect check failed", e);
+      }
+    })();
+  </script>
 
 
 <head>

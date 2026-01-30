@@ -192,8 +192,9 @@ toggle.onclick=()=>{
 
 
 /* ROLE */
-window.selectRole=(role,url)=>{
+ window.selectRole=(role,url)=>{
  localStorage.setItem("arabread_role",role);
+ localStorage.setItem("lastIntroSeen", Date.now());
  document.body.classList.add("fade-out");
  setTimeout(()=>window.location.assign(url),300);
 };
