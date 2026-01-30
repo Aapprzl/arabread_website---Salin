@@ -1491,10 +1491,82 @@
                     </div>
 
                     <!-- JSON BUILDER FOR LESSONS -->
+                    <!-- LESSONS BUILDER (GUI) -->
                     <div class="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
-                        <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Lessons / Materi (JSON Builder)</label>
-                        <textarea id="gramLessonsJson" rows="6" class="w-full font-mono text-xs px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-900 text-green-400 outline-none focus:ring-2 focus:ring-teal-500" placeholder='[{"id":"t1-01", "judul_id":"...", ...}]'></textarea>
-                        <p class="text-[10px] text-slate-400">Paste JSON here or use the Import Default button below to seed data.</p>
+                        <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Materi Pelajaran (Lesson Builder)</label>
+                        <input type="hidden" id="gramLessonsJson">
+                        
+                        <!-- Builder Area -->
+                        <div class="bg-teal-50 dark:bg-teal-900/20 rounded-xl border border-teal-100 dark:border-teal-800 p-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h5 class="font-bold text-teal-700 dark:text-teal-400 text-sm">Tambah/Edit Materi</h5>
+                                <button type="button" id="btnClearLessonForm" class="text-[10px] text-slate-400 hover:text-slate-600">Bersihkan Form</button>
+                            </div>
+                            
+                            <!-- Basic Info -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                                 <div>
+                                    <input id="lessonId" class="w-full px-3 py-2 rounded text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 outline-none focus:ring-1 focus:ring-teal-500" placeholder="ID (cth: t1-01)">
+                                 </div>
+                                 <div>
+                                    <input id="lessonOrder" type="number" class="w-full px-3 py-2 rounded text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 outline-none focus:ring-1 focus:ring-teal-500" placeholder="Urutan (Angka)">
+                                 </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                                 <input id="lessonTitleId" class="w-full px-3 py-2 rounded text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 outline-none focus:ring-1 focus:ring-teal-500" placeholder="Judul Indonesia">
+                                 <input id="lessonTitleAr" class="w-full px-3 py-2 rounded text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 font-arab text-right outline-none focus:ring-1 focus:ring-teal-500" placeholder="Judul Arab" dir="rtl">
+                            </div>
+
+                            <!-- Lists (Textarea) -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                                <div>
+                                     <label class="block text-[10px] font-bold text-slate-400 mb-1">Tujuan (1 baris = 1 poin)</label>
+                                     <textarea id="lessonObjectives" rows="3" class="w-full px-3 py-2 rounded text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 outline-none focus:ring-1 focus:ring-teal-500 placeholder-slate-300" placeholder="- Siswa dapat..."></textarea>
+                                </div>
+                                <div>
+                                     <label class="block text-[10px] font-bold text-slate-400 mb-1">Penjelasan (1 baris = 1 poin)</label>
+                                     <textarea id="lessonExplanation" rows="3" class="w-full px-3 py-2 rounded text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 outline-none focus:ring-1 focus:ring-teal-500 placeholder-slate-300" placeholder="- Penjelasan singkat..."></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Additional Info -->
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                                 <input id="lessonRef" class="w-full px-3 py-2 rounded text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 outline-none focus:ring-1 focus:ring-teal-500" placeholder="Referensi (Opsional)">
+                                 <input id="lessonLimit" class="w-full px-3 py-2 rounded text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 outline-none focus:ring-1 focus:ring-teal-500" placeholder="Batas Pemula (Opsional)">
+                            </div>
+
+                            <!-- Examples Builder (Nested) -->
+                            <div class="mb-3 border border-dashed border-teal-300/50 p-3 rounded-lg bg-white/50 dark:bg-slate-800/50">
+                                 <label class="block text-[10px] font-bold text-teal-600 dark:text-teal-400 mb-2">Contoh (Sub-Builder)</label>
+                                 
+                                 <div class="grid grid-cols-12 gap-2 mb-2">
+                                     <div class="col-span-4">
+                                        <input id="exAr" class="w-full px-2 py-1.5 text-xs border border-slate-300 dark:border-slate-600 rounded font-arab text-right dark:bg-slate-800 dark:text-white" placeholder="Arab" dir="rtl">
+                                     </div>
+                                     <div class="col-span-4">
+                                        <input id="exId" class="w-full px-2 py-1.5 text-xs border border-slate-300 dark:border-slate-600 rounded dark:bg-slate-800 dark:text-white" placeholder="Arti">
+                                     </div>
+                                     <div class="col-span-4">
+                                        <input id="exFocus" class="w-full px-2 py-1.5 text-xs border border-slate-300 dark:border-slate-600 rounded dark:bg-slate-800 dark:text-white" placeholder="Fokus (Grammar)">
+                                     </div>
+                                 </div>
+                                 <button type="button" id="btnAddExample" class="w-full py-1.5 bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400 text-xs font-bold rounded hover:bg-teal-100 dark:hover:bg-teal-900/50 transition border border-teal-200 dark:border-teal-800">+ Tambah Contoh ke List</button>
+                                 
+                                 <div id="examplesPreview" class="mt-2 space-y-1"></div>
+                            </div>
+
+                            <button type="button" id="btnAddLesson" class="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-xs uppercase tracking-wider shadow-sm transition transform active:scale-[0.98]">
+                                Simpan Materi ke Daftar
+                            </button>
+                        </div>
+
+                        <!-- Preview List of Lessons -->
+                        <div class="mt-4">
+                             <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">Daftar Materi di Misi Ini</label>
+                             <div id="lessonsPreviewList" class="space-y-2 max-h-60 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-teal-200">
+                                 <p class="text-center text-xs text-slate-400 italic py-2">Belum ada materi dalam misi ini.</p>
+                             </div>
+                        </div>
                     </div>
 
                     <div class="flex justify-between pt-4">
@@ -5454,92 +5526,248 @@
         });
     }
 
-    // 3. Save Logic
-    document.getElementById('btnSaveGrammar')?.addEventListener('click', async () => {
-        const id = document.getElementById('gramId').value.trim();
-        if(!id) return Swal.fire('Error', 'ID Misi wajib diisi!', 'error');
-        
-        const data = {
-            id: id,
-            urutan: parseInt(document.getElementById('gramOrder').value) || 99,
-            judul_misi: document.getElementById('gramTitle').value,
-            sub_judul: document.getElementById('gramSubtitle').value,
-            icon: document.getElementById('gramIcon').value,
-            lessons: [] // TODO: Parse JSON
-        };
-        
-        try {
-            const rawJson = document.getElementById('gramLessonsJson').value;
-            if(rawJson) data.lessons = JSON.parse(rawJson);
-        } catch(e) {
-            return Swal.fire('JSON Error', 'Format JSON Lessons tidak valid!', 'error');
-        }
+    // 3. BUILDER & SAVE LOGIC
+    let currentLessonsData = [];
+    let currentExampleList = [];
 
-        const btn = document.getElementById('btnSaveGrammar');
-        btn.textContent = '⏳ Menyimpan...';
-        btn.disabled = true;
-
-        try {
-            await setDoc(doc(db, "grammar_missions", id), data, { merge: true });
-            Swal.fire('Sukses', 'Misi Grammar tersimpan!', 'success');
-            document.getElementById('btnResetGrammar').click();
-        } catch(e) {
-            console.error(e);
-            Swal.fire('Error', e.message, 'error');
-        } finally {
-            btn.innerHTML = '<span>💾 Simpan Misi Grammar</span>';
-            btn.disabled = false;
+    // --- RENDER BUILDER LISTS ---
+    function renderBuilderLessonsList() {
+        const listEl = document.getElementById('lessonsPreviewList');
+        const hiddenInput = document.getElementById('gramLessonsJson');
+        if(!listEl) return;
+        
+        // Sync to Hidden Input (Backwards Compatibility / Debug)
+        if(hiddenInput) hiddenInput.value = JSON.stringify(currentLessonsData);
+        
+        listEl.innerHTML = "";
+        if(currentLessonsData.length === 0) {
+            listEl.innerHTML = `<p class="text-center text-xs text-slate-400 italic py-2">Belum ada materi dalam misi ini.</p>`;
+            return;
         }
-    });
-    
-    // 4. Edit Logic
-    window.editGrammar = async (id) => {
-        const snap = await getDoc(doc(db, "grammar_missions", id));
-        if(snap.exists()) {
-             const d = snap.data();
-             document.getElementById('gramId').value = id;
-             document.getElementById('gramOrder').value = d.urutan;
-             document.getElementById('gramTitle').value = d.judul_misi;
-             document.getElementById('gramSubtitle').value = d.sub_judul;
-             document.getElementById('gramIcon').value = d.icon;
-             document.getElementById('gramLessonsJson').value = JSON.stringify(d.lessons || [], null, 2);
-             
-             document.getElementById('grammarContent').classList.remove('hidden');
-             const chevron = document.getElementById('grammarChevron');
-             if(chevron) chevron.classList.remove('-rotate-90');
-             document.getElementById('grammarContent').scrollIntoView({behavior: 'smooth'});
-        }
-    };
-    
-    // 5. Delete Logic
-    window.deleteGrammar = async(id) => {
-        const confirm = await Swal.fire({
-            title: 'Hapus Misi?',
-            text: "Data tidak bisa dikembalikan!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus!'
+        
+        currentLessonsData.forEach((l, idx) => {
+             const div = document.createElement('div');
+             div.className = "flex items-center justify-between p-2 bg-white dark:bg-slate-800 rounded border border-teal-100 dark:border-teal-900 text-xs";
+             div.innerHTML = `
+               <div class="flex-1 min-w-0 pr-2">
+                 <div class="font-bold text-teal-700 dark:text-teal-400">#${l.urutan} - ${l.judul_id}</div>
+                 <div class="text-[10px] text-slate-500 font-arab" dir="rtl">${l.judul_ar}</div>
+                 <div class="text-[9px] text-slate-400 mt-0.5">${(l.contoh||[]).length} Contoh • ${l.id}</div>
+               </div>
+               <div class="flex items-center gap-1">
+                 <button type="button" onclick="loadLessonToForm(${idx})" class="p-1.5 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition" title="Edit">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                 </button>
+                 <button type="button" onclick="deleteLessonItem(${idx})" class="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition" title="Hapus">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                 </button>
+               </div>
+             `;
+             listEl.appendChild(div);
         });
+    }
+
+    function renderExampleList() {
+        const listEl = document.getElementById('examplesPreview');
+        if(!listEl) return;
+        listEl.innerHTML = "";
         
-        if (confirm.isConfirmed) {
-            try {
-                await deleteDoc(doc(db, "grammar_missions", id));
-                Swal.fire('Terhapus!', 'Misi telah dihapus.', 'success');
-            } catch(e) {
-                Swal.fire('Gagal', e.message, 'error');
-            }
+        currentExampleList.forEach((ex, idx) => {
+            const li = document.createElement('div');
+            li.className = "text-[10px] text-slate-600 dark:text-slate-400 flex justify-between items-start border-b border-dashed border-slate-200 dark:border-slate-700 py-1";
+            li.innerHTML = `
+              <span><span class="font-arab font-bold text-teal-600 dark:text-teal-400" dir="rtl">${ex.ar}</span> = ${ex.id} (${ex.focus||ex.fokus})</span>
+              <button type="button" onclick="removeExampleItem(${idx})" class="text-red-400 hover:text-red-600 ml-2">x</button>
+            `;
+            listEl.appendChild(li);
+        });
+    }
+
+    // --- BUTTON ACTIONS ---
+    window.addExampleItem = () => {
+        const ar = document.getElementById('exAr').value.trim();
+        const id = document.getElementById('exId').value.trim();
+        const focus = document.getElementById('exFocus').value.trim();
+        if(!ar || !id) return Swal.fire('Data Kurang', 'Arab dan Arti wajib diisi', 'warning');
+        
+        currentExampleList.push({ ar: ar, id: id, fokus: focus });
+        renderExampleList();
+        
+        document.getElementById('exAr').value = '';
+        document.getElementById('exId').value = '';
+        document.getElementById('exFocus').value = '';
+        document.getElementById('exAr').focus();
+    };
+    
+    // Bind click event for addExampleButton
+    document.getElementById('btnAddExample')?.addEventListener('click', window.addExampleItem);
+    
+    window.removeExampleItem = (idx) => {
+        currentExampleList.splice(idx, 1);
+        renderExampleList();
+    };
+
+    document.getElementById('btnAddLesson')?.addEventListener('click', () => {
+        const id = document.getElementById('lessonId').value.trim();
+        const order = parseInt(document.getElementById('lessonOrder').value) || 0;
+        const titleId = document.getElementById('lessonTitleId').value.trim();
+        const titleAr = document.getElementById('lessonTitleAr').value.trim();
+        const objs = document.getElementById('lessonObjectives').value.split('\n').map(s=>s.trim()).filter(s=>s);
+        const expls = document.getElementById('lessonExplanation').value.split('\n').map(s=>s.trim()).filter(s=>s);
+        const ref = document.getElementById('lessonRef').value.trim();
+        const limit = document.getElementById('lessonLimit').value.trim();
+        
+        if(!id || !titleId) return Swal.fire('Error', 'ID dan Judul wajib diisi', 'error');
+
+        // Check if ID exists (Update) or New
+        const existingIdx = currentLessonsData.findIndex(l => l.id === id);
+        
+        const newLesson = {
+            id: id,
+            urutan: order,
+            judul_id: titleId,
+            judul_ar: titleAr,
+            tujuan: objs,
+            penjelasan_muyassar: expls,
+            referensi: ref,
+            batas_pemula: limit,
+            contoh: [...currentExampleList]
+        };
+
+        if(existingIdx >= 0) {
+             if(!confirm('ID Pelajaran sudah ada. Timpa data ini?')) return;
+             currentLessonsData[existingIdx] = newLesson;
+        } else {
+             currentLessonsData.push(newLesson);
+        }
+        
+        // Sort by Order
+        currentLessonsData.sort((a,b) => (a.urutan||0) - (b.urutan||0));
+        
+        renderBuilderLessonsList();
+        clearLessonInputForm();
+        Swal.fire({toast: true, icon: 'success', title: 'Materi disimpan ke Draft', position: 'top-end', showConfirmButton: false, timer: 1500});
+    });
+
+    window.deleteLessonItem = (idx) => {
+        if(confirm('Hapus materi ini dari daftar?')) {
+            currentLessonsData.splice(idx, 1);
+            renderBuilderLessonsList();
         }
     };
     
-    // 6. Reset Logic
+    window.loadLessonToForm = (idx) => {
+        const l = currentLessonsData[idx];
+        document.getElementById('lessonId').value = l.id;
+        document.getElementById('lessonOrder').value = l.urutan;
+        document.getElementById('lessonTitleId').value = l.judul_id;
+        document.getElementById('lessonTitleAr').value = l.judul_ar;
+        document.getElementById('lessonObjectives').value = (l.tujuan||[]).join('\n');
+        document.getElementById('lessonExplanation').value = (l.penjelasan_muyassar || []).join('\n');
+        document.getElementById('lessonRef').value = l.referensi || '';
+        document.getElementById('lessonLimit').value = l.batas_pemula || '';
+        
+        currentExampleList = [...(l.contoh || [])];
+        renderExampleList();
+        
+        // Scroll to form
+        document.getElementById('lessonId').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+
+    function clearLessonInputForm() {
+        document.getElementById('lessonId').value = '';
+        document.getElementById('lessonOrder').value = '';
+        document.getElementById('lessonTitleId').value = '';
+        document.getElementById('lessonTitleAr').value = '';
+        document.getElementById('lessonObjectives').value = '';
+        document.getElementById('lessonExplanation').value = '';
+        document.getElementById('lessonRef').value = '';
+        document.getElementById('lessonLimit').value = '';
+        currentExampleList = [];
+        renderExampleList();
+    }
+    
+    document.getElementById('btnClearLessonForm')?.addEventListener('click', clearLessonInputForm);
+
+    // --- SAVE MISSION LOGIC ---
+    document.getElementById('btnSaveGrammar')?.addEventListener('click', async () => {
+         const id = document.getElementById('gramId').value.trim();
+         if(!id) return Swal.fire('Error', 'ID Misi wajib diisi!', 'error');
+
+         const data = {
+             id: id,
+             urutan: parseInt(document.getElementById('gramOrder').value) || 99,
+             judul_misi: document.getElementById('gramTitle').value,
+             sub_judul: document.getElementById('gramSubtitle').value,
+             icon: document.getElementById('gramIcon').value,
+             lessons: currentLessonsData // Use Builder Data
+         };
+
+         const btn = document.getElementById('btnSaveGrammar');
+         const originalText = btn.innerHTML;
+         btn.disabled = true; btn.innerHTML = '⏳ Saving...';
+         
+         try {
+             await setDoc(doc(db, "grammar_missions", id), data, { merge: true });
+             Swal.fire('Sukses', 'Misi Grammar tersimpan!', 'success');
+             
+             // Refresh List
+             renderGrammarList();
+             
+             // Reset Form
+             document.getElementById('btnResetGrammar').click();
+             
+         } catch(e) {
+             console.error(e);
+             Swal.fire('Error', e.message, 'error');
+         } finally {
+             btn.disabled = false; btn.innerHTML = originalText;
+         }
+    });
+
+    // --- EDIT MISSION LOGIC ---
+    window.editGrammar = async (id) => {
+         const snap = await getDoc(doc(db, "grammar_missions", id));
+         if(snap.exists()) {
+              const d = snap.data();
+              document.getElementById('gramId').value = id;
+              document.getElementById('gramOrder').value = d.urutan;
+              document.getElementById('gramTitle').value = d.judul_misi;
+              document.getElementById('gramSubtitle').value = d.sub_judul;
+              document.getElementById('gramIcon').value = d.icon;
+              
+              // Load Lessons
+              currentLessonsData = d.lessons || [];
+              renderBuilderLessonsList();
+              clearLessonInputForm();
+
+              document.getElementById('grammarContent').classList.remove('hidden');
+              const chevron = document.getElementById('grammarChevron');
+              if(chevron) chevron.classList.remove('-rotate-90');
+              document.getElementById('grammarContent').scrollIntoView({behavior: 'smooth'});
+              
+              Swal.fire({toast:true, position:'top-end', icon:'info', title:'Mode Edit Misi', showConfirmButton:false, timer:2000});
+         }
+    };
+    
+    // --- DELETE MISSION LOGIC ---
+    window.deleteGrammar = async(id) => {
+        if((await Swal.fire({title:'Hapus Misi?', icon:'warning', showCancelButton:true})).isConfirmed) {
+            try { await deleteDoc(doc(db, "grammar_missions", id)); Swal.fire('Terhapus!', '', 'success'); }
+            catch(e) { Swal.fire('Error', e.message, 'error'); }
+        }
+    };
+    
+    // RESET FORM
     document.getElementById('btnResetGrammar')?.addEventListener('click', () => {
          document.getElementById('gramId').value = '';
          document.getElementById('gramOrder').value = '';
          document.getElementById('gramTitle').value = '';
          document.getElementById('gramSubtitle').value = '';
          document.getElementById('gramIcon').value = '';
-         document.getElementById('gramLessonsJson').value = '';
+         currentLessonsData = [];
+         renderBuilderLessonsList();
+         clearLessonInputForm();
     });
     
     // 7. Init
